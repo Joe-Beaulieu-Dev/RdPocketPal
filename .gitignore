@@ -52,6 +52,8 @@ captures/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+# Added this because this file changed out of nowhere. Just created the develop branch and changed no project files
+.idea/misc.xml
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
