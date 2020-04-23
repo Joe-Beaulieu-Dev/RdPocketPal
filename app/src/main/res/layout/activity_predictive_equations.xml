@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.rdpocketpal2.predictiveequations.PredictiveEquationsViewModel" />
+    </data>
+
+    <!-- ScrollView that holds the whole UI -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".predictiveequations.PredictiveEquationsActivity">
+
+        <!-- Predictive Equations internal layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/predictive_equations_internal_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Equation label -->
+            <TextView
+                android:id="@+id/label_equation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_equation"
+                android:textSize="@dimen/font_size_extra_large"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinner_equation"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_equation"
+                app:layout_constraintStart_toStartOf="@id/data_entry_cardview" />
+
+            <!-- Equation Spinner -->
+            <Spinner
+                android:id="@+id/spinner_equation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:entries="@array/predictive_equations"
+                app:layout_constraintStart_toEndOf="@id/label_equation"
+                app:layout_constraintTop_toTopOf="parent"
+                app:selectedSpinnerItem="@={viewModel.mSelectedEquation}"
+                tools:listitem="@layout/spinner_item" />
+
+            <!-- Data Entry CardView -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/data_entry_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                app:layout_constraintBottom_toTopOf="@id/separator_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_equation">
+
+                <!-- Data Entry layout -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/data_entry_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small">
+
+                    <!-- Sex Selection -->
+                    <RadioGroup
+                        android:id="@+id/sex_selection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toStartOf="@id/unit_selection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selectedRadioBtn="@={viewModel.mSelectedSex}"
+                        tools:checkedButton="@id/sex_male">
+
+                        <!-- Male option -->
+                        <RadioButton
+                            android:id="@+id/sex_male"
+                            style="@style/SexSelectionBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_medium"
+                            android:width="75dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/text_male" />
+
+                        <!-- Female Option -->
+                        <RadioButton
+                            android:id="@+id/sex_female"
+                            style="@style/SexSelectionBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_medium"
+                            android:width="75dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/text_female" />
+
+                    </RadioGroup>
+
+                    <!-- Unit Selection -->
+                    <RadioGroup
+                        android:id="@+id/unit_selection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/sex_selection"
+                        app:layout_constraintTop_toTopOf="@id/sex_selection"
+                        app:selectedRadioBtn="@={viewModel.mSelectedUnit}"
+                        tools:checkedButton="@id/unit_metric">
+
+                        <!-- Metric -->
+                        <RadioButton
+                            android:id="@+id/unit_metric"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(unitMetric)}"
+                            android:text="@string/text_metric" />
+
+                        <!-- Standard -->
+                        <RadioButton
+                            android:id="@+id/unit_standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(unitStandard)}"
+                            android:text="@string/text_standard" />
+
+                    </RadioGroup>
+
+                    <!-- Weight label -->
+                    <TextView
+                        android:id="@+id/label_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_weight"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_weight"
+                        app:layout_constraintEnd_toStartOf="@id/text_weight"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Weight entry -->
+                    <EditText
+                        android:id="@+id/text_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:ems="3"
+                        android:hint="@{viewModel.mWeightHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mWeight}"
+                        app:errorMsg="@={viewModel.mWeightErrorMsg}"
+                        app:layout_constraintEnd_toStartOf="@id/label_height"
+                        app:layout_constraintStart_toEndOf="@id/label_weight"
+                        app:layout_constraintTop_toBottomOf="@id/unit_selection" />
+
+                    <!-- Height label -->
+                    <TextView
+                        android:id="@+id/label_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_height"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_height"
+                        app:layout_constraintEnd_toStartOf="@id/text_height"
+                        app:layout_constraintStart_toEndOf="@id/text_weight"
+                        app:layout_constraintTop_toTopOf="@id/label_weight" />
+
+                    <!-- Height entry -->
+                    <EditText
+                        android:id="@+id/text_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:ems="3"
+                        android:hint="@{viewModel.mHeightHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mHeight}"
+                        app:errorMsg="@={viewModel.mHeightErrorMsg}"
+                        app:layout_constraintEnd_toStartOf="@id/label_age"
+                        app:layout_constraintStart_toEndOf="@id/label_height"
+                        app:layout_constraintTop_toTopOf="@id/text_weight" />
+
+                    <!-- Age label -->
+                    <TextView
+                        android:id="@+id/label_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_age"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_age"
+                        app:layout_constraintEnd_toStartOf="@id/text_age"
+                        app:layout_constraintStart_toEndOf="@id/text_height"
+                        app:layout_constraintTop_toTopOf="@id/label_weight" />
+
+                    <!-- Age entry -->
+                    <EditText
+                        android:id="@+id/text_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mAgeHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mAge}"
+                        app:errorMsg="@={viewModel.mAgeErrorMsg}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/label_age"
+                        app:layout_constraintTop_toTopOf="@id/text_weight" />
+
+                    <!-- TOO FAR -->
+
+                    <!-- Tmax label -->
+                    <TextView
+                        android:id="@+id/label_tmax"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_tmax"
+                        android:textSize="@dimen/font_size_medium"
+                        android:visibility="gone"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_tmax"
+                        app:layout_constraintEnd_toStartOf="@id/text_tmax"
+                        tools:visibility="visible" />
+
+                    <!-- Tmax entry -->
+                    <EditText
+                        android:id="@+id/text_tmax"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mTmaxHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mTmax}"
+                        android:visibility="gone"
+                        app:errorMsg="@={viewModel.mTmaxErrorMsg}"
+                        app:layout_constraintStart_toStartOf="@id/text_weight"
+                        app:layout_constraintTop_toBottomOf="@id/text_weight"
+                        tools:visibility="visible" />
+
+                    <!-- Heart rate label -->
+                    <TextView
+                        android:id="@+id/label_heart_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_heart_rate"
+                        android:textSize="@dimen/font_size_medium"
+                        android:visibility="gone"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_heart_rate"
+                        app:layout_constraintEnd_toStartOf="@id/text_heart_rate"
+                        tools:visibility="visible" />
+
+                    <!-- Heart rate entry -->
+                    <EditText
+                        android:id="@+id/text_heart_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mHeartRateHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mHeartRate}"
+                        android:visibility="gone"
+                        app:errorMsg="@={viewModel.mHeartRateErrorMsg}"
+                        app:layout_constraintStart_toStartOf="@id/text_height"
+                        app:layout_constraintTop_toBottomOf="@id/text_height"
+                        tools:visibility="visible" />
+
+                    <!-- Ve label -->
+                    <TextView
+                        android:id="@+id/label_ve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_ve"
+                        android:textSize="@dimen/font_size_medium"
+                        android:visibility="gone"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_ve"
+                        app:layout_constraintEnd_toStartOf="@id/text_ve"
+                        tools:visibility="visible" />
+
+                    <!-- Ve entry -->
+                    <EditText
+                        android:id="@+id/text_ve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mVeHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mVe}"
+                        android:visibility="gone"
+                        app:errorMsg="@={viewModel.mVeErrorMsg}"
+                        app:layout_constraintStart_toStartOf="@id/text_age"
+                        app:layout_constraintTop_toBottomOf="@id/text_age"
+                        tools:visibility="visible" />
+
+                    <!-- Activity level min label -->
+                    <TextView
+                        android:id="@+id/label_activity_level_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_activity_level_min"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_activity_level_min"
+                        app:layout_constraintEnd_toStartOf="@id/text_activity_level_min" />
+
+                    <!-- Activity level min entry -->
+                    <EditText
+                        android:id="@+id/text_activity_level_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mActivityLevelMinHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mActivityLevelMin}"
+                        app:errorMsg="@={viewModel.mActivityLevelMinErrorMsg}"
+                        app:layout_constraintStart_toStartOf="@id/text_activity_level_max"
+                        app:layout_constraintTop_toBottomOf="@id/text_ve" />
+
+                    <!-- Activity level max label -->
+                    <TextView
+                        android:id="@+id/label_activity_level_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_activity_level_max"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_activity_level_max"
+                        app:layout_constraintStart_toStartOf="@id/label_weight" />
+
+                    <!-- Activity level max entry -->
+                    <EditText
+                        android:id="@+id/text_activity_level_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@{viewModel.mActivityLevelMaxHint}"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mActivityLevelMax}"
+                        app:errorMsg="@={viewModel.mActivityLevelMaxErrorMsg}"
+                        app:layout_constraintStart_toEndOf="@+id/label_activity_level_max"
+                        app:layout_constraintTop_toBottomOf="@id/text_activity_level_min" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Separator line -->
+            <View
+                android:id="@+id/separator_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:background="@color/darkGrey"
+                app:layout_constraintBottom_toTopOf="@+id/result_cardview"
+                app:layout_constraintEnd_toEndOf="@id/data_entry_cardview"
+                app:layout_constraintStart_toStartOf="@id/data_entry_cardview"
+                app:layout_constraintTop_toBottomOf="@id/data_entry_cardview" />
+
+
+            <!-- Result CardView -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/result_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                app:layout_constraintBottom_toTopOf="@id/btn_parenteral_nutrition_calculate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator_line">
+
+                <!-- Result layout -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/result_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small">
+
+                    <!-- BMR label -->
+                    <TextView
+                        android:id="@+id/label_bmr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_bmr"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_bmr"
+                        app:layout_constraintEnd_toStartOf="@id/text_bmr" />
+
+                    <!-- BMR entry -->
+                    <EditText
+                        android:id="@+id/text_bmr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:ems="3"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:longClickable="false"
+                        android:text="@={viewModel.mBmr}"
+                        app:layout_constraintStart_toStartOf="@+id/text_calorie_min"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Bmr unit label -->
+                    <TextView
+                        android:id="@+id/unit_bmr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_kcals"
+                        app:layout_constraintBaseline_toBaselineOf="@id/text_bmr"
+                        app:layout_constraintStart_toEndOf="@id/text_bmr" />
+
+                    <!-- Calorie min label -->
+                    <TextView
+                        android:id="@+id/label_calorie_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_calorie_min"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_calorie_min"
+                        app:layout_constraintEnd_toStartOf="@id/text_calorie_min" />
+
+                    <!-- Calorie min entry -->
+                    <EditText
+                        android:id="@+id/text_calorie_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:ems="3"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:longClickable="false"
+                        android:text="@={viewModel.mCalorieMin}"
+                        app:layout_constraintStart_toStartOf="@+id/text_calorie_max"
+                        app:layout_constraintTop_toBottomOf="@id/text_bmr" />
+
+                    <!-- Calorie min unit label -->
+                    <TextView
+                        android:id="@+id/unit_calorie_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_kcals"
+                        app:layout_constraintBaseline_toBaselineOf="@id/text_calorie_min"
+                        app:layout_constraintStart_toEndOf="@id/text_calorie_min" />
+
+                    <!-- Calorie max label -->
+                    <TextView
+                        android:id="@+id/label_calorie_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_calorie_max"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_calorie_max"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Calorie max entry -->
+                    <EditText
+                        android:id="@+id/text_calorie_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:ems="3"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:longClickable="false"
+                        android:text="@={viewModel.mCalorieMax}"
+                        app:layout_constraintStart_toEndOf="@+id/label_calorie_max"
+                        app:layout_constraintTop_toBottomOf="@id/text_calorie_min" />
+
+                    <!-- Calorie max unit label -->
+                    <TextView
+                        android:id="@+id/unit_calorie_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_kcals"
+                        app:layout_constraintBaseline_toBaselineOf="@id/text_calorie_max"
+                        app:layout_constraintStart_toEndOf="@id/text_calorie_max" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Clear Button -->
+            <Button
+                android:id="@+id/btn_parenteral_nutrition_clear"
+                style="@style/ClearBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:onClick="@{() -> viewModel.onClearClicked()}"
+                android:padding="@dimen/margin_small"
+                android:text="@string/text_clear"
+                app:layout_constraintEnd_toStartOf="@id/btn_parenteral_nutrition_calculate"
+                app:layout_constraintTop_toTopOf="@id/btn_parenteral_nutrition_calculate" />
+
+            <!-- Calculate Button -->
+            <Button
+                android:id="@+id/btn_parenteral_nutrition_calculate"
+                style="@style/CalculateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:onClick="@{() -> viewModel.onCalculateClicked()}"
+                android:padding="@dimen/margin_small"
+                android:text="@string/text_calculate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/result_cardview"
+                app:layout_constraintTop_toBottomOf="@id/result_cardview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

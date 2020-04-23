@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="marquee"
+    android:singleLine="true"
+    android:textAlignment="inherit"
+    android:textSize="@dimen/font_size_large"
+    android:textColor="@color/black"
+    tools:text="Mifflin St. Jear" />
+
+    <!-- Original Android style in simple_spinner_item.xml -->
+    <!-- style="?android:attr/spinnerItemStyle" -->

@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.rdpocketpal2.quickmethod.QuickMethodViewModel" />
+    </data>
+
+    <!-- ScrollView that holds the whole UI -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/qm_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Quick Method internal layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".quickmethod.QuickMethodActivity">
+
+            <!-- Weight label -->
+            <TextView
+                android:id="@+id/qm_weight_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:text="@string/text_weight"
+                android:textSize="@dimen/font_size_extra_large"
+                app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!-- Weight entry -->
+            <EditText
+                android:id="@+id/qm_weight_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.mWeight}"
+                app:errorMsg="@={viewModel.mWeightErrorMsg}"
+                app:layout_constraintBottom_toTopOf="@id/qm_calorie_layout_container"
+                app:layout_constraintStart_toEndOf="@+id/qm_weight_textView" />
+
+            <!-- Weight unit label -->
+            <TextView
+                android:id="@+id/qm_weight_unit_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.mWeightUnitLabel}"
+                app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
+                app:layout_constraintStart_toEndOf="@id/qm_weight_editText"
+                tools:text="@string/hint_kilograms" />
+
+            <!-- Unit Selection -->
+            <RadioGroup
+                android:id="@+id/qm_unit_radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:selectedRadioBtn="@={viewModel.mUnitSelection}"
+                tools:checkedButton="@id/qm_unit_metric">
+
+                <!-- Metric -->
+                <RadioButton
+                    android:id="@+id/qm_unit_metric"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitMetric)}"
+                    android:text="@string/text_metric" />
+
+                <!-- Standard -->
+                <RadioButton
+                    android:id="@+id/qm_unit_standard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitStandard)}"
+                    android:text="@string/text_standard" />
+
+            </RadioGroup>
+
+            <!--
+                ******************************
+                ** Calorie layout container **
+                ******************************
+            -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/qm_calorie_layout_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/qm_protein_layout_container"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/qm_unit_radioGroup">
+
+                <!-- Calorie CardView -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/qm_calorie_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Calorie layout -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/qm_calorie_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small">
+
+                        <!-- Calorie label -->
+                        <TextView
+                            android:id="@+id/qm_calorie_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_calories"
+                            android:textSize="@dimen/font_size_large"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--
+                            ***********
+                            ** Input **
+                            ***********
+                        -->
+
+                        <!-- kcal/kg min input -->
+                        <EditText
+                            android:id="@+id/qm_calorie_kcal_per_kg_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mKcalPerKgMin}"
+                            app:errorMsg="@={viewModel.mKcalPerKgMinErrorMsg}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_calorie_textView" />
+
+                        <!-- Input dash -->
+                        <TextView
+                            android:id="@+id/qm_calorie_input_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_calorie_kcal_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_kcal_per_kg_min" />
+
+                        <!-- kcal/kg max input -->
+                        <EditText
+                            android:id="@+id/qm_calorie_kcal_per_kg_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mKcalPerKgMax}"
+                            app:errorMsg="@={viewModel.mKcalPerKgMaxErrorMsg}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_calorie_kcal_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_input_dash" />
+
+                        <!-- kcal/kg max label -->
+                        <TextView
+                            android:id="@+id/qm_calorie_kcal_per_kg_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_kcal_per_kilogram"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_calorie_kcal_per_kg_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_kcal_per_kg_max" />
+
+                        <!--
+                            ***********
+                            ** Arrow **
+                            ***********
+                        -->
+
+                        <ImageView
+                            android:id="@+id/qm_calorie_down_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:src="@drawable/ic_arrow_downward_grey_24dp"
+                            app:layout_constraintBottom_toTopOf="@id/qm_calorie_output_dash"
+                            app:layout_constraintEnd_toEndOf="@id/qm_calorie_input_dash"
+                            app:layout_constraintStart_toStartOf="@id/qm_calorie_input_dash"
+                            app:layout_constraintTop_toBottomOf="@id/qm_calorie_input_dash" />
+
+                        <!--
+                            ************
+                            ** Output **
+                            ************
+                        -->
+
+                        <!-- kcal/day min result -->
+                        <EditText
+                            android:id="@+id/qm_calorie_kcal_per_day_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mKcalPerDayMin}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_calorie_output_dash"
+                            app:layout_constraintEnd_toStartOf="@id/qm_calorie_output_dash" />
+
+                        <!-- Output dash -->
+                        <TextView
+                            android:id="@+id/qm_calorie_output_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_kcal_per_day_min"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_calorie_down_arrow" />
+
+                        <!-- kcal/day max result -->
+                        <EditText
+                            android:id="@+id/qm_calorie_kcal_per_day_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mKcalPerDayMax}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_calorie_output_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_output_dash" />
+
+                        <!-- kcal/day max result label -->
+                        <TextView
+                            android:id="@+id/qm_calorie_kcal_per_day_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_kcal_per_day"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_calorie_kcal_per_day_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_calorie_kcal_per_day_max" />
+
+                        <!--
+                            *************
+                            ** Buttons **
+                            *************
+                        -->
+
+                        <!-- Calorie Clear and Calculate button container -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/qm_calorie_btn_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/qm_calorie_kcal_per_day_max">
+
+                            <!-- Calorie Clear btn -->
+                            <Button
+                                android:id="@+id/qm_calorie_clear_btn"
+                                style="@style/ClearBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_medium"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onCalorieClearClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_clear"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/qm_calorie_calculate_btn"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <!-- Calorie Calculate btn -->
+                            <Button
+                                android:id="@+id/qm_calorie_calculate_btn"
+                                style="@style/CalculateBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onCalorieCalculateClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_calculate"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--
+                ******************************
+                ** Protein layout container **
+                ******************************
+            -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/qm_protein_layout_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/qm_fluid_layout_container"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/qm_calorie_layout_container">
+
+                <!-- Protein CardView -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/qm_protein_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Protein layout -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/qm_protein_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small">
+
+                        <!-- Protein label -->
+                        <TextView
+                            android:id="@+id/qm_protein_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_protein"
+                            android:textSize="@dimen/font_size_large"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--
+                            ***********
+                            ** Input **
+                            ***********
+                        -->
+
+                        <!-- g/kg min input -->
+                        <EditText
+                            android:id="@+id/qm_protein_grams_per_kg_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mGramsPerKgMin}"
+                            app:errorMsg="@={viewModel.mGramsPerKgMinErrorMsg}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_protein_textView" />
+
+                        <!-- Input separator -->
+                        <TextView
+                            android:id="@+id/qm_protein_input_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_protein_grams_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@id/qm_protein_grams_per_kg_min" />
+
+                        <!-- g/kg max input -->
+                        <EditText
+                            android:id="@+id/qm_protein_grams_per_kg_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mGramsPerKgMax}"
+                            app:errorMsg="@={viewModel.mGramsPerKgMaxErrorMsg}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_protein_grams_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@+id/qm_protein_input_dash" />
+
+                        <!-- g/kg max label -->
+                        <TextView
+                            android:id="@+id/qm_protein_grams_per_kg_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_grams_per_kilogram"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_protein_grams_per_kg_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_protein_grams_per_kg_max" />
+
+                        <!--
+                            ***********
+                            ** Arrow **
+                            ***********
+                        -->
+
+                        <ImageView
+                            android:id="@+id/qm_protein_down_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:src="@drawable/ic_arrow_downward_grey_24dp"
+                            app:layout_constraintBottom_toTopOf="@id/qm_protein_output_dash"
+                            app:layout_constraintEnd_toEndOf="@id/qm_protein_input_dash"
+                            app:layout_constraintStart_toStartOf="@id/qm_protein_input_dash"
+                            app:layout_constraintTop_toBottomOf="@id/qm_protein_input_dash" />
+
+                        <!--
+                            ************
+                            ** Output **
+                            ************
+                        -->
+
+                        <!-- g/day min result -->
+                        <EditText
+                            android:id="@+id/qm_protein_grams_per_day_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mGramsPerDayMin}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_protein_output_dash"
+                            app:layout_constraintEnd_toStartOf="@id/qm_protein_output_dash" />
+
+                        <!-- Output dash -->
+                        <TextView
+                            android:id="@+id/qm_protein_output_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_protein_grams_per_day_min"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_protein_down_arrow" />
+
+                        <!-- g/kg max result -->
+                        <EditText
+                            android:id="@+id/qm_protein_grams_per_day_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mGramsPerDayMax}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_protein_output_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_protein_output_dash" />
+
+                        <!-- g/day max result label -->
+                        <TextView
+                            android:id="@+id/qm_protein_grams_per_day_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_grams_per_day_max"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_protein_grams_per_day_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_protein_grams_per_day_max" />
+
+                        <!--
+                            *************
+                            ** Buttons **
+                            *************
+                        -->
+
+                        <!-- Protein Clear and Calculate button container -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/qm_protein_btn_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/qm_protein_grams_per_day_max">
+
+                            <!-- Protein Clear btn -->
+                            <Button
+                                android:id="@+id/qm_protein_clear_btn"
+                                style="@style/ClearBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_medium"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onProteinClearClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_clear"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/qm_protein_calculate_btn"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <!-- Protein Calculate btn -->
+                            <Button
+                                android:id="@+id/qm_protein_calculate_btn"
+                                style="@style/CalculateBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onProteinCalculateClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_calculate"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--
+                ******************************
+                ** Fluid layout container **
+                ******************************
+            -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/qm_fluid_layout_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qm_protein_layout_container">
+
+                <!-- Fluid CardView -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/qm_fluid_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Fluid layout -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/qm_fluid_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small">
+
+                        <!-- Fluid label -->
+                        <TextView
+                            android:id="@+id/qm_fluid_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_fluids"
+                            android:textSize="@dimen/font_size_large"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--
+                            ***********
+                            ** Input **
+                            ***********
+                        -->
+
+                        <!-- ml/kg min input -->
+                        <EditText
+                            android:id="@+id/qm_fluid_ml_per_kg_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mMlPerKgMin}"
+                            app:errorMsg="@={viewModel.mMlPerKgMinErrorMsg}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_fluid_textView" />
+
+                        <!-- Input dash -->
+                        <TextView
+                            android:id="@+id/qm_fluid_input_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_fluid_ml_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_ml_per_kg_min" />
+
+                        <!-- ml/kg max input -->
+                        <EditText
+                            android:id="@+id/qm_fluid_ml_per_kg_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mMlPerKgMax}"
+                            app:errorMsg="@={viewModel.mMlPerKgMaxErrorMsg}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_fluid_ml_per_kg_min"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_input_dash" />
+
+                        <!-- ml/kg max label -->
+                        <TextView
+                            android:id="@+id/qm_fluid_ml_per_kg_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_ml_per_kilogram"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_fluid_ml_per_kg_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_ml_per_kg_max" />
+
+                        <!--
+                            ***********
+                            ** Arrow **
+                            ***********
+                        -->
+
+                        <ImageView
+                            android:id="@+id/qm_fluid_down_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:src="@drawable/ic_arrow_downward_grey_24dp"
+                            app:layout_constraintBottom_toTopOf="@id/qm_fluid_output_dash"
+                            app:layout_constraintEnd_toEndOf="@id/qm_fluid_input_dash"
+                            app:layout_constraintStart_toStartOf="@id/qm_fluid_input_dash"
+                            app:layout_constraintTop_toBottomOf="@id/qm_fluid_input_dash" />
+
+                        <!--
+                            ************
+                            ** Output **
+                            ************
+                        -->
+
+                        <!-- ml/day min result -->
+                        <EditText
+                            android:id="@+id/qm_fluid_ml_per_day_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="3"
+                            android:hint="@string/hint_min"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mMlPerDayMin}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_fluid_output_dash"
+                            app:layout_constraintEnd_toStartOf="@id/qm_fluid_output_dash" />
+
+                        <!-- Output dash -->
+                        <TextView
+                            android:id="@+id/qm_fluid_output_dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:text="@string/text_em_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_ml_per_day_min"
+                            app:layout_constraintTop_toBottomOf="@+id/qm_fluid_down_arrow" />
+
+                        <!-- ml/day max result -->
+                        <EditText
+                            android:id="@+id/qm_fluid_ml_per_day_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:ems="3"
+                            android:hint="@string/hint_max"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mMlPerDayMax}"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/qm_fluid_output_dash"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_output_dash" />
+
+                        <!-- ml/day max result label -->
+                        <TextView
+                            android:id="@+id/qm_fluid_ml_per_day_max_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_ml_per_day"
+                            app:layout_constraintBaseline_toBaselineOf="@id/qm_fluid_ml_per_day_max"
+                            app:layout_constraintStart_toEndOf="@id/qm_fluid_ml_per_day_max" />
+
+                        <!--
+                            *************
+                            ** Buttons **
+                            *************
+                        -->
+
+                        <!-- Fluid Clear and Calculate button container -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/qm_fluid_btn_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/qm_fluid_ml_per_day_max">
+
+                            <!-- Fluid Clear btn -->
+                            <Button
+                                android:id="@+id/qm_fluid_clear_btn"
+                                style="@style/ClearBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_medium"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onFluidClearClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_clear"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/qm_fluid_calculate_btn"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <!-- Fluid Calculate btn -->
+                            <Button
+                                android:id="@+id/qm_fluid_calculate_btn"
+                                style="@style/CalculateBtnSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginBottom="@dimen/margin_small"
+                                android:onClick="@{() -> viewModel.onFluidCalculateClicked()}"
+                                android:padding="@dimen/margin_small"
+                                android:text="@string/text_calculate"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">RD Pocket Pal</string>
+
+    <!-- Home Buttons -->
+    <string name="btn_predictive_equations">Predictive\nEquations</string>
+    <string name="btn_quick_method">Quick\nMethod</string>
+    <string name="btn_anthropometrics">Anthropometrics\n</string>
+    <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
+    <string name="btn_conversions">Conversions\n</string>
+
+    <!-- Activity Names -->
+    <string name="title_predictive_equations">Predictive Equations</string>
+    <string name="title_quick_method">Quick Method</string>
+    <string name="title_anthropometrics">Anthropometrics</string>
+    <string name="title_parenteral_nutrition">Parenteral Nutrition</string>
+    <string name="title_conversions">Conversions</string>
+
+    <!-- Predictive Equations -->
+    <string name="text_equation">Equation:</string>
+    <string name="text_male">Male</string>
+    <string name="text_female">Female</string>
+    <string name="text_metric">Metric</string>
+    <string name="text_standard">Standard</string>
+    <string name="text_height">Height:</string>
+    <string name="text_age">Age:</string>
+    <string name="text_tmax">Tmax:</string>
+    <string name="text_heart_rate">HR:</string>
+    <string name="text_ve">Ve:</string>
+    <string name="text_activity_level_min">Activity level min:</string>
+    <string name="text_activity_level_max">Activity level max:</string>
+    <string name="text_bmr">BMR:</string>
+    <string name="text_calorie_min">Calorie min:</string>
+    <string name="text_calorie_max">Calorie max:</string>
+    <string name="mifflin_st_jear">Mifflin St. Jear</string>
+    <string name="harris_benedict">Harris Benedict</string>
+    <string name="penn_state_2003b">Penn State 2003b</string>
+    <string name="penn_state_2010">Penn State 2010</string>
+    <string name="brandi">Brandi</string>
+    <string-array name="predictive_equations">
+        <item>@string/mifflin_st_jear</item>
+        <item>@string/harris_benedict</item>
+        <item>@string/penn_state_2003b</item>
+        <item>@string/penn_state_2010</item>
+        <item>@string/brandi</item>
+    </string-array>
+    <string name="hint_celsius">&#xb0;C</string>
+    <string name="hint_fahrenheit">&#xb0;F</string>
+    <string name="hint_beats_per_minute">bpm</string>
+    <string name="hint_liters_per_minute">L/min</string>
+    <string name="hint_gallons_per_minute">gal/min</string>
+    <string name="text_kcals">kcals</string>
+
+    <!-- Quick Method -->
+    <string name="text_protein">Protein</string>
+    <string name="text_fluids">Fluids</string>
+    <string name="text_calories">Calories</string>
+    <!-- Calories -->
+    <string name="text_kcal_per_kilogram">kcal/kg</string>
+    <string name="text_kcal_per_day">kcal/day</string>
+    <!-- Protein -->
+    <string name="text_grams_per_kilogram">g/kg</string>
+    <string name="text_grams_per_day_max">g/day</string>
+    <!-- Fluid -->
+    <string name="text_ml_per_kilogram">ml/kg</string>
+    <string name="text_ml_per_day">ml/day</string>
+
+    <!-- Global strings -->
+    <string name="text_weight">Weight:</string>
+    <string name="text_calculate">Calculate</string>
+    <string name="text_clear">Clear</string>
+    <string name="toast_invalid_fields">Please correct the marked fields</string>
+    <string name="toast_results_cleared_unit_change">Results cleared due to unit change</string>
+    <string name="hint_pounds">lb</string>
+    <string name="hint_kilograms">kg</string>
+    <string name="hint_inches">in</string>
+    <string name="hint_centimeters">cm</string>
+    <string name="hint_years">years</string>
+    <string name="hint_min">min</string>
+    <string name="hint_max">max</string>
+    <string name="hint_x">X</string>
+    <string name="text_em_dash">&#x2014;</string>
+
+    <!-- Error messages -->
+    <string name="error_enter_a_number">Enter a number</string>
+</resources>
