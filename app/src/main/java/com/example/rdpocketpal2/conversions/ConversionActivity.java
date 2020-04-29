@@ -2,6 +2,7 @@ package com.example.rdpocketpal2.conversions;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -34,8 +35,16 @@ public class ConversionActivity extends AppCompatActivity {
         mBinding.setLifecycleOwner(this);
         mBinding.setViewModel(mViewModel);
 
+        // observe LiveData
+        observeLiveData();
+
         // set up UI elements
+        setUpUi();
+    }
+
+    private void setUpUi() {
         setUpConversionSpinner();
+        setUpElementSpinner();
         setUpAllBtnRipples();
     }
 
@@ -46,21 +55,61 @@ public class ConversionActivity extends AppCompatActivity {
                 .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-        // observe Spinner LiveData so we can tell the ViewModel to update field labels based on the
-        // selected Spinner item
-        observeSpinnerData();
     }
 
-    private void observeSpinnerData() {
-        mViewModel.getConversionType().observe(this, new Observer<String>() {
+    private void setUpElementSpinner() {
+        // initialize and assign ArrayAdapter to Spinner
+        Spinner spinner = findViewById(R.id.conv_element_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.element_list, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void observeLiveData() {
+        observeConversionTypeData();
+        observeElementData();
+    }
+
+    private void observeConversionTypeData() {
+        mViewModel.getConversionTypeData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                if (s.equals(getResources().getString(R.string.text_gm_to_meq))
+                        || s.equals(getResources().getString(R.string.text_mg_to_meq))) {
+                    setElementSpinnerVisibility(View.VISIBLE);
+                } else {
+                    setElementSpinnerVisibility(View.GONE);
+                }
                 // update the unit labels for the input/output fields
                 // when the conversion type changes
                 mViewModel.updateFieldLabelData();
+                // clear input/output fields when User changes conversion type
+                mViewModel.clearAllFields();
             }
         });
+    }
+
+    private void observeElementData() {
+        mViewModel.getElementData().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // clear input/output fields when User changes element type
+                mViewModel.clearAllFields();
+            }
+        });
+    }
+
+    private void setElementSpinnerVisibility(int visibility) {
+        // @View.Visibility is hidden, so have to check validity
+        if (visibility != View.VISIBLE
+                && visibility != View.INVISIBLE
+                && visibility != View.GONE) {
+            return;
+        }
+
+        // set visibility
+        findViewById(R.id.conv_element_spinner).setVisibility(visibility);
     }
 
     private void setUpAllBtnRipples() {

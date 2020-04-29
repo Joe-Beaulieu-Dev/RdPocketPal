@@ -55,11 +55,24 @@
                             android:id="@+id/conv_conversion_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toTopOf="@id/conv_field_left"
+                            app:layout_constraintBottom_toTopOf="@id/conv_element_spinner"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:selectedSpinnerItem="@={viewModel.mConversionType}"
                             tools:listitem="@layout/spinner_item" />
+
+                        <!-- Element Spinner -->
+                        <Spinner
+                            android:id="@+id/conv_element_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@id/conv_field_left"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/conv_conversion_spinner"
+                            app:selectedSpinnerItem="@={viewModel.mElement}"
+                            tools:listitem="@layout/spinner_item"
+                            tools:visibility="visible" />
 
                         <!-- Left field -->
                         <EditText
@@ -72,7 +85,7 @@
                             app:errorMsg="@={viewModel.mFieldLeftErrorMsg}"
                             app:layout_constraintEnd_toStartOf="@id/conv_field_left_label"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/conv_conversion_spinner" />
+                            app:layout_constraintTop_toBottomOf="@id/conv_element_spinner" />
 
                         <!-- Left field label -->
                         <TextView
