@@ -64,6 +64,22 @@
     <string name="text_ml_per_kilogram">ml/kg</string>
     <string name="text_ml_per_day">ml/day</string>
 
+    <!-- Conversions -->
+    <string name="text_in">in</string>
+    <string name="text_cm">cm</string>
+    <string name="text_lb">lb</string>
+    <string name="text_kg">kg</string>
+    <string name="text_gm">gm</string>
+    <string name="text_meq">meq</string>
+    <string name="text_in_to_cm">Inches &lt;=> Centimeters</string>
+    <string name="text_lb_to_kg">Pounds &lt;=> Kilograms</string>
+    <string name="text_gm_to_meq">Grams &lt;=> Milliequivalents</string>
+    <string-array name="conversion_list">
+        <item>@string/text_in_to_cm</item>
+        <item>@string/text_lb_to_kg</item>
+        <item>@string/text_gm_to_meq</item>
+    </string-array>
+
     <!-- Global strings -->
     <string name="text_weight">Weight:</string>
     <string name="text_calculate">Calculate</string>

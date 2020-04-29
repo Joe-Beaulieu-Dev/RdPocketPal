@@ -5,8 +5,16 @@ public class ConversionUtil {
         return pounds * 0.45359237;
     }
 
+    public static double kilogramsToPounds(double kilograms) {
+        return kilograms / 0.45359237;
+    }
+
     public static double inchesToCentimeters(double inches) {
         return inches * 2.54;
+    }
+
+    public static double centimetersToInches(double centimeters) {
+        return centimeters / 2.54;
     }
 
     public static double fahrenheitToCelsius(double tempFahrenheit) {

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.conversions.ConversionActivity;
 import com.example.rdpocketpal2.predictiveequations.PredictiveEquationsActivity;
 import com.example.rdpocketpal2.quickmethod.QuickMethodActivity;
 
@@ -24,7 +25,7 @@ public class HomeButtonAdapter extends RecyclerView.Adapter<HomeButtonAdapter.Ho
             new HomeButton(R.drawable.ic_parenteral_nutrition_purple_48dp, R.string.btn_parenteral_nutrition
                     , PredictiveEquationsActivity.class),
             new HomeButton(R.drawable.ic_conversions_purple_48dp, R.string.btn_conversions
-                    , PredictiveEquationsActivity.class)
+                    , ConversionActivity.class)
     };
 
     private HomeButtonListener mListener;

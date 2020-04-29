@@ -9,7 +9,7 @@
     android:textAlignment="inherit"
     android:textSize="@dimen/font_size_large"
     android:textColor="@color/black"
-    tools:text="Mifflin St. Jear" />
+    tools:text="Sample item" />
 
     <!-- Original Android style in simple_spinner_item.xml -->
     <!-- style="?android:attr/spinnerItemStyle" -->
