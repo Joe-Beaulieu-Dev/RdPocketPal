@@ -47,12 +47,14 @@ public class ConversionViewModel extends AndroidViewModel {
     private Context mApplicationContext;
     private SavedStateHandle mState;
 
+    // Input/output fields
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({LEFT_FIELD, RIGHT_FIELD})
+    @IntDef({FIELD_LEFT, FIELD_RIGHT})
     private @interface Fields {}
-    private static final int LEFT_FIELD = 0;
-    private static final int RIGHT_FIELD = 1;
+    private static final int FIELD_LEFT = 0;
+    private static final int FIELD_RIGHT = 1;
 
+    // Conversion types
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({IN_TO_CM, CM_TO_IN, LB_TO_KG, KG_TO_LB, GM_TO_MEQ, MEQ_TO_GM, MG_TO_MEQ, MEQ_TO_MG})
     private @interface Conversion {}
@@ -83,8 +85,8 @@ public class ConversionViewModel extends AndroidViewModel {
     public void onLeftFieldChanged(EditText editText) {
         // check for focus to break loops
         if (editText.hasFocus()) {
-            if (validateInputDataAndToast(LEFT_FIELD)) {
-                convertAndSetResult(getConversionType(LEFT_FIELD), LEFT_FIELD);
+            if (validateInputDataAndToast(FIELD_LEFT)) {
+                convertAndSetResult(getConversionType(FIELD_LEFT), FIELD_LEFT);
             }
         }
     }
@@ -92,8 +94,8 @@ public class ConversionViewModel extends AndroidViewModel {
     public void onRightFieldChanged(EditText editText) {
         // check for focus to break loops
         if (editText.hasFocus()) {
-            if (validateInputDataAndToast(RIGHT_FIELD)) {
-                convertAndSetResult(getConversionType(RIGHT_FIELD), RIGHT_FIELD);
+            if (validateInputDataAndToast(FIELD_RIGHT)) {
+                convertAndSetResult(getConversionType(FIELD_RIGHT), FIELD_RIGHT);
             }
         }
     }
@@ -103,10 +105,10 @@ public class ConversionViewModel extends AndroidViewModel {
     private void convertAndSetResult(@Conversion int conversion, @Fields int inputField) {
         // set value of output field
         switch (inputField) {
-            case LEFT_FIELD:
+            case FIELD_LEFT:
                 mFieldRight.setValue(String.valueOf(convert(conversion, mFieldLeft)));
                 break;
-            case RIGHT_FIELD:
+            case FIELD_RIGHT:
                 mFieldLeft.setValue(String.valueOf(convert(conversion, mFieldRight)));
                 break;
         }
@@ -144,8 +146,8 @@ public class ConversionViewModel extends AndroidViewModel {
 
     //region Validation Methods
     private boolean validateInputDataAndToast(@Fields int field) {
-        MutableLiveData<String> inputField = field == LEFT_FIELD ? mFieldLeft : mFieldRight;
-        MutableLiveData<String> errorField = field == LEFT_FIELD ? mFieldLeftErrorMsg : mFieldRightErrorMsg;
+        MutableLiveData<String> inputField = field == FIELD_LEFT ? mFieldLeft : mFieldRight;
+        MutableLiveData<String> errorField = field == FIELD_LEFT ? mFieldLeftErrorMsg : mFieldRightErrorMsg;
 
         // if empty or null (user erases text) -> not valid, don't set error, don't toast, clear fields
         // if not empty or null and not a double -> not valid, set error, toast
@@ -197,27 +199,27 @@ public class ConversionViewModel extends AndroidViewModel {
         // compare selection String to String Resource currently being
         // used in order to decide which conversion we are calculating
         if (type.equals(mApplicationContext.getResources().getString(R.string.text_in_to_cm))) {
-            if (inputField == LEFT_FIELD) {
+            if (inputField == FIELD_LEFT) {
                 return IN_TO_CM;
-            } else if (inputField == RIGHT_FIELD) {
+            } else if (inputField == FIELD_RIGHT) {
                 return CM_TO_IN;
             }
         } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_lb_to_kg))) {
-            if (inputField == LEFT_FIELD) {
+            if (inputField == FIELD_LEFT) {
                 return LB_TO_KG;
-            } else if (inputField == RIGHT_FIELD) {
+            } else if (inputField == FIELD_RIGHT) {
                 return KG_TO_LB;
             }
         } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_gm_to_meq))) {
-            if (inputField == LEFT_FIELD) {
+            if (inputField == FIELD_LEFT) {
                 return GM_TO_MEQ;
-            } else if (inputField == RIGHT_FIELD) {
+            } else if (inputField == FIELD_RIGHT) {
                 return MEQ_TO_GM;
             }
         } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_mg_to_meq))) {
-            if (inputField == LEFT_FIELD) {
+            if (inputField == FIELD_LEFT) {
                 return MG_TO_MEQ;
-            } else if (inputField == RIGHT_FIELD) {
+            } else if (inputField == FIELD_RIGHT) {
                 return MEQ_TO_MG;
             }
         }
@@ -236,18 +238,24 @@ public class ConversionViewModel extends AndroidViewModel {
 
         // compare selection String to String Resource currently being
         // used in order to decide which element was chosen
-        if (element.equals(mApplicationContext.getResources().getString(R.string.text_sodium))) {
-            return Constants.SODIUM;
-        } else if (element.equals(mApplicationContext.getResources().getString(R.string.text_chlorine))) {
-            return Constants.CHLORINE;
-        } else if (element.equals(mApplicationContext.getResources().getString(R.string.text_potassium))) {
-            return Constants.POTASSIUM;
-        } else if (element.equals(mApplicationContext.getResources().getString(R.string.text_magnesium))) {
-            return Constants.MAGNESIUM;
-        } else if (element.equals(mApplicationContext.getResources().getString(R.string.text_calcium))) {
+        if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_calcium))) {
             return Constants.CALCIUM;
-        } else if (element.equals(mApplicationContext.getResources().getString(R.string.text_phosphorus))) {
+        } else if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_chlorine))) {
+            return Constants.CHLORINE;
+        } else if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_magnesium))) {
+            return Constants.MAGNESIUM;
+        } else if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_phosphorus))) {
             return Constants.PHOSPHORUS;
+        } else if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_potassium))) {
+            return Constants.POTASSIUM;
+        } else if (element.equals(mApplicationContext
+                .getResources().getString(R.string.text_sodium))) {
+            return Constants.SODIUM;
         }
 
         // this should never happen, just here to quiet the ide
@@ -301,13 +309,17 @@ public class ConversionViewModel extends AndroidViewModel {
 
     void updateFieldLabelData() {
         if (mConversionType.getValue() != null) {
-            if (mConversionType.getValue().equals(mApplicationContext.getResources().getString(R.string.text_in_to_cm))) {
+            if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_in_to_cm))) {
                 setFieldLabels(R.string.text_in, R.string.text_cm);
-            } else if (mConversionType.getValue().equals(mApplicationContext.getResources().getString(R.string.text_lb_to_kg))) {
+            } else if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_lb_to_kg))) {
                 setFieldLabels(R.string.text_lb, R.string.text_kg);
-            } else if (mConversionType.getValue().equals(mApplicationContext.getResources().getString(R.string.text_gm_to_meq))) {
+            } else if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_gm_to_meq))) {
                 setFieldLabels(R.string.text_gm, R.string.text_meq);
-            } else if (mConversionType.getValue().equals(mApplicationContext.getResources().getString(R.string.text_mg_to_meq))) {
+            } else if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_mg_to_meq))) {
                 setFieldLabels(R.string.text_mg, R.string.text_meq);
             }
         }
