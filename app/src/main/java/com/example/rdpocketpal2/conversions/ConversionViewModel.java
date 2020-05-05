@@ -149,7 +149,11 @@ public class ConversionViewModel extends AndroidViewModel {
         MutableLiveData<String> inputField = field == FIELD_LEFT ? mFieldLeft : mFieldRight;
         MutableLiveData<String> errorField = field == FIELD_LEFT ? mFieldLeftErrorMsg : mFieldRightErrorMsg;
 
-        // if empty or null (user erases text) -> not valid, don't set error, don't toast, clear fields
+        // Of course, we only want to return true if the input if valid. That said, we don't want to
+        // set an error message if the user just erases the input, or corrects it, but we still want
+        // to return false in these cases to indicate that the input is invalid. Therefore:
+        //
+        // if empty or null (user erases text) -> not valid, don't set error, don't toast, clear fields, reset error
         // if not empty or null and not a double -> not valid, set error, toast
         // if not empty, not null, and a double -> valid
         if (!isFieldEmptyOrNull(inputField)) {
@@ -159,6 +163,7 @@ public class ConversionViewModel extends AndroidViewModel {
             }
         } else {
             clearAllFields();
+            resetError(errorField == mFieldLeftErrorMsg ? mFieldRightErrorMsg : mFieldLeftErrorMsg);
             return false;
         }
         // input is valid, reset error message of output field (edge case -> if user has error
