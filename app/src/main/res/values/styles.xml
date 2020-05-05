@@ -6,24 +6,38 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="cardViewStyle">@style/CardViewCustomLight</item>
     </style>
 
+    <!-- CardView -->
+    <style name="CardViewCustomLight" parent="CardView">
+        <item name="cardBackgroundColor">@color/cardViewBackgroundLight</item>
+        <item name="cardCornerRadius">6dp</item>
+    </style>
+
+    <!-- Sex Selection Button -->
     <style name="SexSelectionBtn" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:background">@drawable/radio_btn_selector</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:textColor">@drawable/radio_btn_text_color_selector</item>
     </style>
 
+    <!-- Clear Button -->
     <style name="ClearBtn" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/btn_clear</item>
     </style>
 
+    <!-- Calculate Button -->
     <style name="CalculateBtn" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/btn_calculate</item>
     </style>
 
+    <!-- Clear Button Small -->
     <style name="ClearBtnSmall" parent="Widget.AppCompat.Button">
         <item name="android:textSize">@dimen/font_size_small</item>
         <item name="android:textColor">@color/white</item>
@@ -32,6 +46,7 @@
         <item name="android:background">@drawable/btn_clear</item>
     </style>
 
+    <!-- Calculate Button Small -->
     <style name="CalculateBtnSmall" parent="Widget.AppCompat.Button">
         <item name="android:textSize">@dimen/font_size_small</item>
         <item name="android:textColor">@color/white</item>
