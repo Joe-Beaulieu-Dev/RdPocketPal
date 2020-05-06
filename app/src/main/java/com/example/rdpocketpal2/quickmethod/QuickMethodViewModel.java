@@ -309,11 +309,11 @@ public class QuickMethodViewModel extends AndroidViewModel {
     }
 
     private void setUiDataToMetric() {
-        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.hint_kilograms));
+        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_kg));
     }
 
     private void setUiDataToStandard() {
-        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.hint_pounds));
+        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_lb));
     }
 
     private void clearCalorieInput() {
