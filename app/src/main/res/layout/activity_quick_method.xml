@@ -18,71 +18,101 @@
 
         <!-- Quick Method internal layout -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/qm_layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".quickmethod.QuickMethodActivity">
 
-            <!-- Weight label -->
-            <TextView
-                android:id="@+id/qm_weight_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_large"
-                android:text="@string/text_weight"
-                android:textSize="@dimen/font_size_extra_large"
-                app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <!-- Weight entry -->
-            <EditText
-                android:id="@+id/qm_weight_editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="3"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.mWeight}"
-                app:errorMsg="@={viewModel.mWeightErrorMsg}"
-                app:layout_constraintBottom_toTopOf="@id/qm_calorie_layout_container"
-                app:layout_constraintStart_toEndOf="@+id/qm_weight_textView" />
-
-            <!-- Weight unit label -->
-            <TextView
-                android:id="@+id/qm_weight_unit_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.mWeightUnitLabel}"
-                app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
-                app:layout_constraintStart_toEndOf="@id/qm_weight_editText"
-                tools:text="@string/text_kg" />
-
-            <!-- Unit Selection -->
-            <RadioGroup
-                android:id="@+id/qm_unit_radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
+            <!--
+                *********************
+                ** Weight CardView **
+                *********************
+            -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/qm_weight_cardView"
+                style="@style/CardViewHeaderCustomLight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toTopOf="@+id/qm_calorie_layout_container"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:selectedRadioBtn="@={viewModel.mUnitSelection}"
-                tools:checkedButton="@id/qm_unit_metric">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Metric -->
-                <RadioButton
-                    android:id="@+id/qm_unit_metric"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitMetric)}"
-                    android:text="@string/text_metric" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/qm_weight_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <!-- Standard -->
-                <RadioButton
-                    android:id="@+id/qm_unit_standard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitStandard)}"
-                    android:text="@string/text_standard" />
+                    <!-- Weight label -->
+                    <TextView
+                        android:id="@+id/qm_weight_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:text="@string/text_weight"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_extra_large"
+                        app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            </RadioGroup>
+                    <!-- Weight entry -->
+                    <EditText
+                        android:id="@+id/qm_weight_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mWeight}"
+                        android:textColor="@color/black"
+                        app:errorMsg="@={viewModel.mWeightErrorMsg}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/qm_weight_textView" />
+
+                    <!-- Weight unit label -->
+                    <TextView
+                        android:id="@+id/qm_weight_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.mWeightUnitLabel}"
+                        android:textColor="@color/black"
+                        app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
+                        app:layout_constraintStart_toEndOf="@id/qm_weight_editText"
+                        tools:text="@string/text_kg" />
+
+                    <!-- Unit Selection -->
+                    <RadioGroup
+                        android:id="@+id/qm_unit_radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:selectedRadioBtn="@={viewModel.mUnitSelection}"
+                        tools:checkedButton="@id/qm_unit_metric">
+
+                        <!-- Metric -->
+                        <RadioButton
+                            android:id="@+id/qm_unit_metric"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitMetric)}"
+                            android:text="@string/text_metric"
+                            android:textColor="@color/black" />
+
+                        <!-- Standard -->
+                        <RadioButton
+                            android:id="@+id/qm_unit_standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(qmUnitStandard)}"
+                            android:text="@string/text_standard"
+                            android:textColor="@color/black" />
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <!--
                 ******************************
@@ -96,17 +126,14 @@
                 app:layout_constraintBottom_toTopOf="@id/qm_protein_layout_container"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/qm_unit_radioGroup">
+                app:layout_constraintTop_toBottomOf="@id/qm_weight_cardView">
 
                 <!-- Calorie CardView -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/qm_calorie_cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_large"
-                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_margin="@dimen/margin_large"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_calories"
+                            android:textColor="@color/matte_black"
                             android:textSize="@dimen/font_size_large"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -345,6 +373,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_protein"
+                            android:textColor="@color/matte_black"
                             android:textSize="@dimen/font_size_large"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -566,6 +595,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_fluids"
+                            android:textColor="@color/matte_black"
                             android:textSize="@dimen/font_size_large"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
