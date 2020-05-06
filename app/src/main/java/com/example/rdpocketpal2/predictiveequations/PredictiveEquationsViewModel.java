@@ -36,8 +36,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     public MutableLiveData<String> mTmax = new MutableLiveData<>();
     public MutableLiveData<String> mHeartRate = new MutableLiveData<>();
     public MutableLiveData<String> mVe = new MutableLiveData<>();
-    public MutableLiveData<String> mActivityLevelMin = new MutableLiveData<>();
-    public MutableLiveData<String> mActivityLevelMax = new MutableLiveData<>();
+    public MutableLiveData<String> mActivityFactorMin = new MutableLiveData<>();
+    public MutableLiveData<String> mActivityFactorMax = new MutableLiveData<>();
     public MutableLiveData<String> mBmr = new MutableLiveData<>();
     public MutableLiveData<String> mCalorieMin = new MutableLiveData<>();
     public MutableLiveData<String> mCalorieMax = new MutableLiveData<>();
@@ -49,30 +49,28 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     public MutableLiveData<String> mTmaxErrorMsg;
     public MutableLiveData<String> mHeartRateErrorMsg;
     public MutableLiveData<String> mVeErrorMsg;
-    public MutableLiveData<String> mActivityLevelMinErrorMsg;
-    public MutableLiveData<String> mActivityLevelMaxErrorMsg;
+    public MutableLiveData<String> mActivityFactorMinErrorMsg;
+    public MutableLiveData<String> mActivityFactorMaxErrorMsg;
 
     // Hints
-    public MutableLiveData<String> mWeightHint = new MutableLiveData<>();
-    public MutableLiveData<String> mHeightHint = new MutableLiveData<>();
-    public MutableLiveData<String> mAgeHint = new MutableLiveData<>();
-    public MutableLiveData<String> mTmaxHint = new MutableLiveData<>();
-    public MutableLiveData<String> mHeartRateHint = new MutableLiveData<>();
-    public MutableLiveData<String> mVeHint = new MutableLiveData<>();
-    public MutableLiveData<String> mActivityLevelMinHint = new MutableLiveData<>();
-    public MutableLiveData<String> mActivityLevelMaxHint = new MutableLiveData<>();
+    public MutableLiveData<String> mWeightUnitLabel = new MutableLiveData<>();
+    public MutableLiveData<String> mHeightUnitLabel = new MutableLiveData<>();
+    public MutableLiveData<String> mAgeUnitLabel = new MutableLiveData<>();
+    public MutableLiveData<String> mTmaxUnitLabel = new MutableLiveData<>();
+    public MutableLiveData<String> mHeartRateUnitLabel = new MutableLiveData<>();
+    public MutableLiveData<String> mVeUnitLabel = new MutableLiveData<>();
     //endregion
 
     //region LiveData SavedState Keys
     // Error message keys
-    public static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
-    public static final String HEIGHT_ERROR_MSG_KEY = "heightErrorMsgKey";
-    public static final String AGE_ERROR_MSG_KEY = "ageErrorMsgKey";
-    public static final String TMAX_ERROR_MSG_KEY = "tmaxErrorMsgKey";
-    public static final String HEART_RATE_ERROR_MSG_KEY = "heartRateErrorMsgKey";
-    public static final String VE_ERROR_MSG_KEY = "veErrorMsgKey";
-    public static final String ACTIVITY_LEVEL_MIN_ERROR_MSG_KEY = "activityLevelMinErrorMsgKey";
-    public static final String ACTIVITY_LEVEL_MAX_ERROR_MSG_KEY = "activityLevelMaxErrorMsgKey";
+    private static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
+    private static final String HEIGHT_ERROR_MSG_KEY = "heightErrorMsgKey";
+    private static final String AGE_ERROR_MSG_KEY = "ageErrorMsgKey";
+    private static final String TMAX_ERROR_MSG_KEY = "tmaxErrorMsgKey";
+    private static final String HEART_RATE_ERROR_MSG_KEY = "heartRateErrorMsgKey";
+    private static final String VE_ERROR_MSG_KEY = "veErrorMsgKey";
+    private static final String ACTIVITY_FACTOR_MIN_ERROR_MSG_KEY = "activityFactorMinErrorMsgKey";
+    private static final String ACTIVITY_FACTOR_MAX_ERROR_MSG_KEY = "activityFactorMaxErrorMsgKey";
     //endregion
 
     // this is fine because we're storing the application context here
@@ -99,22 +97,16 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
 
     //region Button listeners
     public void onClearClicked() {
-//        mWeight.setValue("");
-//        mHeight.setValue("");
-//        mAge.setValue("");
-//        mTmax.setValue("");
-//        mVe.setValue("");
-//        mActivityLevelMin.setValue("");
-//        mActivityLevelMax.setValue("");
-//        mBmr.setValue("");
-//        mCalorieMin.setValue("");
-//        mCalorieMax.setValue("");
-
-        Toast.makeText(mApplicationContext
-                , "Eq: " + mSelectedEquation.getValue()
-                        + ", Sex: " + mSelectedSex.getValue()
-                        + ", Unit: " + mSelectedUnit.getValue()
-                , Toast.LENGTH_SHORT).show();
+        mWeight.setValue("");
+        mHeight.setValue("");
+        mAge.setValue("");
+        mTmax.setValue("");
+        mVe.setValue("");
+        mActivityFactorMin.setValue("");
+        mActivityFactorMax.setValue("");
+        mBmr.setValue("");
+        mCalorieMin.setValue("");
+        mCalorieMax.setValue("");
     }
 
     public void onCalculateClicked() {
@@ -125,7 +117,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
             // even though fields have validation on focus change, still need to validate everything
             // when the calculation button is pressed in case the user never clicks on a field,
             // leaving it null, which would bypass the validation. This must all be done at once at
-            // the start or else if bmr fields are invalid, activity level fields won't get
+            // the start or else if bmr fields are invalid, activity factor fields won't get
             // validated when the calculate button is pressed
             if (validateAllNecessaryFields(getEquationSelection())) {
                 // perform calculations
@@ -181,11 +173,11 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private double calculateCalorieMin(double bmr) throws NumberFormatException {
-        return CalculationUtil.calculateCalorieMin(bmr, NumberUtil.parseDouble(mActivityLevelMin));
+        return CalculationUtil.calculateCalorieMin(bmr, NumberUtil.parseDouble(mActivityFactorMin));
     }
 
     private double calculateCalorieMax(double bmr) throws NumberFormatException {
-        return CalculationUtil.calculateCalorieMax(bmr, NumberUtil.parseDouble(mActivityLevelMax));
+        return CalculationUtil.calculateCalorieMax(bmr, NumberUtil.parseDouble(mActivityFactorMax));
     }
 
     private double calculateMifflin(@Unit int unit, @Sex int sex) throws NumberFormatException {
@@ -299,21 +291,21 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private void setUiDataToMetric() {
-        mWeightHint.setValue(mApplicationContext.getResources().getString(R.string.hint_kilograms));
-        mHeightHint.setValue(mApplicationContext.getResources().getString(R.string.hint_centimeters));
-        mAgeHint.setValue(mApplicationContext.getResources().getString(R.string.hint_years));
-        mTmaxHint.setValue(mApplicationContext.getResources().getString(R.string.hint_celsius));
-        mHeartRateHint.setValue(mApplicationContext.getResources().getString(R.string.hint_beats_per_minute));
-        mVeHint.setValue(mApplicationContext.getResources().getString(R.string.hint_liters_per_minute));
+        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_kg));
+        mHeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_cm));
+        mAgeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_yr));
+        mTmaxUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_celsius));
+        mHeartRateUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_beats_per_minute));
+        mVeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_liters_per_minute));
     }
 
     private void setUiDataToStandard() {
-        mWeightHint.setValue(mApplicationContext.getResources().getString(R.string.hint_pounds));
-        mHeightHint.setValue(mApplicationContext.getResources().getString(R.string.hint_inches));
-        mAgeHint.setValue(mApplicationContext.getResources().getString(R.string.hint_years));
-        mTmaxHint.setValue(mApplicationContext.getResources().getString(R.string.hint_fahrenheit));
-        mHeartRateHint.setValue(mApplicationContext.getResources().getString(R.string.hint_beats_per_minute));
-        mVeHint.setValue(mApplicationContext.getResources().getString(R.string.hint_gallons_per_minute));
+        mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_lb));
+        mHeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_in));
+        mAgeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_yr));
+        mTmaxUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_fahrenheit));
+        mHeartRateUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_beats_per_minute));
+        mVeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_gallons_per_minute));
     }
 
     private void logFields() {
@@ -326,8 +318,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
         Log.d(LOG_TAG, "Tmax: " + mTmax.getValue());
         Log.d(LOG_TAG, "Heart rate: " + mHeartRate.getValue());
         Log.d(LOG_TAG, "Ve: " + mVe.getValue());
-        Log.d(LOG_TAG, "Activity level min: " + mActivityLevelMin.getValue());
-        Log.d(LOG_TAG, "Activity Level Max: " + mActivityLevelMax.getValue());
+        Log.d(LOG_TAG, "Activity factor min: " + mActivityFactorMin.getValue());
+        Log.d(LOG_TAG, "Activity factor Max: " + mActivityFactorMax.getValue());
         Log.d(LOG_TAG, "BMR: " + mBmr.getValue());
         Log.d(LOG_TAG, "Calorie min: " + mCalorieMin.getValue());
         Log.d(LOG_TAG, "Calorie max: " + mCalorieMax.getValue());
@@ -415,16 +407,16 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isActivityLevelMinValid() {
-        if (!NumberUtil.isDouble(mActivityLevelMin)) {
-            setEnterNumberError(mActivityLevelMinErrorMsg);
+        if (!NumberUtil.isDouble(mActivityFactorMin)) {
+            setEnterNumberError(mActivityFactorMinErrorMsg);
             return false;
         }
         return true;
     }
 
     private boolean isActivityLevelMaxValid() {
-        if (!NumberUtil.isDouble(mActivityLevelMax)) {
-            setEnterNumberError(mActivityLevelMaxErrorMsg);
+        if (!NumberUtil.isDouble(mActivityFactorMax)) {
+            setEnterNumberError(mActivityFactorMaxErrorMsg);
             return false;
         }
         return true;
@@ -445,8 +437,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
         mState.set(TMAX_ERROR_MSG_KEY, mTmaxErrorMsg.getValue());
         mState.set(HEART_RATE_ERROR_MSG_KEY, mHeartRateErrorMsg.getValue());
         mState.set(VE_ERROR_MSG_KEY, mVeErrorMsg.getValue());
-        mState.set(ACTIVITY_LEVEL_MIN_ERROR_MSG_KEY, mActivityLevelMinErrorMsg.getValue());
-        mState.set(ACTIVITY_LEVEL_MAX_ERROR_MSG_KEY, mActivityLevelMaxErrorMsg.getValue());
+        mState.set(ACTIVITY_FACTOR_MIN_ERROR_MSG_KEY, mActivityFactorMinErrorMsg.getValue());
+        mState.set(ACTIVITY_FACTOR_MAX_ERROR_MSG_KEY, mActivityFactorMaxErrorMsg.getValue());
     }
 
     private void restoreState() {
@@ -457,8 +449,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
         mTmaxErrorMsg = mState.getLiveData(TMAX_ERROR_MSG_KEY);
         mHeartRateErrorMsg = mState.getLiveData(HEART_RATE_ERROR_MSG_KEY);
         mVeErrorMsg = mState.getLiveData(VE_ERROR_MSG_KEY);
-        mActivityLevelMinErrorMsg = mState.getLiveData(ACTIVITY_LEVEL_MIN_ERROR_MSG_KEY);
-        mActivityLevelMaxErrorMsg = mState.getLiveData(ACTIVITY_LEVEL_MAX_ERROR_MSG_KEY);
+        mActivityFactorMinErrorMsg = mState.getLiveData(ACTIVITY_FACTOR_MIN_ERROR_MSG_KEY);
+        mActivityFactorMaxErrorMsg = mState.getLiveData(ACTIVITY_FACTOR_MAX_ERROR_MSG_KEY);
     }
     //endregion
 

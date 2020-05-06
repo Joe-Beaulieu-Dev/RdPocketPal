@@ -1,12 +1,6 @@
 <resources>
+    <!-- App name -->
     <string name="app_name">RD Pocket Pal</string>
-
-    <!-- Home Buttons -->
-    <string name="btn_predictive_equations">Predictive\nEquations</string>
-    <string name="btn_quick_method">Quick\nMethod</string>
-    <string name="btn_anthropometrics">Anthropometrics\n</string>
-    <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
-    <string name="btn_conversions">Conversions\n</string>
 
     <!-- Activity Names -->
     <string name="title_predictive_equations">Predictive Equations</string>
@@ -14,6 +8,13 @@
     <string name="title_anthropometrics">Anthropometrics</string>
     <string name="title_parenteral_nutrition">Parenteral Nutrition</string>
     <string name="title_conversions">Conversions</string>
+
+    <!-- Home -->
+    <string name="btn_predictive_equations">Predictive\nEquations</string>
+    <string name="btn_quick_method">Quick\nMethod</string>
+    <string name="btn_anthropometrics">Anthropometrics\n</string>
+    <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
+    <string name="btn_conversions">Conversions\n</string>
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>
@@ -26,8 +27,8 @@
     <string name="text_tmax">Tmax:</string>
     <string name="text_heart_rate">HR:</string>
     <string name="text_ve">Ve:</string>
-    <string name="text_activity_level_min">Activity level min:</string>
-    <string name="text_activity_level_max">Activity level max:</string>
+    <string name="text_activity_factor_min">Activity factor min:</string>
+    <string name="text_activity_factor_max">Activity factor max:</string>
     <string name="text_bmr">BMR:</string>
     <string name="text_calorie_min">Calorie min:</string>
     <string name="text_calorie_max">Calorie max:</string>
@@ -43,17 +44,19 @@
         <item>@string/penn_state_2010</item>
         <item>@string/brandi</item>
     </string-array>
-    <string name="hint_celsius">&#xb0;C</string>
-    <string name="hint_fahrenheit">&#xb0;F</string>
-    <string name="hint_beats_per_minute">bpm</string>
-    <string name="hint_liters_per_minute">L/min</string>
-    <string name="hint_gallons_per_minute">gal/min</string>
+    <string name="text_celsius">&#xb0;C</string>
+    <string name="text_fahrenheit">&#xb0;F</string>
+    <string name="text_beats_per_minute">bpm</string>
+    <string name="text_liters_per_minute">L/min</string>
+    <string name="text_gallons_per_minute">gal/min</string>
     <string name="text_kcals">kcals</string>
 
     <!-- Quick Method -->
     <string name="text_protein">Protein</string>
     <string name="text_fluids">Fluids</string>
     <string name="text_calories">Calories</string>
+    <string name="hint_min">min</string>
+    <string name="hint_max">max</string>
     <!-- Calories -->
     <string name="text_kcal_per_kilogram">kcal/kg</string>
     <string name="text_kcal_per_day">kcal/day</string>
@@ -65,10 +68,6 @@
     <string name="text_ml_per_day">ml/day</string>
 
     <!-- Conversions -->
-    <string name="text_in">in</string>
-    <string name="text_cm">cm</string>
-    <string name="text_lb">lb</string>
-    <string name="text_kg">kg</string>
     <string name="text_mg">mg</string>
     <string name="text_gm">gm</string>
     <string name="text_meq">mEq</string>
@@ -82,19 +81,19 @@
         <item>@string/text_gm_to_meq</item>
         <item>@string/text_mg_to_meq</item>
     </string-array>
-    <string name="text_sodium">(Na) Sodium</string>
-    <string name="text_chlorine">(Cl) Chlorine</string>
-    <string name="text_potassium">(K) Potassium</string>
-    <string name="text_magnesium">(Mg) Magnesium</string>
     <string name="text_calcium">(Ca) Calcium</string>
+    <string name="text_chlorine">(Cl) Chlorine</string>
+    <string name="text_magnesium">(Mg) Magnesium</string>
     <string name="text_phosphorus">(P) Phosphorus</string>
+    <string name="text_potassium">(K) Potassium</string>
+    <string name="text_sodium">(Na) Sodium</string>
     <string-array name="element_list">
-        <item>@string/text_sodium</item>
-        <item>@string/text_chlorine</item>
-        <item>@string/text_potassium</item>
-        <item>@string/text_magnesium</item>
         <item>@string/text_calcium</item>
+        <item>@string/text_chlorine</item>
+        <item>@string/text_magnesium</item>
         <item>@string/text_phosphorus</item>
+        <item>@string/text_potassium</item>
+        <item>@string/text_sodium</item>
     </string-array>
 
     <!-- Global strings -->
@@ -103,14 +102,11 @@
     <string name="text_clear">Clear</string>
     <string name="toast_invalid_fields">Please correct the marked fields</string>
     <string name="toast_results_cleared_unit_change">Results cleared due to unit change</string>
-    <string name="hint_pounds">lb</string>
-    <string name="hint_kilograms">kg</string>
-    <string name="hint_inches">in</string>
-    <string name="hint_centimeters">cm</string>
-    <string name="hint_years">years</string>
-    <string name="hint_min">min</string>
-    <string name="hint_max">max</string>
-    <string name="hint_x">X</string>
+    <string name="text_lb">lb</string>
+    <string name="text_kg">kg</string>
+    <string name="text_in">in</string>
+    <string name="text_cm">cm</string>
+    <string name="text_yr">yr</string>
     <string name="text_em_dash">&#x2014;</string>
 
     <!-- Error messages -->

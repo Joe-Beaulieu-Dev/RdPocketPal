@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="windowBackground">#bebebe</color> <!--ededed-->
+    <!-- Base colors -->
+    <color name="colorPrimary">#5213ab</color>
+    <color name="colorPrimaryDark">#320e81</color>
+    <color name="colorAccent">#118e81</color>
+    <color name="windowBackground">#bebebe</color>
+    <color name="headerBackground">#eeeeee</color>
+
+
+    <!-- Standalone colors -->
     <color name="grey">#D3D3D3</color>
     <color name="lightGrey">#E9E9E9</color>
     <color name="darkGrey">#939393</color>
@@ -16,24 +21,5 @@
     <!-- Button -->
     <color name="btnPink">#c33061</color>
     <color name="btnGreen">#118e81</color>
-
-    <!--<color name="btnPink">#ee6493</color>
-    <color name="btnGreen">#15b1a1</color>-->
-
-
     <color name="ripple_light_grey">#ebe5f7</color>
-
-    <!-- Original pink -->
-    <!-- <color name="pink">#FF4081</color> -->
-
-    <!-- Button colors before ui color rework -->
-<!--    <color name="pink">#ff538d</color>-->
-<!--    <color name="colorAccent">#03DAC5</color>-->
-
-<!--    <color name="windowBackground">#ededed</color>-->
-<!--    <color name="cardViewBackgroundLight">#f6f6f6</color>-->
-
-<!--    v2 1 shade darker on color-hex -->
-<!--    <color name="btnPink">#e54a7e</color>-->
-<!--    <color name="btnGreen">#02c4b1</color>-->
 </resources>

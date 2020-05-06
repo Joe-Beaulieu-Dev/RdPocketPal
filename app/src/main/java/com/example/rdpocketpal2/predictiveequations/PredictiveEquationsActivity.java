@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityPredictiveEquationsBinding;
+import com.example.rdpocketpal2.predictiveequations.PredictiveEquationsViewModel.Equations;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,19 +21,12 @@ import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 
 public class PredictiveEquationsActivity extends AppCompatActivity {
-    private static final String LOG_TAG = "PredictiveEqActivity";
-
     private PredictiveEquationsViewModel mViewModel;
     private ActivityPredictiveEquationsBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // create the ViewModel
-//        mViewModel = new ViewModelProvider(this,
-//                ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
-//                .get(PredictiveEquationsViewModel.class);
 
         // create ViewModel with SavedStateHandle
         mViewModel = new ViewModelProvider(this
@@ -57,29 +51,22 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
 
     private void setUpEquationSpinner() {
         // style Spinner and set Adapter
-        Spinner equationSpinner = findViewById(R.id.spinner_equation);
+        Spinner equationSpinner = findViewById(R.id.pe_equation_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.predictive_equations, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                .createFromResource(this, R.array.predictive_equations, R.layout.spinner_item_dark_grey);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dark_grey);
         equationSpinner.setAdapter(adapter);
-
-//        // set tags on each view so we can data bind it to the xml so the ViewModel
-//        // can read it to compare in order to know which equation to use
-//        String [] choices = getResources().getStringArray(R.array.predictive_equations);
-//        for (int i = 0; i < adapter.getCount(); i++) {
-//            adapter.getView(i, null, equationSpinner).setTag(choices[i]);
-//        }
     }
 
     private void setUpButtonRipple() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Male button
-            Button sexMale = findViewById(R.id.sex_male);
+            Button sexMale = findViewById(R.id.pe_sex_male);
             sexMale.setForeground(getResources()
                     .getDrawable(R.drawable.ripple_oval, getTheme()));
 
             // Female button
-            Button sexFemale = findViewById(R.id.sex_female);
+            Button sexFemale = findViewById(R.id.pe_sex_female);
             sexFemale.setForeground(getResources()
                     .getDrawable(R.drawable.ripple_oval, getTheme()));
 
@@ -100,57 +87,69 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         mViewModel.getSelectedEquation().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                // Doing findViewById() here instead of data binding because I need to grab
-                // string resources in order to determine visibility states, so that
-                // needs to be done on this side. If done in the ViewModel, and the user changes the
-                // locale while the screen is up, the ViewModel will be holding onto (and displaying) a stale string
-                // in the previous locale, which is bad practice. Since the strings are the determining factor for visibility calculation,
-                // that calculation needs to be done here. Since it's done here, using data binding
-                // would be pointless as I would end up needing to call the ViewModel from the View
-                // in order to update the data bound values, which is bad practice, because the View
-                // shouldn't call the ViewModel unless it's necessary, such as for observing data.
-                // Therefore, it's best just to do it the old fashioned way.
+                // change view visibility and constraints based on selected equation
                 if (s.equals(getString(R.string.mifflin_st_jear))
                         || s.equals(getString(R.string.harris_benedict))) {
                     // set visibilities
                     setVisibilities(View.GONE, View.GONE, View.GONE);
+                    // change layout constraints to eliminate gaps
+                    setConstraints(PredictiveEquationsViewModel.MIFFLIN);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
                         || s.equals(getString(R.string.penn_state_2010))) {
                     // set visibilities
                     setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
-
                     // change layout constraints to eliminate gaps
-                    ConstraintLayout layout = findViewById(R.id.data_entry_layout);
-                    ConstraintSet constraintSet = new ConstraintSet();
-                    constraintSet.clone(layout);
-                    constraintSet.connect(R.id.text_ve, ConstraintSet.START, R.id.text_height, ConstraintSet.START);
-                    constraintSet.connect(R.id.text_ve, ConstraintSet.TOP, R.id.text_height, ConstraintSet.BOTTOM);
-                    constraintSet.applyTo((ConstraintLayout) findViewById(R.id.data_entry_layout));
+                    setConstraints(PredictiveEquationsViewModel.PENN2003B);
                 } else if (s.equals(getString(R.string.brandi))) {
                     // set visibilities
                     setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
-
                     // change layout constraints to eliminate gaps
-                    ConstraintLayout layout = findViewById(R.id.data_entry_layout);
-                    ConstraintSet constraintSet = new ConstraintSet();
-                    constraintSet.clone(layout);
-                    constraintSet.connect(R.id.text_heart_rate, ConstraintSet.START, R.id.text_weight, ConstraintSet.START);
-                    constraintSet.connect(R.id.text_heart_rate, ConstraintSet.TOP, R.id.text_weight, ConstraintSet.BOTTOM);
-                    constraintSet.connect(R.id.text_ve, ConstraintSet.START, R.id.text_height, ConstraintSet.START);
-                    constraintSet.connect(R.id.text_ve, ConstraintSet.TOP, R.id.text_height, ConstraintSet.BOTTOM);
-                    constraintSet.applyTo((ConstraintLayout) findViewById(R.id.data_entry_layout));
+                    setConstraints(PredictiveEquationsViewModel.BRANDI);
                 }
             }
         });
     }
 
+    private void setConstraints(@Equations int equation) {
+        // create ConstraintSet
+        ConstraintLayout layout = findViewById(R.id.pe_input_first_three_rows);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(layout);
+
+        // create constraints
+        switch (equation) {
+            case PredictiveEquationsViewModel.MIFFLIN:
+            case PredictiveEquationsViewModel.BENEDICT:
+                break;
+            case PredictiveEquationsViewModel.PENN2003B:
+            case PredictiveEquationsViewModel.PENN2010:
+                // changed constraint
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                break;
+            case PredictiveEquationsViewModel.BRANDI:
+                // changed constraints
+                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.START, R.id.pe_height_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.TOP, R.id.pe_height_editText, ConstraintSet.BOTTOM);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                break;
+        }
+
+        // apply constraints
+        constraintSet.applyTo(layout);
+    }
+
     private void setVisibilities(int tmaxVisibility, int hrVisibility, int veVisibility) {
-        findViewById(R.id.label_tmax).setVisibility(tmaxVisibility);
-        findViewById(R.id.text_tmax).setVisibility(tmaxVisibility);
-        findViewById(R.id.label_heart_rate).setVisibility(hrVisibility);
-        findViewById(R.id.text_heart_rate).setVisibility(hrVisibility);
-        findViewById(R.id.label_ve).setVisibility(veVisibility);
-        findViewById(R.id.text_ve).setVisibility(veVisibility);
+        findViewById(R.id.pe_tmax_textView).setVisibility(tmaxVisibility);
+        findViewById(R.id.pe_tmax_editText).setVisibility(tmaxVisibility);
+        findViewById(R.id.pe_tmax_unit_label).setVisibility(tmaxVisibility);
+        findViewById(R.id.pe_heart_rate_textView).setVisibility(hrVisibility);
+        findViewById(R.id.pe_heart_rate_editText).setVisibility(hrVisibility);
+        findViewById(R.id.pe_heart_rate_unit_label).setVisibility(hrVisibility);
+        findViewById(R.id.pe_ve_textView).setVisibility(veVisibility);
+        findViewById(R.id.pe_ve_editText).setVisibility(veVisibility);
+        findViewById(R.id.pe_ve_unit_label).setVisibility(veVisibility);
     }
 
     @Override

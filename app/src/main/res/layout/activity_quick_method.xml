@@ -53,7 +53,7 @@
                 android:text="@{viewModel.mWeightUnitLabel}"
                 app:layout_constraintBaseline_toBaselineOf="@id/qm_weight_editText"
                 app:layout_constraintStart_toEndOf="@id/qm_weight_editText"
-                tools:text="@string/hint_kilograms" />
+                tools:text="@string/text_kg" />
 
             <!-- Unit Selection -->
             <RadioGroup
