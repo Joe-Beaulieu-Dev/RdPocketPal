@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Numeric Scale -->
+    <Preference
+        android:summary="@string/text_scale_desc"
+        android:title="@string/text_scale" />
+
+    <!-- Rounding Method -->
+    <Preference
+        android:summary="@string/text_rounding_method_desc"
+        android:title="@string/text_rounding_method" />
+
+</PreferenceScreen>

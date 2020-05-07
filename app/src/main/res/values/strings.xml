@@ -3,6 +3,7 @@
     <string name="app_name">RD Pocket Pal</string>
 
     <!-- Activity Names -->
+    <string name="title_settings">Settings</string>
     <string name="title_predictive_equations">Predictive Equations</string>
     <string name="title_quick_method">Quick Method</string>
     <string name="title_anthropometrics">Anthropometrics</string>
@@ -15,6 +16,15 @@
     <string name="btn_anthropometrics">Anthropometrics\n</string>
     <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
     <string name="btn_conversions">Conversions\n</string>
+
+    <!-- Main Menu -->
+    <string name="text_settings">Settings</string>
+    
+    <!-- Settings -->
+    <string name="text_scale">Numeric Scale</string>
+    <string name="text_scale_desc">How many decimal places will be displayed in calculation results</string>
+    <string name="text_rounding_method">Rounding Method</string>
+    <string name="text_rounding_method_desc">How the number of decimal places will be reduced</string>
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>

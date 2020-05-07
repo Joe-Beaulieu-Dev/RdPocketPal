@@ -48,4 +48,7 @@ dependencies {
     // Annotation processor
     annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
 
+    // Preferences
+    implementation 'androidx.preference:preference:1.1.1'
+
 }

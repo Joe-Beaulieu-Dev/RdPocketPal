@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!-- Home -->
         <activity android:name=".home.HomeActivity">
             <intent-filter>
@@ -18,25 +17,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!-- Settings -->
+        <activity android:name=".settings.SettingsActivity" />
         <!-- Predictive Equations -->
         <activity
             android:name=".predictiveequations.PredictiveEquationsActivity"
             android:label="@string/title_predictive_equations"
             android:parentActivityName=".home.HomeActivity" />
-
         <!-- Quick Method -->
         <activity
             android:name=".quickmethod.QuickMethodActivity"
             android:label="@string/title_quick_method"
             android:parentActivityName=".home.HomeActivity" />
-
         <!-- Conversions -->
         <activity
             android:name=".conversions.ConversionActivity"
             android:label="@string/title_conversions"
             android:parentActivityName=".home.HomeActivity" />
-
     </application>
 
 </manifest>
