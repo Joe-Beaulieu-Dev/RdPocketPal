@@ -2,13 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Numeric Scale -->
-    <Preference
-        android:summary="@string/text_scale_desc"
-        android:title="@string/text_scale" />
+    <com.example.rdpocketpal2.settings.NumberPickerPreference
+        android:icon="@drawable/ic_compare_arrows_grey_24dp"
+        android:key="@string/key_numeric_scale"
+        android:title="@string/text_numeric_scale" />
 
     <!-- Rounding Method -->
-    <Preference
-        android:summary="@string/text_rounding_method_desc"
-        android:title="@string/text_rounding_method" />
+    <ListPreference
+        android:defaultValue="@string/key_rounding"
+        android:entries="@array/decimal_reduction_method_choices"
+        android:entryValues="@array/decimal_reduction_method_choices"
+        android:icon="@drawable/ic_compare_arrows_grey_24dp"
+        android:key="@string/key_decimal_reduction_method"
+        android:title="@string/text_decimal_reduction_method" />
 
 </PreferenceScreen>

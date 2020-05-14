@@ -21,10 +21,20 @@
     <string name="text_settings">Settings</string>
     
     <!-- Settings -->
-    <string name="text_scale">Numeric Scale</string>
-    <string name="text_scale_desc">How many decimal places will be displayed in calculation results</string>
-    <string name="text_rounding_method">Rounding Method</string>
-    <string name="text_rounding_method_desc">How the number of decimal places will be reduced</string>
+    <string name="text_numeric_scale">Displayed Decimal Places</string>
+    <string name="text_numeric_scale_desc">digits will be displayed after the decimal point in all results</string>
+    <string name="text_decimal_reduction_method">Decimal Reduction Method</string>
+    <string name="text_decimal_reduction_method_desc">How the number of decimal places will be reduced</string>
+    <!-- Preference keys -->
+    <string name="key_numeric_scale">numericScale</string>
+    <string name="key_decimal_reduction_method">decimalReductionMethod</string>
+    <string name="key_rounding">Rounding</string>
+    <string name="key_truncation">Truncation</string>
+    <string-array name="decimal_reduction_method_choices">
+        <item>@string/key_rounding</item>
+        <item>@string/key_truncation</item>
+    </string-array>
+
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>

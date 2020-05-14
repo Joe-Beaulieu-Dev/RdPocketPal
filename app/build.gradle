@@ -51,4 +51,7 @@ dependencies {
     // Preferences
     implementation 'androidx.preference:preference:1.1.1'
 
+    // Stetho
+    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
+
 }

@@ -61,4 +61,11 @@
         <item name="android:background">@drawable/btn_calculate</item>
     </style>
 
+    <!-- NumberPickerDialog -->
+    <style name="NumberPickerDialog" parent="Preference.DialogPreference">
+<!--        <item name="paddingStart">@dimen/margin_extra_large</item>-->
+<!--        <item name="paddingEnd">@dimen/margin_extra_large</item>-->
+        <item name="android:textSize">@dimen/font_size_extra_large</item>
+    </style>
+
 </resources>
