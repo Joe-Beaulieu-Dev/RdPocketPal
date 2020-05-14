@@ -10,6 +10,30 @@
         <!-- View attributes -->
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="cardViewStyle">@style/CardViewCustomLight</item>
+
+        <!-- AlertDialog -->
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+    </style>
+
+    <!-- AlertDialog -->
+    <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <!-- Background color -->
+        <item name="android:windowBackground">@color/cardViewBackgroundLight</item>
+        <!-- Buttons -->
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <!-- AlertDialog text color -->
+        <item name="android:textColorPrimary">@color/matte_black</item>
+    </style>
+
+    <!-- AlertDialog Negative Button -->
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/btnPink</item>
+    </style>
+
+    <!-- AlertDialog Positive Button -->
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/btnGreen</item>
     </style>
 
     <!-- CardView light -->
@@ -63,9 +87,11 @@
 
     <!-- NumberPickerDialog -->
     <style name="NumberPickerDialog" parent="Preference.DialogPreference">
-<!--        <item name="paddingStart">@dimen/margin_extra_large</item>-->
-<!--        <item name="paddingEnd">@dimen/margin_extra_large</item>-->
         <item name="android:textSize">@dimen/font_size_extra_large</item>
+        <!-- Number color -->
+        <item name="android:textColorPrimary">@color/matte_black</item>
+        <!-- Divider color -->
+        <item name="android:textColorSecondary">@color/matte_black</item>
     </style>
 
 </resources>

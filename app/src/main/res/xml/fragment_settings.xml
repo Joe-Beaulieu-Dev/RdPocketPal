@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Numeric Scale -->
     <com.example.rdpocketpal2.settings.NumberPickerPreference
         android:icon="@drawable/ic_compare_arrows_grey_24dp"
         android:key="@string/key_numeric_scale"
-        android:title="@string/text_numeric_scale" />
+        android:title="@string/text_numeric_scale"
+        app:maxValue="5"
+        app:minValue="0"
+        app:wrapSelectorWheel="true" />
 
     <!-- Rounding Method -->
     <ListPreference

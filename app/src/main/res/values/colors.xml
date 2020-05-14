@@ -15,11 +15,11 @@
     <color name="lightGrey">#E9E9E9</color>
     <color name="white">#FFFFFF</color>
 
-    <!-- View Colors -->
+    <!-- CardView Colors -->
     <color name="cardViewBackgroundLight">#f7f7f7</color>
 
     <!-- Button -->
     <color name="btnPink">#c33061</color>
     <color name="btnGreen">#118e81</color>
-    <color name="ripple_light_grey">#ebe5f7</color>
+    <color name="rippleLightGrey">#ebe5f7</color>
 </resources>
