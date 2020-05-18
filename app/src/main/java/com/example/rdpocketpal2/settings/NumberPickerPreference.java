@@ -11,9 +11,9 @@ import androidx.preference.DialogPreference;
 
 public class NumberPickerPreference extends DialogPreference {
     // default values
-    public static final int DEFAULT_MIN_VALUE = 0;
-    public static final int DEFAULT_MAX_VALUE = 4;
-    public static final boolean DEFAULT_WRAP_SELECTOR_WHEEL = false;
+    private static final int DEFAULT_MIN_VALUE = 0;
+    private static final int DEFAULT_MAX_VALUE = 5;
+    private static final boolean DEFAULT_WRAP_SELECTOR_WHEEL = true;
 
     // values from xml
     private final int mMinValue;
@@ -64,7 +64,9 @@ public class NumberPickerPreference extends DialogPreference {
 
     void setValue(int value) {
         mValue = value;
+        // save the new value
         persistInt(mValue);
+        // required for the summary to change
         notifyChanged();
     }
     //endregion

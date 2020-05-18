@@ -21,6 +21,7 @@
     <string name="text_settings">Settings</string>
     
     <!-- Settings -->
+    <string name="text_numeric">Numeric</string>
     <string name="text_numeric_scale">Displayed Decimal Places</string>
     <string name="text_numeric_scale_desc">digits will be displayed after the decimal point in all results</string>
     <string name="text_decimal_reduction_method">Decimal Reduction Method</string>

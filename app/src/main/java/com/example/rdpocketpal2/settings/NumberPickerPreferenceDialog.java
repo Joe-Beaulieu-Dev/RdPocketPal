@@ -9,9 +9,16 @@ import android.widget.NumberPicker;
 
 import com.example.rdpocketpal2.R;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 public class NumberPickerPreferenceDialog extends PreferenceDialogFragmentCompat {
+    // NumberPicker value
+    private int mValue;
+
+    // NumberPicker value saved state key
+    private static final String KEY_VALUE = "keyValue";
+
     private NumberPicker mPicker;
 
     static NumberPickerPreferenceDialog newInstance(String key) {
@@ -24,31 +31,16 @@ public class NumberPickerPreferenceDialog extends PreferenceDialogFragmentCompat
         return fragment;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        if (getDialog() != null && getDialog().getWindow() != null) {
-//            AlertDialog dialog = (AlertDialog) getDialog();
-//
-//            (dialog.getButton(AlertDialog.BUTTON_NEGATIVE)).setBackgroundResource(R.drawable.ripple_rectangle);
-//
-//            // set up Button ripple
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                setUpBtnRipple(dialog.getButton(AlertDialog.BUTTON_NEGATIVE));
-//                setUpBtnRipple(dialog.getButton(AlertDialog.BUTTON_POSITIVE));
-//            }
-//        }
-//    }
-//
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    private void setUpBtnRipple(Button btn) {
-//        if (getActivity() != null) {
-//            btn.setBackgroundResource(R.drawable.ripple_rectangle);
-////            btn.setForeground(getActivity().getResources()
-////                    .getDrawable(R.drawable.ripple_rectangle, getActivity().getTheme()));
-//        }
-//    }
+    //region Lifecycle methods
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            mValue = getNumberPickerPreference().getValue();
+        } else {
+            mValue = savedInstanceState.getInt(KEY_VALUE);
+        }
+    }
 
     @Override
     protected View onCreateDialogView(Context context) {
@@ -57,6 +49,7 @@ public class NumberPickerPreferenceDialog extends PreferenceDialogFragmentCompat
         mPicker = (NumberPicker) LayoutInflater.from(context)
                 .inflate(R.layout.pref_dialog_number_picker, layout, false);
 
+        // add the custom NumberPicker to the Dialog
         layout.addView(mPicker);
 
         return layout;
@@ -71,9 +64,16 @@ public class NumberPickerPreferenceDialog extends PreferenceDialogFragmentCompat
         mPicker.setMinValue(preference.getMinValue());
         mPicker.setMaxValue(preference.getMaxValue());
         mPicker.setWrapSelectorWheel(preference.getWrapSelectorWheel());
+        mPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                // record the value so it can be used when restoring state
+                mValue = newVal;
+            }
+        });
 
         // set value on preference
-        mPicker.setValue(preference.getValue());
+        mPicker.setValue(mValue);
     }
 
     @Override
@@ -84,10 +84,24 @@ public class NumberPickerPreferenceDialog extends PreferenceDialogFragmentCompat
 
             // get Preference and save value
             NumberPickerPreference preference = (NumberPickerPreference) getPreference();
-            // allows the client to ignore the user value
             if (preference.callChangeListener(value)) {
                 preference.setValue(value);
             }
         }
     }
+    //endregion
+
+    //region Getters
+    private NumberPickerPreference getNumberPickerPreference() {
+        return (NumberPickerPreference) getPreference();
+    }
+    //endregion
+
+    //region Saved state
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_VALUE, mValue);
+    }
+    //endregion
 }
