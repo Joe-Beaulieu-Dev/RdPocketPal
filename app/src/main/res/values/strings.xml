@@ -3,6 +3,7 @@
     <string name="app_name">RD Pocket Pal</string>
 
     <!-- Activity Names -->
+    <string name="title_settings">Settings</string>
     <string name="title_predictive_equations">Predictive Equations</string>
     <string name="title_quick_method">Quick Method</string>
     <string name="title_anthropometrics">Anthropometrics</string>
@@ -15,6 +16,26 @@
     <string name="btn_anthropometrics">Anthropometrics\n</string>
     <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
     <string name="btn_conversions">Conversions\n</string>
+
+    <!-- Main Menu -->
+    <string name="text_settings">Settings</string>
+    
+    <!-- Settings -->
+    <string name="text_numeric">Numeric</string>
+    <string name="text_numeric_scale">Displayed Decimal Places</string>
+    <string name="text_numeric_scale_desc">digits will be displayed after the decimal point in all results</string>
+    <string name="text_decimal_reduction_method">Decimal Reduction Method</string>
+    <string name="text_decimal_reduction_method_desc">How the number of decimal places will be reduced</string>
+    <!-- Preference keys -->
+    <string name="key_numeric_scale">numericScale</string>
+    <string name="key_decimal_reduction_method">decimalReductionMethod</string>
+    <string name="key_rounding">Rounding</string>
+    <string name="key_truncation">Truncation</string>
+    <string-array name="decimal_reduction_method_choices">
+        <item>@string/key_rounding</item>
+        <item>@string/key_truncation</item>
+    </string-array>
+
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>
