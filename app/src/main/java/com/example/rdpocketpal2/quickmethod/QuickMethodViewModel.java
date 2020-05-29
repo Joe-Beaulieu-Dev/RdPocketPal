@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.util.CalculationUtil;
+import com.example.rdpocketpal2.util.CalculationUtilKotlin;
 import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.NumberUtil;
 
@@ -191,7 +192,7 @@ public class QuickMethodViewModel extends AndroidViewModel {
     }
 
     private double calculateValuePerDay(MutableLiveData<String> factor) {
-        return CalculationUtil.calculateQuickMethod(getUnit()
+        return CalculationUtilKotlin.calculateQuickMethod(getUnit()
                 , NumberUtil.parseDouble(mWeight)
                 , NumberUtil.parseDouble(factor)
         );

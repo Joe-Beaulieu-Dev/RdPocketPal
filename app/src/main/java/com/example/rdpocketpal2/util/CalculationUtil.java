@@ -88,13 +88,25 @@ public class CalculationUtil {
     //endregion
 
     //region QuickMethod
+//    public static double calculateQuickMethod(@Unit int unit, double weight, double factor) {
+//        switch (unit) {
+//            case Constants.METRIC:
+//                return MetricEquationUtil.calculateQuickMethod(weight, factor);
+//            case Constants.STANDARD:
+//                return MetricEquationUtil.calculateQuickMethod(
+//                        ConversionUtil.poundsToKilograms(weight), factor);
+//            default:
+//                return 0.0;
+//        }
+//    }
+
     public static double calculateQuickMethod(@Unit int unit, double weight, double factor) {
         switch (unit) {
             case Constants.METRIC:
-                return MetricEquationUtil.calculateQuickMethod(weight, factor);
+                return MetricEquationUtilKotlin.calculateQuickMethod(weight, factor);
             case Constants.STANDARD:
-                return MetricEquationUtil.calculateQuickMethod(
-                        ConversionUtil.poundsToKilograms(weight), factor);
+                return MetricEquationUtilKotlin.calculateQuickMethod(
+                        ConversionUtilKotlin.poundsToKilograms(weight), factor);
             default:
                 return 0.0;
         }
