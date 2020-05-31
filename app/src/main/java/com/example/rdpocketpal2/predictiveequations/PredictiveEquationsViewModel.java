@@ -8,10 +8,10 @@ import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.Constants;
-import com.example.rdpocketpal2.util.Constants.Sex;
-import com.example.rdpocketpal2.util.Constants.Unit;
+import com.example.rdpocketpal2.util.ConstantsKotlin;
 import com.example.rdpocketpal2.util.NumberUtil;
+import com.example.rdpocketpal2.util.Sex;
+import com.example.rdpocketpal2.util.Unit;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -264,9 +264,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return Constants.METRIC;
+            return ConstantsKotlin.METRIC;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return Constants.STANDARD;
+            return ConstantsKotlin.STANDARD;
         } else {
             throw new ValidationException("Unit selection not valid");
         }
@@ -282,9 +282,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
         // compare selection String to String Resource currently being
         // used in order to decide which sex is being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_male))) {
-            return Constants.MALE;
+            return ConstantsKotlin.MALE;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_female))) {
-            return Constants.FEMALE;
+            return ConstantsKotlin.FEMALE;
         } else {
             throw new ValidationException("Sex selection not valid");
         }

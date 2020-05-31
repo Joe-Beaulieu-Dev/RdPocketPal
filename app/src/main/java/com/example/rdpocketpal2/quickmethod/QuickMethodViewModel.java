@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.Constants;
+import com.example.rdpocketpal2.util.ConstantsKotlin;
 import com.example.rdpocketpal2.util.NumberUtil;
 
 import java.lang.annotation.Retention;
@@ -300,9 +300,9 @@ public class QuickMethodViewModel extends AndroidViewModel {
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (unit.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return Constants.METRIC;
+            return ConstantsKotlin.METRIC;
         } else if (unit.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return Constants.STANDARD;
+            return ConstantsKotlin.STANDARD;
         } else {
             throw new FatalCalculationException("Unit selection not valid");
         }

@@ -37,7 +37,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrMifflin_male_isCorrect() {
         assertEquals(MIFFLIN_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.MALE, WEIGHT, HEIGHT, AGE)
+                , MetricEquationUtil.calculateBmrMifflin(ConstantsKotlin.MALE, WEIGHT, HEIGHT, AGE)
                 , DELTA
         );
     }
@@ -45,7 +45,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrMifflin_female_isCorrect() {
         assertEquals(MIFFLIN_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.FEMALE, WEIGHT, HEIGHT, AGE)
+                , MetricEquationUtil.calculateBmrMifflin(ConstantsKotlin.FEMALE, WEIGHT, HEIGHT, AGE)
                 , DELTA
         );
     }
@@ -53,7 +53,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrBenedict_male_isCorrect() {
         assertEquals(BENEDICT_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.MALE, WEIGHT, HEIGHT, AGE)
+                , MetricEquationUtil.calculateBmrBenedict(ConstantsKotlin.MALE, WEIGHT, HEIGHT, AGE)
                 , DELTA
         );
     }
@@ -61,7 +61,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrBenedict_female_isCorrect() {
         assertEquals(BENEDICT_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.FEMALE, WEIGHT, HEIGHT, AGE)
+                , MetricEquationUtil.calculateBmrBenedict(ConstantsKotlin.FEMALE, WEIGHT, HEIGHT, AGE)
                 , DELTA
         );
     }
