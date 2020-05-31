@@ -7,10 +7,10 @@ import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
-import com.example.rdpocketpal2.util.Constants;
-import com.example.rdpocketpal2.util.Constants.Element;
-import com.example.rdpocketpal2.util.ConversionUtil;
-import com.example.rdpocketpal2.util.NumberUtil;
+import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.ConversionUtilKotlin;
+import com.example.rdpocketpal2.util.Element;
+import com.example.rdpocketpal2.util.NumberUtilKotlin;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -118,25 +118,25 @@ public class ConversionViewModel extends AndroidViewModel {
                            MutableLiveData<String> inputField) throws FatalCalculationException {
         switch (conversion) {
             case IN_TO_CM:
-                return ConversionUtil.inchesToCentimeters(NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.inchesToCentimeters(NumberUtilKotlin.parseDouble(inputField));
             case CM_TO_IN:
-                return ConversionUtil.centimetersToInches(NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.centimetersToInches(NumberUtilKotlin.parseDouble(inputField));
             case LB_TO_KG:
-                return ConversionUtil.poundsToKilograms(NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.poundsToKilograms(NumberUtilKotlin.parseDouble(inputField));
             case KG_TO_LB:
-                return ConversionUtil.kilogramsToPounds(NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.kilogramsToPounds(NumberUtilKotlin.parseDouble(inputField));
             case GM_TO_MEQ:
-                return ConversionUtil.gramsToMilliequivalents(getElement()
-                        , NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.gramsToMilliequivalents(getElement()
+                        , NumberUtilKotlin.parseDouble(inputField));
             case MEQ_TO_GM:
-                return ConversionUtil.milliequivalentsToGrams(getElement()
-                        , NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.milliequivalentsToGrams(getElement()
+                        , NumberUtilKotlin.parseDouble(inputField));
             case MG_TO_MEQ:
-                return ConversionUtil.milligramsToMilliequivalents(getElement()
-                        , NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.milligramsToMilliequivalents(getElement()
+                        , NumberUtilKotlin.parseDouble(inputField));
             case MEQ_TO_MG:
-                return ConversionUtil.milliequivalentsToMilligrams(getElement()
-                        , NumberUtil.parseDouble(inputField));
+                return ConversionUtilKotlin.milliequivalentsToMilligrams(getElement()
+                        , NumberUtilKotlin.parseDouble(inputField));
             default:
                 // this should never happen, just here to quiet the ide
                 throw new FatalCalculationException("Conversion type not valid");
@@ -179,7 +179,7 @@ public class ConversionViewModel extends AndroidViewModel {
     private boolean validateFieldAndSetError(MutableLiveData<String> field,
                                           MutableLiveData<String> fieldError) {
         // if invalid, set error message
-        if (!NumberUtil.isDouble(field)) {
+        if (!NumberUtilKotlin.isDouble(field)) {
             setNumberError(fieldError);
             return false;
         }
@@ -245,22 +245,22 @@ public class ConversionViewModel extends AndroidViewModel {
         // used in order to decide which element was chosen
         if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_calcium))) {
-            return Constants.CALCIUM;
+            return ConstantsKotlin.CALCIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_chlorine))) {
-            return Constants.CHLORINE;
+            return ConstantsKotlin.CHLORINE;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_magnesium))) {
-            return Constants.MAGNESIUM;
+            return ConstantsKotlin.MAGNESIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_phosphorus))) {
-            return Constants.PHOSPHORUS;
+            return ConstantsKotlin.PHOSPHORUS;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_potassium))) {
-            return Constants.POTASSIUM;
+            return ConstantsKotlin.POTASSIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_sodium))) {
-            return Constants.SODIUM;
+            return ConstantsKotlin.SODIUM;
         }
 
         // this should never happen, just here to quiet the ide
