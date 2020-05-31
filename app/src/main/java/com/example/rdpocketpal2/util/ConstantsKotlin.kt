@@ -5,9 +5,9 @@ package com.example.rdpocketpal2.util
 import androidx.annotation.IntDef
 
 /*
- ************
- ** Units **
- ************
+ *********
+ ** Sex **
+ *********
  */
 @Retention(AnnotationRetention.SOURCE)
 @IntDef(MALE, FEMALE)

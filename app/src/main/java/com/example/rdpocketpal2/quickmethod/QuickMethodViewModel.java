@@ -6,10 +6,9 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
-import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.CalculationUtilKotlin;
-import com.example.rdpocketpal2.util.Constants;
-import com.example.rdpocketpal2.util.NumberUtil;
+import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.NumberUtilKotlin;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -193,8 +192,8 @@ public class QuickMethodViewModel extends AndroidViewModel {
 
     private double calculateValuePerDay(MutableLiveData<String> factor) {
         return CalculationUtilKotlin.calculateQuickMethod(getUnit()
-                , NumberUtil.parseDouble(mWeight)
-                , NumberUtil.parseDouble(factor)
+                , NumberUtilKotlin.parseDouble(mWeight)
+                , NumberUtilKotlin.parseDouble(factor)
         );
     }
     //endregion
@@ -278,7 +277,7 @@ public class QuickMethodViewModel extends AndroidViewModel {
 
     private boolean validateFieldAndSetError(MutableLiveData<String> field,
                                              MutableLiveData<String> fieldError) {
-        if (!NumberUtil.isDouble(field)) {
+        if (!NumberUtilKotlin.isDouble(field)) {
             setEnterNumberError(fieldError);
             return false;
         }
@@ -301,9 +300,9 @@ public class QuickMethodViewModel extends AndroidViewModel {
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (unit.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return Constants.METRIC;
+            return ConstantsKotlin.METRIC;
         } else if (unit.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return Constants.STANDARD;
+            return ConstantsKotlin.STANDARD;
         } else {
             throw new FatalCalculationException("Unit selection not valid");
         }

@@ -18,17 +18,24 @@ object NumberUtilKotlin {
     }
     //endregion
 
+    //region Type checks
     @JvmStatic
     fun isDouble(liveData: MutableLiveData<String>): Boolean {
         val data: String? = liveData.value
+        return isDouble(data)
+    }
+
+    @JvmStatic
+    fun isDouble(string: String?): Boolean {
         try {
-            data!!.toDouble()
+            string!!.toDouble()
             return true
         } catch (e: NumberFormatException) {
             e.printStackTrace()
-        } catch (e: KotlinNullPointerException) {
+        } catch (e: NullPointerException) {
             e.printStackTrace()
         }
         return false
     }
+    //endregion
 }
