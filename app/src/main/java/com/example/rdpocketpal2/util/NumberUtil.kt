@@ -2,7 +2,7 @@ package com.example.rdpocketpal2.util
 
 import androidx.lifecycle.MutableLiveData
 
-object NumberUtilKotlin {
+object NumberUtil {
 
     //region Parsing
     @JvmStatic

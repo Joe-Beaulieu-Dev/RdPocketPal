@@ -7,9 +7,9 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
-import com.example.rdpocketpal2.util.CalculationUtilKotlin;
+import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
-import com.example.rdpocketpal2.util.NumberUtilKotlin;
+import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
 import com.example.rdpocketpal2.util.Unit;
 
@@ -173,58 +173,58 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private double calculateCalorieMin(double bmr) throws NumberFormatException {
-        return CalculationUtilKotlin.calculateCalorieMin(bmr, NumberUtilKotlin.parseDouble(mActivityFactorMin));
+        return CalculationUtil.calculateCalorieMin(bmr, NumberUtil.parseDouble(mActivityFactorMin));
     }
 
     private double calculateCalorieMax(double bmr) throws NumberFormatException {
-        return CalculationUtilKotlin.calculateCalorieMax(bmr, NumberUtilKotlin.parseDouble(mActivityFactorMax));
+        return CalculationUtil.calculateCalorieMax(bmr, NumberUtil.parseDouble(mActivityFactorMax));
     }
 
     private double calculateMifflin(@Unit int unit, @Sex int sex) throws NumberFormatException {
-        return CalculationUtilKotlin.calculateBmrMifflin(unit
+        return CalculationUtil.calculateBmrMifflin(unit
                 , sex
-                , NumberUtilKotlin.parseDouble(mWeight)
-                , NumberUtilKotlin.parseDouble(mHeight)
-                , NumberUtilKotlin.parseInt(mAge)
+                , NumberUtil.parseDouble(mWeight)
+                , NumberUtil.parseDouble(mHeight)
+                , NumberUtil.parseInt(mAge)
         );
     }
 
     private double calculateBenedict(@Unit int unit, @Sex int sex) throws NumberFormatException {
-        return CalculationUtilKotlin.calculateBmrBenedict(unit
+        return CalculationUtil.calculateBmrBenedict(unit
                 , sex
-                , NumberUtilKotlin.parseDouble(mWeight)
-                , NumberUtilKotlin.parseDouble(mHeight)
-                , NumberUtilKotlin.parseInt(mAge)
+                , NumberUtil.parseDouble(mWeight)
+                , NumberUtil.parseDouble(mHeight)
+                , NumberUtil.parseInt(mAge)
         );
     }
 
     private double calculatePennState2003b(@Unit int unit) throws ValidationException, NumberFormatException {
         double bmrMifflin = calculateBmr(MIFFLIN);
 
-        return CalculationUtilKotlin.calculateBmrPennState2003b(unit
+        return CalculationUtil.calculateBmrPennState2003b(unit
                 , bmrMifflin
-                , NumberUtilKotlin.parseDouble(mTmax)
-                , NumberUtilKotlin.parseDouble(mVe)
+                , NumberUtil.parseDouble(mTmax)
+                , NumberUtil.parseDouble(mVe)
         );
     }
 
     private double calculatePennState2010(@Unit int unit) throws ValidationException, NumberFormatException {
         double bmrMifflin = calculateBmr(MIFFLIN);
 
-        return CalculationUtilKotlin.calculateBmrPennState2010(unit
+        return CalculationUtil.calculateBmrPennState2010(unit
                 , bmrMifflin
-                , NumberUtilKotlin.parseDouble(mTmax)
-                , NumberUtilKotlin.parseDouble(mVe)
+                , NumberUtil.parseDouble(mTmax)
+                , NumberUtil.parseDouble(mVe)
         );
     }
 
     private double calculateBrandi(@Unit int unit) throws ValidationException, NumberFormatException {
         double bmrBenedict = calculateBmr(BENEDICT);
 
-        return CalculationUtilKotlin.calculateBmrBrandi(unit
+        return CalculationUtil.calculateBmrBrandi(unit
                 , bmrBenedict
-                , NumberUtilKotlin.parseDouble(mHeartRate)
-                , NumberUtilKotlin.parseDouble(mVe)
+                , NumberUtil.parseDouble(mHeartRate)
+                , NumberUtil.parseDouble(mVe)
         );
     }
     //endregion
@@ -366,15 +366,15 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     private boolean validateWeightHeightAge() {
         boolean isValid = true;
 
-        if (!NumberUtilKotlin.isDouble(mWeight)) {
+        if (!NumberUtil.isDouble(mWeight)) {
             setEnterNumberError(mWeightErrorMsg);
             isValid = false;
         }
-        if (!NumberUtilKotlin.isDouble(mHeight)) {
+        if (!NumberUtil.isDouble(mHeight)) {
             setEnterNumberError(mHeightErrorMsg);
             isValid = false;
         }
-        if (!NumberUtilKotlin.isDouble(mAge)) {
+        if (!NumberUtil.isDouble(mAge)) {
             setEnterNumberError(mAgeErrorMsg);
             isValid = false;
         }
@@ -383,7 +383,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isTmaxValid() {
-        if (!NumberUtilKotlin.isDouble(mTmax)) {
+        if (!NumberUtil.isDouble(mTmax)) {
             setEnterNumberError(mTmaxErrorMsg);
             return false;
         }
@@ -391,7 +391,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isHeartRateValid() {
-        if (!NumberUtilKotlin.isDouble(mHeartRate)) {
+        if (!NumberUtil.isDouble(mHeartRate)) {
             setEnterNumberError(mHeartRateErrorMsg);
             return false;
         }
@@ -399,7 +399,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isVeValid() {
-        if (!NumberUtilKotlin.isDouble(mVe)) {
+        if (!NumberUtil.isDouble(mVe)) {
             setEnterNumberError(mVeErrorMsg);
             return false;
         }
@@ -407,7 +407,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isActivityLevelMinValid() {
-        if (!NumberUtilKotlin.isDouble(mActivityFactorMin)) {
+        if (!NumberUtil.isDouble(mActivityFactorMin)) {
             setEnterNumberError(mActivityFactorMinErrorMsg);
             return false;
         }
@@ -415,7 +415,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     private boolean isActivityLevelMaxValid() {
-        if (!NumberUtilKotlin.isDouble(mActivityFactorMax)) {
+        if (!NumberUtil.isDouble(mActivityFactorMax)) {
             setEnterNumberError(mActivityFactorMaxErrorMsg);
             return false;
         }

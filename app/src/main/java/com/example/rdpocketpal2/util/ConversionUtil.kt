@@ -1,6 +1,6 @@
 package com.example.rdpocketpal2.util
 
-object ConversionUtilKotlin {
+object ConversionUtil {
 
     //region Weight
     @JvmStatic

@@ -38,7 +38,7 @@ public class ConversionUtilTest {
     @Test
     public void poundsToKilograms_isCorrect() {
         assertEquals(LB_TO_KG_ANSWER
-                , ConversionUtilKotlin.poundsToKilograms(LB_TO_KG_INPUT)
+                , ConversionUtil.poundsToKilograms(LB_TO_KG_INPUT)
                 , DELTA_SIX
         );
     }
@@ -46,7 +46,7 @@ public class ConversionUtilTest {
     @Test
     public void inchesToCentimeters_isCorrect() {
         assertEquals(IN_TO_CM_ANSWER
-                , ConversionUtilKotlin.inchesToCentimeters(IN_TO_CM_INPUT)
+                , ConversionUtil.inchesToCentimeters(IN_TO_CM_INPUT)
                 , DELTA_SIX
         );
     }
@@ -54,7 +54,7 @@ public class ConversionUtilTest {
     @Test
     public void fahrenheitToCelsius_isCorrect() {
         assertEquals(FAHRENHEIT_TO_CELSIUS_ANSWER
-                , ConversionUtilKotlin.fahrenheitToCelsius(FAHRENHEIT_TO_CELSIUS_INPUT)
+                , ConversionUtil.fahrenheitToCelsius(FAHRENHEIT_TO_CELSIUS_INPUT)
                 , DELTA_SIX
         );
     }
@@ -62,7 +62,7 @@ public class ConversionUtilTest {
     @Test
     public void gallonsToLiters_isCorrect() {
         assertEquals(GALLONS_TO_LITERS_ANSWER
-                , ConversionUtilKotlin.gallonsToLiters(GALLONS_TO_LITERS_INPUT)
+                , ConversionUtil.gallonsToLiters(GALLONS_TO_LITERS_INPUT)
                 , DELTA_SIX
         );
     }
@@ -71,37 +71,37 @@ public class ConversionUtilTest {
     public void gramsToMilliequivalents_isCorrect() {
         // calcium
         assertEquals(GM_TO_MEQ_CALCIUM
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.CALCIUM, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.CALCIUM, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(GM_TO_MEQ_CHLORINE
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.CHLORINE, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.CHLORINE, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(GM_TO_MEQ_MAGNESIUM
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.MAGNESIUM, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.MAGNESIUM, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // phosphorus
         assertEquals(GM_TO_MEQ_PHOSPHORUS
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.PHOSPHORUS, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.PHOSPHORUS, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.POTASSIUM, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.POTASSIUM, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(GM_TO_MEQ_SODIUM
-                , ConversionUtilKotlin.gramsToMilliequivalents(ConstantsKotlin.SODIUM, TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(ConstantsKotlin.SODIUM, TEN_GRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -110,37 +110,37 @@ public class ConversionUtilTest {
     public void milliequivalentsToGrams_isCorrect() {
         // calcium
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.CALCIUM, GM_TO_MEQ_CALCIUM)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.CALCIUM, GM_TO_MEQ_CALCIUM)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.CHLORINE, GM_TO_MEQ_CHLORINE)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.CHLORINE, GM_TO_MEQ_CHLORINE)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.MAGNESIUM, GM_TO_MEQ_MAGNESIUM)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.MAGNESIUM, GM_TO_MEQ_MAGNESIUM)
                 , DELTA_EIGHT
         );
 
         // phosphorus
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.POTASSIUM, GM_TO_MEQ_POTASSIUM)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.POTASSIUM, GM_TO_MEQ_POTASSIUM)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(TEN_GRAMS
-                , ConversionUtilKotlin.milliequivalentsToGrams(ConstantsKotlin.SODIUM, GM_TO_MEQ_SODIUM)
+                , ConversionUtil.milliequivalentsToGrams(ConstantsKotlin.SODIUM, GM_TO_MEQ_SODIUM)
                 , DELTA_EIGHT
         );
     }
@@ -149,37 +149,37 @@ public class ConversionUtilTest {
     public void milligramsToMilliequivalents_isCorrect() {
         // calcium
         assertEquals(GM_TO_MEQ_CALCIUM
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.CALCIUM, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.CALCIUM, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(GM_TO_MEQ_CHLORINE
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.CHLORINE, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.CHLORINE, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(GM_TO_MEQ_MAGNESIUM
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.MAGNESIUM, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.MAGNESIUM, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // phosphorus
         assertEquals(GM_TO_MEQ_PHOSPHORUS
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.PHOSPHORUS, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.PHOSPHORUS, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.POTASSIUM, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.POTASSIUM, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(GM_TO_MEQ_SODIUM
-                , ConversionUtilKotlin.milligramsToMilliequivalents(ConstantsKotlin.SODIUM, TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(ConstantsKotlin.SODIUM, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -188,37 +188,37 @@ public class ConversionUtilTest {
     public void milliequivalentsToMilligrams_isCorrect() {
         // calcium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.CALCIUM, GM_TO_MEQ_CALCIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.CALCIUM, GM_TO_MEQ_CALCIUM)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.CHLORINE, GM_TO_MEQ_CHLORINE)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.CHLORINE, GM_TO_MEQ_CHLORINE)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.MAGNESIUM, GM_TO_MEQ_MAGNESIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.MAGNESIUM, GM_TO_MEQ_MAGNESIUM)
                 , DELTA_EIGHT
         );
 
         // phosphorus
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.POTASSIUM, GM_TO_MEQ_POTASSIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.POTASSIUM, GM_TO_MEQ_POTASSIUM)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtilKotlin.milliequivalentsToMilligrams(ConstantsKotlin.SODIUM, GM_TO_MEQ_SODIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(ConstantsKotlin.SODIUM, GM_TO_MEQ_SODIUM)
                 , DELTA_EIGHT
         );
     }

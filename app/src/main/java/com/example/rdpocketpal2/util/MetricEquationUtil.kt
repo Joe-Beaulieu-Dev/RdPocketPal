@@ -1,6 +1,6 @@
 package com.example.rdpocketpal2.util
 
-object MetricEquationUtilKotlin {
+object MetricEquationUtil {
 
     //region Predictive Equations
     @JvmStatic

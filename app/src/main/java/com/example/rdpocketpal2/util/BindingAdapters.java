@@ -54,7 +54,7 @@ public class BindingAdapters {
     @InverseBindingAdapter(attribute = "errorMsg")
     public static String getErrorMsg(EditText editText) {
         if (!editText.getText().toString().equals("")
-                && !NumberUtilKotlin.isDouble(editText.getText().toString())) {
+                && !NumberUtil.isDouble(editText.getText().toString())) {
             editText.setError(editText.getContext().getResources()
                     .getString(R.string.error_enter_a_number));
         }

@@ -6,9 +6,9 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
-import com.example.rdpocketpal2.util.CalculationUtilKotlin;
+import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
-import com.example.rdpocketpal2.util.NumberUtilKotlin;
+import com.example.rdpocketpal2.util.NumberUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -191,9 +191,9 @@ public class QuickMethodViewModel extends AndroidViewModel {
     }
 
     private double calculateValuePerDay(MutableLiveData<String> factor) {
-        return CalculationUtilKotlin.calculateQuickMethod(getUnit()
-                , NumberUtilKotlin.parseDouble(mWeight)
-                , NumberUtilKotlin.parseDouble(factor)
+        return CalculationUtil.calculateQuickMethod(getUnit()
+                , NumberUtil.parseDouble(mWeight)
+                , NumberUtil.parseDouble(factor)
         );
     }
     //endregion
@@ -277,7 +277,7 @@ public class QuickMethodViewModel extends AndroidViewModel {
 
     private boolean validateFieldAndSetError(MutableLiveData<String> field,
                                              MutableLiveData<String> fieldError) {
-        if (!NumberUtilKotlin.isDouble(field)) {
+        if (!NumberUtil.isDouble(field)) {
             setEnterNumberError(fieldError);
             return false;
         }

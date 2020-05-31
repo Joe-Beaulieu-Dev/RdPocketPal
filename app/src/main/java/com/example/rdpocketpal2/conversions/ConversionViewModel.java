@@ -8,9 +8,9 @@ import android.widget.Toast;
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
-import com.example.rdpocketpal2.util.ConversionUtilKotlin;
+import com.example.rdpocketpal2.util.ConversionUtil;
 import com.example.rdpocketpal2.util.Element;
-import com.example.rdpocketpal2.util.NumberUtilKotlin;
+import com.example.rdpocketpal2.util.NumberUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -118,25 +118,25 @@ public class ConversionViewModel extends AndroidViewModel {
                            MutableLiveData<String> inputField) throws FatalCalculationException {
         switch (conversion) {
             case IN_TO_CM:
-                return ConversionUtilKotlin.inchesToCentimeters(NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.inchesToCentimeters(NumberUtil.parseDouble(inputField));
             case CM_TO_IN:
-                return ConversionUtilKotlin.centimetersToInches(NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.centimetersToInches(NumberUtil.parseDouble(inputField));
             case LB_TO_KG:
-                return ConversionUtilKotlin.poundsToKilograms(NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.poundsToKilograms(NumberUtil.parseDouble(inputField));
             case KG_TO_LB:
-                return ConversionUtilKotlin.kilogramsToPounds(NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.kilogramsToPounds(NumberUtil.parseDouble(inputField));
             case GM_TO_MEQ:
-                return ConversionUtilKotlin.gramsToMilliequivalents(getElement()
-                        , NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.gramsToMilliequivalents(getElement()
+                        , NumberUtil.parseDouble(inputField));
             case MEQ_TO_GM:
-                return ConversionUtilKotlin.milliequivalentsToGrams(getElement()
-                        , NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.milliequivalentsToGrams(getElement()
+                        , NumberUtil.parseDouble(inputField));
             case MG_TO_MEQ:
-                return ConversionUtilKotlin.milligramsToMilliequivalents(getElement()
-                        , NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.milligramsToMilliequivalents(getElement()
+                        , NumberUtil.parseDouble(inputField));
             case MEQ_TO_MG:
-                return ConversionUtilKotlin.milliequivalentsToMilligrams(getElement()
-                        , NumberUtilKotlin.parseDouble(inputField));
+                return ConversionUtil.milliequivalentsToMilligrams(getElement()
+                        , NumberUtil.parseDouble(inputField));
             default:
                 // this should never happen, just here to quiet the ide
                 throw new FatalCalculationException("Conversion type not valid");
@@ -179,7 +179,7 @@ public class ConversionViewModel extends AndroidViewModel {
     private boolean validateFieldAndSetError(MutableLiveData<String> field,
                                           MutableLiveData<String> fieldError) {
         // if invalid, set error message
-        if (!NumberUtilKotlin.isDouble(field)) {
+        if (!NumberUtil.isDouble(field)) {
             setNumberError(fieldError);
             return false;
         }
