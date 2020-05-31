@@ -10,6 +10,17 @@ import androidx.annotation.IntDef
  ************
  */
 @Retention(AnnotationRetention.SOURCE)
+@IntDef(MALE, FEMALE)
+annotation class Sex
+const val MALE = 0
+const val FEMALE = 1
+
+/*
+ ************
+ ** Units **
+ ************
+ */
+@Retention(AnnotationRetention.SOURCE)
 @IntDef(METRIC, STANDARD)
 annotation class Unit
 const val METRIC = 0

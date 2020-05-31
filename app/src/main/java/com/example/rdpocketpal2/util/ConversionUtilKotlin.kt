@@ -26,6 +26,20 @@ object ConversionUtilKotlin {
     }
     //endregion
 
+    //region Temperature
+    @JvmStatic
+    fun fahrenheitToCelsius(tempFahrenheit: Double): Double {
+        return (tempFahrenheit - 32) * (5.0 / 9.0)
+    }
+    //endregion
+
+    //region Fluid
+    @JvmStatic
+    fun gallonsToLiters(gallons: Double): Double {
+        return gallons * 3.78541
+    }
+    //endregion
+
     //region Chemistry
     @JvmStatic
     fun gramsToMilliequivalents(@Element element: Int, grams: Double): Double {

@@ -38,7 +38,7 @@ public class ConversionUtilTest {
     @Test
     public void poundsToKilograms_isCorrect() {
         assertEquals(LB_TO_KG_ANSWER
-                , ConversionUtil.poundsToKilograms(LB_TO_KG_INPUT)
+                , ConversionUtilKotlin.poundsToKilograms(LB_TO_KG_INPUT)
                 , DELTA_SIX
         );
     }
@@ -46,7 +46,7 @@ public class ConversionUtilTest {
     @Test
     public void inchesToCentimeters_isCorrect() {
         assertEquals(IN_TO_CM_ANSWER
-                , ConversionUtil.inchesToCentimeters(IN_TO_CM_INPUT)
+                , ConversionUtilKotlin.inchesToCentimeters(IN_TO_CM_INPUT)
                 , DELTA_SIX
         );
     }
@@ -54,7 +54,7 @@ public class ConversionUtilTest {
     @Test
     public void fahrenheitToCelsius_isCorrect() {
         assertEquals(FAHRENHEIT_TO_CELSIUS_ANSWER
-                , ConversionUtil.fahrenheitToCelsius(FAHRENHEIT_TO_CELSIUS_INPUT)
+                , ConversionUtilKotlin.fahrenheitToCelsius(FAHRENHEIT_TO_CELSIUS_INPUT)
                 , DELTA_SIX
         );
     }
@@ -62,7 +62,7 @@ public class ConversionUtilTest {
     @Test
     public void gallonsToLiters_isCorrect() {
         assertEquals(GALLONS_TO_LITERS_ANSWER
-                , ConversionUtil.gallonsToLiters(GALLONS_TO_LITERS_INPUT)
+                , ConversionUtilKotlin.gallonsToLiters(GALLONS_TO_LITERS_INPUT)
                 , DELTA_SIX
         );
     }

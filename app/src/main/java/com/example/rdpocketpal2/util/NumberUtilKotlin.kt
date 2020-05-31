@@ -4,11 +4,19 @@ import androidx.lifecycle.MutableLiveData
 
 object NumberUtilKotlin {
 
+    //region Parsing
     @JvmStatic
     fun parseDouble(liveData: MutableLiveData<String>): Double {
         val data: String? = liveData.value
         return data!!.toDouble()
     }
+
+    @JvmStatic
+    fun parseInt(liveData: MutableLiveData<String>): Int {
+        val data: String? = liveData.value
+        return data!!.toInt()
+    }
+    //endregion
 
     @JvmStatic
     fun isDouble(liveData: MutableLiveData<String>): Boolean {
