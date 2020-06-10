@@ -2,13 +2,13 @@ package com.example.rdpocketpal2.application;
 
 import android.app.Application;
 
-import com.example.rdpocketpal2.util.StethoInitializerKotlin;
+import com.example.rdpocketpal2.util.StethoInitializer;
 
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
         // initialize Stetho
-        new StethoInitializerKotlin(this).initialize();
+        new StethoInitializer(this).initialize();
     }
 }
