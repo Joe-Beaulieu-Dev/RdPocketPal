@@ -1,18 +1,17 @@
 package com.example.rdpocketpal2.quickmethod;
 
+import android.os.Build;
+import android.os.Bundle;
+
+import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.databinding.ActivityQuickMethodBinding;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Button;
-
-import com.example.rdpocketpal2.R;
-import com.example.rdpocketpal2.databinding.ActivityQuickMethodBinding;
 
 public class QuickMethodActivity extends AppCompatActivity {
     private QuickMethodViewModel mViewModel;

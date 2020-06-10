@@ -5,10 +5,8 @@ import android.widget.*
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
-
 import androidx.databinding.InverseBindingListener
 import com.example.rdpocketpal2.R
-import kotlinx.android.synthetic.*
 
 //region EditText
 @BindingAdapter("errorMsg")
