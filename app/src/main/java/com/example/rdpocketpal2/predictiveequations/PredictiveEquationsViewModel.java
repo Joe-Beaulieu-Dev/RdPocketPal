@@ -7,8 +7,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.PreferenceRepository;
+import com.example.rdpocketpal2.model.QueryResult;
+import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
 import com.example.rdpocketpal2.util.Unit;
@@ -22,7 +26,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
-public class PredictiveEquationsViewModel extends AndroidViewModel {
+public class PredictiveEquationsViewModel extends AndroidViewModel implements CoroutineCallbackListener {
     private static final String LOG_TAG = "PredictiveEqViewModel";
 
     //region LiveData
@@ -76,6 +80,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     // this is fine because we're storing the application context here
     private Context mApplicationContext;
     private SavedStateHandle mState;
+    private UserPreferences mPrefs;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MIFFLIN, BENEDICT, PENN2003B, PENN2010, BRANDI})
@@ -110,6 +115,11 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     public void onCalculateClicked() {
+        PreferenceRepository repo = new PreferenceRepository();
+        repo.getAllNumericSettings(mApplicationContext, this);
+    }
+
+    private void calculate() {
         // Log field values
         logFields();
 
@@ -456,5 +466,35 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
 
     MutableLiveData<String> getSelectedEquation() {
         return mSelectedEquation;
+    }
+
+    @Override
+    public <T> void onCoroutineFinished(QueryResult<T> result) {
+        if (result instanceof QueryResult.Success
+                && ((QueryResult.Success<T>) result).getData() instanceof UserPreferences) {
+            // get UserPreference obj and pull values from it
+            mPrefs = (UserPreferences) ((QueryResult.Success<T>) result).getData();
+            String roundingMethod = mPrefs.getRounding();
+            Integer scale = mPrefs.getNumericScale();
+
+            // test coroutine usage
+            Toast.makeText(mApplicationContext
+                    , "Rounding method: " + roundingMethod
+                    + "\nNumeric scale: " + scale
+                    , Toast.LENGTH_SHORT).show();
+
+        } else if (result instanceof QueryResult.Failure) {
+            // get and log exception
+            Exception e = ((QueryResult.Failure) result).getException();
+            if (e.getMessage() != null) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+
+            // display feedback to user
+            Toast.makeText(mApplicationContext
+                    , "Failed to access user settings"
+                    , Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }
