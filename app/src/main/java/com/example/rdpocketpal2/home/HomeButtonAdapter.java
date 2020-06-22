@@ -22,8 +22,6 @@ public class HomeButtonAdapter extends RecyclerView.Adapter<HomeButtonAdapter.Ho
                     , QuickMethodActivity.class),
             new HomeButton(R.drawable.ic_anthropometrics_purple_48dp, R.string.btn_anthropometrics
                     , PredictiveEquationsActivity.class),
-            new HomeButton(R.drawable.ic_parenteral_nutrition_purple_48dp, R.string.btn_parenteral_nutrition
-                    , PredictiveEquationsActivity.class),
             new HomeButton(R.drawable.ic_conversions_purple_48dp, R.string.btn_conversions
                     , ConversionActivity.class)
     };
