@@ -3,7 +3,6 @@ package com.example.rdpocketpal2.quickmethod;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -23,11 +22,14 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.SavedStateHandle;
 
-public class QuickMethodViewModel extends AndroidViewModel implements CoroutineCallbackListener
-        , SharedPreferences.OnSharedPreferenceChangeListener {
+public class QuickMethodViewModel extends AndroidViewModel implements
+        CoroutineCallbackListener, LifecycleObserver {
     private static final String LOG_TAG = "QuickMethodViewModel";
 
     //region LiveData
@@ -90,10 +92,7 @@ public class QuickMethodViewModel extends AndroidViewModel implements CoroutineC
 
         mApplicationContext = application.getApplicationContext();
         mState = handle;
-
-        // initialize repo and get settings
         mRepo = new PreferenceRepository();
-        getAllNumericSettings();
 
         // restore data not persisted through system initiated process death
         restoreState();
@@ -309,7 +308,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements CoroutineC
     //endregion
 
     //region Helper Methods
-    private void getAllNumericSettings() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void getAllNumericSettings() {
         if (mRepo != null) {
             mRepo.getAllNumericSettings(mApplicationContext, this);
         }
@@ -478,14 +478,6 @@ public class QuickMethodViewModel extends AndroidViewModel implements CoroutineC
                     , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
                     , Toast.LENGTH_SHORT)
                     .show();
-        }
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(mApplicationContext.getString(R.string.key_decimal_reduction_method))
-                || key.equals(mApplicationContext.getString(R.string.key_numeric_scale))) {
-            getAllNumericSettings();
         }
     }
     //endregion
