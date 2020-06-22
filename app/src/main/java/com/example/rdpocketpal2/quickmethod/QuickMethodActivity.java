@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 public class QuickMethodActivity extends AppCompatActivity {
     private QuickMethodViewModel mViewModel;
@@ -66,5 +67,23 @@ public class QuickMethodActivity extends AppCompatActivity {
         // save the state of the ViewModel to deal with system initiated process death
         mViewModel.saveState();
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register ViewModel as OnSharedPreferenceChangeListener
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(mViewModel);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // unregister ViewModel as OnSharedPreferenceChangeListener
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(mViewModel);
     }
 }

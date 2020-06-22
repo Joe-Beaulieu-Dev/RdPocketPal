@@ -469,11 +469,12 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
         return mSelectedEquation;
     }
 
+    //region Callbacks
     @Override
     public <T> void onCoroutineFinished(QueryResult<T> result) {
         if (result instanceof QueryResult.Success
                 && ((QueryResult.Success<T>) result).getData() instanceof UserPreferences) {
-            // get UserPreference obj and pull values from it
+            // get UserPreference object
             mPrefs = (UserPreferences) ((QueryResult.Success<T>) result).getData();
             // perform calculations
             calculate();
@@ -486,9 +487,10 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
 
             // display feedback to user
             Toast.makeText(mApplicationContext
-                    , "Failed to access user settings"
+                    , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
                     , Toast.LENGTH_SHORT)
                     .show();
         }
     }
+    //endregion
 }

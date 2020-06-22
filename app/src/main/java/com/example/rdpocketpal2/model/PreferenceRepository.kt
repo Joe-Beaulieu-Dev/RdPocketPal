@@ -2,6 +2,7 @@ package com.example.rdpocketpal2.model
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.util.CoroutineCallbackListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,8 @@ class PreferenceRepository() {
 
     //region Kotlin Usage
     /**
-     * Get Decimal Reduction Method preference. Intended for usage in Kotlin code.
+     * Get Decimal Reduction Method preference. Defaults to rounding if pref not found. Intended
+     * for usage in Kotlin code.
      *
      * @param context  The context of the desired preferences
      */
@@ -58,7 +60,9 @@ class PreferenceRepository() {
             return@withContext try {
                 // get preference
                 val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-                val pref = sharedPrefs!!.getString("decimalReductionMethod", "notFound")!!
+                val pref = sharedPrefs!!.getString(
+                        context.getString(R.string.key_decimal_reduction_method)
+                        , context.getString(R.string.key_rounding))!!
 
                 // assign QueryResult containing pref as try's return value
                 QueryResult.Success(pref)
@@ -75,7 +79,8 @@ class PreferenceRepository() {
     }
 
     /**
-     * Get Numeric Scale preference. Intended for usage in Kotlin code.
+     * Get Numeric Scale preference. Defaults to 2 if pref not found. Intended for usage in
+     * Kotlin code.
      *
      * @param context  The context of the desired preferences
      */
@@ -84,7 +89,9 @@ class PreferenceRepository() {
             return@withContext try {
                 // get preference
                 val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-                val pref = sharedPrefs!!.getInt("numericScale", 0)
+                val pref = sharedPrefs!!.getInt(
+                        context.getString(R.string.key_numeric_scale)
+                        , 2)
 
                 // assign QueryResult containing pref as try's return value
                 QueryResult.Success(pref)

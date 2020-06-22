@@ -47,9 +47,9 @@ object NumberUtil {
 
     //region Manipulation
     @JvmStatic
-    fun roundOrTruncate(context: Context, prefs: UserPreferences, num: Double): String {
-        // prefs not properly set, return raw Double as String
-        return if (prefs.reductionMethod == null || prefs.numericScale == null) {
+    fun roundOrTruncate(context: Context, prefs: UserPreferences?, num: Double): String {
+        // prefs is null or not properly set, return raw Double as String
+        return if (prefs?.reductionMethod == null || prefs.numericScale == null) {
             num.toString()
         } else {
             when (prefs.reductionMethod!!) {
