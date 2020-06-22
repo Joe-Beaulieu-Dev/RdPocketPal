@@ -1,5 +1,6 @@
 package com.example.rdpocketpal2.predictiveequations;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -7,8 +8,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.PreferenceRepository;
+import com.example.rdpocketpal2.model.QueryResult;
+import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
 import com.example.rdpocketpal2.util.Unit;
@@ -22,7 +27,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
-public class PredictiveEquationsViewModel extends AndroidViewModel {
+public class PredictiveEquationsViewModel extends AndroidViewModel implements CoroutineCallbackListener {
     private static final String LOG_TAG = "PredictiveEqViewModel";
 
     //region LiveData
@@ -74,8 +79,10 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     //endregion
 
     // this is fine because we're storing the application context here
+    @SuppressLint("StaticFieldLeak")
     private Context mApplicationContext;
     private SavedStateHandle mState;
+    private UserPreferences mPrefs;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MIFFLIN, BENEDICT, PENN2003B, PENN2010, BRANDI})
@@ -110,15 +117,16 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     }
 
     public void onCalculateClicked() {
+        PreferenceRepository repo = new PreferenceRepository();
+        repo.getAllNumericSettings(mApplicationContext, this);
+    }
+
+    private void calculate() {
         // Log field values
         logFields();
 
         try {
-            // even though fields have validation on focus change, still need to validate everything
-            // when the calculation button is pressed in case the user never clicks on a field,
-            // leaving it null, which would bypass the validation. This must all be done at once at
-            // the start or else if bmr fields are invalid, activity factor fields won't get
-            // validated when the calculate button is pressed
+            // validate in case user never inputs into fields
             if (validateAllNecessaryFields(getEquationSelection())) {
                 // perform calculations
                 double bmr = calculateBmr(getEquationSelection());
@@ -126,9 +134,12 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
                 double calorieMax = calculateCalorieMax(bmr);
 
                 // set values to live data
-                mBmr.setValue(String.valueOf(bmr));
-                mCalorieMin.setValue(String.valueOf(calorieMin));
-                mCalorieMax.setValue(String.valueOf(calorieMax));
+                mBmr.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, bmr));
+                mCalorieMin.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, calorieMin));
+                mCalorieMax.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, calorieMax));
             } else {
                 throw new ValidationException("Necessary fields not valid");
             }
@@ -457,4 +468,29 @@ public class PredictiveEquationsViewModel extends AndroidViewModel {
     MutableLiveData<String> getSelectedEquation() {
         return mSelectedEquation;
     }
+
+    //region Callbacks
+    @Override
+    public <T> void onCoroutineFinished(QueryResult<T> result) {
+        if (result instanceof QueryResult.Success
+                && ((QueryResult.Success<T>) result).getData() instanceof UserPreferences) {
+            // get UserPreference object
+            mPrefs = (UserPreferences) ((QueryResult.Success<T>) result).getData();
+            // perform calculations
+            calculate();
+        } else if (result instanceof QueryResult.Failure) {
+            // get and log exception
+            Exception e = ((QueryResult.Failure) result).getException();
+            if (e.getMessage() != null) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+            }
+
+            // display feedback to user
+            Toast.makeText(mApplicationContext
+                    , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
+                    , Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+    //endregion
 }

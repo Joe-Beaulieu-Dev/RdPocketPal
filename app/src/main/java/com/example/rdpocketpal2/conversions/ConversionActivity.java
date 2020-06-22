@@ -1,13 +1,18 @@
 package com.example.rdpocketpal2.conversions;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityConversionBinding;
+import com.example.rdpocketpal2.settings.SettingsActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -123,6 +128,24 @@ public class ConversionActivity extends AppCompatActivity {
     private void setUpBtnRipple(int btnId) {
         findViewById(btnId).setForeground(getResources()
                 .getDrawable(R.drawable.ripple_rectangle, getTheme()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main_menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

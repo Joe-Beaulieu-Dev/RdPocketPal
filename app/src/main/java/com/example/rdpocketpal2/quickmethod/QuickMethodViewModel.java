@@ -1,13 +1,19 @@
 package com.example.rdpocketpal2.quickmethod;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.PreferenceRepository;
+import com.example.rdpocketpal2.model.QueryResult;
+import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 
 import java.lang.annotation.Retention;
@@ -16,10 +22,16 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.SavedStateHandle;
 
-public class QuickMethodViewModel extends AndroidViewModel {
+public class QuickMethodViewModel extends AndroidViewModel implements
+        CoroutineCallbackListener, LifecycleObserver {
+    private static final String LOG_TAG = "QuickMethodViewModel";
+
     //region LiveData
     // UI LiveData
     public MutableLiveData<String> mWeight = new MutableLiveData<>();
@@ -62,8 +74,11 @@ public class QuickMethodViewModel extends AndroidViewModel {
     //endregion
 
     // okay since when the app dies, so does the ViewModel
+    @SuppressLint("StaticFieldLeak")
     private Context mApplicationContext;
     private SavedStateHandle mState;
+    private PreferenceRepository mRepo;
+    private UserPreferences mPrefs;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CALORIE, PROTEIN, FLUID})
@@ -77,6 +92,7 @@ public class QuickMethodViewModel extends AndroidViewModel {
 
         mApplicationContext = application.getApplicationContext();
         mState = handle;
+        mRepo = new PreferenceRepository();
 
         // restore data not persisted through system initiated process death
         restoreState();
@@ -186,8 +202,10 @@ public class QuickMethodViewModel extends AndroidViewModel {
                                             MutableLiveData<String> maxFactor,
                                             MutableLiveData<String> minResult,
                                             MutableLiveData<String> maxResult) {
-        minResult.setValue(String.valueOf(calculateValuePerDay(minFactor)));
-        maxResult.setValue(String.valueOf(calculateValuePerDay(maxFactor)));
+        minResult.setValue(NumberUtil.roundOrTruncate(
+                mApplicationContext, mPrefs, calculateValuePerDay(minFactor)));
+        maxResult.setValue(NumberUtil.roundOrTruncate(
+                mApplicationContext, mPrefs, calculateValuePerDay(maxFactor)));
     }
 
     private double calculateValuePerDay(MutableLiveData<String> factor) {
@@ -290,6 +308,13 @@ public class QuickMethodViewModel extends AndroidViewModel {
     //endregion
 
     //region Helper Methods
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void getAllNumericSettings() {
+        if (mRepo != null) {
+            mRepo.getAllNumericSettings(mApplicationContext, this);
+        }
+    }
+
     private int getUnit() throws FatalCalculationException {
         String unit = mUnitSelection.getValue();
 
@@ -431,6 +456,29 @@ public class QuickMethodViewModel extends AndroidViewModel {
         mGramsPerKgMaxErrorMsg = mState.getLiveData(GRAMS_PER_KG_MAX_ERROR_MSG_KEY);
         mMlPerKgMinErrorMsg = mState.getLiveData(ML_PER_KG_MIN_ERROR_MSG_KEY);
         mMlPerKgMaxErrorMsg = mState.getLiveData(ML_PER_KG_MAX_ERROR_MSG_KEY);
+    }
+    //endregion
+
+    //region Callbacks
+    @Override
+    public <T> void onCoroutineFinished(QueryResult<T> result) {
+        if (result instanceof QueryResult.Success
+                && ((QueryResult.Success<T>) result).getData() instanceof UserPreferences) {
+            // get UserPreference object
+            mPrefs = (UserPreferences) ((QueryResult.Success<T>) result).getData();
+        } else if (result instanceof QueryResult.Failure) {
+            // get and log exception
+            Exception e = ((QueryResult.Failure) result).getException();
+            if (e.getMessage() != null) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+            }
+
+            // display feedback to user
+            Toast.makeText(mApplicationContext
+                    , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
+                    , Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
     //endregion
 }

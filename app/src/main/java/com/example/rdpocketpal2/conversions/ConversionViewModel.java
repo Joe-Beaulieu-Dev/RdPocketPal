@@ -1,11 +1,13 @@
 package com.example.rdpocketpal2.conversions;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
 import com.example.rdpocketpal2.util.ConstantsKotlin;
 import com.example.rdpocketpal2.util.ConversionUtil;
@@ -44,8 +46,10 @@ public class ConversionViewModel extends AndroidViewModel {
     //endregion
 
     // okay since when the app dies, so does the ViewModel
+    @SuppressLint("StaticFieldLeak")
     private Context mApplicationContext;
     private SavedStateHandle mState;
+    private UserPreferences mPrefs;
 
     // Input/output fields
     @Retention(RetentionPolicy.SOURCE)
@@ -72,6 +76,9 @@ public class ConversionViewModel extends AndroidViewModel {
 
         mApplicationContext = application.getApplicationContext();
         mState = handle;
+
+        // create prefs object with hard coded settings
+        createDefaultPrefsObject();
 
         // restore state in the case of system initiated process death
         restoreState();
@@ -106,10 +113,12 @@ public class ConversionViewModel extends AndroidViewModel {
         // set value of output field
         switch (inputField) {
             case FIELD_LEFT:
-                mFieldRight.setValue(String.valueOf(convert(conversion, mFieldLeft)));
+                mFieldRight.setValue(NumberUtil.roundOrTruncate(
+                        mApplicationContext, mPrefs, convert(conversion, mFieldLeft)));
                 break;
             case FIELD_RIGHT:
-                mFieldLeft.setValue(String.valueOf(convert(conversion, mFieldRight)));
+                mFieldLeft.setValue(NumberUtil.roundOrTruncate(
+                        mApplicationContext, mPrefs, convert(conversion, mFieldRight)));
                 break;
         }
     }
@@ -287,6 +296,10 @@ public class ConversionViewModel extends AndroidViewModel {
 
     private void resetError(MutableLiveData<String> errorField) {
         errorField.setValue(null);
+    }
+
+    private void createDefaultPrefsObject() {
+        mPrefs = new UserPreferences(mApplicationContext.getString(R.string.key_rounding), 5);
     }
 
     private void showToast(int stringId, int duration) {
