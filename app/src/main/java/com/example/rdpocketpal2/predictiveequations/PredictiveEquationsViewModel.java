@@ -1,5 +1,6 @@
 package com.example.rdpocketpal2.predictiveequations;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -78,6 +79,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
     //endregion
 
     // this is fine because we're storing the application context here
+    @SuppressLint("StaticFieldLeak")
     private Context mApplicationContext;
     private SavedStateHandle mState;
     private UserPreferences mPrefs;
@@ -124,11 +126,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
         logFields();
 
         try {
-            // even though fields have validation on focus change, still need to validate everything
-            // when the calculation button is pressed in case the user never clicks on a field,
-            // leaving it null, which would bypass the validation. This must all be done at once at
-            // the start or else if bmr fields are invalid, activity factor fields won't get
-            // validated when the calculate button is pressed
+            // validate in case user never inputs into fields
             if (validateAllNecessaryFields(getEquationSelection())) {
                 // perform calculations
                 double bmr = calculateBmr(getEquationSelection());
@@ -136,9 +134,12 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
                 double calorieMax = calculateCalorieMax(bmr);
 
                 // set values to live data
-                mBmr.setValue(String.valueOf(bmr));
-                mCalorieMin.setValue(String.valueOf(calorieMin));
-                mCalorieMax.setValue(String.valueOf(calorieMax));
+                mBmr.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, bmr));
+                mCalorieMin.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, calorieMin));
+                mCalorieMax.setValue(
+                        NumberUtil.roundOrTruncate(mApplicationContext, mPrefs, calorieMax));
             } else {
                 throw new ValidationException("Necessary fields not valid");
             }
@@ -474,20 +475,13 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
                 && ((QueryResult.Success<T>) result).getData() instanceof UserPreferences) {
             // get UserPreference obj and pull values from it
             mPrefs = (UserPreferences) ((QueryResult.Success<T>) result).getData();
-            String roundingMethod = mPrefs.getRounding();
-            Integer scale = mPrefs.getNumericScale();
-
-            // test coroutine usage
-            Toast.makeText(mApplicationContext
-                    , "Rounding method: " + roundingMethod
-                    + "\nNumeric scale: " + scale
-                    , Toast.LENGTH_SHORT).show();
-
+            // perform calculations
+            calculate();
         } else if (result instanceof QueryResult.Failure) {
             // get and log exception
             Exception e = ((QueryResult.Failure) result).getException();
             if (e.getMessage() != null) {
-                Log.e(LOG_TAG, e.getMessage());
+                Log.e(LOG_TAG, e.getMessage(), e);
             }
 
             // display feedback to user

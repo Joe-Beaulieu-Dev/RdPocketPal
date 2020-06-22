@@ -29,9 +29,10 @@ class PreferenceRepository() {
             val result = if (decimalReductionMethod is QueryResult.Success
                     && numericScale is QueryResult.Success) {
                 // create pref object and set values
-                val pref = UserPreferences()
-                pref.rounding = decimalReductionMethod.data
-                pref.numericScale = numericScale.data
+                val pref = UserPreferences().apply {
+                    reductionMethod = decimalReductionMethod.data
+                    this.numericScale = numericScale.data
+                }
 
                 // return Success with UserPreferences object
                 QueryResult.Success(pref)
