@@ -8,51 +8,19 @@ import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 
+//region Testing constants
+const val EMPTY_STRING = ""
+//endregion
+
 class QuickMethodRobot : TestRobot() {
 
-    //region Calories
+    //region Weight
     fun enterWeight(weight: String) {
         enterText(R.id.qm_weight_editText, weight)
     }
 
-    fun enterKcalPerKgMin(kcal: String) {
-        enterText(R.id.qm_calorie_kcal_per_kg_min, kcal)
-    }
-
-    fun enterKcalPerKgMax(kcal: String) {
-        enterText(R.id.qm_calorie_kcal_per_kg_max, kcal)
-    }
-
-    fun clickCalorieCalculate() {
-        clickViewId(R.id.qm_calorie_calculate_btn)
-    }
-
-    fun validateKcalPerDayMin(kcal: String) {
-        checkText(R.id.qm_calorie_kcal_per_day_min, kcal)
-    }
-
-    fun validateKcalPerDayMax(kcal: String) {
-        checkText(R.id.qm_calorie_kcal_per_day_max, kcal)
-    }
-    //endregion
-
-    //region Units
-    fun setInputMetric() {
-        // click metric RadioButton
-        clickViewId(R.id.qm_unit_metric)
-    }
-
-    fun setInputStandard() {
-        // click standard RadioButton
-        clickViewId(R.id.qm_unit_standard)
-    }
-
-    fun <T : Activity> checkUnitMetric(rule: ActivityTestRule<T>) {
-        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_kg))
-    }
-
-    fun <T : Activity> checkUnitStandard(rule: ActivityTestRule<T>) {
-        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_lb))
+    fun checkWeight(weight: String) {
+        checkText(R.id.qm_weight_editText, weight)
     }
     //endregion
 
@@ -79,6 +47,167 @@ class QuickMethodRobot : TestRobot() {
         clickViewText(stringId)
         // exit settings screen
         pressBack()
+    }
+    //endregion
+
+    //region Units
+    fun setInputMetric() {
+        // click metric RadioButton
+        clickViewId(R.id.qm_unit_metric)
+    }
+
+    fun setInputStandard() {
+        // click standard RadioButton
+        clickViewId(R.id.qm_unit_standard)
+    }
+
+    fun <T : Activity> checkUnitMetric(rule: ActivityTestRule<T>) {
+        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_kg))
+    }
+
+    fun <T : Activity> checkUnitStandard(rule: ActivityTestRule<T>) {
+        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_lb))
+    }
+    //endregion
+
+    //region Calories
+    fun enterKcalPerKgMin(kcal: String) {
+        enterText(R.id.qm_calorie_kcal_per_kg_min, kcal)
+    }
+
+    fun enterKcalPerKgMax(kcal: String) {
+        enterText(R.id.qm_calorie_kcal_per_kg_max, kcal)
+    }
+
+    fun checkKcalPerDayMin(kcal: String) {
+        checkText(R.id.qm_calorie_kcal_per_day_min, kcal)
+    }
+
+    fun checkKcalPerDayMax(kcal: String) {
+        checkText(R.id.qm_calorie_kcal_per_day_max, kcal)
+    }
+
+    fun setCalorieTextProgrammatically() {
+        setTextProgrammatically(R.id.qm_calorie_kcal_per_kg_min, "1")
+        setTextProgrammatically(R.id.qm_calorie_kcal_per_kg_max, "2")
+        setTextProgrammatically(R.id.qm_calorie_kcal_per_day_min, "3")
+        setTextProgrammatically(R.id.qm_calorie_kcal_per_day_max, "4")
+    }
+
+    fun checkProgrammaticallySetCalorieFields() {
+        checkText(R.id.qm_calorie_kcal_per_kg_min, "1")
+        checkText(R.id.qm_calorie_kcal_per_kg_max, "2")
+        checkText(R.id.qm_calorie_kcal_per_day_min, "3")
+        checkText(R.id.qm_calorie_kcal_per_day_max, "4")
+    }
+
+    fun checkCalorieFieldsClear() {
+        checkText(R.id.qm_calorie_kcal_per_kg_min, EMPTY_STRING)
+        checkText(R.id.qm_calorie_kcal_per_kg_max, EMPTY_STRING)
+        checkText(R.id.qm_calorie_kcal_per_day_min, EMPTY_STRING)
+        checkText(R.id.qm_calorie_kcal_per_day_max, EMPTY_STRING)
+    }
+
+    fun clickCalorieClear() {
+        clickViewId(R.id.qm_calorie_clear_btn)
+    }
+
+    fun clickCalorieCalculate() {
+        clickViewId(R.id.qm_calorie_calculate_btn)
+    }
+    //endregion
+
+    //region Protein
+    fun enterGramsPerKgMin(kcal: String) {
+        enterText(R.id.qm_protein_grams_per_kg_min, kcal)
+    }
+
+    fun enterGramsPerKgMax(kcal: String) {
+        enterText(R.id.qm_protein_grams_per_kg_max, kcal)
+    }
+
+    fun checkGramsPerDayMin(kcal: String) {
+        checkText(R.id.qm_protein_grams_per_day_min, kcal)
+    }
+
+    fun checkGramsPerDayMax(kcal: String) {
+        checkText(R.id.qm_protein_grams_per_day_max, kcal)
+    }
+
+    fun setProteinTextProgrammatically() {
+        setTextProgrammatically(R.id.qm_protein_grams_per_kg_min, "1")
+        setTextProgrammatically(R.id.qm_protein_grams_per_kg_max, "2")
+        setTextProgrammatically(R.id.qm_protein_grams_per_day_min, "3")
+        setTextProgrammatically(R.id.qm_protein_grams_per_day_max, "4")
+    }
+
+    fun checkProgrammaticallySetProteinFields() {
+        checkText(R.id.qm_protein_grams_per_kg_min, "1")
+        checkText(R.id.qm_protein_grams_per_kg_max, "2")
+        checkText(R.id.qm_protein_grams_per_day_min, "3")
+        checkText(R.id.qm_protein_grams_per_day_max, "4")
+    }
+
+    fun checkProteinFieldsClear() {
+        checkText(R.id.qm_protein_grams_per_kg_min, EMPTY_STRING)
+        checkText(R.id.qm_protein_grams_per_kg_max, EMPTY_STRING)
+        checkText(R.id.qm_protein_grams_per_day_min, EMPTY_STRING)
+        checkText(R.id.qm_protein_grams_per_day_max, EMPTY_STRING)
+    }
+
+    fun clickProteinClear() {
+        clickViewId(R.id.qm_protein_clear_btn)
+    }
+
+    fun clickProteinCalculate() {
+        clickViewId(R.id.qm_protein_calculate_btn)
+    }
+    //endregion
+
+    //region Fluids
+    fun enterMlPerKgMin(kcal: String) {
+        enterText(R.id.qm_fluid_ml_per_kg_min, kcal)
+    }
+
+    fun enterMlPerKgMax(kcal: String) {
+        enterText(R.id.qm_fluid_ml_per_kg_max, kcal)
+    }
+
+    fun checkMlPerDayMin(kcal: String) {
+        checkText(R.id.qm_fluid_ml_per_day_min, kcal)
+    }
+
+    fun checkMlPerDayMax(kcal: String) {
+        checkText(R.id.qm_fluid_ml_per_day_max, kcal)
+    }
+
+    fun setFluidTextProgrammatically() {
+        setTextProgrammatically(R.id.qm_fluid_ml_per_kg_min, "1")
+        setTextProgrammatically(R.id.qm_fluid_ml_per_kg_max, "2")
+        setTextProgrammatically(R.id.qm_fluid_ml_per_day_min, "3")
+        setTextProgrammatically(R.id.qm_fluid_ml_per_day_max, "4")
+    }
+
+    fun checkProgrammaticallySetFluidFields() {
+        checkText(R.id.qm_fluid_ml_per_kg_min, "1")
+        checkText(R.id.qm_fluid_ml_per_kg_max, "2")
+        checkText(R.id.qm_fluid_ml_per_day_min, "3")
+        checkText(R.id.qm_fluid_ml_per_day_max, "4")
+    }
+
+    fun checkFluidFieldsClear() {
+        checkText(R.id.qm_fluid_ml_per_kg_min, EMPTY_STRING)
+        checkText(R.id.qm_fluid_ml_per_kg_max, EMPTY_STRING)
+        checkText(R.id.qm_fluid_ml_per_day_min, EMPTY_STRING)
+        checkText(R.id.qm_fluid_ml_per_day_max, EMPTY_STRING)
+    }
+
+    fun clickFluidClear() {
+        clickViewId(R.id.qm_fluid_clear_btn)
+    }
+
+    fun clickFluidCalculate() {
+        clickViewId(R.id.qm_fluid_calculate_btn)
     }
     //endregion
 }
