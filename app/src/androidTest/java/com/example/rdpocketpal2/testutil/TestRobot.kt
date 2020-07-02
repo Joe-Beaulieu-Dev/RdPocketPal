@@ -13,8 +13,8 @@ import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -23,9 +23,7 @@ import org.hamcrest.Matcher
 
 open class TestRobot {
     fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
-            onView(withId(viewId))
-                    .perform(ViewActions.typeText(text)
-                            , ViewActions.closeSoftKeyboard())
+            onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
 
     fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction =
             onView(withId(id)).perform(object: ViewAction {
@@ -42,17 +40,17 @@ open class TestRobot {
                 }
             })
 
+    fun checkEditTextError(@IdRes viewId: Int, errorText: String?): ViewInteraction =
+            onView(withId(viewId)).check(matches(hasErrorText(errorText)))
+
     fun clickViewId(@IdRes viewId: Int): ViewInteraction =
-            onView(withId(viewId))
-                    .perform(ViewActions.click())
+            onView(withId(viewId)).perform(click())
 
     fun clickViewText(@IdRes viewId: Int): ViewInteraction =
-            onView(withText(viewId))
-                    .perform(ViewActions.click())
+            onView(withText(viewId)).perform(click())
 
     fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
-            onView(withId(viewId))
-                    .check(ViewAssertions.matches(withText(text)))
+            onView(withId(viewId)).check(matches(withText(text)))
 
     fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
             onView(withId(id)).perform(object : ViewAction {
@@ -74,10 +72,10 @@ open class TestRobot {
         openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().targetContext)
         // open settings screen
-        onView(withText(R.string.text_settings)).perform(ViewActions.click())
+        onView(withText(R.string.text_settings)).perform(click())
     }
 
-    fun <T : Activity>rotateScreen(rule: ActivityTestRule<T>, instrumentation: Instrumentation) {
+    fun <T : Activity> rotateScreen(rule: ActivityTestRule<T>, instrumentation: Instrumentation) {
         // get current orientation and set value to opposite
         val orientation: Int =
                 if (rule.activity.resources.configuration.orientation

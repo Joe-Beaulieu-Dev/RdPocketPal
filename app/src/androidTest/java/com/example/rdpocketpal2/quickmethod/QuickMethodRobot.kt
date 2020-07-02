@@ -22,6 +22,15 @@ class QuickMethodRobot : TestRobot() {
     fun checkWeight(weight: String) {
         checkText(R.id.qm_weight_editText, weight)
     }
+
+    fun <T : Activity> checkWeightNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_weight_editText
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkWeightNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_weight_editText, null)
+    }
     //endregion
 
     //region Preferences
@@ -87,6 +96,24 @@ class QuickMethodRobot : TestRobot() {
         checkText(R.id.qm_calorie_kcal_per_day_max, kcal)
     }
 
+    fun <T : Activity> checkKcalMinNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_calorie_kcal_per_kg_min
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkKcalMaxNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_calorie_kcal_per_kg_max
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkKcalMinNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_calorie_kcal_per_kg_min, null)
+    }
+
+    fun <T : Activity> checkKcalMaxNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_calorie_kcal_per_kg_max, null)
+    }
+
     fun setCalorieTextProgrammatically() {
         setTextProgrammatically(R.id.qm_calorie_kcal_per_kg_min, "1")
         setTextProgrammatically(R.id.qm_calorie_kcal_per_kg_max, "2")
@@ -134,6 +161,24 @@ class QuickMethodRobot : TestRobot() {
         checkText(R.id.qm_protein_grams_per_day_max, kcal)
     }
 
+    fun <T : Activity> checkGramsMinNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_protein_grams_per_kg_min
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkGramsMaxNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_protein_grams_per_kg_max
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkGramsMinNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_protein_grams_per_kg_min, null)
+    }
+
+    fun <T : Activity> checkGramsMaxNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_protein_grams_per_kg_max, null)
+    }
+
     fun setProteinTextProgrammatically() {
         setTextProgrammatically(R.id.qm_protein_grams_per_kg_min, "1")
         setTextProgrammatically(R.id.qm_protein_grams_per_kg_max, "2")
@@ -179,6 +224,24 @@ class QuickMethodRobot : TestRobot() {
 
     fun checkMlPerDayMax(kcal: String) {
         checkText(R.id.qm_fluid_ml_per_day_max, kcal)
+    }
+
+    fun <T : Activity> checkMlMinNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_min
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkMlMaxNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_max
+                , TestUtil.getString(rule, R.string.error_enter_a_number))
+    }
+
+    fun <T : Activity> checkMlMinNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_min, null)
+    }
+
+    fun <T : Activity> checkMlMaxNoError(rule: ActivityTestRule<T>) {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_max, null)
     }
 
     fun setFluidTextProgrammatically() {

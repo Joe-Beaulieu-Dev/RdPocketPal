@@ -1,5 +1,6 @@
 package com.example.rdpocketpal2.quickmethod
 
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -19,6 +20,7 @@ const val FACTOR_MAX: String = "30"
 const val OUTPUT_MIN_ONE_DECIMAL: String = "1519"
 const val OUTPUT_MIN_TWO_DECIMAL: String = "1518.75"
 const val OUTPUT_MAX_TWO_DECIMAL: String = "2250"
+const val INVALID_ENTRY_NOT_NUMBER: String = "."
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -242,8 +244,77 @@ class QuickMethodTest {
     }
     //endregion
 
+    //region Error messages
+    @Test
+    fun checkWeightError_notANumber_displays() {
+        // invalid input into Weight field, then check for NaN error on EditText
+        withQuickMethodRobot {
+            // input
+            enterWeight(INVALID_ENTRY_NOT_NUMBER)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_calorie_kcal_per_kg_min)
+            pressBack()
+
+            // validate error
+            checkWeightNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkCalorieError_notANumber_displays() {
+        // invalid input into Calorie fields, then check for NaN error on EditText
+        withQuickMethodRobot {
+            // input
+            enterKcalPerKgMin(INVALID_ENTRY_NOT_NUMBER)
+            enterKcalPerKgMax(INVALID_ENTRY_NOT_NUMBER)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkKcalMinNanError(activityRule)
+            checkKcalMaxNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkProteinError_notANumber_displays() {
+        // invalid input into Protein fields, then check for NaN error on EditText
+        withQuickMethodRobot {
+            // input
+            enterGramsPerKgMin(INVALID_ENTRY_NOT_NUMBER)
+            enterGramsPerKgMax(INVALID_ENTRY_NOT_NUMBER)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkGramsMinNanError(activityRule)
+            checkGramsMaxNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkFluidsError_notANumber_displays() {
+        // invalid input into Fluids fields, then check for NaN error on EditText
+        withQuickMethodRobot {
+            // input
+            enterMlPerKgMin(INVALID_ENTRY_NOT_NUMBER)
+            enterMlPerKgMax(INVALID_ENTRY_NOT_NUMBER)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkMlMinNanError(activityRule)
+            checkMlMaxNanError(activityRule)
+        }
+    }
+    //endregion
+
     @Test
     fun orientationChange_fieldPersistence() {
+        // enter data into all fields, change orientation twice, and check that input persists
         withQuickMethodRobot {
             // set all fields
             enterWeight(WEIGHT_METRIC)
