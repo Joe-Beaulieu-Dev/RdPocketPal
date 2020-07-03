@@ -76,15 +76,14 @@ class QuickMethodTest {
             setInputMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
-            enterKcalPerKgMin(FACTOR_MIN)
-            enterKcalPerKgMax(FACTOR_MAX)
-            clickCalorieCalculate()
-            // validate calculation
-            checkKcalPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkKcalPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
-            // click clear and validate
-            clickCalorieClear()
-            checkCalorieFieldsClear()
+            inCalories {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -96,12 +95,14 @@ class QuickMethodTest {
             setInputStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
-            enterKcalPerKgMin(FACTOR_MIN)
-            enterKcalPerKgMax(FACTOR_MAX)
-            clickCalorieCalculate()
-            // validate calculation
-            checkKcalPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkKcalPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inCalories {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -109,12 +110,14 @@ class QuickMethodTest {
     fun calories_clear_fields() {
         // set text on all Calorie fields, clear, and validate
         withQuickMethodRobot {
-            // set text on all fields
-            setCalorieTextProgrammatically()
-            // clear fields
-            clickCalorieClear()
-            // validate
-            checkCalorieFieldsClear()
+            inCalories {
+                // set text on all fields
+                setAllFieldsProgrammatically()
+                // clear fields
+                clickClear()
+                // validate
+                checkFieldsClear()
+            }
         }
     }
     //endregion
@@ -128,12 +131,14 @@ class QuickMethodTest {
             setInputMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
-            enterGramsPerKgMin(FACTOR_MIN)
-            enterGramsPerKgMax(FACTOR_MAX)
-            clickProteinCalculate()
-            // validate calculation
-            checkGramsPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkGramsPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inProtein {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -145,12 +150,14 @@ class QuickMethodTest {
             setInputStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
-            enterGramsPerKgMin(FACTOR_MIN)
-            enterGramsPerKgMax(FACTOR_MAX)
-            clickProteinCalculate()
-            // validate calculation
-            checkGramsPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkGramsPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inProtein {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -158,12 +165,14 @@ class QuickMethodTest {
     fun protein_clear_fields() {
         // set text on all Protein fields, clear, and validate
         withQuickMethodRobot {
-            // set text on all fields
-            setProteinTextProgrammatically()
-            // clear fields
-            clickProteinClear()
-            // validate
-            checkProteinFieldsClear()
+            inProtein {
+                // set text on all fields
+                setAllFieldsProgrammatically()
+                // clear fields
+                clickClear()
+                // validate
+                checkFieldsClear()
+            }
         }
     }
     //endregion
@@ -177,12 +186,14 @@ class QuickMethodTest {
             setInputMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
-            enterMlPerKgMin(FACTOR_MIN)
-            enterMlPerKgMax(FACTOR_MAX)
-            clickFluidCalculate()
-            // validate calculation
-            checkMlPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkMlPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inFluids {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -194,12 +205,14 @@ class QuickMethodTest {
             setInputStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
-            enterMlPerKgMin(FACTOR_MIN)
-            enterMlPerKgMax(FACTOR_MAX)
-            clickFluidCalculate()
-            // validate calculation
-            checkMlPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkMlPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inFluids {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate calculation
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
 
@@ -207,12 +220,14 @@ class QuickMethodTest {
     fun fluid_clear_fields() {
         // set text on all Fluid fields, clear, and validate
         withQuickMethodRobot {
-            // set text on all fields
-            setFluidTextProgrammatically()
-            // clear fields
-            clickFluidClear()
-            // validate
-            checkFluidFieldsClear()
+            inFluids {
+                // set text on all fields
+                setAllFieldsProgrammatically()
+                // clear fields
+                clickClear()
+                // validate
+                checkFieldsClear()
+            }
         }
     }
     //endregion
@@ -224,22 +239,28 @@ class QuickMethodTest {
             // set prefs via UI
             setDecimalReductionMethodViaUi(R.string.key_rounding)
             setNumericScaleViaUi(0)
+
             // input and calculate
             enterWeight(WEIGHT_METRIC)
-            enterKcalPerKgMin(FACTOR_MIN)
-            enterKcalPerKgMax(FACTOR_MAX)
-            clickCalorieCalculate()
-            // validate rounded int results
-            checkKcalPerDayMin(OUTPUT_MIN_ONE_DECIMAL)
-            checkKcalPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+            inCalories {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate rounded int results
+                checkMinOutput(OUTPUT_MIN_ONE_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
 
             // set prefs via UI back to default
             setNumericScaleViaUi(2)
-            // calculate
-            clickCalorieCalculate()
-            // validate rounded double results
-            checkKcalPerDayMin(OUTPUT_MIN_TWO_DECIMAL)
-            checkKcalPerDayMax(OUTPUT_MAX_TWO_DECIMAL)
+
+            inCalories {
+                // calculate
+                clickCalculate()
+                // validate rounded double results
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+            }
         }
     }
     //endregion
@@ -264,16 +285,17 @@ class QuickMethodTest {
     fun checkCalorieError_notANumber_displays() {
         // enter invalid input into Calorie fields, then check for NaN error on EditText
         withQuickMethodRobot {
-            // input
-            enterKcalPerKgMin(INVALID_ENTRY_NOT_NUMBER)
-            enterKcalPerKgMax(INVALID_ENTRY_NOT_NUMBER)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inCalories {
+                // input
+                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkKcalMinNanError(activityRule)
-            checkKcalMaxNanError(activityRule)
+                // validate errors
+                checkMinInputNanError(activityRule)
+                checkMaxInputNanError(activityRule)
+            }
         }
     }
 
@@ -281,16 +303,17 @@ class QuickMethodTest {
     fun checkProteinError_notANumber_displays() {
         // enter invalid input into Protein fields, then check for NaN error on EditText
         withQuickMethodRobot {
-            // input
-            enterGramsPerKgMin(INVALID_ENTRY_NOT_NUMBER)
-            enterGramsPerKgMax(INVALID_ENTRY_NOT_NUMBER)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inProtein {
+                // input
+                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkGramsMinNanError(activityRule)
-            checkGramsMaxNanError(activityRule)
+                // validate errors
+                checkMinInputNanError(activityRule)
+                checkMaxInputNanError(activityRule)
+            }
         }
     }
 
@@ -298,16 +321,17 @@ class QuickMethodTest {
     fun checkFluidsError_notANumber_displays() {
         // enter invalid input into Fluids fields, then check for NaN error on EditText
         withQuickMethodRobot {
-            // input
-            enterMlPerKgMin(INVALID_ENTRY_NOT_NUMBER)
-            enterMlPerKgMax(INVALID_ENTRY_NOT_NUMBER)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inFluids {
+                // input
+                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkMlMinNanError(activityRule)
-            checkMlMaxNanError(activityRule)
+                // validate errors
+                checkMinInputNanError(activityRule)
+                checkMaxInputNanError(activityRule)
+            }
         }
     }
 
@@ -330,16 +354,17 @@ class QuickMethodTest {
     fun checkCalorieError_noError() {
         // enter valid input into Calorie fields, then check that EditText doesn't display an error
         withQuickMethodRobot {
-            // input
-            enterKcalPerKgMin(FACTOR_MIN)
-            enterKcalPerKgMax(FACTOR_MAX)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inCalories {
+                // input
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkKcalMinNoError(activityRule)
-            checkKcalMaxNoError(activityRule)
+                // validate errors
+                checkMinInputNoError()
+                checkMaxInputNoError()
+            }
         }
     }
 
@@ -347,16 +372,17 @@ class QuickMethodTest {
     fun checkProteinError_noError() {
         // enter valid input into Protein fields, then check that EditText doesn't display an error
         withQuickMethodRobot {
-            // input
-            enterGramsPerKgMin(FACTOR_MIN)
-            enterGramsPerKgMax(FACTOR_MAX)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inProtein {
+                // input
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkGramsMinNoError(activityRule)
-            checkGramsMaxNoError(activityRule)
+                // validate errors
+                checkMinInputNoError()
+                checkMaxInputNoError()
+            }
         }
     }
 
@@ -364,16 +390,17 @@ class QuickMethodTest {
     fun checkFluidsError_noError() {
         // enter valid input into Fluids fields, then check that EditText doesn't display an error
         withQuickMethodRobot {
-            // input
-            enterMlPerKgMin(FACTOR_MIN)
-            enterMlPerKgMax(FACTOR_MAX)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_weight_editText)
-            pressBack()
+            inFluids {
+                // input
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                // leave final field and close keyboard
+                leaveField()
 
-            // validate errors
-            checkMlMinNoError(activityRule)
-            checkMlMaxNoError(activityRule)
+                // validate errors
+                checkMinInputNoError()
+                checkMaxInputNoError()
+            }
         }
     }
     //endregion
@@ -384,19 +411,31 @@ class QuickMethodTest {
         withQuickMethodRobot {
             // set all fields
             enterWeight(WEIGHT_METRIC)
-            setCalorieTextProgrammatically()
-            setProteinTextProgrammatically()
-            setFluidTextProgrammatically()
+            inCalories {
+                setAllFieldsProgrammatically()
+            }
+            inProtein {
+                setAllFieldsProgrammatically()
+            }
+            inFluids {
+                setAllFieldsProgrammatically()
+            }
+
             // rotate screen
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+
             // validate all fields
             checkWeight(WEIGHT_METRIC)
-            checkProgrammaticallySetCalorieFields()
-            checkProgrammaticallySetProteinFields()
-            checkProgrammaticallySetFluidFields()
+            inCalories {
+                checkAllProgrammaticallySetFields()
+            }
+            inProtein {
+                checkAllProgrammaticallySetFields()
+            }
+            inFluids {
+                checkAllProgrammaticallySetFields()
+            }
         }
     }
-
-    private fun withQuickMethodRobot(fn: QuickMethodRobot.() -> Unit) = QuickMethodRobot().apply(fn)
 }

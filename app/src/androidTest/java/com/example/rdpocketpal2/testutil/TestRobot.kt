@@ -21,6 +21,10 @@ import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import org.hamcrest.Matcher
 
+@DslMarker
+annotation class TestRobotMarker
+
+@TestRobotMarker
 open class TestRobot {
     fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
