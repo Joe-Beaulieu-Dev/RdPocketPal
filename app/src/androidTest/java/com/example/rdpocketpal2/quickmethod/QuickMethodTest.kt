@@ -247,7 +247,7 @@ class QuickMethodTest {
     //region Error messages
     @Test
     fun checkWeightError_notANumber_displays() {
-        // invalid input into Weight field, then check for NaN error on EditText
+        // enter invalid input into Weight field, then check for NaN error on EditText
         withQuickMethodRobot {
             // input
             enterWeight(INVALID_ENTRY_NOT_NUMBER)
@@ -262,7 +262,7 @@ class QuickMethodTest {
 
     @Test
     fun checkCalorieError_notANumber_displays() {
-        // invalid input into Calorie fields, then check for NaN error on EditText
+        // enter invalid input into Calorie fields, then check for NaN error on EditText
         withQuickMethodRobot {
             // input
             enterKcalPerKgMin(INVALID_ENTRY_NOT_NUMBER)
@@ -279,7 +279,7 @@ class QuickMethodTest {
 
     @Test
     fun checkProteinError_notANumber_displays() {
-        // invalid input into Protein fields, then check for NaN error on EditText
+        // enter invalid input into Protein fields, then check for NaN error on EditText
         withQuickMethodRobot {
             // input
             enterGramsPerKgMin(INVALID_ENTRY_NOT_NUMBER)
@@ -296,7 +296,7 @@ class QuickMethodTest {
 
     @Test
     fun checkFluidsError_notANumber_displays() {
-        // invalid input into Fluids fields, then check for NaN error on EditText
+        // enter invalid input into Fluids fields, then check for NaN error on EditText
         withQuickMethodRobot {
             // input
             enterMlPerKgMin(INVALID_ENTRY_NOT_NUMBER)
@@ -308,6 +308,72 @@ class QuickMethodTest {
             // validate errors
             checkMlMinNanError(activityRule)
             checkMlMaxNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkWeightError_noError() {
+        // enter valid input into Weight field, then check that EditText doesn't display an error
+        withQuickMethodRobot {
+            // input
+            enterWeight(WEIGHT_METRIC)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_calorie_kcal_per_kg_min)
+            pressBack()
+
+            // validate error
+            checkWeightNoError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkCalorieError_noError() {
+        // enter valid input into Calorie fields, then check that EditText doesn't display an error
+        withQuickMethodRobot {
+            // input
+            enterKcalPerKgMin(FACTOR_MIN)
+            enterKcalPerKgMax(FACTOR_MAX)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkKcalMinNoError(activityRule)
+            checkKcalMaxNoError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkProteinError_noError() {
+        // enter valid input into Protein fields, then check that EditText doesn't display an error
+        withQuickMethodRobot {
+            // input
+            enterGramsPerKgMin(FACTOR_MIN)
+            enterGramsPerKgMax(FACTOR_MAX)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkGramsMinNoError(activityRule)
+            checkGramsMaxNoError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkFluidsError_noError() {
+        // enter valid input into Fluids fields, then check that EditText doesn't display an error
+        withQuickMethodRobot {
+            // input
+            enterMlPerKgMin(FACTOR_MIN)
+            enterMlPerKgMax(FACTOR_MAX)
+            // leave final field and close keyboard
+            clickViewId(R.id.qm_weight_editText)
+            pressBack()
+
+            // validate errors
+            checkMlMinNoError(activityRule)
+            checkMlMaxNoError(activityRule)
         }
     }
     //endregion
