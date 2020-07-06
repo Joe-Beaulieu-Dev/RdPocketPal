@@ -4,9 +4,10 @@ import android.app.Activity
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 
-class ProteinRobot : QuickMethodRobot() {
+class ProteinRobot : TestRobot() {
 
     fun enterMinInput(kcal: String) {
         enterText(R.id.qm_protein_grams_per_kg_min, kcal)

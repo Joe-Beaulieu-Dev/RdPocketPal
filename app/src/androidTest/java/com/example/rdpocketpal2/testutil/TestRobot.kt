@@ -26,10 +26,10 @@ annotation class TestRobotMarker
 
 @TestRobotMarker
 open class TestRobot {
-    fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
+    protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
 
-    fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction =
+    protected fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction =
             onView(withId(id)).perform(object: ViewAction {
                 override fun getDescription(): String {
                     return "Set the value of an EditText programmatically"
@@ -44,19 +44,19 @@ open class TestRobot {
                 }
             })
 
-    fun checkEditTextError(@IdRes viewId: Int, errorText: String?): ViewInteraction =
+    protected fun checkEditTextError(@IdRes viewId: Int, errorText: String?): ViewInteraction =
             onView(withId(viewId)).check(matches(hasErrorText(errorText)))
 
-    fun clickViewId(@IdRes viewId: Int): ViewInteraction =
+    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction =
             onView(withId(viewId)).perform(click())
 
-    fun clickViewText(@IdRes viewId: Int): ViewInteraction =
+    protected fun clickViewText(@IdRes viewId: Int): ViewInteraction =
             onView(withText(viewId)).perform(click())
 
-    fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
+    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).check(matches(withText(text)))
 
-    fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
+    protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
             onView(withId(id)).perform(object : ViewAction {
                 override fun getDescription(): String {
                     return "Set the value of a NumberPicker"
@@ -71,7 +71,7 @@ open class TestRobot {
                 }
             })
 
-    fun openPreferences() {
+    protected fun openPreferences() {
         // open overflow menu
         openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().targetContext)

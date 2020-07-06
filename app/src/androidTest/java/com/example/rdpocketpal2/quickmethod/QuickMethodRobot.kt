@@ -31,6 +31,11 @@ open class QuickMethodRobot : TestRobot() {
     fun <T : Activity> checkWeightNoError(rule: ActivityTestRule<T>) {
         checkEditTextError(R.id.qm_weight_editText, null)
     }
+
+    fun leaveField() {
+        clickViewId(R.id.qm_calorie_kcal_per_kg_min)
+        pressBack()
+    }
     //endregion
 
     //region Preferences

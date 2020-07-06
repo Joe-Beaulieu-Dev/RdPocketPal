@@ -1,6 +1,5 @@
 package com.example.rdpocketpal2.quickmethod
 
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -272,9 +271,8 @@ class QuickMethodTest {
         withQuickMethodRobot {
             // input
             enterWeight(INVALID_ENTRY_NOT_NUMBER)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_calorie_kcal_per_kg_min)
-            pressBack()
+            // leave weight field and close keyboard
+            leaveField()
 
             // validate error
             checkWeightNanError(activityRule)
@@ -341,9 +339,8 @@ class QuickMethodTest {
         withQuickMethodRobot {
             // input
             enterWeight(WEIGHT_METRIC)
-            // leave final field and close keyboard
-            clickViewId(R.id.qm_calorie_kcal_per_kg_min)
-            pressBack()
+            // leave weight field and close keyboard
+            leaveField()
 
             // validate error
             checkWeightNoError(activityRule)

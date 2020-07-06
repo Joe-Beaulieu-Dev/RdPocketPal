@@ -4,9 +4,10 @@ import android.app.Activity
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 
-class CalorieRobot : QuickMethodRobot() {
+class CalorieRobot : TestRobot() {
 
     fun enterMinInput(kcal: String) {
         enterText(R.id.qm_calorie_kcal_per_kg_min, kcal)
