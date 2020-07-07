@@ -73,30 +73,33 @@ fun RadioGroup.setRadioGroupListener(listener: InverseBindingListener) {
 //endregion
 
 //region Spinner
-@BindingAdapter("selectedSpinnerItem")
-fun Spinner.setSelectionFromString(selection: String?) {
-    if (selection != null && selection != selectedItem) {
-        // TODO sort this out
-        val pos = (adapter as? ArrayAdapter<String>)!!.getPosition(selection)
-        setSelection(pos, true)
-    }
-}
-
 @InverseBindingAdapter(attribute = "selectedSpinnerItem")
 fun Spinner.getSelectionString(): String? {
     return selectedItem?.toString()
 }
 
-@BindingAdapter("selectedSpinnerItemAttrChanged")
-fun Spinner.setSpinnerListener(listener: InverseBindingListener) {
+@BindingAdapter(value = ["selectedSpinnerItem", "selectedSpinnerItemAttrChanged"], requireAll = false)
+fun Spinner.setSpinnerListener(selection: String?, listener: InverseBindingListener) {
+    //for selectedSpinnerItemAttrChanged
     onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            // prevent calls to listener.onChange() that were happening on orientation change
+            if (selection == parent?.selectedItem) {
+                return
+            }
             listener.onChange()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
             // empty
         }
+    }
+
+    // for selectedSpinnerItem
+    if (selection != null && selection != selectedItem) {
+        // TODO sort this out
+        val pos = (adapter as? ArrayAdapter<String>)!!.getPosition(selection)
+        setSelection(pos, true)
     }
 }
 //endregion
