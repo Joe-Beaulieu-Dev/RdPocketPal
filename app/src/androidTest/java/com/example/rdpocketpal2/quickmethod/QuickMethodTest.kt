@@ -5,6 +5,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -19,7 +20,6 @@ const val FACTOR_MAX: String = "30"
 const val OUTPUT_MIN_ONE_DECIMAL: String = "1519"
 const val OUTPUT_MIN_TWO_DECIMAL: String = "1518.75"
 const val OUTPUT_MAX_TWO_DECIMAL: String = "2250"
-const val INVALID_ENTRY_NOT_NUMBER: String = "."
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -403,6 +403,7 @@ class QuickMethodTest {
     }
     //endregion
 
+    //region Field persistence
     @Test
     fun orientationChange_fieldPersistence() {
         // enter data into all fields, change orientation twice, and check that input persists
@@ -436,4 +437,5 @@ class QuickMethodTest {
             }
         }
     }
+    //endregion
 }

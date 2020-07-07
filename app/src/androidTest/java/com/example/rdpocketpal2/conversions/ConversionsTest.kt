@@ -5,6 +5,8 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.EMPTY_STRING
+import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -27,14 +29,24 @@ const val GM_TO_MEQ_MAGNESIUM_MEQ: String = "822.87595"
 const val GM_TO_MEQ_PHOSPHORUS_MEQ: String = "968.55427"
 const val GM_TO_MEQ_POTASSIUM_MEQ: String = "255.76756"
 const val GM_TO_MEQ_SODIUM_MEQ: String = "434.97173"
-// mg to meq
+// mg to meq input
 const val MG_TO_MEQ_MILLIGRAMS: String = "10000"
-const val MG_TO_MEQ_CALCIUM_MEQ: String = "499.0269"
-const val MG_TO_MEQ_CHLORINE_MEQ: String = "282.08745"
-const val MG_TO_MEQ_MAGNESIUM_MEQ: String = "822.87595"
-const val MG_TO_MEQ_PHOSPHORUS_MEQ: String = "968.55427"
-const val MG_TO_MEQ_POTASSIUM_MEQ: String = "255.76756"
-const val MG_TO_MEQ_SODIUM_MEQ: String = "434.97173"
+const val MG_TO_MEQ_CALCIUM_MEQ_INPUT: String = "499.0268975498"
+const val MG_TO_MEQ_CHLORINE_MEQ_INPUT: String = "282.0874471086"
+const val MG_TO_MEQ_MAGNESIUM_MEQ_INPUT: String = "822.8759514503"
+const val MG_TO_MEQ_PHOSPHORUS_MEQ_INPUT: String = "968.5542713243"
+const val MG_TO_MEQ_POTASSIUM_MEQ_INPUT: String = "255.7675584429"
+const val MG_TO_MEQ_SODIUM_MEQ_INPUT: String = "434.9717268378"
+// mg to meq output
+// values rounded to 5 decimal places. Conversions screen locked to Rounding 5 for preferences
+const val MG_TO_MEQ_CALCIUM_MEQ_OUTPUT: String = "499.0269"
+const val MG_TO_MEQ_CHLORINE_MEQ_OUTPUT: String = "282.08745"
+const val MG_TO_MEQ_MAGNESIUM_MEQ_OUTPUT: String = "822.87595"
+const val MG_TO_MEQ_PHOSPHORUS_MEQ_OUTPUT: String = "968.55427"
+const val MG_TO_MEQ_POTASSIUM_MEQ_OUTPUT: String = "255.76756"
+const val MG_TO_MEQ_SODIUM_MEQ_OUTPUT: String = "434.97173"
+
+
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -256,13 +268,37 @@ class ConversionsTest {
 
     //region mg to mEq
     @Test
+    fun mgToMeq_calcium_leftToRight_isCorrect() {
+        withConversionsRobot {
+            inMgMeq {
+                navigateToMgMeq(activityRule)
+                selectCalcium(activityRule)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_CALCIUM_MEQ_OUTPUT)
+            }
+        }
+    }
+
+    @Test
+    fun mgToMeq_calcium_rightToLeft_isCorrect() {
+        withConversionsRobot {
+            inMgMeq {
+                navigateToMgMeq(activityRule)
+                selectCalcium(activityRule)
+                enterMilliequivalents(MG_TO_MEQ_CALCIUM_MEQ_INPUT)
+                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+            }
+        }
+    }
+
+    @Test
     fun mgToMeq_chlorine_leftToRight_isCorrect() {
         withConversionsRobot {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectChlorine(activityRule)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ_OUTPUT)
             }
         }
     }
@@ -273,7 +309,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectChlorine(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ)
+                enterMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ_INPUT)
                 checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
             }
         }
@@ -285,8 +321,8 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectMagnesium(activityRule)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ_OUTPUT)
             }
         }
     }
@@ -297,7 +333,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectMagnesium(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ)
+                enterMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ_INPUT)
                 checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
             }
         }
@@ -309,8 +345,8 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectPhosphorus(activityRule)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ_OUTPUT)
             }
         }
     }
@@ -321,7 +357,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectPhosphorus(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ)
+                enterMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ_INPUT)
                 checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
             }
         }
@@ -333,8 +369,8 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectPotassium(activityRule)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ_OUTPUT)
             }
         }
     }
@@ -345,7 +381,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectPotassium(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ)
+                enterMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ_INPUT)
                 checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
             }
         }
@@ -357,8 +393,8 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectSodium(activityRule)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_SODIUM_MEQ)
+                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilliequivalents(MG_TO_MEQ_SODIUM_MEQ_OUTPUT)
             }
         }
     }
@@ -369,8 +405,91 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectSodium(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_SODIUM_MEQ)
+                enterMilliequivalents(MG_TO_MEQ_SODIUM_MEQ_INPUT)
                 checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+            }
+        }
+    }
+    //endregion
+
+    //region Clear button
+    @Test
+    fun clearFields() {
+        withConversionsRobot {
+            inInCm {
+                enterInches(IN_TO_CM_INCHES)
+                checkCentimeters(IN_TO_CM_CENTIMETERS)
+            }
+            clickClear()
+            inInCm {
+                checkInches(EMPTY_STRING)
+                checkCentimeters(EMPTY_STRING)
+            }
+        }
+    }
+    //endregion
+
+    //region Errors
+    @Test
+    fun checkError_leftField_notANumber_displays() {
+        withConversionsRobot {
+            inInCm {
+                navigateToInCm(activityRule)
+                enterInches(INVALID_ENTRY_NOT_NUMBER)
+            }
+            checkLeftFieldNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_rightField_notANumber_displays() {
+        withConversionsRobot {
+            inInCm {
+                navigateToInCm(activityRule)
+                enterCentimeters(INVALID_ENTRY_NOT_NUMBER)
+            }
+            checkRightFieldNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_leftField_noError_displays() {
+        withConversionsRobot {
+            inInCm {
+                navigateToInCm(activityRule)
+                enterInches(IN_TO_CM_INCHES)
+            }
+            checkLeftFieldNoError()
+        }
+    }
+
+    @Test
+    fun checkError_rightField_noError_displays() {
+        withConversionsRobot {
+            inInCm {
+                navigateToInCm(activityRule)
+                enterCentimeters(IN_TO_CM_CENTIMETERS)
+            }
+            checkRightFieldNoError()
+        }
+    }
+    //endregion
+
+    //region Field persistence
+    @Test
+    fun orientationChange_fieldPersistence() {
+        withConversionsRobot {
+            // input
+            inInCm {
+                enterInches(IN_TO_CM_INCHES)
+            }
+            // rotate screen
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validate field persistence
+            inInCm {
+                checkInches(IN_TO_CM_INCHES)
+                checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
         }
     }

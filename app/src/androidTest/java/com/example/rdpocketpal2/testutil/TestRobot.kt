@@ -25,6 +25,7 @@ import org.hamcrest.Matchers.*
 
 //region Testing constants
 const val EMPTY_STRING = ""
+const val INVALID_ENTRY_NOT_NUMBER: String = "."
 //endregion
 
 @DslMarker
