@@ -8,10 +8,6 @@ import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 
-//region Testing constants
-const val EMPTY_STRING = ""
-//endregion
-
 open class QuickMethodRobot : TestRobot() {
 
     //region Weight
@@ -85,11 +81,11 @@ open class QuickMethodRobot : TestRobot() {
     //endregion
 
     //region Robot builders
-    fun inCalories(fn: CalorieRobot.() -> Unit): CalorieRobot = CalorieRobot().apply(fn)
+    fun inCalories(fn: CalorieRobot.() -> Unit) = CalorieRobot().apply(fn)
 
-    fun inProtein(fn: ProteinRobot.() -> Unit): ProteinRobot = ProteinRobot().apply(fn)
+    fun inProtein(fn: ProteinRobot.() -> Unit) = ProteinRobot().apply(fn)
 
-    fun inFluids(fn: FluidsRobot.() -> Unit): FluidsRobot = FluidsRobot().apply(fn)
+    fun inFluids(fn: FluidsRobot.() -> Unit) = FluidsRobot().apply(fn)
     //endregion
 }
 

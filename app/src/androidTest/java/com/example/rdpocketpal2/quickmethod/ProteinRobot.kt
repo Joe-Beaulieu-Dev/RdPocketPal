@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 

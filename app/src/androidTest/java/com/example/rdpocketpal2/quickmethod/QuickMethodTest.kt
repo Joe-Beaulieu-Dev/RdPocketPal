@@ -33,7 +33,8 @@ class QuickMethodTest {
     companion object {
         @BeforeClass
         @JvmStatic
-        fun before() {
+        fun beforeClass() {
+            // set preferences
             TestUtil.setDecimalReductionMethodPref(
                     InstrumentationRegistry.getInstrumentation().targetContext
                     , R.string.key_rounding)

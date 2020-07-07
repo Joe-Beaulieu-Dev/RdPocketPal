@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.annotation.IdRes
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.UiController
@@ -20,6 +21,11 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.*
+
+//region Testing constants
+const val EMPTY_STRING = ""
+//endregion
 
 @DslMarker
 annotation class TestRobotMarker
@@ -55,6 +61,21 @@ open class TestRobot {
 
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).check(matches(withText(text)))
+
+    protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
+                                   , @IdRes spinnerId: Int
+                                   , @IdRes stringId: Int): ViewInteraction {
+        // click conversion spinner
+        clickViewId(spinnerId)
+        // find target item and click it
+        return onData(allOf(`is`(instanceOf(String::class.java))
+                , `is`(TestUtil.getString(activityRule, stringId))))
+                .perform(click())
+    }
+
+    protected fun checkSpinnerSelection(@IdRes spinnerId: Int
+                                        , @IdRes stringId: Int): ViewInteraction =
+            onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
 
     protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
             onView(withId(id)).perform(object : ViewAction {
