@@ -64,14 +64,17 @@ open class TestRobot {
             onView(withId(viewId)).check(matches(withText(text)))
 
     protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
-                                   , @IdRes spinnerId: Int
-                                   , @IdRes stringId: Int): ViewInteraction {
+                                                  , @IdRes spinnerId: Int
+                                                  , @IdRes stringId: Int): ViewInteraction {
+        return clickSpinnerItem(spinnerId, TestUtil.getString(activityRule, stringId))
+    }
+
+    protected fun clickSpinnerItem(@IdRes spinnerId: Int
+                                   , selection: String): ViewInteraction {
         // click conversion spinner
         clickViewId(spinnerId)
         // find target item and click it
-        return onData(allOf(`is`(instanceOf(String::class.java))
-                , `is`(TestUtil.getString(activityRule, stringId))))
-                .perform(click())
+        return onData(allOf(`is`(instanceOf(String::class.java)), `is`(selection))).perform(click())
     }
 
     protected fun checkSpinnerSelection(@IdRes spinnerId: Int

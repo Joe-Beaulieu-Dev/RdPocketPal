@@ -45,8 +45,6 @@ const val MG_TO_MEQ_MAGNESIUM_MEQ_OUTPUT: String = "822.87595"
 const val MG_TO_MEQ_PHOSPHORUS_MEQ_OUTPUT: String = "968.55427"
 const val MG_TO_MEQ_POTASSIUM_MEQ_OUTPUT: String = "255.76756"
 const val MG_TO_MEQ_SODIUM_MEQ_OUTPUT: String = "434.97173"
-
-
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -412,9 +410,9 @@ class ConversionsTest {
     }
     //endregion
 
-    //region Clear button
+    //region Clear fields
     @Test
-    fun clearFields() {
+    fun clearFields_clearBtn() {
         withConversionsRobot {
             inInCm {
                 enterInches(IN_TO_CM_INCHES)
@@ -424,6 +422,39 @@ class ConversionsTest {
             inInCm {
                 checkInches(EMPTY_STRING)
                 checkCentimeters(EMPTY_STRING)
+            }
+        }
+    }
+
+    @Test
+    fun clearFields_conversionTypeSpinnerSelection() {
+        withConversionsRobot {
+            inInCm {
+                navigateToInCm(activityRule)
+                enterInches(IN_TO_CM_INCHES)
+                checkCentimeters(IN_TO_CM_CENTIMETERS)
+            }
+            inLbKg {
+                navigateToLbKg(activityRule)
+                checkPounds(EMPTY_STRING)
+                checkKilograms(EMPTY_STRING)
+            }
+        }
+    }
+
+    @Test
+    fun clearFields_elementSpinnerSelection() {
+        withConversionsRobot {
+            inGmMeq {
+                navigateToGmMeq(activityRule)
+                selectChlorine(activityRule)
+                enterGrams(GM_TO_MEQ_GRAMS)
+                checkMilliequivalents(GM_TO_MEQ_CHLORINE_MEQ)
+            }
+            selectRandomElement(activityRule)
+            inGmMeq {
+                checkGrams(EMPTY_STRING)
+                checkMilliequivalents(EMPTY_STRING)
             }
         }
     }
