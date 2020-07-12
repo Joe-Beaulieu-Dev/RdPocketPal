@@ -356,63 +356,68 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         clearField(mMlPerKgMax);
     }
 
+    /**
+     * Clears all results on screen. returns true if *any* results are cleared.
+     *
+     * @return true if any results are cleared
+     */
     private boolean clearAllResults() {
-        boolean allCleared = true;
+        boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (!clearCalorieResults()) {
-            allCleared = false;
+        if (clearCalorieResults()) {
+            anyFieldsCleared = true;
         }
-        if (!clearProteinResults()) {
-            allCleared = false;
+        if (clearProteinResults()) {
+            anyFieldsCleared = true;
         }
-        if (!clearFluidResults()) {
-            allCleared = false;
+        if (clearFluidResults()) {
+            anyFieldsCleared = true;
         }
 
-        return allCleared;
+        return anyFieldsCleared;
     }
 
     private boolean clearCalorieResults() {
-        boolean allCleared = true;
+        boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (!clearField(mKcalPerDayMin)) {
-            allCleared = false;
+        if (clearField(mKcalPerDayMin)) {
+            anyFieldsCleared = true;
         }
-        if (!clearField(mKcalPerDayMax)) {
-            allCleared = false;
+        if (clearField(mKcalPerDayMax)) {
+            anyFieldsCleared = true;
         }
 
-        return allCleared;
+        return anyFieldsCleared;
     }
 
     private boolean clearProteinResults() {
-        boolean allCleared = true;
+        boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (!clearField(mGramsPerDayMin)) {
-            allCleared = false;
+        if (clearField(mGramsPerDayMin)) {
+            anyFieldsCleared = true;
         }
-        if (!clearField(mGramsPerDayMax)) {
-            allCleared = false;
+        if (clearField(mGramsPerDayMax)) {
+            anyFieldsCleared = true;
         }
 
-        return allCleared;
+        return anyFieldsCleared;
     }
 
     private boolean clearFluidResults() {
-        boolean allCleared = true;
+        boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (!clearField(mMlPerDayMin)) {
-            allCleared = false;
+        if (clearField(mMlPerDayMin)) {
+            anyFieldsCleared = true;
         }
-        if (!clearField(mMlPerDayMax)) {
-            allCleared = false;
+        if (clearField(mMlPerDayMax)) {
+            anyFieldsCleared = true;
         }
 
-        return allCleared;
+        return anyFieldsCleared;
     }
 
     private boolean clearField(MutableLiveData<String> fieldData) {

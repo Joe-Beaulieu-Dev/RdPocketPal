@@ -18,6 +18,14 @@ class ProteinRobot : TestRobot() {
         enterText(R.id.qm_protein_grams_per_kg_max, kcal)
     }
 
+    fun checkMinInput(kcal: String) {
+        checkText(R.id.qm_protein_grams_per_kg_min, kcal)
+    }
+
+    fun checkMaxInput(kcal: String) {
+        checkText(R.id.qm_protein_grams_per_kg_max, kcal)
+    }
+
     fun checkMinOutput(kcal: String) {
         checkText(R.id.qm_protein_grams_per_day_min, kcal)
     }
@@ -64,17 +72,17 @@ class ProteinRobot : TestRobot() {
         pressBack()
     }
 
-    fun setAllFieldsProgrammatically() {
-        setTextProgrammatically(R.id.qm_protein_grams_per_kg_min, "1")
-        setTextProgrammatically(R.id.qm_protein_grams_per_kg_max, "2")
-        setTextProgrammatically(R.id.qm_protein_grams_per_day_min, "3")
-        setTextProgrammatically(R.id.qm_protein_grams_per_day_max, "4")
+    fun setAllFieldsProgrammatically(text: String) {
+        setTextProgrammatically(R.id.qm_protein_grams_per_kg_min, text)
+        setTextProgrammatically(R.id.qm_protein_grams_per_kg_max, text)
+        setTextProgrammatically(R.id.qm_protein_grams_per_day_min, text)
+        setTextProgrammatically(R.id.qm_protein_grams_per_day_max, text)
     }
 
-    fun checkAllProgrammaticallySetFields() {
-        checkText(R.id.qm_protein_grams_per_kg_min, "1")
-        checkText(R.id.qm_protein_grams_per_kg_max, "2")
-        checkText(R.id.qm_protein_grams_per_day_min, "3")
-        checkText(R.id.qm_protein_grams_per_day_max, "4")
+    fun checkAllProgrammaticallySetFields(text: String) {
+        checkText(R.id.qm_protein_grams_per_kg_min, text)
+        checkText(R.id.qm_protein_grams_per_kg_max, text)
+        checkText(R.id.qm_protein_grams_per_day_min, text)
+        checkText(R.id.qm_protein_grams_per_day_max, text)
     }
 }

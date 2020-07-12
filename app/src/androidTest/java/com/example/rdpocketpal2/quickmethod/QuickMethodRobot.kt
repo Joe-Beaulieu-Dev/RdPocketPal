@@ -80,6 +80,32 @@ open class QuickMethodRobot : TestRobot() {
     }
     //endregion
 
+    fun setAllFieldsProgrammatically(text: String) {
+        setTextProgrammatically(R.id.qm_weight_editText, text)
+        inCalories {
+            setAllFieldsProgrammatically(text)
+        }
+        inProtein {
+            setAllFieldsProgrammatically(text)
+        }
+        inFluids {
+            setAllFieldsProgrammatically(text)
+        }
+    }
+
+    fun checkAllProgrammaticallySetFields(text: String) {
+        checkWeight(text)
+        inCalories {
+            checkAllProgrammaticallySetFields(text)
+        }
+        inProtein {
+            checkAllProgrammaticallySetFields(text)
+        }
+        inFluids {
+            checkAllProgrammaticallySetFields(text)
+        }
+    }
+
     //region Robot builders
     fun inCalories(fn: CalorieRobot.() -> Unit) = CalorieRobot().apply(fn)
 

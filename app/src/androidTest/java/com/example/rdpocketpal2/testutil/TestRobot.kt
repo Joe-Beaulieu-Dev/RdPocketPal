@@ -20,6 +20,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.matchers.ToastMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 
@@ -62,6 +63,9 @@ open class TestRobot {
 
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).check(matches(withText(text)))
+
+    fun checkToastDisplayedWithMessage(@IdRes stringId: Int): ViewInteraction =
+            onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 
     protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
                                                   , @IdRes spinnerId: Int

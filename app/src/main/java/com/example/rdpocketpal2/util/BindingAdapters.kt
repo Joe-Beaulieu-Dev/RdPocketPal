@@ -47,8 +47,6 @@ fun RadioGroup.setSelectedSexBtnText(selection: String?) {
     // set initial value
     if (selection == null) {
         check(getChildAt(0).id)
-        // must be explicitly called using this method
-        getChildAt(0).callOnClick()
         return
     }
 

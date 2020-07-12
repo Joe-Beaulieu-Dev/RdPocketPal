@@ -5,6 +5,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
 import org.junit.BeforeClass
@@ -112,7 +113,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inCalories {
                 // set text on all fields
-                setAllFieldsProgrammatically()
+                setAllFieldsProgrammatically(WEIGHT_METRIC)
                 // clear fields
                 clickClear()
                 // validate
@@ -167,7 +168,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inProtein {
                 // set text on all fields
-                setAllFieldsProgrammatically()
+                setAllFieldsProgrammatically(WEIGHT_METRIC)
                 // clear fields
                 clickClear()
                 // validate
@@ -177,7 +178,7 @@ class QuickMethodTest {
     }
     //endregion
 
-    //region Protein
+    //region Fluid
     @Test
     fun fluid_calculate_metric() {
         // enter metric data into Fluids section, calculate, and verify
@@ -222,7 +223,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inFluids {
                 // set text on all fields
-                setAllFieldsProgrammatically()
+                setAllFieldsProgrammatically(WEIGHT_METRIC)
                 // clear fields
                 clickClear()
                 // validate
@@ -403,38 +404,56 @@ class QuickMethodTest {
     }
     //endregion
 
+    //region Clear fields
+    @Test
+    fun clearFields_unitRadioBtnPress() {
+        withQuickMethodRobot {
+            // input
+            setAllFieldsProgrammatically(WEIGHT_METRIC)
+
+            // change units
+            setInputStandard()
+
+            // check that outputs cleared and inputs remained
+            inCalories {
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
+            }
+            inProtein {
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
+            }
+            inFluids {
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
+            }
+
+            // check that correct error Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
+        }
+    }
+    //endregion
+
     //region Field persistence
     @Test
     fun orientationChange_fieldPersistence() {
         // enter data into all fields, change orientation twice, and check that input persists
         withQuickMethodRobot {
             // set all fields
-            enterWeight(WEIGHT_METRIC)
-            inCalories {
-                setAllFieldsProgrammatically()
-            }
-            inProtein {
-                setAllFieldsProgrammatically()
-            }
-            inFluids {
-                setAllFieldsProgrammatically()
-            }
+            setAllFieldsProgrammatically(WEIGHT_METRIC)
 
             // rotate screen
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
 
             // validate all fields
-            checkWeight(WEIGHT_METRIC)
-            inCalories {
-                checkAllProgrammaticallySetFields()
-            }
-            inProtein {
-                checkAllProgrammaticallySetFields()
-            }
-            inFluids {
-                checkAllProgrammaticallySetFields()
-            }
+            checkAllProgrammaticallySetFields(WEIGHT_METRIC)
         }
     }
     //endregion
