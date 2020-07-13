@@ -25,7 +25,6 @@ public class QuickMethodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quick_method);
 
         // set up the ViewModel
         mViewModel = new ViewModelProvider(this

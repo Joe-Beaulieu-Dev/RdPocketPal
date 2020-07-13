@@ -12,7 +12,7 @@ import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
@@ -24,10 +24,14 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.SavedStateHandle;
 
-public class PredictiveEquationsViewModel extends AndroidViewModel implements CoroutineCallbackListener {
+public class PredictiveEquationsViewModel extends AndroidViewModel implements
+        CoroutineCallbackListener, LifecycleObserver {
     private static final String LOG_TAG = "PredictiveEqViewModel";
 
     //region LiveData
@@ -275,9 +279,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return ConstantsKotlin.METRIC;
+            return Constants.METRIC;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return ConstantsKotlin.STANDARD;
+            return Constants.STANDARD;
         } else {
             throw new ValidationException("Unit selection not valid");
         }
@@ -293,9 +297,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
         // compare selection String to String Resource currently being
         // used in order to decide which sex is being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_male))) {
-            return ConstantsKotlin.MALE;
+            return Constants.MALE;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_female))) {
-            return ConstantsKotlin.FEMALE;
+            return Constants.FEMALE;
         } else {
             throw new ValidationException("Sex selection not valid");
         }
@@ -490,6 +494,28 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements Co
                     , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
                     , Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+    //endregion
+
+    //region LifeCycle Events
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onResume() {
+        setUnits();
+    }
+
+    private void setUnits() {
+        try {
+            int unit = getUnitSelection();
+            if (unit == Constants.METRIC) {
+                setUiDataToMetric();
+            } else {
+                setUiDataToStandard();
+            }
+        } catch (ValidationException e) {
+            e.printStackTrace();
+            // units don't get displayed, but will never happen
+            // really need to get rid of this Exception (Sealed Classes would be nice here XD)
         }
     }
     //endregion

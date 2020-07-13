@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
-import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.ConversionUtil;
 import com.example.rdpocketpal2.util.Element;
 import com.example.rdpocketpal2.util.NumberUtil;
@@ -254,22 +254,22 @@ public class ConversionViewModel extends AndroidViewModel {
         // used in order to decide which element was chosen
         if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_calcium))) {
-            return ConstantsKotlin.CALCIUM;
+            return Constants.CALCIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_chlorine))) {
-            return ConstantsKotlin.CHLORINE;
+            return Constants.CHLORINE;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_magnesium))) {
-            return ConstantsKotlin.MAGNESIUM;
+            return Constants.MAGNESIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_phosphorus))) {
-            return ConstantsKotlin.PHOSPHORUS;
+            return Constants.PHOSPHORUS;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_potassium))) {
-            return ConstantsKotlin.POTASSIUM;
+            return Constants.POTASSIUM;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_sodium))) {
-            return ConstantsKotlin.SODIUM;
+            return Constants.SODIUM;
         }
 
         // this should never happen, just here to quiet the ide

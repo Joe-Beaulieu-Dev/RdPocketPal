@@ -97,7 +97,7 @@
 
                 <!-- Data Entry layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/data_entry_layout"
+                    android:id="@+id/pe_data_entry_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small">
@@ -502,7 +502,7 @@
                         android:layout_marginTop="@dimen/margin_large"
                         android:layout_marginEnd="@dimen/margin_medium"
                         android:background="@color/darkGrey"
-                        app:layout_constraintBottom_toTopOf="@id/result_layout"
+                        app:layout_constraintBottom_toTopOf="@id/pe_result_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/pe_activity_factor_max_editText" />
@@ -513,7 +513,7 @@
                         *******************
                     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/result_layout"
+                        android:id="@+id/pe_result_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_medium"
@@ -524,17 +524,17 @@
 
                         <!-- BMR label -->
                         <TextView
-                            android:id="@+id/label_bmr"
+                            android:id="@+id/pe_bmr_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_bmr"
                             android:textSize="@dimen/font_size_medium"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/text_bmr"
-                            app:layout_constraintEnd_toStartOf="@id/text_bmr" />
+                            app:layout_constraintBaseline_toBaselineOf="@+id/pe_bmr_editText"
+                            app:layout_constraintEnd_toStartOf="@id/pe_bmr_editText" />
 
                         <!-- BMR entry -->
                         <EditText
-                            android:id="@+id/text_bmr"
+                            android:id="@+id/pe_bmr_editText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:clickable="false"
@@ -544,31 +544,31 @@
                             android:focusableInTouchMode="false"
                             android:longClickable="false"
                             android:text="@={viewModel.mBmr}"
-                            app:layout_constraintStart_toStartOf="@+id/text_calorie_min"
+                            app:layout_constraintStart_toStartOf="@+id/pe_calorie_min_editText"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- Bmr unit label -->
                         <TextView
-                            android:id="@+id/unit_bmr"
+                            android:id="@+id/pe_bmr_unit_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_kcals"
-                            app:layout_constraintBaseline_toBaselineOf="@id/text_bmr"
-                            app:layout_constraintStart_toEndOf="@id/text_bmr" />
+                            app:layout_constraintBaseline_toBaselineOf="@id/pe_bmr_editText"
+                            app:layout_constraintStart_toEndOf="@id/pe_bmr_editText" />
 
                         <!-- Calorie min label -->
                         <TextView
-                            android:id="@+id/label_calorie_min"
+                            android:id="@+id/pe_calorie_min_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_calorie_min"
                             android:textSize="@dimen/font_size_medium"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/text_calorie_min"
-                            app:layout_constraintEnd_toStartOf="@id/text_calorie_min" />
+                            app:layout_constraintBaseline_toBaselineOf="@+id/pe_calorie_min_editText"
+                            app:layout_constraintEnd_toStartOf="@id/pe_calorie_min_editText" />
 
                         <!-- Calorie min entry -->
                         <EditText
-                            android:id="@+id/text_calorie_min"
+                            android:id="@+id/pe_calorie_min_editText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:clickable="false"
@@ -578,31 +578,31 @@
                             android:focusableInTouchMode="false"
                             android:longClickable="false"
                             android:text="@={viewModel.mCalorieMin}"
-                            app:layout_constraintStart_toStartOf="@+id/text_calorie_max"
-                            app:layout_constraintTop_toBottomOf="@id/text_bmr" />
+                            app:layout_constraintStart_toStartOf="@+id/pe_calorie_max_editText"
+                            app:layout_constraintTop_toBottomOf="@id/pe_bmr_editText" />
 
                         <!-- Calorie min unit label -->
                         <TextView
-                            android:id="@+id/unit_calorie_min"
+                            android:id="@+id/pe_calorie_min_unit_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_kcals"
-                            app:layout_constraintBaseline_toBaselineOf="@id/text_calorie_min"
-                            app:layout_constraintStart_toEndOf="@id/text_calorie_min" />
+                            app:layout_constraintBaseline_toBaselineOf="@id/pe_calorie_min_editText"
+                            app:layout_constraintStart_toEndOf="@id/pe_calorie_min_editText" />
 
                         <!-- Calorie max label -->
                         <TextView
-                            android:id="@+id/label_calorie_max"
+                            android:id="@+id/pe_calorie_max_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_calorie_max"
                             android:textSize="@dimen/font_size_medium"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/text_calorie_max"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/pe_calorie_max_editText"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <!-- Calorie max entry -->
                         <EditText
-                            android:id="@+id/text_calorie_max"
+                            android:id="@+id/pe_calorie_max_editText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:clickable="false"
@@ -612,17 +612,17 @@
                             android:focusableInTouchMode="false"
                             android:longClickable="false"
                             android:text="@={viewModel.mCalorieMax}"
-                            app:layout_constraintStart_toEndOf="@+id/label_calorie_max"
-                            app:layout_constraintTop_toBottomOf="@id/text_calorie_min" />
+                            app:layout_constraintStart_toEndOf="@+id/pe_calorie_max_textView"
+                            app:layout_constraintTop_toBottomOf="@id/pe_calorie_min_editText" />
 
                         <!-- Calorie max unit label -->
                         <TextView
-                            android:id="@+id/unit_calorie_max"
+                            android:id="@+id/pe_calorie_max_unit_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_kcals"
-                            app:layout_constraintBaseline_toBaselineOf="@id/text_calorie_max"
-                            app:layout_constraintStart_toEndOf="@id/text_calorie_max" />
+                            app:layout_constraintBaseline_toBaselineOf="@id/pe_calorie_max_editText"
+                            app:layout_constraintStart_toEndOf="@id/pe_calorie_max_editText" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -638,7 +638,7 @@
 
             <!-- Clear Button -->
             <Button
-                android:id="@+id/btn_parenteral_nutrition_clear"
+                android:id="@+id/pe_clear_btn"
                 style="@style/ClearBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -646,12 +646,12 @@
                 android:onClick="@{() -> viewModel.onClearClicked()}"
                 android:padding="@dimen/margin_small"
                 android:text="@string/text_clear"
-                app:layout_constraintEnd_toStartOf="@id/btn_parenteral_nutrition_calculate"
-                app:layout_constraintTop_toTopOf="@id/btn_parenteral_nutrition_calculate" />
+                app:layout_constraintEnd_toStartOf="@id/pe_calculate_btn"
+                app:layout_constraintTop_toTopOf="@id/pe_calculate_btn" />
 
             <!-- Calculate Button -->
             <Button
-                android:id="@+id/btn_parenteral_nutrition_calculate"
+                android:id="@+id/pe_calculate_btn"
                 style="@style/CalculateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

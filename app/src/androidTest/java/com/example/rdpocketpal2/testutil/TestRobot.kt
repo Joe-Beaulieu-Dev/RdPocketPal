@@ -34,6 +34,8 @@ annotation class TestRobotMarker
 
 @TestRobotMarker
 open class TestRobot {
+
+    //region Text entry
     protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
             onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
 
@@ -51,22 +53,38 @@ open class TestRobot {
                     (view as EditText).setText(text)
                 }
             })
+    //endregion
 
+    //region Text validation
+    protected fun <T : Activity> checkText(activityRule: ActivityTestRule<T>
+                                           , @IdRes viewId: Int
+                                           , @IdRes stringId: Int): ViewInteraction {
+        return checkText(viewId, TestUtil.getString(activityRule, stringId))
+    }
+
+    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
+            onView(withId(viewId)).check(matches(withText(text)))
+    //endregion
+
+    //region Error validation
     protected fun checkEditTextError(@IdRes viewId: Int, errorText: String?): ViewInteraction =
             onView(withId(viewId)).check(matches(hasErrorText(errorText)))
+    //endregion
 
+    //region Click
     protected fun clickViewId(@IdRes viewId: Int): ViewInteraction =
             onView(withId(viewId)).perform(click())
 
     protected fun clickViewText(@IdRes viewId: Int): ViewInteraction =
             onView(withText(viewId)).perform(click())
+    //endregion
 
-    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
-            onView(withId(viewId)).check(matches(withText(text)))
-
+    //region Toast
     fun checkToastDisplayedWithMessage(@IdRes stringId: Int): ViewInteraction =
             onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
+    //endregion
 
+    //region Spinner
     protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
                                                   , @IdRes spinnerId: Int
                                                   , @IdRes stringId: Int): ViewInteraction {
@@ -84,7 +102,9 @@ open class TestRobot {
     protected fun checkSpinnerSelection(@IdRes spinnerId: Int
                                         , @IdRes stringId: Int): ViewInteraction =
             onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
+    //endregion
 
+    //region NumberPicker
     protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
             onView(withId(id)).perform(object : ViewAction {
                 override fun getDescription(): String {
@@ -99,7 +119,9 @@ open class TestRobot {
                     (view as NumberPicker).value = num
                 }
             })
+    //endregion
 
+    //region Preferences
     protected fun openPreferences() {
         // open overflow menu
         openActionBarOverflowOrOptionsMenu(
@@ -107,7 +129,9 @@ open class TestRobot {
         // open settings screen
         onView(withText(R.string.text_settings)).perform(click())
     }
+    //endregion
 
+    //region Orientation
     fun <T : Activity> rotateScreen(rule: ActivityTestRule<T>, instrumentation: Instrumentation) {
         // get current orientation and set value to opposite
         val orientation: Int =
@@ -124,4 +148,5 @@ open class TestRobot {
         // wait for screen to finish rotating
         instrumentation.waitForIdleSync()
     }
+    //endregion
 }

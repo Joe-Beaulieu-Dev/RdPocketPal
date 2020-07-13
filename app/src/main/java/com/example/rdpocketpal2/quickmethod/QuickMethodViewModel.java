@@ -12,7 +12,7 @@ import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.ConstantsKotlin;
+import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 
@@ -308,13 +308,6 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     //endregion
 
     //region Helper Methods
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    public void getAllNumericSettings() {
-        if (mRepo != null) {
-            mRepo.getAllNumericSettings(mApplicationContext, this);
-        }
-    }
-
     private int getUnit() throws FatalCalculationException {
         String unit = mUnitSelection.getValue();
 
@@ -325,9 +318,9 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (unit.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return ConstantsKotlin.METRIC;
+            return Constants.METRIC;
         } else if (unit.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return ConstantsKotlin.STANDARD;
+            return Constants.STANDARD;
         } else {
             throw new FatalCalculationException("Unit selection not valid");
         }
@@ -483,6 +476,29 @@ public class QuickMethodViewModel extends AndroidViewModel implements
                     , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
                     , Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+    //endregion
+
+    //region Lifecycle Events
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onResume() {
+        getAllNumericSettings();
+        setUnits();
+    }
+
+    private void getAllNumericSettings() {
+        if (mRepo != null) {
+            mRepo.getAllNumericSettings(mApplicationContext, this);
+        }
+    }
+
+    private void setUnits() {
+        int unit = getUnit();
+        if (unit == Constants.METRIC) {
+            setUiDataToMetric();
+        } else {
+            setUiDataToStandard();
         }
     }
     //endregion

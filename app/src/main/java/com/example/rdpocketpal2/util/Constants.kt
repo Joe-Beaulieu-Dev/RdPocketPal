@@ -1,4 +1,4 @@
-@file:JvmName("ConstantsKotlin")
+@file:JvmName("Constants")
 
 package com.example.rdpocketpal2.util
 

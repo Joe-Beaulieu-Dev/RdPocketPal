@@ -46,6 +46,9 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         // set binding's lifecycle owner so LiveData works properly
         mBinding.setLifecycleOwner(this);
 
+        // add ViewModel as a LifecycleObserver
+        getLifecycle().addObserver(mViewModel);
+
         // set up UI elements
         setUpEquationSpinner();
         setUpButtonRipple();
@@ -76,12 +79,12 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                     .getDrawable(R.drawable.ripple_oval, getTheme()));
 
             // Clear button
-            Button clear = findViewById(R.id.btn_parenteral_nutrition_clear);
+            Button clear = findViewById(R.id.pe_clear_btn);
             clear.setForeground(getResources()
                     .getDrawable(R.drawable.ripple_rectangle, getTheme()));
 
             // Calculate button
-            Button calculate = findViewById(R.id.btn_parenteral_nutrition_calculate);
+            Button calculate = findViewById(R.id.pe_calculate_btn);
             calculate.setForeground(getResources()
                     .getDrawable(R.drawable.ripple_rectangle, getTheme()));
         }

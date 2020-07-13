@@ -50,8 +50,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrMifflin_metric_male_isCorrect() {
         assertEquals(MIFFLIN_MALE_ANSWER
-                , CalculationUtil.calculateBmrMifflin(ConstantsKotlin.METRIC
-                        , ConstantsKotlin.MALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
+                , CalculationUtil.calculateBmrMifflin(Constants.METRIC
+                        , Constants.MALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
                 , DELTA_THREE
         );
     }
@@ -59,8 +59,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrMifflin_metric_female_isCorrect() {
         assertEquals(MIFFLIN_FEMALE_ANSWER
-                , CalculationUtil.calculateBmrMifflin(ConstantsKotlin.METRIC
-                        , ConstantsKotlin.FEMALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
+                , CalculationUtil.calculateBmrMifflin(Constants.METRIC
+                        , Constants.FEMALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
                 , DELTA_THREE
         );
     }
@@ -68,8 +68,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrMifflin_standard_male_isCorrect() {
         assertEquals(MIFFLIN_MALE_ANSWER
-                , CalculationUtil.calculateBmrMifflin(ConstantsKotlin.STANDARD
-                        , ConstantsKotlin.MALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
+                , CalculationUtil.calculateBmrMifflin(Constants.STANDARD
+                        , Constants.MALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
                 , DELTA_THREE
         );
     }
@@ -77,8 +77,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrMifflin_standard_female_isCorrect() {
         assertEquals(MIFFLIN_FEMALE_ANSWER
-                , CalculationUtil.calculateBmrMifflin(ConstantsKotlin.STANDARD
-                        , ConstantsKotlin.FEMALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
+                , CalculationUtil.calculateBmrMifflin(Constants.STANDARD
+                        , Constants.FEMALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
                 , DELTA_THREE
         );
     }
@@ -86,8 +86,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBenedict_metric_male_isCorrect() {
         assertEquals(BENEDICT_MALE_ANSWER
-                , CalculationUtil.calculateBmrBenedict(ConstantsKotlin.METRIC
-                        , ConstantsKotlin.MALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
+                , CalculationUtil.calculateBmrBenedict(Constants.METRIC
+                        , Constants.MALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
                 , DELTA_THREE
         );
     }
@@ -95,8 +95,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBenedict_metric_female_isCorrect() {
         assertEquals(BENEDICT_FEMALE_ANSWER
-                , CalculationUtil.calculateBmrBenedict(ConstantsKotlin.METRIC
-                        , ConstantsKotlin.FEMALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
+                , CalculationUtil.calculateBmrBenedict(Constants.METRIC
+                        , Constants.FEMALE, WEIGHT_METRIC, HEIGHT_METRIC, AGE)
                 , DELTA_THREE
         );
     }
@@ -104,8 +104,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBenedict_standard_male_isCorrect() {
         assertEquals(BENEDICT_MALE_ANSWER
-                , CalculationUtil.calculateBmrBenedict(ConstantsKotlin.STANDARD
-                        , ConstantsKotlin.MALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
+                , CalculationUtil.calculateBmrBenedict(Constants.STANDARD
+                        , Constants.MALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
                 , DELTA_THREE
         );
     }
@@ -113,8 +113,8 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBenedict_standard_female_isCorrect() {
         assertEquals(BENEDICT_FEMALE_ANSWER
-                , CalculationUtil.calculateBmrBenedict(ConstantsKotlin.STANDARD
-                        , ConstantsKotlin.FEMALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
+                , CalculationUtil.calculateBmrBenedict(Constants.STANDARD
+                        , Constants.FEMALE, WEIGHT_STANDARD, HEIGHT_STANDARD, AGE)
                 , DELTA_THREE
         );
     }
@@ -122,7 +122,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrPennState2003b_metric_isCorrect() {
         assertEquals(PENN_STATE_2003b_ANSWER
-                , CalculationUtil.calculateBmrPennState2003b(ConstantsKotlin.METRIC
+                , CalculationUtil.calculateBmrPennState2003b(Constants.METRIC
                         , PENN_STATE_2003B_MIFFLIN_INPUT, TMAX_METRIC, VE_METRIC)
                 , DELTA_THREE
         );
@@ -131,7 +131,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrPennState2003b_standard_isCorrect() {
         assertEquals(PENN_STATE_2003b_ANSWER
-                , CalculationUtil.calculateBmrPennState2003b(ConstantsKotlin.STANDARD
+                , CalculationUtil.calculateBmrPennState2003b(Constants.STANDARD
                         , PENN_STATE_2003B_MIFFLIN_INPUT, TMAX_STANDARD, VE_STANDARD)
                 , DELTA_THREE
         );
@@ -140,7 +140,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrPennState2010_metric_isCorrect() {
         assertEquals(PENN_STATE_2010_ANSWER
-                , CalculationUtil.calculateBmrPennState2010(ConstantsKotlin.METRIC
+                , CalculationUtil.calculateBmrPennState2010(Constants.METRIC
                         , PENN_STATE_2010_MIFFLIN_INPUT, TMAX_METRIC, VE_METRIC)
                 , DELTA_THREE
         );
@@ -149,7 +149,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrPennState2010_standard_isCorrect() {
         assertEquals(PENN_STATE_2010_ANSWER
-                , CalculationUtil.calculateBmrPennState2010(ConstantsKotlin.STANDARD
+                , CalculationUtil.calculateBmrPennState2010(Constants.STANDARD
                         , PENN_STATE_2010_MIFFLIN_INPUT, TMAX_STANDARD, VE_STANDARD)
                 , DELTA_THREE
         );
@@ -158,7 +158,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBrandi_metric_isCorrect() {
         assertEquals(BRANDI_ANSWER
-                , CalculationUtil.calculateBmrBrandi(ConstantsKotlin.METRIC
+                , CalculationUtil.calculateBmrBrandi(Constants.METRIC
                         , BRANDI_BENEDICT_INPUT, HEART_RATE, VE_METRIC)
                 , DELTA_THREE
         );
@@ -167,7 +167,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateBmrBrandi_standard_isCorrect() {
         assertEquals(BRANDI_ANSWER
-                , CalculationUtil.calculateBmrBrandi(ConstantsKotlin.STANDARD
+                , CalculationUtil.calculateBmrBrandi(Constants.STANDARD
                         , BRANDI_BENEDICT_INPUT, HEART_RATE, VE_STANDARD)
                 , DELTA_THREE
         );
@@ -176,7 +176,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateQuickMethod_metric_isCorrect() {
         assertEquals(QUICK_METHOD_ANSWER_METRIC
-                , CalculationUtil.calculateQuickMethod(ConstantsKotlin.METRIC
+                , CalculationUtil.calculateQuickMethod(Constants.METRIC
                         , QUICK_METHOD_WEIGHT, QUICK_METHOD_FACTOR)
                 , DELTA_SIX);
     }
@@ -184,7 +184,7 @@ public class CalculationUtilTest {
     @Test
     public void calculateQuickMethod_standard_isCorrect() {
         assertEquals(QUICK_METHOD_ANSWER_STANDARD
-                , CalculationUtil.calculateQuickMethod(ConstantsKotlin.STANDARD
+                , CalculationUtil.calculateQuickMethod(Constants.STANDARD
                         , QUICK_METHOD_WEIGHT, QUICK_METHOD_FACTOR)
                 , DELTA_SIX);
     }

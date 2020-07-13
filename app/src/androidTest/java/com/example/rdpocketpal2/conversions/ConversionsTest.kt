@@ -4,11 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
-import com.example.rdpocketpal2.testutil.TestUtil
-import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -54,19 +51,6 @@ class ConversionsTest {
     @get:Rule
     val activityRule: ActivityTestRule<ConversionActivity> =
             ActivityTestRule(ConversionActivity::class.java)
-
-    companion object {
-        @BeforeClass
-        @JvmStatic
-        fun beforeClass() {
-            // set preferences
-            TestUtil.setDecimalReductionMethodPref(
-                    InstrumentationRegistry.getInstrumentation().targetContext
-                    , R.string.key_rounding)
-            TestUtil.setNumericScalePref(
-                    InstrumentationRegistry.getInstrumentation().targetContext, 2)
-        }
-    }
 
     //region in to cm
     @Test
