@@ -73,6 +73,16 @@ class PredictiveEquationsRobot : TestRobot() {
     }
     //endregion
 
+    //region Buttons
+    fun clickClear() {
+        clickViewId(R.id.pe_clear_btn)
+    }
+
+    fun clickCalculate() {
+        clickViewId(R.id.pe_calculate_btn)
+    }
+    //endregion
+
     //region Entry
     fun enterWeight(string: String) {
         enterText(R.id.pe_weight_editText, string)
@@ -105,9 +115,53 @@ class PredictiveEquationsRobot : TestRobot() {
     fun enterActivityFactorMax(string: String) {
         enterText(R.id.pe_activity_factor_max_editText, string)
     }
+
+    fun programmaticallySetBmr(string: String) {
+        setTextProgrammatically(R.id.pe_bmr_editText, string)
+    }
+
+    fun programmaticallySetCalorieMin(string: String) {
+        setTextProgrammatically(R.id.pe_calorie_min_editText, string)
+    }
+
+    fun programmaticallySetCalorieMax(string: String) {
+        setTextProgrammatically(R.id.pe_calorie_max_editText, string)
+    }
     //endregion
 
     //region Validation
+    fun checkWeight(string: String) {
+        checkText(R.id.pe_weight_editText, string)
+    }
+
+    fun checkHeight(string: String) {
+        checkText(R.id.pe_height_editText, string)
+    }
+
+    fun checkAge(string: String) {
+        checkText(R.id.pe_age_editText, string)
+    }
+
+    fun checkTmax(string: String) {
+        checkText(R.id.pe_tmax_editText, string)
+    }
+
+    fun checkVe(string: String) {
+        checkText(R.id.pe_ve_editText, string)
+    }
+
+    fun checkHeartRate(string: String) {
+        checkText(R.id.pe_heart_rate_editText, string)
+    }
+
+    fun checkActivityFactorMin(string: String) {
+        checkText(R.id.pe_activity_factor_min_editText, string)
+    }
+
+    fun checkActivityFactorMax(string: String) {
+        checkText(R.id.pe_activity_factor_max_editText, string)
+    }
+
     fun checkBmr(string: String) {
         checkText(R.id.pe_bmr_editText, string)
     }

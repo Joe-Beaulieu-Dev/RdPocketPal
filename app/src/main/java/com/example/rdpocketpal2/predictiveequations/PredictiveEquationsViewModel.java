@@ -113,6 +113,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         mAge.setValue("");
         mTmax.setValue("");
         mVe.setValue("");
+        mHeartRate.setValue("");
         mActivityFactorMin.setValue("");
         mActivityFactorMax.setValue("");
         mBmr.setValue("");
