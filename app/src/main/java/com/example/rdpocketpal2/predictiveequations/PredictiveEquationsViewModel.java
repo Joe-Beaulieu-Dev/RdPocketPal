@@ -245,7 +245,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
     //endregion
 
-    //region Helper methods
+    //region Data gathering
     private int getEquationSelection() throws ValidationException {
         String selection = mSelectedEquation.getValue();
 
@@ -305,7 +305,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
             throw new ValidationException("Sex selection not valid");
         }
     }
+    //endregion
 
+    //region UI data manipulation
     private void setUiDataToMetric() {
         mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_kg));
         mHeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_cm));
@@ -322,23 +324,6 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         mTmaxUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_fahrenheit));
         mHeartRateUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_beats_per_minute));
         mVeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_gallons_per_minute));
-    }
-
-    private void logFields() {
-        Log.d(LOG_TAG, "Selected Equation: " + mSelectedEquation.getValue());
-        Log.d(LOG_TAG, "Selected Sex: " + mSelectedSex.getValue());
-        Log.d(LOG_TAG, "Selected Unit: " + mSelectedUnit.getValue());
-        Log.d(LOG_TAG, "Weight: " + mWeight.getValue());
-        Log.d(LOG_TAG, "Height: " + mHeight.getValue());
-        Log.d(LOG_TAG, "Age: " + mAge.getValue());
-        Log.d(LOG_TAG, "Tmax: " + mTmax.getValue());
-        Log.d(LOG_TAG, "Heart rate: " + mHeartRate.getValue());
-        Log.d(LOG_TAG, "Ve: " + mVe.getValue());
-        Log.d(LOG_TAG, "Activity factor min: " + mActivityFactorMin.getValue());
-        Log.d(LOG_TAG, "Activity factor Max: " + mActivityFactorMax.getValue());
-        Log.d(LOG_TAG, "BMR: " + mBmr.getValue());
-        Log.d(LOG_TAG, "Calorie min: " + mCalorieMin.getValue());
-        Log.d(LOG_TAG, "Calorie max: " + mCalorieMax.getValue());
     }
     //endregion
 
@@ -359,24 +344,55 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         return isValid;
     }
 
-    // chose not to do inline validation for null/empty checks on EditTexts as it would miss fields
-    // is the user never clicked them. Therefore, just doing them when the user presses the
-    // Calculate button
-    //TODO cases like PENN2003b stop validation after first method fails, which means no error
-    // messages on subsequent fields
     private boolean areBmrFieldsValid(@Equations int equation) {
         switch (equation) {
             case MIFFLIN:
             case BENEDICT:
-                return validateWeightHeightAge();
+                return validateMifflinOrBenedictFields();
             case PENN2003B:
             case PENN2010:
-                return validateWeightHeightAge() && isTmaxValid() && isVeValid();
+                return validatePennStateFields();
             case BRANDI:
-                return validateWeightHeightAge() && isHeartRateValid() && isVeValid();
+                return validateBrandiFields();
             default:
                 return false;
         }
+    }
+
+    private boolean validateMifflinOrBenedictFields() {
+        return validateWeightHeightAge();
+    }
+
+    private boolean validatePennStateFields() {
+        boolean allFieldsValid = true;
+
+        if (!validateWeightHeightAge()) {
+            allFieldsValid = false;
+        }
+        if (!isTmaxValid()) {
+            allFieldsValid = false;
+        }
+        if (!isVeValid()) {
+            allFieldsValid = false;
+        }
+
+        return allFieldsValid;
+    }
+
+    private boolean validateBrandiFields() {
+        boolean allFieldsValid = true;
+
+        if (!validateWeightHeightAge()) {
+            allFieldsValid = false;
+        }
+        if (!isHeartRateValid()) {
+            allFieldsValid = false;
+        }
+        if (!isVeValid()) {
+            allFieldsValid = false;
+        }
+
+        return allFieldsValid;
     }
 
     private boolean validateWeightHeightAge() {
@@ -520,4 +536,21 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         }
     }
     //endregion
+
+    private void logFields() {
+        Log.d(LOG_TAG, "Selected Equation: " + mSelectedEquation.getValue());
+        Log.d(LOG_TAG, "Selected Sex: " + mSelectedSex.getValue());
+        Log.d(LOG_TAG, "Selected Unit: " + mSelectedUnit.getValue());
+        Log.d(LOG_TAG, "Weight: " + mWeight.getValue());
+        Log.d(LOG_TAG, "Height: " + mHeight.getValue());
+        Log.d(LOG_TAG, "Age: " + mAge.getValue());
+        Log.d(LOG_TAG, "Tmax: " + mTmax.getValue());
+        Log.d(LOG_TAG, "Heart rate: " + mHeartRate.getValue());
+        Log.d(LOG_TAG, "Ve: " + mVe.getValue());
+        Log.d(LOG_TAG, "Activity factor min: " + mActivityFactorMin.getValue());
+        Log.d(LOG_TAG, "Activity factor Max: " + mActivityFactorMax.getValue());
+        Log.d(LOG_TAG, "BMR: " + mBmr.getValue());
+        Log.d(LOG_TAG, "Calorie min: " + mCalorieMin.getValue());
+        Log.d(LOG_TAG, "Calorie max: " + mCalorieMax.getValue());
+    }
 }
