@@ -23,8 +23,6 @@ const val TMAX_METRIC = "37.0"
 const val TMAX_STANDARD = "98.6"
 const val HEART_RATE = "75.0"
 const val VE_METRIC = "7.0"
-//const val VE_STANDARD = "1.849205238"
-const val VE_STANDARD = "1.8492052380059227402051561125479"
 const val ACTIVITY_FACTOR_MIN = "1"
 const val ACTIVITY_FACTOR_MAX = "2"
 
@@ -341,7 +339,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterTmax(TMAX_STANDARD)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()
@@ -363,7 +361,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterTmax(TMAX_STANDARD)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()
@@ -429,7 +427,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterTmax(TMAX_STANDARD)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()
@@ -451,7 +449,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterTmax(TMAX_STANDARD)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()
@@ -517,7 +515,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterHeartRate(HEART_RATE)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()
@@ -539,7 +537,7 @@ class PredictiveEquationsTest {
             enterHeight(HEIGHT_STANDARD)
             enterAge(AGE)
             enterHeartRate(HEART_RATE)
-            enterVe(VE_STANDARD)
+            enterVe(VE_METRIC)
             enterActivityFactorMin(ACTIVITY_FACTOR_MIN)
             enterActivityFactorMax(ACTIVITY_FACTOR_MAX)
             clickCalculate()

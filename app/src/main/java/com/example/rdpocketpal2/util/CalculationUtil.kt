@@ -35,7 +35,7 @@ object CalculationUtil {
             METRIC -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr, tmax, ve)
             STANDARD -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr
                     , ConversionUtil.fahrenheitToCelsius(tmax)
-                    , ConversionUtil.gallonsToLiters(ve))
+                    , ve)
             else -> 0.0
         }
     }
@@ -46,20 +46,14 @@ object CalculationUtil {
             METRIC -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr, tmax, ve)
             STANDARD -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr
                     , ConversionUtil.fahrenheitToCelsius(tmax)
-                    , ConversionUtil.gallonsToLiters(ve))
+                    , ve)
             else -> 0.0
         }
     }
 
     @JvmStatic
-    fun calculateBmrBrandi(@Unit unit: Int, benedictBmr: Double, heartRate: Double, ve: Double): Double {
-        return when (unit) {
-            METRIC -> MetricEquationUtil.calculateBmrBrandi(benedictBmr, heartRate, ve)
-            STANDARD -> MetricEquationUtil.calculateBmrBrandi(benedictBmr
-                    , heartRate
-                    , ConversionUtil.gallonsToLiters(ve))
-            else -> 0.0
-        }
+    fun calculateBmrBrandi(benedictBmr: Double, heartRate: Double, ve: Double): Double {
+        return MetricEquationUtil.calculateBmrBrandi(benedictBmr, heartRate, ve)
     }
 
     @JvmStatic

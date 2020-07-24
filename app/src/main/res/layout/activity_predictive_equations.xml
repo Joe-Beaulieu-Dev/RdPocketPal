@@ -309,7 +309,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_medium"
-                            android:text="@{viewModel.mAgeUnitLabel}"
+                            android:text="@string/text_yr"
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_age_editText"
                             app:layout_constraintStart_toEndOf="@id/pe_age_editText"
                             tools:text="@string/text_yr" />
@@ -391,7 +391,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_medium"
-                            android:text="@{viewModel.mHeartRateUnitLabel}"
+                            android:text="@string/text_beats_per_minute"
                             android:visibility="gone"
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_heart_rate_editText"
                             app:layout_constraintStart_toEndOf="@id/pe_heart_rate_editText"
@@ -424,13 +424,13 @@
                             app:layout_constraintTop_toBottomOf="@id/pe_tmax_editText"
                             tools:visibility="visible" />
 
-                        <!-- Heart rate unit label -->
+                        <!-- Ve unit label -->
                         <TextView
                             android:id="@+id/pe_ve_unit_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_medium"
-                            android:text="@{viewModel.mVeUnitLabel}"
+                            android:text="@string/text_liters_per_minute"
                             android:visibility="gone"
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_ve_editText"
                             app:layout_constraintStart_toEndOf="@id/pe_ve_editText"

@@ -19,7 +19,6 @@ public class CalculationUtilTest {
     private static final double TMAX_STANDARD = 98.6;
     private static final double HEART_RATE = 75;
     private static final double VE_METRIC = 7;
-    private static final double VE_STANDARD = 1.849205238;
 
     // Mifflin values
     private static final double MIFFLIN_MALE_ANSWER = 1723.75;
@@ -132,7 +131,7 @@ public class CalculationUtilTest {
     public void calculateBmrPennState2003b_standard_isCorrect() {
         assertEquals(PENN_STATE_2003b_ANSWER
                 , CalculationUtil.calculateBmrPennState2003b(Constants.STANDARD
-                        , PENN_STATE_2003B_MIFFLIN_INPUT, TMAX_STANDARD, VE_STANDARD)
+                        , PENN_STATE_2003B_MIFFLIN_INPUT, TMAX_STANDARD, VE_METRIC)
                 , DELTA_THREE
         );
     }
@@ -150,25 +149,15 @@ public class CalculationUtilTest {
     public void calculateBmrPennState2010_standard_isCorrect() {
         assertEquals(PENN_STATE_2010_ANSWER
                 , CalculationUtil.calculateBmrPennState2010(Constants.STANDARD
-                        , PENN_STATE_2010_MIFFLIN_INPUT, TMAX_STANDARD, VE_STANDARD)
+                        , PENN_STATE_2010_MIFFLIN_INPUT, TMAX_STANDARD, VE_METRIC)
                 , DELTA_THREE
         );
     }
 
     @Test
-    public void calculateBmrBrandi_metric_isCorrect() {
+    public void calculateBmrBrandi_isCorrect() {
         assertEquals(BRANDI_ANSWER
-                , CalculationUtil.calculateBmrBrandi(Constants.METRIC
-                        , BRANDI_BENEDICT_INPUT, HEART_RATE, VE_METRIC)
-                , DELTA_THREE
-        );
-    }
-
-    @Test
-    public void calculateBmrBrandi_standard_isCorrect() {
-        assertEquals(BRANDI_ANSWER
-                , CalculationUtil.calculateBmrBrandi(Constants.STANDARD
-                        , BRANDI_BENEDICT_INPUT, HEART_RATE, VE_STANDARD)
+                , CalculationUtil.calculateBmrBrandi(BRANDI_BENEDICT_INPUT, HEART_RATE, VE_METRIC)
                 , DELTA_THREE
         );
     }

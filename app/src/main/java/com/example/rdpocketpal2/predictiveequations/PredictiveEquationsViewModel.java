@@ -61,13 +61,10 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     public MutableLiveData<String> mActivityFactorMinErrorMsg;
     public MutableLiveData<String> mActivityFactorMaxErrorMsg;
 
-    // Hints
+    // Unit labels
     public MutableLiveData<String> mWeightUnitLabel = new MutableLiveData<>();
     public MutableLiveData<String> mHeightUnitLabel = new MutableLiveData<>();
-    public MutableLiveData<String> mAgeUnitLabel = new MutableLiveData<>();
     public MutableLiveData<String> mTmaxUnitLabel = new MutableLiveData<>();
-    public MutableLiveData<String> mHeartRateUnitLabel = new MutableLiveData<>();
-    public MutableLiveData<String> mVeUnitLabel = new MutableLiveData<>();
     //endregion
 
     //region LiveData SavedState Keys
@@ -182,7 +179,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
             case PENN2010:
                 return calculatePennState2010(unit);
             case BRANDI:
-                return calculateBrandi(unit);
+                return calculateBrandi();
             default:
                 throw new ValidationException("Equation selection not valid");
         }
@@ -234,11 +231,10 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         );
     }
 
-    private double calculateBrandi(@Unit int unit) throws ValidationException, NumberFormatException {
+    private double calculateBrandi() throws ValidationException, NumberFormatException {
         double bmrBenedict = calculateBmr(BENEDICT);
 
-        return CalculationUtil.calculateBmrBrandi(unit
-                , bmrBenedict
+        return CalculationUtil.calculateBmrBrandi(bmrBenedict
                 , NumberUtil.parseDouble(mHeartRate)
                 , NumberUtil.parseDouble(mVe)
         );
@@ -311,19 +307,13 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     private void setUiDataToMetric() {
         mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_kg));
         mHeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_cm));
-        mAgeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_yr));
         mTmaxUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_celsius));
-        mHeartRateUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_beats_per_minute));
-        mVeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_liters_per_minute));
     }
 
     private void setUiDataToStandard() {
         mWeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_lb));
         mHeightUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_in));
-        mAgeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_yr));
         mTmaxUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_fahrenheit));
-        mHeartRateUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_beats_per_minute));
-        mVeUnitLabel.setValue(mApplicationContext.getResources().getString(R.string.text_gallons_per_minute));
     }
     //endregion
 
