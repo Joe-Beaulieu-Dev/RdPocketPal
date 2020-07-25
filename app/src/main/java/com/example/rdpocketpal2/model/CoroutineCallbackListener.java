@@ -1,6 +1,4 @@
-package com.example.rdpocketpal2.util;
-
-import com.example.rdpocketpal2.model.QueryResult;
+package com.example.rdpocketpal2.model;
 
 public interface CoroutineCallbackListener {
     /**

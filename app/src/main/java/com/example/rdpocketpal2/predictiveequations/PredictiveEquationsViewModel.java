@@ -8,14 +8,15 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.CoroutineCallbackListener;
 import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.Constants;
-import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
+import com.example.rdpocketpal2.util.UiUtil;
 import com.example.rdpocketpal2.util.Unit;
 
 import java.lang.annotation.Retention;
@@ -105,17 +106,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
 
     //region Button listeners
     public void onClearClicked() {
-        mWeight.setValue("");
-        mHeight.setValue("");
-        mAge.setValue("");
-        mTmax.setValue("");
-        mVe.setValue("");
-        mHeartRate.setValue("");
-        mActivityFactorMin.setValue("");
-        mActivityFactorMax.setValue("");
-        mBmr.setValue("");
-        mCalorieMin.setValue("");
-        mCalorieMax.setValue("");
+        clearAllFields();
     }
 
     public void onCalculateClicked() {
@@ -148,17 +139,36 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         } catch (ValidationException | NumberFormatException e) {
             e.printStackTrace();
             // fields not valid, display Toast
-            Toast.makeText(mApplicationContext,
-                    mApplicationContext.getResources().getString(R.string.toast_invalid_fields),
-                    Toast.LENGTH_SHORT).show();
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
+        }
+    }
+
+    public void onSexRadioBtnClicked() {
+        // clear results so they don't clash with inputs and show Toast
+        if (clearResults()) {
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_results_cleared_sex_change, Toast.LENGTH_LONG);
         }
     }
 
     public void onUnitRadioBtnClicked(RadioButton btn) {
         if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
             setUiDataToMetric();
+
+            // clear results so they don't clash with inputs and show Toast
+            if (clearResults()) {
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
+            }
         } else if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
             setUiDataToStandard();
+
+            // clear results so they don't clash with inputs and show Toast
+            if (clearResults()) {
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
+            }
         }
     }
     //endregion
@@ -449,6 +459,46 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
     //endregion
 
+    //region Clear fields
+    private void clearAllFields() {
+        UiUtil.clearField(mWeight);
+        UiUtil.clearField(mHeight);
+        UiUtil.clearField(mAge);
+        UiUtil.clearField(mTmax);
+        UiUtil.clearField(mVe);
+        UiUtil.clearField(mHeartRate);
+        UiUtil.clearField(mActivityFactorMin);
+        UiUtil.clearField(mActivityFactorMax);
+        UiUtil.clearField(mBmr);
+        UiUtil.clearField(mCalorieMin);
+        UiUtil.clearField(mCalorieMax);
+    }
+
+    public void clearResultDataFromActivity() {
+        if (clearResults()) {
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_results_cleared_equation_change, Toast.LENGTH_LONG);
+        }
+    }
+
+    private boolean clearResults() {
+        boolean anyFieldsCleared = false;
+
+        // clear fields and set flag
+        if (UiUtil.clearField(mBmr)) {
+            anyFieldsCleared = true;
+        }
+        if (UiUtil.clearField(mCalorieMin)) {
+            anyFieldsCleared = true;
+        }
+        if (UiUtil.clearField(mCalorieMax)) {
+            anyFieldsCleared = true;
+        }
+
+        return anyFieldsCleared;
+    }
+    //endregion
+
     //region SavedState methods
     void saveState() {
         // unlike other values in the UI, error messages do not get persisted upon system initiated
@@ -497,10 +547,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
             }
 
             // display feedback to user
-            Toast.makeText(mApplicationContext
-                    , mApplicationContext.getString(R.string.toast_failed_to_access_settings)
-                    , Toast.LENGTH_SHORT)
-                    .show();
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_failed_to_access_settings, Toast.LENGTH_SHORT);
         }
     }
     //endregion

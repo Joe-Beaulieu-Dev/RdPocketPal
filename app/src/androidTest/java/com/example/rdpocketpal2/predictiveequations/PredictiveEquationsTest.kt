@@ -50,23 +50,13 @@ const val PENN_STATE_2003b_FEMALE_ANSWER_BMR = "1679.44"
 const val PENN_STATE_2003b_FEMALE_ANSWER_MIN = "1679.44"
 const val PENN_STATE_2003b_FEMALE_ANSWER_MAX = "3358.88"
 
-//penn state 2003b
-//(1557.75 * 0.96) + (37 * 167) + (7 * 31) - 6212
-//... + 184
-
 // Penn State 2010 values
-//const val RAW_PENN_STATE_2010_MALE_ANSWER_BMR = "1731.8625"
 const val PENN_STATE_2010_MALE_ANSWER_BMR = "1731.86"
 const val PENN_STATE_2010_MALE_ANSWER_MIN = "1731.86"
 const val PENN_STATE_2010_MALE_ANSWER_MAX = "3463.73"
-//const val RAW_PENN_STATE_2010_FEMALE_ANSWER_BMR = "1614.0025"
 const val PENN_STATE_2010_FEMALE_ANSWER_BMR = "1614"
 const val PENN_STATE_2010_FEMALE_ANSWER_MIN = "1614"
 const val PENN_STATE_2010_FEMALE_ANSWER_MAX = "3228.01"
-
-//penn state 2010
-//(mifflinBmr * 0.71) + (37 * 85) + (7 * 64) - 3085
-//... + 508
 
 // Brandi values
 const val BRANDI_ANSWER_MALE_BMR = "1885.56"
@@ -75,10 +65,6 @@ const val BRANDI_ANSWER_MALE_MAX = "3771.12"
 const val BRANDI_ANSWER_FEMALE_BMR = "1668.6"
 const val BRANDI_ANSWER_FEMALE_MIN = "1668.6"
 const val BRANDI_ANSWER_FEMALE_MAX = "3337.2"
-
-//brandi
-//(benedictBmr * 0.96) + (75 * 7) + (7 * 48) - 702
-//... + 159
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -587,16 +573,79 @@ class PredictiveEquationsTest {
     }
 
     @Test
+    fun clearFields_sexRadioBtnPress() {
+        withPredictiveEquationsRobot {
+            setSexMale()
+            // entry
+            programmaticallySetBmr(WEIGHT_METRIC)
+            programmaticallySetCalorieMin(WEIGHT_METRIC)
+            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            // change sex to female
+            setSexFemale()
+            // validate fields are empty
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+            // entry
+            programmaticallySetBmr(WEIGHT_METRIC)
+            programmaticallySetCalorieMin(WEIGHT_METRIC)
+            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            // change sex to male
+            setSexMale()
+            // validate fields are empty
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+        }
+    }
+
+    @Test
     fun clearFields_unitRadioBtnPress() {
         withPredictiveEquationsRobot {
-
+            setUnitMetric()
+            // entry
+            programmaticallySetBmr(WEIGHT_METRIC)
+            programmaticallySetCalorieMin(WEIGHT_METRIC)
+            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            // change sex to female
+            setUnitStandard()
+            // validate fields are empty
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+            // entry
+            programmaticallySetBmr(WEIGHT_METRIC)
+            programmaticallySetCalorieMin(WEIGHT_METRIC)
+            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            // change sex to male
+            setUnitMetric()
+            // validate fields are empty
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
 
     @Test
     fun clearFields_equationSpinnerSelection() {
         withPredictiveEquationsRobot {
-
+            selectMifflin(activityRule)
+            // entry
+            programmaticallySetBmr(WEIGHT_METRIC)
+            programmaticallySetCalorieMin(WEIGHT_METRIC)
+            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            // change equation
+            selectBenedict(activityRule)
+            // validate fields are empty
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_equation_change)
         }
     }
     //endregion

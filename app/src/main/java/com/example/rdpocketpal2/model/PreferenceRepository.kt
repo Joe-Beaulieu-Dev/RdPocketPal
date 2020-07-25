@@ -3,7 +3,6 @@ package com.example.rdpocketpal2.model
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.example.rdpocketpal2.R
-import com.example.rdpocketpal2.util.CoroutineCallbackListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

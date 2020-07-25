@@ -123,6 +123,8 @@
     <string name="text_clear">Clear</string>
     <string name="toast_failed_to_access_settings">Failed to access user settings</string>
     <string name="toast_invalid_fields">Please correct the marked fields</string>
+    <string name="toast_results_cleared_equation_change">Results cleared due to equation change</string>
+    <string name="toast_results_cleared_sex_change">Results cleared due to sex change</string>
     <string name="toast_results_cleared_unit_change">Results cleared due to unit change</string>
     <string name="text_lb">lb</string>
     <string name="text_kg">kg</string>

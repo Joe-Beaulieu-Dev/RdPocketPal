@@ -8,13 +8,14 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.model.CoroutineCallbackListener;
 import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.Constants;
-import com.example.rdpocketpal2.util.CoroutineCallbackListener;
 import com.example.rdpocketpal2.util.NumberUtil;
+import com.example.rdpocketpal2.util.UiUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -107,7 +108,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             // sense relative to the user input. If fields were cleared, show Toast
             if (clearAllResults()) {
                 // show toast for result clearing
-                showToast(R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
             }
         } else if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
             setUiDataToStandard();
@@ -116,7 +118,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             // sense relative to the user input. If fields were cleared, show Toast
             if (clearAllResults()) {
                 // show toast for result clearing
-                showToast(R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
             }
         }
     }
@@ -134,7 +137,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             calculate(CALORIE);
         } else {
             // display error Toast
-            showToast(R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
         }
     }
 
@@ -151,7 +155,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             calculate(PROTEIN);
         } else {
             // display error Toast
-            showToast(R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
         }
     }
 
@@ -168,7 +173,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             calculate(FLUID);
         } else {
             // display error Toast
-            showToast(R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
+            UiUtil.showToast(mApplicationContext
+                    , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
         }
     }
     //endregion
@@ -335,18 +341,18 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private void clearCalorieInput() {
-        clearField(mKcalPerKgMin);
-        clearField(mKcalPerKgMax);
+        UiUtil.clearField(mKcalPerKgMin);
+        UiUtil.clearField(mKcalPerKgMax);
     }
 
     private void clearProteinInput() {
-        clearField(mGramsPerKgMin);
-        clearField(mGramsPerKgMax);
+        UiUtil.clearField(mGramsPerKgMin);
+        UiUtil.clearField(mGramsPerKgMax);
     }
 
     private void clearFluidInput() {
-        clearField(mMlPerKgMin);
-        clearField(mMlPerKgMax);
+        UiUtil.clearField(mMlPerKgMin);
+        UiUtil.clearField(mMlPerKgMax);
     }
 
     /**
@@ -375,10 +381,10 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (clearField(mKcalPerDayMin)) {
+        if (UiUtil.clearField(mKcalPerDayMin)) {
             anyFieldsCleared = true;
         }
-        if (clearField(mKcalPerDayMax)) {
+        if (UiUtil.clearField(mKcalPerDayMax)) {
             anyFieldsCleared = true;
         }
 
@@ -389,10 +395,10 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (clearField(mGramsPerDayMin)) {
+        if (UiUtil.clearField(mGramsPerDayMin)) {
             anyFieldsCleared = true;
         }
-        if (clearField(mGramsPerDayMax)) {
+        if (UiUtil.clearField(mGramsPerDayMax)) {
             anyFieldsCleared = true;
         }
 
@@ -403,35 +409,14 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (clearField(mMlPerDayMin)) {
+        if (UiUtil.clearField(mMlPerDayMin)) {
             anyFieldsCleared = true;
         }
-        if (clearField(mMlPerDayMax)) {
+        if (UiUtil.clearField(mMlPerDayMax)) {
             anyFieldsCleared = true;
         }
 
         return anyFieldsCleared;
-    }
-
-    private boolean clearField(MutableLiveData<String> fieldData) {
-        if (fieldData.getValue() != null && !fieldData.getValue().equals("")) {
-            fieldData.setValue("");
-            return true;
-        }
-        return false;
-    }
-
-    private void showToast(int stringId, int duration) {
-        // can't reference @View.DURATION in the parameters so have to do this
-        if (duration != Toast.LENGTH_SHORT && duration != Toast.LENGTH_LONG) {
-            return;
-        }
-
-        // show Toast
-        Toast.makeText(mApplicationContext
-                , mApplicationContext.getResources().getString(stringId)
-                , duration)
-                .show();
     }
     //endregion
 

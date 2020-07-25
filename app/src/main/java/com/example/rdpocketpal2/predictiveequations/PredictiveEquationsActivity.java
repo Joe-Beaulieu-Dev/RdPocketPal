@@ -114,6 +114,10 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                     // change layout constraints to eliminate gaps
                     setConstraints(PredictiveEquationsViewModel.BRANDI);
                 }
+
+                // clear result data when equation is changed and show Toast
+                // this is done so results don't clash with user input/equation selection
+                mViewModel.clearResultDataFromActivity();
             }
         });
     }

@@ -13,6 +13,7 @@ import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.ConversionUtil;
 import com.example.rdpocketpal2.util.Element;
 import com.example.rdpocketpal2.util.NumberUtil;
+import com.example.rdpocketpal2.util.UiUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -167,7 +168,8 @@ public class ConversionViewModel extends AndroidViewModel {
         // if not empty, not null, and a double -> valid
         if (!isFieldEmptyOrNull(inputField)) {
             if (!validateFieldAndSetError(inputField, errorField)) {
-                showToast(R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
                 return false;
             }
         } else {
@@ -284,14 +286,8 @@ public class ConversionViewModel extends AndroidViewModel {
     }
 
     void clearAllFields() {
-        clearField(mFieldLeft);
-        clearField(mFieldRight);
-    }
-
-    private void clearField(MutableLiveData<String> fieldData) {
-        if (fieldData.getValue() != null && !fieldData.getValue().equals("")) {
-            fieldData.setValue("");
-        }
+        UiUtil.clearField(mFieldLeft);
+        UiUtil.clearField(mFieldRight);
     }
 
     private void resetError(MutableLiveData<String> errorField) {
@@ -300,19 +296,6 @@ public class ConversionViewModel extends AndroidViewModel {
 
     private void createDefaultPrefsObject() {
         mPrefs = new UserPreferences(mApplicationContext.getString(R.string.key_rounding), 5);
-    }
-
-    private void showToast(int stringId, int duration) {
-        // can't reference @View.DURATION in the parameters so have to do this
-        if (duration != Toast.LENGTH_SHORT && duration != Toast.LENGTH_LONG) {
-            return;
-        }
-
-        // show Toast
-        Toast.makeText(mApplicationContext
-                , mApplicationContext.getResources().getString(stringId)
-                , duration)
-                .show();
     }
     //endregion
 

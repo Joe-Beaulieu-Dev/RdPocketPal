@@ -434,7 +434,7 @@ class QuickMethodTest {
                 checkMaxOutput(EMPTY_STRING)
             }
 
-            // check that correct error Toast is displayed
+            // check that correct Toast is displayed
             checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
