@@ -6,7 +6,6 @@ import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.TestRobot
-import com.example.rdpocketpal2.testutil.TestUtil
 
 class FluidsRobot : TestRobot() {
 
@@ -35,21 +34,19 @@ class FluidsRobot : TestRobot() {
     }
 
     fun <T : Activity> checkMinInputNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.qm_fluid_ml_per_kg_min
-                , TestUtil.getString(rule, R.string.error_enter_a_number))
+        checkEditTextError(rule, R.id.qm_fluid_ml_per_kg_min, R.string.error_enter_a_number)
     }
 
     fun <T : Activity> checkMaxInputNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.qm_fluid_ml_per_kg_max
-                , TestUtil.getString(rule, R.string.error_enter_a_number))
+        checkEditTextError(rule, R.id.qm_fluid_ml_per_kg_max, R.string.error_enter_a_number)
     }
 
     fun checkMinInputNoError() {
-        checkEditTextError(R.id.qm_fluid_ml_per_kg_min, null)
+        checkEditTextNoError(R.id.qm_fluid_ml_per_kg_min)
     }
 
     fun checkMaxInputNoError() {
-        checkEditTextError(R.id.qm_fluid_ml_per_kg_max, null)
+        checkEditTextNoError(R.id.qm_fluid_ml_per_kg_max)
     }
 
     fun checkFieldsClear() {

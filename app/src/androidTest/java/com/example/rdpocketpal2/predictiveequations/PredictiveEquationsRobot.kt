@@ -127,9 +127,17 @@ class PredictiveEquationsRobot : TestRobot() {
     fun programmaticallySetCalorieMax(string: String) {
         setTextProgrammatically(R.id.pe_calorie_max_editText, string)
     }
+
+    fun loseFocusToWeight() {
+        clickViewId(R.id.pe_weight_editText)
+    }
+
+    fun loseFocusToAge() {
+        clickViewId(R.id.pe_age_editText)
+    }
     //endregion
 
-    //region Validation
+    //region Field validation
     fun checkWeight(string: String) {
         checkText(R.id.pe_weight_editText, string)
     }
@@ -172,6 +180,72 @@ class PredictiveEquationsRobot : TestRobot() {
 
     fun checkCalorieMax(string: String) {
         checkText(R.id.pe_calorie_max_editText, string)
+    }
+    //endregion
+
+    //region Error validation
+    fun <T : Activity> checkWeightNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_weight_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkHeightNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_height_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkAgeNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_age_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkTmaxNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_tmax_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkVeNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_ve_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkHeartRateNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_heart_rate_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkActivityFactorMinNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_activity_factor_min_editText, R.string.error_enter_a_number)
+    }
+
+    fun <T : Activity> checkActivityFactorMaxNanError(rule: ActivityTestRule<T>) {
+        checkEditTextError(rule, R.id.pe_activity_factor_max_editText, R.string.error_enter_a_number)
+    }
+
+    fun checkWeightNoError() {
+        checkEditTextNoError(R.id.pe_weight_editText)
+    }
+
+    fun checkHeightNoError() {
+        checkEditTextNoError(R.id.pe_height_editText)
+    }
+
+    fun checkAgeNoError() {
+        checkEditTextNoError(R.id.pe_age_editText)
+    }
+
+    fun checkTmaxNoError() {
+        checkEditTextNoError(R.id.pe_tmax_editText)
+    }
+
+    fun checkVeNoError() {
+        checkEditTextNoError(R.id.pe_ve_editText)
+    }
+
+    fun checkHeartRateNoError() {
+        checkEditTextNoError(R.id.pe_heart_rate_editText)
+    }
+
+    fun checkActivityFactorMinNoError() {
+        checkEditTextNoError(R.id.pe_activity_factor_min_editText)
+    }
+
+    fun checkActivityFactorMaxNoError() {
+        checkEditTextNoError(R.id.pe_activity_factor_max_editText)
     }
     //endregion
 }

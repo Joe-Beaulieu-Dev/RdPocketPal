@@ -5,7 +5,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
-import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
+import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -450,7 +450,7 @@ class ConversionsTest {
         withConversionsRobot {
             inInCm {
                 navigateToInCm(activityRule)
-                enterInches(INVALID_ENTRY_NOT_NUMBER)
+                enterInches(INVALID_ENTRY_NOT_A_NUMBER)
             }
             checkLeftFieldNanError(activityRule)
         }
@@ -461,7 +461,7 @@ class ConversionsTest {
         withConversionsRobot {
             inInCm {
                 navigateToInCm(activityRule)
-                enterCentimeters(INVALID_ENTRY_NOT_NUMBER)
+                enterCentimeters(INVALID_ENTRY_NOT_A_NUMBER)
             }
             checkRightFieldNanError(activityRule)
         }

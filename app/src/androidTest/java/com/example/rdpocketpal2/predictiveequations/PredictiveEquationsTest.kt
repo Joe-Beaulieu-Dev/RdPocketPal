@@ -6,7 +6,9 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
+import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
+import com.example.rdpocketpal2.testutil.VALID_ENTRY_INT_STRING
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
@@ -541,16 +543,16 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             // initial entry
             selectPennState2003b(activityRule)
-            enterWeight(WEIGHT_METRIC)
-            enterHeight(WEIGHT_METRIC)
-            enterAge(AGE)
-            enterTmax(WEIGHT_METRIC)
-            enterVe(WEIGHT_METRIC)
-            enterActivityFactorMin(WEIGHT_METRIC)
-            enterActivityFactorMax(WEIGHT_METRIC)
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            enterWeight(VALID_ENTRY_INT_STRING)
+            enterHeight(VALID_ENTRY_INT_STRING)
+            enterAge(VALID_ENTRY_INT_STRING)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            enterVe(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             clickClear()
             // initial check that fields are empty
             checkWeight(EMPTY_STRING)
@@ -563,9 +565,10 @@ class PredictiveEquationsTest {
             checkBmr(EMPTY_STRING)
             checkCalorieMin(EMPTY_STRING)
             checkCalorieMax(EMPTY_STRING)
+
             // enter fields that don't display in penn state equations
             selectBrandi(activityRule)
-            enterHeartRate(WEIGHT_METRIC)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
             clickClear()
             // check that fields are empty
             checkHeartRate(EMPTY_STRING)
@@ -577,19 +580,22 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             setSexMale()
             // entry
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change sex to female
             setSexFemale()
             // validate fields are empty
             checkBmr(EMPTY_STRING)
             checkCalorieMin(EMPTY_STRING)
             checkCalorieMax(EMPTY_STRING)
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+
             // entry
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change sex to male
             setSexMale()
             // validate fields are empty
@@ -606,19 +612,22 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             setUnitMetric()
             // entry
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change sex to female
             setUnitStandard()
             // validate fields are empty
             checkBmr(EMPTY_STRING)
             checkCalorieMin(EMPTY_STRING)
             checkCalorieMax(EMPTY_STRING)
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
+
             // entry
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change sex to male
             setUnitMetric()
             // validate fields are empty
@@ -635,9 +644,9 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             selectMifflin(activityRule)
             // entry
-            programmaticallySetBmr(WEIGHT_METRIC)
-            programmaticallySetCalorieMin(WEIGHT_METRIC)
-            programmaticallySetCalorieMax(WEIGHT_METRIC)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change equation
             selectBenedict(activityRule)
             // validate fields are empty
@@ -649,136 +658,301 @@ class PredictiveEquationsTest {
         }
     }
     //endregion
-//
-//    //region Errors
-//    @Test
-//    fun checkError_weight_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_height_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_age_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_tmax_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_ve_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_heartRate_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_activityFactorMin_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_activityFactorMax_notANumber_displays() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_weight_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_height_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_age_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_tmax_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_ve_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_heartRate_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_activityFactorMin_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//
-//    @Test
-//    fun checkError_activityFactorMax_noError() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//    //endregion
-//
-//    //region Field persistence
-//    @Test
-//    fun fieldPersistence_orientationChange() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//    //endregion
-//
-//    //region Preference reaction
-//    @Test
-//    fun preferenceChangeRefresh() {
-//        withPredictiveEquationsRobot {
-//
-//        }
-//    }
-//    //endregion
+
+    //region Errors
+    @Test
+    fun checkError_noInput_calculationBtn_pennState2003b_allFields_displays() {
+        withPredictiveEquationsRobot {
+            // setup and calculate
+            selectPennState2003b(activityRule)
+            clickCalculate()
+            // validation
+            checkWeightNanError(activityRule)
+            checkHeightNanError(activityRule)
+            checkAgeNanError(activityRule)
+            checkTmaxNanError(activityRule)
+            checkVeNanError(activityRule)
+            checkActivityFactorMinNanError(activityRule)
+            checkActivityFactorMaxNanError(activityRule)
+            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
+            // check results
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+        }
+    }
+
+    @Test
+    fun checkError_noInput_calculationBtn_brandi_allFields_displays() {
+        withPredictiveEquationsRobot {
+            // setup and calculate
+            selectBrandi(activityRule)
+            clickCalculate()
+            // validation
+            checkWeightNanError(activityRule)
+            checkHeightNanError(activityRule)
+            checkAgeNanError(activityRule)
+            checkHeartRateNanError(activityRule)
+            checkVeNanError(activityRule)
+            checkActivityFactorMinNanError(activityRule)
+            checkActivityFactorMaxNanError(activityRule)
+            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
+            // check results
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+        }
+    }
+
+    @Test
+    fun checkError_invalidInput_calculationBtn_pennState2003b_allFields_displays() {
+        withPredictiveEquationsRobot {
+            // setup and calculate
+            selectPennState2003b(activityRule)
+            enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
+            enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
+            enterAge(INVALID_ENTRY_NOT_A_NUMBER)
+            enterTmax(INVALID_ENTRY_NOT_A_NUMBER)
+            enterVe(INVALID_ENTRY_NOT_A_NUMBER)
+            enterActivityFactorMin(INVALID_ENTRY_NOT_A_NUMBER)
+            enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
+            clickCalculate()
+            // validation
+            checkWeightNanError(activityRule)
+            checkHeightNanError(activityRule)
+            checkAgeNanError(activityRule)
+            checkTmaxNanError(activityRule)
+            checkVeNanError(activityRule)
+            checkActivityFactorMinNanError(activityRule)
+            checkActivityFactorMaxNanError(activityRule)
+            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
+            // check results
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+        }
+    }
+
+    @Test
+    fun checkError_invalidInput_calculationBtn_brandi_allFields_displays() {
+        withPredictiveEquationsRobot {
+            // setup and calculate
+            selectBrandi(activityRule)
+            enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
+            enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
+            enterAge(INVALID_ENTRY_NOT_A_NUMBER)
+            enterHeartRate(INVALID_ENTRY_NOT_A_NUMBER)
+            enterVe(INVALID_ENTRY_NOT_A_NUMBER)
+            enterActivityFactorMin(INVALID_ENTRY_NOT_A_NUMBER)
+            enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
+            clickCalculate()
+            // validation
+            checkWeightNanError(activityRule)
+            checkHeightNanError(activityRule)
+            checkAgeNanError(activityRule)
+            checkHeartRateNanError(activityRule)
+            checkVeNanError(activityRule)
+            checkActivityFactorMinNanError(activityRule)
+            checkActivityFactorMaxNanError(activityRule)
+            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
+            // check results
+            checkBmr(EMPTY_STRING)
+            checkCalorieMin(EMPTY_STRING)
+            checkCalorieMax(EMPTY_STRING)
+        }
+    }
+
+    @Test
+    fun checkError_weight_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkWeightNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_height_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkHeightNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_age_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            enterAge(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToWeight()
+            checkAgeNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_tmax_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            selectPennState2003b(activityRule)
+            enterTmax(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkTmaxNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_ve_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            selectPennState2003b(activityRule)
+            enterVe(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkVeNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_heartRate_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            selectBrandi(activityRule)
+            enterHeartRate(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkHeartRateNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_activityFactorMin_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            enterActivityFactorMin(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkActivityFactorMinNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_activityFactorMax_notANumber_displays() {
+        withPredictiveEquationsRobot {
+            enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
+            loseFocusToAge()
+            checkActivityFactorMaxNanError(activityRule)
+        }
+    }
+
+    @Test
+    fun checkError_weight_noError() {
+        withPredictiveEquationsRobot {
+            enterWeight(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkWeightNoError()
+        }
+    }
+
+    @Test
+    fun checkError_height_noError() {
+        withPredictiveEquationsRobot {
+            enterHeight(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkHeightNoError()
+        }
+    }
+
+    @Test
+    fun checkError_age_noError() {
+        withPredictiveEquationsRobot {
+            enterAge(VALID_ENTRY_INT_STRING)
+            loseFocusToWeight()
+            checkAgeNoError()
+        }
+    }
+
+    @Test
+    fun checkError_tmax_noError() {
+        withPredictiveEquationsRobot {
+            selectPennState2003b(activityRule)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkTmaxNoError()
+        }
+    }
+
+    @Test
+    fun checkError_ve_noError() {
+        withPredictiveEquationsRobot {
+            selectPennState2003b(activityRule)
+            enterVe(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkVeNoError()
+        }
+    }
+
+    @Test
+    fun checkError_heartRate_noError() {
+        withPredictiveEquationsRobot {
+            selectBrandi(activityRule)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkHeartRateNoError()
+        }
+    }
+
+    @Test
+    fun checkError_activityFactorMin_noError() {
+        withPredictiveEquationsRobot {
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkActivityFactorMinNoError()
+        }
+    }
+
+    @Test
+    fun checkError_activityFactorMax_noError() {
+        withPredictiveEquationsRobot {
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            loseFocusToAge()
+            checkActivityFactorMaxNoError()
+        }
+    }
+    //endregion
+
+    //region Field persistence
+    @Test
+    fun fieldPersistence_orientationChange() {
+        withPredictiveEquationsRobot {
+            // entry
+            selectPennState2003b(activityRule)
+            enterWeight(VALID_ENTRY_INT_STRING)
+            enterHeight(VALID_ENTRY_INT_STRING)
+            enterAge(VALID_ENTRY_INT_STRING)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            enterVe(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
+            // rotate screen
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validation
+            checkWeight(VALID_ENTRY_INT_STRING)
+            checkHeight(VALID_ENTRY_INT_STRING)
+            checkAge(VALID_ENTRY_INT_STRING)
+            checkTmax(VALID_ENTRY_INT_STRING)
+            checkVe(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMin(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMax(VALID_ENTRY_INT_STRING)
+            checkBmr(VALID_ENTRY_INT_STRING)
+            checkCalorieMin(VALID_ENTRY_INT_STRING)
+            checkCalorieMax(VALID_ENTRY_INT_STRING)
+
+            // enter fields that don't display in penn state equations
+            selectBrandi(activityRule)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
+            // rotate screen
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validation
+            checkHeartRate(VALID_ENTRY_INT_STRING)
+        }
+    }
+    //endregion
 }

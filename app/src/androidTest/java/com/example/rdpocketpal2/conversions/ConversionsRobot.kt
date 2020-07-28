@@ -6,7 +6,6 @@ import androidx.annotation.IdRes
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.TestRobot
-import com.example.rdpocketpal2.testutil.TestUtil
 
 class ConversionsRobot : TestRobot() {
 
@@ -47,21 +46,19 @@ class ConversionsRobot : TestRobot() {
 
     //region Errors
     fun <T : Activity> checkLeftFieldNanError(activityRule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.conv_field_left
-                , TestUtil.getString(activityRule, R.string.error_enter_a_number))
+        checkEditTextError(activityRule, R.id.conv_field_left, R.string.error_enter_a_number)
     }
 
     fun <T : Activity> checkRightFieldNanError(activityRule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.conv_field_right
-                , TestUtil.getString(activityRule, R.string.error_enter_a_number))
+        checkEditTextError(activityRule, R.id.conv_field_right, R.string.error_enter_a_number)
     }
 
     fun checkLeftFieldNoError() {
-        checkEditTextError(R.id.conv_field_left, null)
+        checkEditTextNoError(R.id.conv_field_left)
     }
 
     fun checkRightFieldNoError() {
-        checkEditTextError(R.id.conv_field_right, null)
+        checkEditTextNoError(R.id.conv_field_right)
     }
     //endregion
 

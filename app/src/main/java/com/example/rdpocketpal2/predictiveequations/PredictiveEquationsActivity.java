@@ -29,6 +29,10 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     private PredictiveEquationsViewModel mViewModel;
     private ActivityPredictiveEquationsBinding mBinding;
 
+    private static final String KEY_ORIENTATION_CHANGED = "orientationChanged";
+    private boolean mConfigurationChanged = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +56,6 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         // set up UI elements
         setUpEquationSpinner();
         setUpButtonRipple();
-
-        // observe data
-        observeData();
     }
 
     private void setUpEquationSpinner() {
@@ -90,36 +91,56 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         }
     }
 
-    private void observeData() {
+    // Observer's onChanged() is called not only when observed LiveData is changed, but also
+    // on device configuration change, even if the LiveData's value is never changed. This is bad
+    // because since this implementation of onChanged() clears the User's result data when the
+    // selected equation is changed, if the configuration is changed then onChanged() will fire
+    // as well. Therefore, we need to check whether onChanged() is being called due to an actual
+    // change in the LiveData, or due to a configuration change. This will determine whether or not
+    // the result data is cleared.
+    //
+    // This check is done using values set and read in onSaveInstanceState() and
+    // onRestoreInstanceState(). If this method is implemented before onRestoreInstanceState() is
+    // called, then we can't check if onChanged() was called due to an orientation change.
+    // Therefore, this method MUST be implemented in a lifecycle method that gets called
+    // AFTER onRestoreInstanceState().
+    private void observeEquationSpinnerData() {
         // observe equation spinner and set view visibility of variable views accordingly
         mViewModel.getSelectedEquation().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                // change view visibility and constraints based on selected equation
+                // change view visibility based on selected equation,
+                // then change layout constraints to eliminate gaps
                 if (s.equals(getString(R.string.mifflin_st_jear))
                         || s.equals(getString(R.string.harris_benedict))) {
-                    // set visibilities
                     setVisibilities(View.GONE, View.GONE, View.GONE);
-                    // change layout constraints to eliminate gaps
                     setConstraints(PredictiveEquationsViewModel.MIFFLIN);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
                         || s.equals(getString(R.string.penn_state_2010))) {
-                    // set visibilities
                     setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
-                    // change layout constraints to eliminate gaps
                     setConstraints(PredictiveEquationsViewModel.PENN2003B);
                 } else if (s.equals(getString(R.string.brandi))) {
-                    // set visibilities
                     setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
-                    // change layout constraints to eliminate gaps
                     setConstraints(PredictiveEquationsViewModel.BRANDI);
                 }
 
-                // clear result data when equation is changed and show Toast
-                // this is done so results don't clash with user input/equation selection
-                mViewModel.clearResultDataFromActivity();
+                // this is the method where the reason onChanged() was called is important
+                clearDataIfNecessary();
             }
         });
+    }
+
+    private void clearDataIfNecessary() {
+        // do nothing if this method's caller (Observer<T>.onChanged()) was called
+        // due to a config change
+        if (!mConfigurationChanged) {
+            // clear result data when equation is changed and show Toast
+            // this is done so results don't clash with user input/equation selection
+            mViewModel.clearResultDataFromActivity();
+        }
+        // reset value as it being true is only relevant when onChanged() is initially
+        // auto-called due to a config change
+        mConfigurationChanged = false;
     }
 
     private void setConstraints(@Equations int equation) {
@@ -183,9 +204,27 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        observeEquationSpinnerData();
+        super.onResume();
+    }
+
+    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        // Activity was killed due to a configuration change and is going to be recreated
+        // https://developer.android.com/guide/components/activities/activity-lifecycle#ondestroy
+        if (!isFinishing()) {
+            outState.putBoolean(KEY_ORIENTATION_CHANGED, true);
+        }
         // save the state of the ViewModel to deal with system initiated process death
         mViewModel.saveState();
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mConfigurationChanged = savedInstanceState
+                .getBoolean(KEY_ORIENTATION_CHANGED, false);
     }
 }

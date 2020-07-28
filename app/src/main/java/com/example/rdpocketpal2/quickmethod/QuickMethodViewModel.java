@@ -468,7 +468,10 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     //region Lifecycle Events
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
+        // settings not pulled on Calculate btn click
         getAllNumericSettings();
+        // RadioGroup Binding Adapter doesn't fire child listeners as to avoid unintended behavior
+        // on orientation change, etc. Listeners only fired on actual presses, so set units here.
         setUnits();
     }
 

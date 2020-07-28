@@ -6,7 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
-import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_NUMBER
+import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -272,7 +272,7 @@ class QuickMethodTest {
         // enter invalid input into Weight field, then check for NaN error on EditText
         withQuickMethodRobot {
             // input
-            enterWeight(INVALID_ENTRY_NOT_NUMBER)
+            enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
             // leave weight field and close keyboard
             leaveField()
 
@@ -287,8 +287,8 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inCalories {
                 // input
-                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
-                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMinInput(INVALID_ENTRY_NOT_A_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_A_NUMBER)
                 // leave final field and close keyboard
                 leaveField()
 
@@ -305,8 +305,8 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inProtein {
                 // input
-                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
-                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMinInput(INVALID_ENTRY_NOT_A_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_A_NUMBER)
                 // leave final field and close keyboard
                 leaveField()
 
@@ -323,8 +323,8 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inFluids {
                 // input
-                enterMinInput(INVALID_ENTRY_NOT_NUMBER)
-                enterMaxInput(INVALID_ENTRY_NOT_NUMBER)
+                enterMinInput(INVALID_ENTRY_NOT_A_NUMBER)
+                enterMaxInput(INVALID_ENTRY_NOT_A_NUMBER)
                 // leave final field and close keyboard
                 leaveField()
 
@@ -345,7 +345,7 @@ class QuickMethodTest {
             leaveField()
 
             // validate error
-            checkWeightNoError(activityRule)
+            checkWeightNoError()
         }
     }
 

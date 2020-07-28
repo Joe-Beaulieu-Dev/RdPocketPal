@@ -4,10 +4,12 @@ import android.app.Activity
 import android.app.Instrumentation
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -26,7 +28,8 @@ import org.hamcrest.Matchers.*
 
 //region Testing constants
 const val EMPTY_STRING = ""
-const val INVALID_ENTRY_NOT_NUMBER: String = "."
+const val INVALID_ENTRY_NOT_A_NUMBER: String = "."
+const val VALID_ENTRY_INT_STRING = "1"
 //endregion
 
 @DslMarker
@@ -36,23 +39,25 @@ annotation class TestRobotMarker
 open class TestRobot {
 
     //region Text entry
-    protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
-            onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
+    protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction {
+        return onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
+    }
 
-    protected fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction =
-            onView(withId(id)).perform(object: ViewAction {
-                override fun getDescription(): String {
-                    return "Set the value of an EditText programmatically"
-                }
+    protected fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction {
+        return onView(withId(id)).perform(object : ViewAction {
+            override fun getDescription(): String {
+                return "Set the value of an EditText programmatically"
+            }
 
-                override fun getConstraints(): Matcher<View> {
-                    return isAssignableFrom(EditText::class.java)
-                }
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(EditText::class.java)
+            }
 
-                override fun perform(uiController: UiController?, view: View?) {
-                    (view as EditText).setText(text)
-                }
-            })
+            override fun perform(uiController: UiController?, view: View?) {
+                (view as EditText).setText(text)
+            }
+        })
+    }
     //endregion
 
     //region Text validation
@@ -62,26 +67,41 @@ open class TestRobot {
         return checkText(viewId, TestUtil.getString(activityRule, stringId))
     }
 
-    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
-            onView(withId(viewId)).check(matches(withText(text)))
+    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
+        return onView(withId(viewId)).check(matches(withText(text)))
+    }
     //endregion
 
     //region Error validation
-    protected fun checkEditTextError(@IdRes viewId: Int, errorText: String?): ViewInteraction =
-            onView(withId(viewId)).check(matches(hasErrorText(errorText)))
+    protected fun <T : Activity> checkEditTextError(activityRule: ActivityTestRule<T>
+                                                    , @IdRes viewId: Int
+                                                    , @StringRes stringId: Int): ViewInteraction {
+        return onView(withId(viewId)).check(matches(
+                hasErrorText(TestUtil.getString(activityRule, stringId))))
+    }
+
+    protected fun checkEditTextNoError(@IdRes viewId: Int): ViewInteraction {
+        // need to use this value because of overload resolution
+        // ambiguity on hasErrorText() when just using null
+        val nullString: String? = null
+        return onView(withId(viewId)).check(matches(hasErrorText(nullString)))
+    }
     //endregion
 
     //region Click
-    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction =
-            onView(withId(viewId)).perform(click())
+    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction {
+        return onView(withId(viewId)).perform(click())
+    }
 
-    protected fun clickViewText(@IdRes viewId: Int): ViewInteraction =
-            onView(withText(viewId)).perform(click())
+    protected fun clickViewText(@IdRes viewId: Int): ViewInteraction {
+        return onView(withText(viewId)).perform(click())
+    }
     //endregion
 
     //region Toast
-    fun checkToastDisplayedWithMessage(@IdRes stringId: Int): ViewInteraction =
-            onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
+    fun checkToastDisplayedWithMessage(@IdRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
+    }
     //endregion
 
     //region Spinner
@@ -100,25 +120,27 @@ open class TestRobot {
     }
 
     protected fun checkSpinnerSelection(@IdRes spinnerId: Int
-                                        , @IdRes stringId: Int): ViewInteraction =
-            onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
+                                        , @IdRes stringId: Int): ViewInteraction {
+        return onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
+    }
     //endregion
 
     //region NumberPicker
-    protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction =
-            onView(withId(id)).perform(object : ViewAction {
-                override fun getDescription(): String {
-                    return "Set the value of a NumberPicker"
-                }
+    protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction {
+        return onView(withId(id)).perform(object : ViewAction {
+            override fun getDescription(): String {
+                return "Set the value of a NumberPicker"
+            }
 
-                override fun getConstraints(): Matcher<View> {
-                    return isAssignableFrom(NumberPicker::class.java)
-                }
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(NumberPicker::class.java)
+            }
 
-                override fun perform(uiController: UiController?, view: View?) {
-                    (view as NumberPicker).value = num
-                }
-            })
+            override fun perform(uiController: UiController?, view: View?) {
+                (view as NumberPicker).value = num
+            }
+        })
+    }
     //endregion
 
     //region Preferences
@@ -146,7 +168,12 @@ open class TestRobot {
         rule.activity.requestedOrientation = orientation
 
         // wait for screen to finish rotating
+        // waitForIdleSync() doesn't get the job done; still getting errors trying to use it.
+        // Need to use sleep as well or else we'll still get errors. Ex: PredictiveEquationsTest,
+        // rotating the screen twice with waitForIdleSync() and then trying to click on the equation
+        // Spinner leads to an error without using sleep.
         instrumentation.waitForIdleSync()
+        SystemClock.sleep(500)
     }
     //endregion
 }

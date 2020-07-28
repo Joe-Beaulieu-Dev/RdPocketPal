@@ -20,12 +20,11 @@ open class QuickMethodRobot : TestRobot() {
     }
 
     fun <T : Activity> checkWeightNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.qm_weight_editText
-                , TestUtil.getString(rule, R.string.error_enter_a_number))
+        checkEditTextError(rule, R.id.qm_weight_editText, R.string.error_enter_a_number)
     }
 
-    fun <T : Activity> checkWeightNoError(rule: ActivityTestRule<T>) {
-        checkEditTextError(R.id.qm_weight_editText, null)
+    fun checkWeightNoError() {
+        checkEditTextNoError(R.id.qm_weight_editText)
     }
 
     fun leaveField() {

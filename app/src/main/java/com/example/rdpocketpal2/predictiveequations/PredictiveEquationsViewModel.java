@@ -556,6 +556,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     //region LifeCycle Events
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
+        // RadioGroup Binding Adapter doesn't fire child listeners as to avoid unintended behavior
+        // on orientation change, etc. Listeners only fired on actual presses, so set units here.
         setUnits();
     }
 
