@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MetricEquationUtilTest {
+    //region Test data
     // User input values
     private static final double WEIGHT = 75;
     private static final double HEIGHT = 175;
@@ -34,6 +35,13 @@ public class MetricEquationUtilTest {
     private static final double BRANDI_BENEDICT_INPUT = 1798.5;
     private static final double BRANDI_ANSWER = 1885.56;
 
+    // Quick Method values
+    public static final double QUICK_METHOD_WEIGHT_INPUT = 75;
+    public static final double QUICK_METHOD_FACTOR_INPUT = 2;
+    public static final double QUICK_METHOD_ANSWER = 150;
+    //endregion
+
+    //region Predictive Equations
     @Test
     public void calculateBmrMifflin_male_isCorrect() {
         assertEquals(MIFFLIN_MALE_ANSWER
@@ -89,4 +97,16 @@ public class MetricEquationUtilTest {
                 , DELTA
         );
     }
+    //endregion
+
+    //region Quick Method
+    @Test
+    public void calculateQuickMethod_isCorrect() {
+        assertEquals(QUICK_METHOD_ANSWER
+                , MetricEquationUtil.calculateQuickMethod(
+                        QUICK_METHOD_WEIGHT_INPUT, QUICK_METHOD_FACTOR_INPUT)
+                , DELTA
+        );
+    }
+    //endregion
 }

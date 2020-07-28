@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class CalculationUtilTest {
+    //region Test data
     // general values
     private static final double DELTA_THREE = 0.001;
     private static final double DELTA_SIX = 0.000001;
@@ -40,12 +41,21 @@ public class CalculationUtilTest {
     private static final double BRANDI_BENEDICT_INPUT = 1572.5;
     private static final double BRANDI_ANSWER = 1668.6;
 
+    // Calorie Min/Max values
+    private static final double CALORIE_MIN_MAX_BMR = 1234.5;
+    private static final double CALORIE_ACTIVITY_FACTOR_MIN = 1;
+    private static final double CALORIE_ACTIVITY_FACTOR_MAX = 2;
+    private static final double CALORIE_MIN_ANSWER = 1234.5;
+    private static final double CALORIE_MAX_ANSWER = 2469;
+
     // Quick Method values
     private static final double QUICK_METHOD_ANSWER_STANDARD = 90.718474;
     private static final double QUICK_METHOD_ANSWER_METRIC = 200;
     private static final double QUICK_METHOD_WEIGHT = 100;
     private static final double QUICK_METHOD_FACTOR = 2;
+    //endregion
 
+    //region Predictive Equations
     @Test
     public void calculateBmrMifflin_metric_male_isCorrect() {
         assertEquals(MIFFLIN_MALE_ANSWER
@@ -163,6 +173,24 @@ public class CalculationUtilTest {
     }
 
     @Test
+    public void calculateCalorieMin_isCorrect() {
+        assertEquals(CALORIE_MIN_ANSWER
+                , CalculationUtil.calculateCalorieMin(
+                        CALORIE_MIN_MAX_BMR, CALORIE_ACTIVITY_FACTOR_MIN)
+                , DELTA_THREE);
+    }
+
+    @Test
+    public void calculateCalorieMax_isCorrect() {
+        assertEquals(CALORIE_MAX_ANSWER
+                , CalculationUtil.calculateCalorieMax(
+                        CALORIE_MIN_MAX_BMR, CALORIE_ACTIVITY_FACTOR_MAX)
+                , DELTA_THREE);
+    }
+    // endregion
+
+    //region Quick Method
+    @Test
     public void calculateQuickMethod_metric_isCorrect() {
         assertEquals(QUICK_METHOD_ANSWER_METRIC
                 , CalculationUtil.calculateQuickMethod(Constants.METRIC
@@ -177,4 +205,5 @@ public class CalculationUtilTest {
                         , QUICK_METHOD_WEIGHT, QUICK_METHOD_FACTOR)
                 , DELTA_SIX);
     }
+    //endregion
 }
