@@ -1,10 +1,12 @@
 package com.example.rdpocketpal2.predictiveequations
 
+import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.settings.withSettingsRobot
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
@@ -575,6 +577,7 @@ class PredictiveEquationsTest {
         }
     }
 
+    // TODO fails when run with whole class, but not when run on its own. Doesn't detect Toast
     @Test
     fun clearFields_sexRadioBtnPress() {
         withPredictiveEquationsRobot {
@@ -682,6 +685,7 @@ class PredictiveEquationsTest {
         }
     }
 
+    // TODO fails when run with whole class, but not when run on its own. Doesn't detect Toast
     @Test
     fun checkError_noInput_calculationBtn_brandi_allFields_displays() {
         withPredictiveEquationsRobot {
@@ -953,6 +957,20 @@ class PredictiveEquationsTest {
             // validation
             checkHeartRate(VALID_ENTRY_INT_STRING)
         }
+    }
+    //endregion
+
+    //region Preferences
+    @Test
+    fun checkPreferences_areAccessible() {
+        Intents.init()
+        withPredictiveEquationsRobot {
+            openPreferences()
+        }
+        withSettingsRobot {
+            checkSettingsActivityIsDisplayed()
+        }
+        Intents.release()
     }
     //endregion
 }

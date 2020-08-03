@@ -1,10 +1,12 @@
 package com.example.rdpocketpal2.quickmethod
 
+import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.settings.withSettingsRobot
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
@@ -14,13 +16,21 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 //region Test constants
+// input
 const val WEIGHT_METRIC: String = "75"
 const val WEIGHT_STANDARD: String = "165.346565409"
 const val FACTOR_MIN: String = "20.25"
 const val FACTOR_MAX: String = "30"
-const val OUTPUT_MIN_ONE_DECIMAL: String = "1519"
-const val OUTPUT_MIN_TWO_DECIMAL: String = "1518.75"
-const val OUTPUT_MAX_TWO_DECIMAL: String = "2250"
+// min output
+const val OUTPUT_MIN_ZERO_DECIMALS_ROUNDED: String = "1519"
+const val OUTPUT_MIN_ONE_DECIMAL_ROUNDED: String = "1518.8"
+const val OUTPUT_MIN_ONE_DECIMAL_TRUNCATED: String = "1518.7"
+const val OUTPUT_MIN_TWO_DECIMALS_ROUNDED: String = "1518.75"
+// max output
+const val OUTPUT_MAX_ZERO_DECIMALS_ROUNDED: String = "2250"
+const val OUTPUT_MAX_ONE_DECIMAL_ROUNDED: String = "2250"
+const val OUTPUT_MAX_ONE_DECIMAL_TRUNCATED: String = "2250"
+const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED: String = "2250"
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -82,8 +92,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -101,8 +111,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -137,8 +147,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -156,8 +166,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -192,8 +202,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -211,8 +221,8 @@ class QuickMethodTest {
                 enterMaxInput(FACTOR_MAX)
                 clickCalculate()
                 // validate calculation
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
             }
         }
     }
@@ -233,40 +243,43 @@ class QuickMethodTest {
     }
     //endregion
 
-    //region Preference reaction
+    //region Clear fields
     @Test
-    fun preferenceChangeRefresh() {
+    fun clearFields_unitRadioBtnPress() {
         withQuickMethodRobot {
-            // set prefs via UI
-            setDecimalReductionMethodViaUi(R.string.key_rounding)
-            setNumericScaleViaUi(0)
+            // input
+            setAllFieldsProgrammatically(WEIGHT_METRIC)
 
-            // input and calculate
-            enterWeight(WEIGHT_METRIC)
+            // change units
+            setInputStandard()
+
+            // check that outputs cleared and inputs remained
             inCalories {
-                enterMinInput(FACTOR_MIN)
-                enterMaxInput(FACTOR_MAX)
-                clickCalculate()
-                // validate rounded int results
-                checkMinOutput(OUTPUT_MIN_ONE_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
+            }
+            inProtein {
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
+            }
+            inFluids {
+                checkMinInput(WEIGHT_METRIC)
+                checkMaxInput(WEIGHT_METRIC)
+                checkMinOutput(EMPTY_STRING)
+                checkMaxOutput(EMPTY_STRING)
             }
 
-            // set prefs via UI back to default
-            setNumericScaleViaUi(2)
-
-            inCalories {
-                // calculate
-                clickCalculate()
-                // validate rounded double results
-                checkMinOutput(OUTPUT_MIN_TWO_DECIMAL)
-                checkMaxOutput(OUTPUT_MAX_TWO_DECIMAL)
-            }
+            // check that correct Toast is displayed
+            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
     //endregion
 
-    //region Error messages
+    //region Errors
     @Test
     fun checkWeightError_notANumber_displays() {
         // enter invalid input into Weight field, then check for NaN error on EditText
@@ -404,42 +417,6 @@ class QuickMethodTest {
     }
     //endregion
 
-    //region Clear fields
-    @Test
-    fun clearFields_unitRadioBtnPress() {
-        withQuickMethodRobot {
-            // input
-            setAllFieldsProgrammatically(WEIGHT_METRIC)
-
-            // change units
-            setInputStandard()
-
-            // check that outputs cleared and inputs remained
-            inCalories {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
-                checkMinOutput(EMPTY_STRING)
-                checkMaxOutput(EMPTY_STRING)
-            }
-            inProtein {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
-                checkMinOutput(EMPTY_STRING)
-                checkMaxOutput(EMPTY_STRING)
-            }
-            inFluids {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
-                checkMinOutput(EMPTY_STRING)
-                checkMaxOutput(EMPTY_STRING)
-            }
-
-            // check that correct Toast is displayed
-            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
-        }
-    }
-    //endregion
-
     //region Field persistence
     @Test
     fun orientationChange_fieldPersistence() {
@@ -454,6 +431,71 @@ class QuickMethodTest {
 
             // validate all fields
             checkAllProgrammaticallySetFields(WEIGHT_METRIC)
+        }
+    }
+    //endregion
+
+    //region Preferences
+    @Test
+    fun checkPreferences_areAccessible() {
+        Intents.init()
+        withQuickMethodRobot {
+            openPreferences()
+        }
+        withSettingsRobot {
+            checkSettingsActivityIsDisplayed()
+        }
+        Intents.release()
+    }
+
+    @Test
+    fun preferenceChangeRefresh() {
+        withQuickMethodRobot {
+            // set prefs via UI
+            setNumericScaleViaUi(0)
+            setDecimalReductionMethodViaUi(R.string.key_rounding)
+            // input and calculate
+            enterWeight(WEIGHT_METRIC)
+            inCalories {
+                enterMinInput(FACTOR_MIN)
+                enterMaxInput(FACTOR_MAX)
+                clickCalculate()
+                // validate rounded int results
+                checkMinOutput(OUTPUT_MIN_ZERO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_ZERO_DECIMALS_ROUNDED)
+            }
+
+            // set prefs via UI
+            setNumericScaleViaUi(1)
+            // input and calculate
+            inCalories {
+                clickCalculate()
+                // validate rounded int results
+                checkMinOutput(OUTPUT_MIN_ONE_DECIMAL_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_ONE_DECIMAL_ROUNDED)
+            }
+
+            // set prefs via UI
+            setDecimalReductionMethodViaUi(R.string.key_truncation)
+            // input and calculate
+            inCalories {
+                clickCalculate()
+                // validate rounded int results
+                checkMinOutput(OUTPUT_MIN_ONE_DECIMAL_TRUNCATED)
+                checkMaxOutput(OUTPUT_MAX_ONE_DECIMAL_TRUNCATED)
+            }
+
+            // set prefs via UI back to default
+            setNumericScaleViaUi(2)
+            setDecimalReductionMethodViaUi(R.string.key_rounding)
+            // input and calculate
+            inCalories {
+                // calculate
+                clickCalculate()
+                // validate rounded double results
+                checkMinOutput(OUTPUT_MIN_TWO_DECIMALS_ROUNDED)
+                checkMaxOutput(OUTPUT_MAX_TWO_DECIMALS_ROUNDED)
+            }
         }
     }
     //endregion

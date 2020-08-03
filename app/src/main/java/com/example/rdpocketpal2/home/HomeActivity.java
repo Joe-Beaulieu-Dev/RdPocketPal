@@ -15,7 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeActivity extends AppCompatActivity implements HomeButtonAdapter.HomeButtonListener {
+public class HomeActivity extends AppCompatActivity implements
+        HomeButtonAdapter.HomeButtonListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements HomeButtonAdapter
     private void setUpRecyclerView() {
         View root = findViewById(android.R.id.content);
 
-        RecyclerView homeButtons = root.findViewById(R.id.home_buttons);
+        RecyclerView homeButtons = root.findViewById(R.id.home_buttons_recyclerView);
         homeButtons.setLayoutManager(new GridLayoutManager(this, 2));
         homeButtons.setAdapter(new HomeButtonAdapter(this));
     }

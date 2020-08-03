@@ -1,9 +1,11 @@
 package com.example.rdpocketpal2.conversions
 
+import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.example.rdpocketpal2.settings.withSettingsRobot
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import org.junit.Rule
@@ -507,6 +509,20 @@ class ConversionsTest {
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
         }
+    }
+    //endregion
+
+    //region Preferences
+    @Test
+    fun checkPreferences_areAccessible() {
+        Intents.init()
+        withConversionsRobot {
+            openPreferences()
+        }
+        withSettingsRobot {
+            checkSettingsActivityIsDisplayed()
+        }
+        Intents.release()
     }
     //endregion
 }

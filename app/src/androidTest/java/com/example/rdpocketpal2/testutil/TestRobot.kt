@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -18,6 +19,9 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -63,12 +67,20 @@ open class TestRobot {
     //region Text validation
     protected fun <T : Activity> checkText(activityRule: ActivityTestRule<T>
                                            , @IdRes viewId: Int
-                                           , @IdRes stringId: Int): ViewInteraction {
+                                           , @StringRes stringId: Int): ViewInteraction {
         return checkText(viewId, TestUtil.getString(activityRule, stringId))
     }
 
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
         return onView(withId(viewId)).check(matches(withText(text)))
+    }
+
+    protected fun checkViewWithTextIsDisplayed(@StringRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId)).check(matches(isDisplayed()))
+    }
+
+    protected fun checkViewWithTextIsDisplayed(text: String): ViewInteraction {
+        return onView(withText(text)).check(matches(isDisplayed()))
     }
     //endregion
 
@@ -99,7 +111,7 @@ open class TestRobot {
     //endregion
 
     //region Toast
-    fun checkToastDisplayedWithMessage(@IdRes stringId: Int): ViewInteraction {
+    fun checkToastDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
     }
     //endregion
@@ -107,7 +119,7 @@ open class TestRobot {
     //region Spinner
     protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
                                                   , @IdRes spinnerId: Int
-                                                  , @IdRes stringId: Int): ViewInteraction {
+                                                  , @StringRes stringId: Int): ViewInteraction {
         return clickSpinnerItem(spinnerId, TestUtil.getString(activityRule, stringId))
     }
 
@@ -120,14 +132,26 @@ open class TestRobot {
     }
 
     protected fun checkSpinnerSelection(@IdRes spinnerId: Int
-                                        , @IdRes stringId: Int): ViewInteraction {
+                                        , @StringRes stringId: Int): ViewInteraction {
         return onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
     }
     //endregion
 
+    //region RecyclerView
+    protected fun <T : Activity> clickRecyclerViewItem(activityRule: ActivityTestRule<T>
+                                                                 , @IdRes recyclerViewId: Int
+                                                                 , @StringRes stringId: Int): ViewInteraction {
+        // click on the ViewHolder that has the specified text (Activity name)
+        return onView(withId(recyclerViewId))
+                .perform(RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(TestUtil.getString(activityRule, stringId)))
+                        , click()))
+    }
+    //endregion
+
     //region NumberPicker
-    protected fun setNumberPickerValue(@IdRes id: Int, num: Int): ViewInteraction {
-        return onView(withId(id)).perform(object : ViewAction {
+    protected fun setNumberPickerValue(@IdRes numberPickerId: Int, num: Int): ViewInteraction {
+        return onView(withId(numberPickerId)).perform(object : ViewAction {
             override fun getDescription(): String {
                 return "Set the value of a NumberPicker"
             }
@@ -144,7 +168,7 @@ open class TestRobot {
     //endregion
 
     //region Preferences
-    protected fun openPreferences() {
+    fun openPreferences() {
         // open overflow menu
         openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().targetContext)
@@ -174,6 +198,12 @@ open class TestRobot {
         // Spinner leads to an error without using sleep.
         instrumentation.waitForIdleSync()
         SystemClock.sleep(500)
+    }
+    //endregion
+
+    //region Activity
+    protected fun checkActivityIsDisplayed(className: String) {
+        intended(hasComponent(className))
     }
     //endregion
 }

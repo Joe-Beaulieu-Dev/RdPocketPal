@@ -9,7 +9,7 @@
 
     <!-- Contains all the HomeButtons -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_buttons"
+        android:id="@+id/home_buttons_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"

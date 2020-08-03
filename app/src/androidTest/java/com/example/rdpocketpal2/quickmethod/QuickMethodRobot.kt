@@ -1,10 +1,11 @@
 package com.example.rdpocketpal2.quickmethod
 
 import android.app.Activity
-import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.settings.withSettingsRobot
 import com.example.rdpocketpal2.testutil.TestRobot
 import com.example.rdpocketpal2.testutil.TestUtil
 
@@ -37,23 +38,21 @@ open class QuickMethodRobot : TestRobot() {
     fun setNumericScaleViaUi(scale: Int) {
         // open preferences
         openPreferences()
-        // click numeric scale setting
-        clickViewText(R.string.text_numeric_scale)
-        // set value to 2
-        setNumberPickerValue(R.id.pref_dialog_number_picker, scale)
-        // click OK (positive button) to close dialog
-        clickViewId(android.R.id.button1)
+        // set settings value
+        withSettingsRobot {
+            setDisplayedDecimalPlaces(scale)
+        }
         // exit settings screen
         pressBack()
     }
 
-    fun setDecimalReductionMethodViaUi(@IdRes stringId: Int) {
+    fun setDecimalReductionMethodViaUi(@StringRes stringId: Int) {
         // open preferences
         openPreferences()
-        // click decimal reduction setting
-        clickViewText(R.string.text_decimal_reduction_method)
-        // set value to rounding
-        clickViewText(stringId)
+        // set settings value
+        withSettingsRobot {
+            setDecimalReductionMethod(stringId)
+        }
         // exit settings screen
         pressBack()
     }
