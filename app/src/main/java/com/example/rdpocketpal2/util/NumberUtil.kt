@@ -48,7 +48,7 @@ object NumberUtil {
     //region Manipulation
     @JvmStatic
     fun roundOrTruncate(context: Context, prefs: UserPreferences?, num: Double): String {
-        // prefs is null or not properly set, return raw Double as String
+        // prefs Object or target prefs are null, return raw Double as a String
         return if (prefs?.reductionMethod == null || prefs.numericScale == null) {
             num.toString()
         } else {
@@ -56,17 +56,18 @@ object NumberUtil {
                 // round
                 context.getString(R.string.key_rounding) -> round(num, prefs.numericScale!!)
                 // truncate
-                else -> truncate(num, prefs.numericScale!!)
+                context.getString(R.string.key_truncation) -> truncate(num, prefs.numericScale!!)
+                // invalid reductionMethod setting, return raw Double as a String
+                else -> num.toString()
             }
         }
     }
 
     @JvmStatic
     fun round(num: Double, scale: Int): String {
-        // throw exception for invalid input
+        // if scale is invalid, just return num as a String
         if (scale < 0) {
-            throw IllegalArgumentException(
-                    "'places' parameter must be greater than 0. Actual value: $scale")
+            return num.toString()
         }
 
         // round value
@@ -79,6 +80,11 @@ object NumberUtil {
 
     @JvmStatic
     fun truncate(num: Double, scale: Int): String {
+        // if scale is invalid, just return num as a String
+        if (scale < 0) {
+            return num.toString()
+        }
+
         // start pattern
         val builder: StringBuilder = StringBuilder("#")
 

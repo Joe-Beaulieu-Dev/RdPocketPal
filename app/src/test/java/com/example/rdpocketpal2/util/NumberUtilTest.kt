@@ -1,9 +1,18 @@
 package com.example.rdpocketpal2.util
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.model.UserPreferences
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class NumberUtilTest {
     //region Test data
     // general values
@@ -23,6 +32,11 @@ class NumberUtilTest {
     private val IS_DOUBLE_STRING_INVALID_INPUT_NOT_NULL = "."
     private val IS_DOUBLE_STRING_INVALID_INPUT_NULL: String? = null
 
+    // Round/Truncate values
+    private val ROUNDING_KEY = "Rounding"
+    private val TRUNCATION_KEY = "Truncation"
+    private val INVALID_REDUCTION_METHOD_KEY = "Roundation"
+    private val INVALID_SCALE = -1
     // Rounding values
     private val ROUND_INPUT = 12.90154
     private val ROUND_ZERO_DIGITS = "13"
@@ -31,7 +45,6 @@ class NumberUtilTest {
     private val ROUND_THREE_DIGITS = "12.902"
     private val ROUND_FOUR_DIGITS = "12.9015"
     private val ROUND_FIVE_DIGITS = "12.90154"
-
     // Truncation values
     private val TRUNCATE_INPUT = 12.34
     private val TRUNCATE_ZERO_DIGITS = "12"
@@ -39,6 +52,9 @@ class NumberUtilTest {
     private val TRUNCATE_TWO_DIGITS = "12.34"
     private val TRUNCATE_THREE_DIGITS = "12.34"
     //endregion
+
+    @Mock
+    private val context = mock(Context::class.java)
 
     //region Parsing
     @Test
@@ -86,6 +102,86 @@ class NumberUtilTest {
 
     //region Manipulation
     @Test
+    fun roundOrTruncate_round_isCorrect() {
+        setUpContextMockSettings()
+        val prefs = UserPreferences(ROUNDING_KEY, 0)
+
+        // zero decimal places
+        assertEquals(ROUND_ZERO_DIGITS, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+
+        // one decimal place
+        prefs.numericScale = 1
+        assertEquals(ROUND_ONE_DIGIT, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+
+        // two decimal places
+        prefs.numericScale = 2
+        assertEquals(ROUND_TWO_DIGITS, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+
+        // three decimal places
+        prefs.numericScale = 3
+        assertEquals(ROUND_THREE_DIGITS, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+
+        // four decimal places
+        prefs.numericScale = 4
+        assertEquals(ROUND_FOUR_DIGITS, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+
+        // five decimal places
+        prefs.numericScale = 5
+        assertEquals(ROUND_FIVE_DIGITS, NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+    }
+
+    @Test
+    fun roundOrTruncate_truncate_isCorrect() {
+        setUpContextMockSettings()
+        val prefs = UserPreferences(TRUNCATION_KEY, 0)
+
+        // zero decimal places
+        assertEquals(TRUNCATE_ZERO_DIGITS, NumberUtil.roundOrTruncate(context, prefs, TRUNCATE_INPUT))
+
+        // one decimal place
+        prefs.numericScale = 1
+        assertEquals(TRUNCATE_ONE_DIGIT, NumberUtil.roundOrTruncate(context, prefs, TRUNCATE_INPUT))
+
+        // two decimal places
+        prefs.numericScale = 2
+        assertEquals(TRUNCATE_TWO_DIGITS, NumberUtil.roundOrTruncate(context, prefs, TRUNCATE_INPUT))
+
+        // three decimal places
+        prefs.numericScale = 3
+        assertEquals(TRUNCATE_THREE_DIGITS, NumberUtil.roundOrTruncate(context, prefs, TRUNCATE_INPUT))
+    }
+
+    @Test
+    fun roundOrTruncate_invalidReductionMethod_returnsRawDoubleToString() {
+        setUpContextMockSettings()
+        val prefs = UserPreferences(INVALID_REDUCTION_METHOD_KEY, INVALID_SCALE)
+
+        // should return unaltered Double as a String
+        assertEquals(ROUND_INPUT.toString()
+                , NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+    }
+
+    @Test
+    fun roundOrTruncate_round_invalidScale_returnsRawDoubleToString() {
+        setUpContextMockSettings()
+        val prefs = UserPreferences(ROUNDING_KEY, INVALID_SCALE)
+
+        // should return unaltered Double as a String
+        assertEquals(ROUND_INPUT.toString()
+                , NumberUtil.roundOrTruncate(context, prefs, ROUND_INPUT))
+    }
+
+    @Test
+    fun roundOrTruncate_truncate_invalidScale_returnsRawDoubleToString() {
+        setUpContextMockSettings()
+        val prefs = UserPreferences(TRUNCATION_KEY, INVALID_SCALE)
+
+        // should return unaltered Double as a String
+        assertEquals(TRUNCATE_INPUT.toString()
+                , NumberUtil.roundOrTruncate(context, prefs, TRUNCATE_INPUT))
+    }
+
+    @Test
     fun round_isCorrect() {
         assertEquals(ROUND_ZERO_DIGITS, NumberUtil.round(ROUND_INPUT, 0))
         assertEquals(ROUND_ONE_DIGIT, NumberUtil.round(ROUND_INPUT, 1))
@@ -96,11 +192,28 @@ class NumberUtilTest {
     }
 
     @Test
+    fun round_invalidScale_returnsRawDoubleToString() {
+        assertEquals(ROUND_INPUT.toString(), NumberUtil.round(ROUND_INPUT, INVALID_SCALE))
+    }
+
+    @Test
     fun truncate_isCorrect() {
         assertEquals(TRUNCATE_ZERO_DIGITS, NumberUtil.truncate(TRUNCATE_INPUT, 0))
         assertEquals(TRUNCATE_ONE_DIGIT, NumberUtil.truncate(TRUNCATE_INPUT, 1))
         assertEquals(TRUNCATE_TWO_DIGITS, NumberUtil.truncate(TRUNCATE_INPUT, 2))
         assertEquals(TRUNCATE_THREE_DIGITS, NumberUtil.truncate(TRUNCATE_INPUT, 3))
+    }
+
+    @Test
+    fun truncate_invalidScale_returnsRawDoubleToString() {
+        assertEquals(TRUNCATE_INPUT.toString(), NumberUtil.round(TRUNCATE_INPUT, INVALID_SCALE))
+    }
+    //endregion
+
+    //region Helper methods
+    private fun setUpContextMockSettings() {
+        `when`(context.getString(R.string.key_rounding)).thenReturn(ROUNDING_KEY)
+        `when`(context.getString(R.string.key_truncation)).thenReturn(TRUNCATION_KEY)
     }
     //endregion
 }
