@@ -534,7 +534,7 @@
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_bmr_editText"
                             app:layout_constraintEnd_toStartOf="@id/pe_bmr_editText" />
 
-                        <!-- BMR entry -->
+                        <!-- BMR result -->
                         <EditText
                             android:id="@+id/pe_bmr_editText"
                             android:layout_width="wrap_content"
@@ -568,7 +568,7 @@
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_calorie_min_editText"
                             app:layout_constraintEnd_toStartOf="@id/pe_calorie_min_editText" />
 
-                        <!-- Calorie min entry -->
+                        <!-- Calorie min result -->
                         <EditText
                             android:id="@+id/pe_calorie_min_editText"
                             android:layout_width="wrap_content"
@@ -602,7 +602,7 @@
                             app:layout_constraintBaseline_toBaselineOf="@+id/pe_calorie_max_editText"
                             app:layout_constraintStart_toStartOf="parent" />
 
-                        <!-- Calorie max entry -->
+                        <!-- Calorie max result -->
                         <EditText
                             android:id="@+id/pe_calorie_max_editText"
                             android:layout_width="wrap_content"

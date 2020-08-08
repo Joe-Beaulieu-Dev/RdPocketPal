@@ -19,7 +19,7 @@
 
     <!-- Main Menu -->
     <string name="text_settings">Settings</string>
-    
+
     <!-- Settings -->
     <string name="text_numeric">Numeric</string>
     <string name="text_numeric_scale">Displayed Decimal Places</string>
@@ -87,6 +87,14 @@
     <!-- Fluid -->
     <string name="text_ml_per_kilogram">ml/kg</string>
     <string name="text_ml_per_day">ml/day</string>
+
+    <!-- Anthropometrics -->
+    <string name="text_bmi">BMI:</string>
+    <string name="text_ibw">IBW:</string>
+    <string name="text_percent_ibw">%IBW:</string>
+    <string name="text_adjusted_bw">Adj. BW:</string>
+    <string name="text_kg_per_m2">kg/m^2</string>
+    <string name="text_percent_sign">%</string>
 
     <!-- Conversions -->
     <string name="text_mg">mg</string>

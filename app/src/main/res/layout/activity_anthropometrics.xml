@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.rdpocketpal2.anthropometrics.AnthropometricsViewModel" />
+    </data>
+
+    <!-- ScrollView that holds the whole UI -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/anthro_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Anthropometrics internal layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/anthro_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".anthropometrics.AnthropometricsActivity">
+
+            <!--
+                *************************
+                ** Data Entry CardView **
+                *************************
+            -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/anthro_data_entry_cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Data entry layout -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/anthro_data_entry_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_small">
+
+                    <!--
+                        *****************
+                        ** RadioGroups **
+                        *****************
+                    -->
+                    <!-- Sex Selection -->
+                    <RadioGroup
+                        android:id="@+id/anthro_sex_selection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_unit_selection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selectedRadioBtn="@={viewModel.mSelectedSex}"
+                        tools:checkedButton="@id/anthro_sex_male">
+
+                        <!-- Male -->
+                        <RadioButton
+                            android:id="@+id/anthro_sex_male"
+                            style="@style/SexSelectionBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_medium"
+                            android:width="75dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/text_male" />
+
+                        <!-- Female -->
+                        <RadioButton
+                            android:id="@+id/anthro_sex_female"
+                            style="@style/SexSelectionBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_medium"
+                            android:width="75dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/text_female" />
+
+                    </RadioGroup>
+
+                    <!-- Unit selection -->
+                    <RadioGroup
+                        android:id="@+id/anthro_unit_selection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/anthro_sex_selection"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selectedRadioBtn="@={viewModel.mSelectedUnit}"
+                        tools:checkedButton="@id/anthro_unit_metric">
+
+                        <!-- Metric -->
+                        <RadioButton
+                            android:id="@+id/anthro_unit_metric"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_metric" />
+
+                        <!-- Standard -->
+                        <RadioButton
+                            android:id="@+id/anthro_unit_standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_standard" />
+
+                    </RadioGroup>
+
+                    <!--
+                        *****************
+                        ** Field entry **
+                        *****************
+                    -->
+
+                    <!-- Weight label -->
+                    <TextView
+                        android:id="@+id/anthro_weight_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/text_weight"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_weight_editText"
+                        app:layout_constraintHorizontal_bias="@integer/bias_left"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Weight entry -->
+                    <EditText
+                        android:id="@+id/anthro_weight_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_weight_unit_label"
+                        app:layout_constraintStart_toEndOf="@id/anthro_weight_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/anthro_unit_selection" />
+
+                    <!-- Weight unit label -->
+                    <TextView
+                        android:id="@+id/anthro_weight_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_height_textView"
+                        app:layout_constraintStart_toEndOf="@id/anthro_weight_editText"
+                        tools:text="@string/text_kg" />
+
+                    <!-- Height label -->
+                    <TextView
+                        android:id="@+id/anthro_height_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_height"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_height_editText"
+                        app:layout_constraintStart_toEndOf="@id/anthro_weight_unit_label" />
+
+                    <!-- Height entry -->
+                    <EditText
+                        android:id="@+id/anthro_height_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_height_unit_label"
+                        app:layout_constraintStart_toEndOf="@id/anthro_height_textView" />
+
+                    <!-- Height unit label -->
+                    <TextView
+                        android:id="@+id/anthro_height_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/anthro_height_editText"
+                        tools:text="@string/text_cm" />
+
+                    <!--
+                        ************************
+                        ** I/O Separator line **
+                        ************************
+                    -->
+                    <View
+                        android:id="@+id/anthro_io_separator_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@color/darkGrey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/anthro_weight_editText" />
+
+                    <!--
+                        *************
+                        ** Results **
+                        *************
+                    -->
+
+                    <!-- BMI label -->
+                    <TextView
+                        android:id="@+id/anthro_bmi_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/text_bmi"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_bmi_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_bmi_editText" />
+
+                    <!-- BMI result -->
+                    <EditText
+                        android:id="@+id/anthro_bmi_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_bmi_unit_label"
+                        app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintTop_toBottomOf="@+id/anthro_io_separator_line" />
+
+                    <!-- BMI unit label -->
+                    <TextView
+                        android:id="@+id/anthro_bmi_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_bmi_editText"
+                        app:layout_constraintStart_toEndOf="@id/anthro_bmi_editText"
+                        tools:text="@string/text_kg_per_m2" />
+
+                    <!-- IBW label -->
+                    <TextView
+                        android:id="@+id/anthro_ibw_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/text_ibw"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_ibw_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_ibw_editText" />
+
+                    <!-- IBW result -->
+                    <EditText
+                        android:id="@+id/anthro_ibw_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_ibw_unit_label"
+                        app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintTop_toBottomOf="@+id/anthro_bmi_editText" />
+
+                    <!-- IBW unit label -->
+                    <TextView
+                        android:id="@+id/anthro_ibw_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_ibw_editText"
+                        app:layout_constraintStart_toEndOf="@id/anthro_ibw_editText"
+                        tools:text="@string/text_kg" />
+
+                    <!-- Percent IBW label -->
+                    <TextView
+                        android:id="@+id/anthro_percent_ibw_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/text_percent_ibw"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_percent_ibw_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_percent_ibw_editText" />
+
+                    <!-- Percent IBW result -->
+                    <EditText
+                        android:id="@+id/anthro_percent_ibw_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_percent_ibw_unit_label"
+                        app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintTop_toBottomOf="@+id/anthro_ibw_editText" />
+
+                    <!-- Percent IBW unit label -->
+                    <TextView
+                        android:id="@+id/anthro_percent_ibw_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_percent_ibw_editText"
+                        app:layout_constraintStart_toEndOf="@id/anthro_percent_ibw_editText"
+                        tools:text="@string/text_percent_sign" />
+
+                    <!-- Adjusted BW label -->
+                    <TextView
+                        android:id="@+id/anthro_adjusted_bw_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/text_adjusted_bw"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintHorizontal_bias="@integer/bias_left"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Adjusted BW result -->
+                    <EditText
+                        android:id="@+id/anthro_adjusted_bw_editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:inputType="numberDecimal"
+                        app:layout_constraintEnd_toStartOf="@id/anthro_adjusted_bw_unit_label"
+                        app:layout_constraintStart_toEndOf="@id/anthro_adjusted_bw_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/anthro_percent_ibw_editText" />
+
+                    <!-- Adjusted BW unit label -->
+                    <TextView
+                        android:id="@+id/anthro_adjusted_bw_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBaseline_toBaselineOf="@id/anthro_adjusted_bw_editText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/anthro_adjusted_bw_editText"
+                        tools:text="@string/text_kg" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--
+                *************
+                ** Buttons **
+                *************
+            -->
+
+            <!-- Clear Button -->
+            <Button
+                android:id="@+id/anthro_clear_btn"
+                style="@style/ClearBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:padding="@dimen/margin_small"
+                android:text="@string/text_clear"
+                app:layout_constraintEnd_toStartOf="@id/anthro_calculate_btn"
+                app:layout_constraintTop_toTopOf="@id/anthro_calculate_btn" />
+
+            <!-- Calculate Button -->
+            <Button
+                android:id="@+id/anthro_calculate_btn"
+                style="@style/CalculateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:padding="@dimen/margin_small"
+                android:text="@string/text_calculate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/anthro_data_entry_cardView"
+                app:layout_constraintTop_toBottomOf="@id/anthro_data_entry_cardView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
