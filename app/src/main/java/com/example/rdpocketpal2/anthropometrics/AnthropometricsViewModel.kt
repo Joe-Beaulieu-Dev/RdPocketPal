@@ -13,14 +13,13 @@ import com.example.rdpocketpal2.quickmethod.FatalCalculationException
 import com.example.rdpocketpal2.util.*
 import kotlinx.coroutines.launch
 
-class AnthropometricsViewModel(application: Application)
+class AnthropometricsViewModel(application: Application, savedStateHandle: SavedStateHandle)
     : AndroidViewModel(application), LifecycleObserver {
 
     //region LiveData
     // UI LiveData
     val mSelectedSex =  MutableLiveData<String>()
     val mSelectedUnit =  MutableLiveData<String>()
-    var mSelectedUnitOldValue: String? = null
     val mWeight =  MutableLiveData<String>()
     val mHeight =  MutableLiveData<String>()
     val mBmi =  MutableLiveData<String>()
@@ -37,6 +36,12 @@ class AnthropometricsViewModel(application: Application)
     // Error messages
     val mWeightErrorMsg =  MutableLiveData<String>()
     val mHeightErrorMsg =  MutableLiveData<String>()
+    //endregion
+
+    //region SavedState data
+    var mState: SavedStateHandle = savedStateHandle
+    private val SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue"
+    private var mSelectedUnitOldValue: String? = mState.get(SELECTED_UNIT_OLD_VALUE_KEY)
     //endregion
 
     private var mApplicationContext: Context = application.applicationContext
@@ -195,6 +200,12 @@ class AnthropometricsViewModel(application: Application)
         // RadioGroup Binding Adapter doesn't fire child listeners as to avoid unintended behavior
         // on orientation change, etc. Listeners only fired on actual presses, so set units here.
         setUnits()
+    }
+    //endregion
+
+    //region SavedState methods
+    fun saveState() {
+        mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue)
     }
     //endregion
 }

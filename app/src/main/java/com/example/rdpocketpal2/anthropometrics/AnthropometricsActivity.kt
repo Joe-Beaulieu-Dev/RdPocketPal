@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.databinding.ActivityAnthropometricsBinding
@@ -24,7 +25,9 @@ class AnthropometricsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // set up ViewModel
-        mViewModel = ViewModelProvider(this).get(AnthropometricsViewModel::class.java)
+        mViewModel = ViewModelProvider(this
+                , SavedStateViewModelFactory(application, this))
+                .get(AnthropometricsViewModel::class.java)
 
         // set up DataBinding
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_anthropometrics)
@@ -65,5 +68,11 @@ class AnthropometricsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        // save the state of the ViewModel to deal with system initiated process death
+        mViewModel.saveState()
+        super.onSaveInstanceState(outState)
     }
 }
