@@ -103,6 +103,7 @@
                             android:id="@+id/anthro_unit_metric"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(anthroUnitMetric)}"
                             android:text="@string/text_metric" />
 
                         <!-- Standard -->
@@ -110,6 +111,7 @@
                             android:id="@+id/anthro_unit_standard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onUnitRadioBtnClicked(anthroUnitStandard)}"
                             android:text="@string/text_standard" />
 
                     </RadioGroup>
@@ -141,6 +143,8 @@
                         android:layout_height="wrap_content"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mWeight}"
+                        app:errorMsg="@={viewModel.mWeightErrorMsg}"
                         app:layout_constraintEnd_toStartOf="@id/anthro_weight_unit_label"
                         app:layout_constraintStart_toEndOf="@id/anthro_weight_textView"
                         app:layout_constraintTop_toBottomOf="@+id/anthro_unit_selection" />
@@ -151,6 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@{viewModel.mWeightUnitLabel}"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
                         app:layout_constraintEnd_toStartOf="@id/anthro_height_textView"
                         app:layout_constraintStart_toEndOf="@id/anthro_weight_editText"
@@ -174,6 +179,8 @@
                         android:layout_height="wrap_content"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mHeight}"
+                        app:errorMsg="@={viewModel.mHeightErrorMsg}"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
                         app:layout_constraintEnd_toStartOf="@id/anthro_height_unit_label"
                         app:layout_constraintStart_toEndOf="@id/anthro_height_textView" />
@@ -184,6 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@={viewModel.mHeightUnitLabel}"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_weight_editText"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/anthro_height_editText"
@@ -231,6 +239,7 @@
                         android:layout_marginTop="@dimen/margin_large"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mBmi}"
                         app:layout_constraintEnd_toStartOf="@id/anthro_bmi_unit_label"
                         app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
                         app:layout_constraintTop_toBottomOf="@+id/anthro_io_separator_line" />
@@ -241,9 +250,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@string/text_kg_per_m2"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_bmi_editText"
-                        app:layout_constraintStart_toEndOf="@id/anthro_bmi_editText"
-                        tools:text="@string/text_kg_per_m2" />
+                        app:layout_constraintStart_toEndOf="@id/anthro_bmi_editText" />
 
                     <!-- IBW label -->
                     <TextView
@@ -263,6 +272,7 @@
                         android:layout_height="wrap_content"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mIbw}"
                         app:layout_constraintEnd_toStartOf="@id/anthro_ibw_unit_label"
                         app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
                         app:layout_constraintTop_toBottomOf="@+id/anthro_bmi_editText" />
@@ -273,9 +283,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@={viewModel.mIbwUnitLabel}"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_ibw_editText"
-                        app:layout_constraintStart_toEndOf="@id/anthro_ibw_editText"
-                        tools:text="@string/text_kg" />
+                        app:layout_constraintStart_toEndOf="@id/anthro_ibw_editText" />
 
                     <!-- Percent IBW label -->
                     <TextView
@@ -295,6 +305,7 @@
                         android:layout_height="wrap_content"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mPercentIbw}"
                         app:layout_constraintEnd_toStartOf="@id/anthro_percent_ibw_unit_label"
                         app:layout_constraintStart_toStartOf="@id/anthro_adjusted_bw_editText"
                         app:layout_constraintTop_toBottomOf="@+id/anthro_ibw_editText" />
@@ -305,9 +316,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@string/text_percent_sign"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_percent_ibw_editText"
-                        app:layout_constraintStart_toEndOf="@id/anthro_percent_ibw_editText"
-                        tools:text="@string/text_percent_sign" />
+                        app:layout_constraintStart_toEndOf="@id/anthro_percent_ibw_editText" />
 
                     <!-- Adjusted BW label -->
                     <TextView
@@ -330,6 +341,7 @@
                         android:layout_height="wrap_content"
                         android:ems="3"
                         android:inputType="numberDecimal"
+                        android:text="@={viewModel.mAdjustedIbw}"
                         app:layout_constraintEnd_toStartOf="@id/anthro_adjusted_bw_unit_label"
                         app:layout_constraintStart_toEndOf="@id/anthro_adjusted_bw_textView"
                         app:layout_constraintTop_toBottomOf="@+id/anthro_percent_ibw_editText" />
@@ -340,10 +352,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_medium"
+                        android:text="@={viewModel.mAdjustedIbwUnitLabel}"
                         app:layout_constraintBaseline_toBaselineOf="@id/anthro_adjusted_bw_editText"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/anthro_adjusted_bw_editText"
-                        tools:text="@string/text_kg" />
+                        app:layout_constraintStart_toEndOf="@id/anthro_adjusted_bw_editText" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -362,6 +374,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_medium"
+                android:onClick="@{() -> viewModel.onClearClicked()}"
                 android:padding="@dimen/margin_small"
                 android:text="@string/text_clear"
                 app:layout_constraintEnd_toStartOf="@id/anthro_calculate_btn"
@@ -376,6 +389,7 @@
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_large"
                 android:layout_marginBottom="@dimen/margin_large"
+                android:onClick="@{() -> viewModel.onCalculateClicked()}"
                 android:padding="@dimen/margin_small"
                 android:text="@string/text_calculate"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -9,14 +9,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class PreferenceRepository() {
+class PreferenceRepository {
 
     //region Java Usage
     /**
      * Get Decimal Reduction Method and Numeric Scale preferences. Intended for usage in Java code.
      * Launches a new coroutine on [Dispatchers.Main] and utilizes a callback to return value.
      *
-     * @param context  The context of the desired preferences
+     * @param context  The [Context] of the desired preferences
      * @param listener The listener whose callback will be invoked upon preference retrieval
      */
     fun getAllNumericSettings(context: Context, listener: CoroutineCallbackListener) {
@@ -49,12 +49,35 @@ class PreferenceRepository() {
 
     //region Kotlin Usage
     /**
+     * Get Decimal Reduction Method and Numeric Scale preferences, which are returned in a
+     * [QueryResult.Success<UserPreferences>] object. If any preference cannot be retrieved, then
+     * this method will return a [QueryResult.Failure] object containing an [Exception].
+     *
+     * @param context The [Context] of the desired preferences
+     */
+    suspend fun getAllNumericSettings(context: Context): QueryResult<UserPreferences> {
+        return withContext(Dispatchers.IO) {
+            val decimalReductionMethod = getDecimalReductionMethod(context)
+            val scale = getNumericScale(context)
+
+            // return a UserPreferences object if pref retrieval was successful
+            return@withContext if (decimalReductionMethod is QueryResult.Success
+                    && scale is QueryResult.Success) {
+                val pref = UserPreferences(decimalReductionMethod.data, scale.data)
+                QueryResult.Success(pref)
+            } else {
+                QueryResult.Failure(IOException("getAllNumericSettings() failed to query"))
+            }
+        }
+    }
+
+    /**
      * Get Decimal Reduction Method preference. Defaults to rounding if pref not found. Intended
      * for usage in Kotlin code.
      *
      * @param context  The context of the desired preferences
      */
-    suspend fun getDecimalReductionMethod(context: Context): QueryResult<String>? {
+    private suspend fun getDecimalReductionMethod(context: Context): QueryResult<String>? {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 // get preference
@@ -83,7 +106,7 @@ class PreferenceRepository() {
      *
      * @param context  The context of the desired preferences
      */
-    suspend fun getNumericScale(context: Context): QueryResult<Int>? {
+    private suspend fun getNumericScale(context: Context): QueryResult<Int>? {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 // get preference

@@ -78,4 +78,45 @@ object CalculationUtil {
         }
     }
     //endregion
+
+    //region Anthropometrics
+    @JvmStatic
+    fun calculateBmi(unit: UnitK, weight: Double, height: Double): Double {
+        return when (unit) {
+            is UnitK.Metric -> MetricEquationUtil.calculateBmi(weight, height)
+            is UnitK.Standard -> MetricEquationUtil.calculateBmi(
+                    ConversionUtil.poundsToKilograms(weight)
+                    , ConversionUtil.inchesToCentimeters(height))
+        }
+    }
+
+    @JvmStatic
+    fun calculateIbwHamwi(unit: UnitK, sex: SexK, height: Double): Double {
+        return when (unit) {
+            is UnitK.Metric -> ConversionUtil.poundsToKilograms(
+                    MetricEquationUtil.calculateIbwHamwi(sex
+                            , ConversionUtil.centimetersToInches(height)))
+            is UnitK.Standard -> MetricEquationUtil.calculateIbwHamwi(sex, height)
+        }
+    }
+
+    @JvmStatic
+    fun calculatePercentIbw(unit: UnitK, sex: SexK, weight: Double, height: Double): Double {
+        // unit doesn't actually matter here, except for calculating the base IBW
+        return MetricEquationUtil.calculatePercentIbw(calculateIbwHamwi(unit, sex, height), weight)
+    }
+
+    @JvmStatic
+    fun calculateAdjustedIbw(unit: UnitK, sex: SexK, weight: Double, height: Double): Double {
+        return when (unit) {
+            UnitK.Metric -> MetricEquationUtil.calculateAdjustedIbw(
+                    calculateIbwHamwi(unit, sex, height)
+                    , weight)
+            UnitK.Standard -> ConversionUtil.kilogramsToPounds(
+                    MetricEquationUtil.calculateAdjustedIbw(ConversionUtil.poundsToKilograms(
+                            calculateIbwHamwi(unit, sex, height))
+                            , ConversionUtil.poundsToKilograms(weight)))
+        }
+    }
+    //endregion
 }

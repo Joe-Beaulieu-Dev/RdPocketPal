@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.rdpocketpal2.R
@@ -30,6 +31,9 @@ class AnthropometricsActivity : AppCompatActivity() {
         mBinding.lifecycleOwner = this
         mBinding.viewModel = mViewModel
 
+        // add ViewModel as a LifeCycleObserver
+        lifecycle.addObserver(mViewModel)
+
         // set up Button ripples
         setUpAllBtnRipples()
     }
@@ -44,7 +48,7 @@ class AnthropometricsActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setUpBtnRipple(@IdRes btnId: Int) {
         findViewById<Button>(btnId).foreground =
-                resources.getDrawable(R.drawable.ripple_rectangle, theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.ripple_rectangle, theme)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

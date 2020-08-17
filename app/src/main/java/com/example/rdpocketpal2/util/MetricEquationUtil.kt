@@ -1,5 +1,7 @@
 package com.example.rdpocketpal2.util
 
+import kotlin.math.pow
+
 object MetricEquationUtil {
 
     //region Predictive Equations
@@ -41,6 +43,48 @@ object MetricEquationUtil {
     @JvmStatic
     fun calculateQuickMethod(weight: Double, factor: Double): Double {
         return weight * factor
+    }
+    //endregion
+
+    //region Anthropometrics
+    @JvmStatic
+    fun calculateBmi(weight: Double, height: Double): Double {
+        return weight / (height / 100).pow(2.0)
+    }
+
+    @JvmStatic
+    fun calculateIbwHamwi(sex: SexK, height: Double): Double {
+        return when (sex) {
+            SexK.Male -> calculateIbwMale(height)
+            SexK.Female -> calculateIbwFemale(height)
+        }
+    }
+
+    @JvmStatic
+    private fun calculateIbwMale(height: Double): Double {
+        return when {
+            height >= 60 -> 106 + 6 * (height - 60)
+            else -> 106 - (6 * (60 - height) / 2)
+        }
+    }
+
+    @JvmStatic
+    private fun calculateIbwFemale(height: Double): Double {
+        return when {
+            height >= 60 -> 100 + 5 * (height - 60)
+            else -> 100 - (5 * (60 - height) / 2)
+        }
+    }
+
+    @JvmStatic
+    fun calculatePercentIbw(ibw: Double, weight: Double): Double {
+        // check to avoid division by zero
+        return if (ibw == 0.0) 0.0 else (weight / ibw) * 100
+    }
+
+    @JvmStatic
+    fun calculateAdjustedIbw(ibw: Double, weight: Double): Double {
+        return ((weight - ibw) / 4) + ibw
     }
     //endregion
 }
