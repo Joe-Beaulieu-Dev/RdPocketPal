@@ -14,6 +14,7 @@ import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.Constants;
+import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.UiUtil;
 
@@ -254,62 +255,30 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private boolean isWeightValid() {
-        return validateFieldAndSetError(mWeight, mWeightErrorMsg);
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+        );
     }
 
     private boolean areCalorieFieldsValid() {
-        boolean isValid = true;
-
-        // validate all required fields and set flag
-        if (!validateFieldAndSetError(mKcalPerKgMin, mKcalPerKgMinErrorMsg)) {
-            isValid = false;
-        }
-        if (!validateFieldAndSetError(mKcalPerKgMax, mKcalPerKgMaxErrorMsg)) {
-            isValid = false;
-        }
-
-        return isValid;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mKcalPerKgMin, mKcalPerKgMinErrorMsg)
+                , new FieldErrorPair(mKcalPerKgMax, mKcalPerKgMaxErrorMsg)
+        );
     }
 
     private boolean areProteinFieldsValid() {
-        boolean isValid = true;
-
-        // validate all required fields and set flag
-        if (!validateFieldAndSetError(mGramsPerKgMin, mGramsPerKgMinErrorMsg)) {
-            isValid = false;
-        }
-        if (!validateFieldAndSetError(mGramsPerKgMax, mGramsPerKgMaxErrorMsg)) {
-            isValid = false;
-        }
-
-        return isValid;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mGramsPerKgMin, mGramsPerKgMinErrorMsg)
+                , new FieldErrorPair(mGramsPerKgMax, mGramsPerKgMaxErrorMsg)
+        );
     }
 
     private boolean areFluidFieldsValid() {
-        boolean isValid = true;
-
-        // validate all required fields and set flag
-        if (!validateFieldAndSetError(mMlPerKgMin, mMlPerKgMinErrorMsg)) {
-            isValid = false;
-        }
-        if (!validateFieldAndSetError(mMlPerKgMax, mMlPerKgMaxErrorMsg)) {
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    private boolean validateFieldAndSetError(MutableLiveData<String> field,
-                                             MutableLiveData<String> fieldError) {
-        if (!NumberUtil.isDouble(field)) {
-            setEnterNumberError(fieldError);
-            return false;
-        }
-        return true;
-    }
-
-    private void setEnterNumberError(MutableLiveData<String> fieldData) {
-        fieldData.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mMlPerKgMin, mMlPerKgMinErrorMsg)
+                , new FieldErrorPair(mMlPerKgMax, mMlPerKgMaxErrorMsg)
+        );
     }
     //endregion
 
@@ -341,18 +310,15 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private void clearCalorieInput() {
-        UiUtil.clearField(mKcalPerKgMin);
-        UiUtil.clearField(mKcalPerKgMax);
+        UiUtil.clearFields(mKcalPerKgMin, mKcalPerKgMax);
     }
 
     private void clearProteinInput() {
-        UiUtil.clearField(mGramsPerKgMin);
-        UiUtil.clearField(mGramsPerKgMax);
+        UiUtil.clearFields(mGramsPerKgMin, mGramsPerKgMax);
     }
 
     private void clearFluidInput() {
-        UiUtil.clearField(mMlPerKgMin);
-        UiUtil.clearField(mMlPerKgMax);
+        UiUtil.clearFields(mMlPerKgMin, mMlPerKgMax);
     }
 
     /**
@@ -378,45 +344,15 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private boolean clearCalorieResults() {
-        boolean anyFieldsCleared = false;
-
-        // clear all fields and set flag
-        if (UiUtil.clearField(mKcalPerDayMin)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mKcalPerDayMax)) {
-            anyFieldsCleared = true;
-        }
-
-        return anyFieldsCleared;
+        return UiUtil.clearFields(mKcalPerDayMin, mKcalPerDayMax);
     }
 
     private boolean clearProteinResults() {
-        boolean anyFieldsCleared = false;
-
-        // clear all fields and set flag
-        if (UiUtil.clearField(mGramsPerDayMin)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mGramsPerDayMax)) {
-            anyFieldsCleared = true;
-        }
-
-        return anyFieldsCleared;
+        return UiUtil.clearFields(mGramsPerDayMin, mGramsPerDayMax);
     }
 
     private boolean clearFluidResults() {
-        boolean anyFieldsCleared = false;
-
-        // clear all fields and set flag
-        if (UiUtil.clearField(mMlPerDayMin)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mMlPerDayMax)) {
-            anyFieldsCleared = true;
-        }
-
-        return anyFieldsCleared;
+        return UiUtil.clearFields(mMlPerDayMin, mMlPerDayMax);
     }
     //endregion
 

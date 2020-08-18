@@ -12,6 +12,7 @@ import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
 import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.ConversionUtil;
 import com.example.rdpocketpal2.util.Element;
+import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.UiUtil;
 
@@ -167,18 +168,25 @@ public class ConversionViewModel extends AndroidViewModel {
         // if not empty or null and not a double -> not valid, set error, toast
         // if not empty, not null, and a double -> valid
         if (!isFieldEmptyOrNull(inputField)) {
-            if (!validateFieldAndSetError(inputField, errorField)) {
+            // field contains data, validate it
+            if (!UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                    , new FieldErrorPair(inputField, errorField))) {
+                // field data not valid, error already set during validation, show Toast
                 UiUtil.showToast(mApplicationContext
                         , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
                 return false;
             }
         } else {
+            // field doesn't contain any data, clear output field's data and error msg
             clearAllFields();
             resetError(errorField == mFieldLeftErrorMsg ? mFieldRightErrorMsg : mFieldLeftErrorMsg);
             return false;
         }
-        // input is valid, reset error message of output field (edge case -> if user has error
-        // messages in both fields, the output field's message needs to be reset)
+
+        // input is valid, reset error message of output field because of edge case
+        //
+        // edge case -> if user has error messages in both fields,
+        // the output field's message needs to be reset
         resetError(errorField == mFieldLeftErrorMsg ? mFieldRightErrorMsg : mFieldLeftErrorMsg);
         return true;
     }
@@ -187,20 +195,20 @@ public class ConversionViewModel extends AndroidViewModel {
         return field.getValue() == null || field.getValue() != null && field.getValue().equals("");
     }
 
-    private boolean validateFieldAndSetError(MutableLiveData<String> field,
-                                          MutableLiveData<String> fieldError) {
-        // if invalid, set error message
-        if (!NumberUtil.isDouble(field)) {
-            setNumberError(fieldError);
-            return false;
-        }
-        return true;
-    }
-
-    private void setNumberError(MutableLiveData<String> fieldError) {
-        // set error message for LiveData associated with field
-        fieldError.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
-    }
+//    private boolean validateFieldAndSetError(MutableLiveData<String> field,
+//                                          MutableLiveData<String> fieldError) {
+//        // if invalid, set error message
+//        if (!NumberUtil.isDouble(field)) {
+//            setNumberError(fieldError);
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    private void setNumberError(MutableLiveData<String> fieldError) {
+//        // set error message for LiveData associated with field
+//        fieldError.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
+//    }
     //endregion
 
     //region Helper methods
@@ -286,8 +294,9 @@ public class ConversionViewModel extends AndroidViewModel {
     }
 
     void clearAllFields() {
-        UiUtil.clearField(mFieldLeft);
-        UiUtil.clearField(mFieldRight);
+        UiUtil.clearFields(mFieldLeft, mFieldRight);
+//        UiUtil.clearField(mFieldLeft);
+//        UiUtil.clearField(mFieldRight);
     }
 
     private void resetError(MutableLiveData<String> errorField) {

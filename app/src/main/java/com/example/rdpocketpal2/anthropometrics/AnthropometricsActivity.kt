@@ -1,21 +1,17 @@
 package com.example.rdpocketpal2.anthropometrics
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.databinding.ActivityAnthropometricsBinding
 import com.example.rdpocketpal2.settings.SettingsActivity
+import com.example.rdpocketpal2.util.setUpBtnRippleRectangle
 
 class AnthropometricsActivity : AppCompatActivity() {
     private lateinit var mViewModel: AnthropometricsViewModel
@@ -42,16 +38,8 @@ class AnthropometricsActivity : AppCompatActivity() {
     }
 
     private fun setUpAllBtnRipples() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setUpBtnRipple(R.id.anthro_clear_btn)
-            setUpBtnRipple(R.id.anthro_calculate_btn)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun setUpBtnRipple(@IdRes btnId: Int) {
-        findViewById<Button>(btnId).foreground =
-                ResourcesCompat.getDrawable(resources, R.drawable.ripple_rectangle, theme)
+        setUpBtnRippleRectangle(resources, theme, mBinding.anthroClearBtn)
+        setUpBtnRippleRectangle(resources, theme, mBinding.anthroCalculateBtn)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

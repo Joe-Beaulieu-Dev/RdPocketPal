@@ -14,6 +14,7 @@ import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.Constants;
+import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
 import com.example.rdpocketpal2.util.UiUtil;
@@ -360,118 +361,60 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
 
     private boolean validateMifflinOrBenedictFields() {
-        return validateWeightHeightAge();
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+        );
     }
 
     private boolean validatePennStateFields() {
-        boolean allFieldsValid = true;
-
-        if (!validateWeightHeightAge()) {
-            allFieldsValid = false;
-        }
-        if (!isTmaxValid()) {
-            allFieldsValid = false;
-        }
-        if (!isVeValid()) {
-            allFieldsValid = false;
-        }
-
-        return allFieldsValid;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+                , new FieldErrorPair(mTmax, mTmaxErrorMsg)
+                , new FieldErrorPair(mVe, mVeErrorMsg)
+        );
     }
 
     private boolean validateBrandiFields() {
-        boolean allFieldsValid = true;
-
-        if (!validateWeightHeightAge()) {
-            allFieldsValid = false;
-        }
-        if (!isHeartRateValid()) {
-            allFieldsValid = false;
-        }
-        if (!isVeValid()) {
-            allFieldsValid = false;
-        }
-
-        return allFieldsValid;
-    }
-
-    private boolean validateWeightHeightAge() {
-        boolean isValid = true;
-
-        if (!NumberUtil.isDouble(mWeight)) {
-            setEnterNumberError(mWeightErrorMsg);
-            isValid = false;
-        }
-        if (!NumberUtil.isDouble(mHeight)) {
-            setEnterNumberError(mHeightErrorMsg);
-            isValid = false;
-        }
-        if (!NumberUtil.isDouble(mAge)) {
-            setEnterNumberError(mAgeErrorMsg);
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    private boolean isTmaxValid() {
-        if (!NumberUtil.isDouble(mTmax)) {
-            setEnterNumberError(mTmaxErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isHeartRateValid() {
-        if (!NumberUtil.isDouble(mHeartRate)) {
-            setEnterNumberError(mHeartRateErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isVeValid() {
-        if (!NumberUtil.isDouble(mVe)) {
-            setEnterNumberError(mVeErrorMsg);
-            return false;
-        }
-        return true;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+                , new FieldErrorPair(mHeartRate, mHeartRateErrorMsg)
+                , new FieldErrorPair(mVe, mVeErrorMsg)
+        );
     }
 
     private boolean isActivityLevelMinValid() {
-        if (!NumberUtil.isDouble(mActivityFactorMin)) {
-            setEnterNumberError(mActivityFactorMinErrorMsg);
-            return false;
-        }
-        return true;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mActivityFactorMin, mActivityFactorMinErrorMsg)
+        );
     }
 
     private boolean isActivityLevelMaxValid() {
-        if (!NumberUtil.isDouble(mActivityFactorMax)) {
-            setEnterNumberError(mActivityFactorMaxErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private void setEnterNumberError(MutableLiveData<String> fieldData) {
-        fieldData.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mActivityFactorMax, mActivityFactorMaxErrorMsg)
+        );
     }
     //endregion
 
     //region Clear fields
     private void clearAllFields() {
-        UiUtil.clearField(mWeight);
-        UiUtil.clearField(mHeight);
-        UiUtil.clearField(mAge);
-        UiUtil.clearField(mTmax);
-        UiUtil.clearField(mVe);
-        UiUtil.clearField(mHeartRate);
-        UiUtil.clearField(mActivityFactorMin);
-        UiUtil.clearField(mActivityFactorMax);
-        UiUtil.clearField(mBmr);
-        UiUtil.clearField(mCalorieMin);
-        UiUtil.clearField(mCalorieMax);
+        UiUtil.clearFields(mWeight
+                , mHeight
+                , mAge
+                , mTmax
+                , mVe
+                , mHeartRate
+                , mActivityFactorMin
+                , mActivityFactorMax
+                , mBmr
+                , mCalorieMin
+                , mCalorieMax
+        );
     }
 
     public void clearResultDataFromActivity() {
@@ -482,20 +425,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
 
     private boolean clearResults() {
-        boolean anyFieldsCleared = false;
-
-        // clear fields and set flag
-        if (UiUtil.clearField(mBmr)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mCalorieMin)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mCalorieMax)) {
-            anyFieldsCleared = true;
-        }
-
-        return anyFieldsCleared;
+        return UiUtil.clearFields(mBmr, mCalorieMin, mCalorieMax);
     }
     //endregion
 

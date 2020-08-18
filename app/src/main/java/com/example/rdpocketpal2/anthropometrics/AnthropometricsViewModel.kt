@@ -107,7 +107,6 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     @Throws(FatalCalculationException::class)
     private fun calculateBmi(prefs: UserPreferences) {
-        // calculate BMI
         mBmi.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
                 , CalculationUtil.calculateBmi(getUnit()
                 , NumberUtil.parseDouble(mWeight)
@@ -116,7 +115,6 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     @Throws(FatalCalculationException::class)
     private fun calculateIbw(prefs: UserPreferences) {
-        // calculate IBW
         mIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
                 , CalculationUtil.calculateIbwHamwi(getUnit()
                 , getSex()
@@ -125,7 +123,6 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     @Throws(FatalCalculationException::class)
     private fun calculatePercentIbw(prefs: UserPreferences) {
-        // calculate Percent IBW
         mPercentIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
                 , CalculationUtil.calculatePercentIbw(getUnit()
                 , getSex()
@@ -135,7 +132,6 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     @Throws(FatalCalculationException::class)
     private fun calculateAdjustedIbw(prefs: UserPreferences) {
-        // calculate Adjusted IBW
         mAdjustedIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
                 , CalculationUtil.calculateAdjustedIbw(getUnit()
                 , getSex()
