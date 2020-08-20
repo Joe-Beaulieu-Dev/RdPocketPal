@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.rdpocketpal2.R;
@@ -100,24 +101,31 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                 // then change layout constraints to eliminate gaps
                 if (s.equals(getString(R.string.mifflin_st_jear))
                         || s.equals(getString(R.string.harris_benedict))) {
+                    // hide and clear Tmax, Heart Rate, and Ve
                     setVisibilities(View.GONE, View.GONE, View.GONE);
                     setConstraints(PredictiveEquationsViewModel.MIFFLIN);
+                    clearFieldsAndErrors(mBinding.peTmaxEditText
+                            , mBinding.peHeartRateEditText, mBinding.peVeEditText);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
                         || s.equals(getString(R.string.penn_state_2010))) {
+                    // hide and clear Heart Rate, show Tmax and Ve
                     setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
                     setConstraints(PredictiveEquationsViewModel.PENN2003B);
+                    clearFieldsAndErrors(mBinding.peHeartRateEditText);
                 } else if (s.equals(getString(R.string.brandi))) {
+                    // hide and clear Tmax, show Heart Rate and Ve
                     setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
                     setConstraints(PredictiveEquationsViewModel.BRANDI);
+                    clearFieldsAndErrors(mBinding.peTmaxEditText);
                 }
 
                 // this is the method where the reason onChanged() was called is important
-                clearDataIfNecessary();
+                clearOutputDataIfNecessary();
             }
         });
     }
 
-    private void clearDataIfNecessary() {
+    private void clearOutputDataIfNecessary() {
         // do nothing if this method's caller (Observer<T>.onChanged()) was called
         // due to a config change
         if (!mConfigurationChanged) {
@@ -173,6 +181,25 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         mBinding.peVeTextView.setVisibility(veVisibility);
         mBinding.peVeEditText.setVisibility(veVisibility);
         mBinding.peVeUnitLabel.setVisibility(veVisibility);
+    }
+
+    private void clearFieldsAndErrors(EditText... editTexts) {
+        for (EditText editText: editTexts) {
+            editText.setText(null);
+            // Have to clear the errors like this because if it's done via setError()
+            // than it won't trigger the binding adapter for the error field. This is because
+            // this adapter is attached to a custom xml attribute, because there is no
+            // xml attribute that exists for an EditText's error. Since the binding adapter's
+            // onChange() fires via an OnFocusChangeListener, and not from some sort of non-existent
+            // preexisting OnErrorChangeListener, direct calls to setError() will not cause any
+            // activity in the EditText's binding adapters, and therefore the underlying bound data
+            // will not change.
+            switch (editText.getId()) {
+                case R.id.pe_tmax_editText: mViewModel.clearTmaxError();
+                case R.id.pe_heart_rate_editText: mViewModel.clearHeartRateError();
+                case R.id.pe_ve_editText: mViewModel.clearVeError();
+            }
+        }
     }
 
     @Override

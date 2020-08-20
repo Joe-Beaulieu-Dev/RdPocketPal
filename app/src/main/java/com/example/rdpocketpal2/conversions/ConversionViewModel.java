@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
@@ -278,7 +279,7 @@ public class ConversionViewModel extends AndroidViewModel {
         mFieldRightLabel.setValue(mApplicationContext.getResources().getString(rightFieldStringId));
     }
 
-    void clearAllFields() {
+    private void clearAllFields() {
         UiUtil.clearFields(mFieldLeft, mFieldRight);
     }
 
@@ -292,12 +293,18 @@ public class ConversionViewModel extends AndroidViewModel {
     //endregion
 
     //region View methods
-    MutableLiveData<String> getConversionTypeData() {
+    LiveData<String> getConversionTypeData() {
         return mConversionType;
     }
 
-    MutableLiveData<String> getElementData() {
+    LiveData<String> getElementData() {
         return mElement;
+    }
+
+    void clearAllFieldAndErrors() {
+        clearAllFields();
+        mFieldLeftErrorMsg.setValue(null);
+        mFieldRightErrorMsg.setValue(null);
     }
 
     void updateFieldLabelData() {

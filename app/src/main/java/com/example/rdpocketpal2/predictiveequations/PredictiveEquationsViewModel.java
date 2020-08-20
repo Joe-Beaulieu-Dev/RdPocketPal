@@ -29,6 +29,7 @@ import androidx.annotation.StringRes;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.SavedStateHandle;
@@ -474,9 +475,23 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
     //endregion
 
-    MutableLiveData<String> getSelectedEquation() {
+    //region View methods
+    LiveData<String> getSelectedEquation() {
         return mSelectedEquation;
     }
+
+    void clearTmaxError() {
+        mTmaxErrorMsg.setValue(null);
+    }
+
+    void clearHeartRateError() {
+        mHeartRateErrorMsg.setValue(null);
+    }
+
+    void clearVeError() {
+        mVeErrorMsg.setValue(null);
+    }
+    //endregion
 
     //region Callbacks
     @Override

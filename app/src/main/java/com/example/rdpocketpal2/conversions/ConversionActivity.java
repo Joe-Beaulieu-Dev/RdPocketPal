@@ -88,8 +88,8 @@ public class ConversionActivity extends AppCompatActivity {
                 // update the unit labels for the input/output fields
                 // when the conversion type changes
                 mViewModel.updateFieldLabelData();
-                // clear input/output fields when User changes conversion type
-                mViewModel.clearAllFields();
+                // clear input/output fields and errors when User changes conversion type
+                mViewModel.clearAllFieldAndErrors();
             }
         });
     }
@@ -98,8 +98,8 @@ public class ConversionActivity extends AppCompatActivity {
         mViewModel.getElementData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                // clear input/output fields when User changes element type
-                mViewModel.clearAllFields();
+                // clear input/output fields and errors when User changes element type
+                mViewModel.clearAllFieldAndErrors();
             }
         });
     }
