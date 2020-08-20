@@ -129,7 +129,7 @@
                             android:layout_margin="@dimen/margin_medium"
                             android:width="75dp"
                             android:gravity="center"
-                            android:onClick="@{() -> viewModel.onSexRadioBtnClicked()}"
+                            android:onClick="@{() -> viewModel.onSexRadioBtnClicked(peSexMale)}"
                             android:padding="5dp"
                             android:text="@string/text_male" />
 
@@ -142,7 +142,7 @@
                             android:layout_margin="@dimen/margin_medium"
                             android:width="75dp"
                             android:gravity="center"
-                            android:onClick="@{() -> viewModel.onSexRadioBtnClicked()}"
+                            android:onClick="@{() -> viewModel.onSexRadioBtnClicked(peSexFemale)}"
                             android:padding="5dp"
                             android:text="@string/text_female" />
 

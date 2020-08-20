@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.databinding.ActivityAnthropometricsBinding
 import com.example.rdpocketpal2.settings.SettingsActivity
+import com.example.rdpocketpal2.util.setUpBtnRippleOval
 import com.example.rdpocketpal2.util.setUpBtnRippleRectangle
 
 class AnthropometricsActivity : AppCompatActivity() {
@@ -38,6 +39,8 @@ class AnthropometricsActivity : AppCompatActivity() {
     }
 
     private fun setUpAllBtnRipples() {
+        setUpBtnRippleOval(resources, theme, mBinding.anthroSexMale)
+        setUpBtnRippleOval(resources, theme, mBinding.anthroSexFemale)
         setUpBtnRippleRectangle(resources, theme, mBinding.anthroClearBtn)
         setUpBtnRippleRectangle(resources, theme, mBinding.anthroCalculateBtn)
     }

@@ -64,8 +64,12 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     public MutableLiveData<String> mMlPerKgMaxErrorMsg = new MutableLiveData<>();
     //endregion
 
-    //region SavedState keys
-    // error message keys
+    //region SavedState data
+    // Data
+    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
+    private MutableLiveData<String> mSelectedUnitOldValue = new MutableLiveData<>();
+
+    // Error message keys
     private static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
     private static final String KCAL_PER_KG_MIN_ERROR_MSG_KEY = "kcalPerKgMinErrorMsgKey";
     private static final String KCAL_PER_KG_MAX_ERROR_MSG_KEY = "kcalPerKgMaxErrorMsgKey";
@@ -102,33 +106,13 @@ public class QuickMethodViewModel extends AndroidViewModel implements
 
     //region Button Listeners
     public void onUnitRadioBtnClicked(RadioButton btn) {
-        if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            setUiDataToMetric();
-
-            // clear results because once the unit labels change, the results will no longer make
-            // sense relative to the user input. If fields were cleared, show Toast
-            if (clearAllResults()) {
-                // show toast for result clearing
-                UiUtil.showToast(mApplicationContext
-                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
-            }
-        } else if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            setUiDataToStandard();
-
-            // clear results because once the unit labels change, the results will no longer make
-            // sense relative to the user input. If fields were cleared, show Toast
-            if (clearAllResults()) {
-                // show toast for result clearing
-                UiUtil.showToast(mApplicationContext
-                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
-            }
-        }
+        clearAllOutputsAndToastIfNecessary(btn, mSelectedUnitOldValue);
     }
 
     public void onCalorieClearClicked() {
         // clear all Calorie fields
         clearCalorieInput();
-        clearCalorieResults();
+        clearCalorieOutput();
     }
 
     public void onCalorieCalculateClicked() {
@@ -146,7 +130,7 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     public void onProteinClearClicked() {
         // clear all Protein fields
         clearProteinInput();
-        clearProteinResults();
+        clearProteinOutput();
     }
 
     public void onProteinCalculateClicked() {
@@ -164,7 +148,7 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     public void onFluidClearClicked() {
         // clear all Fluid fields
         clearFluidInput();
-        clearFluidResults();
+        clearFluidOutput();
     }
 
     public void onFluidCalculateClicked() {
@@ -326,38 +310,61 @@ public class QuickMethodViewModel extends AndroidViewModel implements
      *
      * @return true if any results are cleared
      */
-    private boolean clearAllResults() {
+    private boolean clearAllOutput() {
         boolean anyFieldsCleared = false;
 
         // clear all fields and set flag
-        if (clearCalorieResults()) {
+        if (clearCalorieOutput()) {
             anyFieldsCleared = true;
         }
-        if (clearProteinResults()) {
+        if (clearProteinOutput()) {
             anyFieldsCleared = true;
         }
-        if (clearFluidResults()) {
+        if (clearFluidOutput()) {
             anyFieldsCleared = true;
         }
 
         return anyFieldsCleared;
     }
 
-    private boolean clearCalorieResults() {
+    private boolean clearCalorieOutput() {
         return UiUtil.clearFields(mKcalPerDayMin, mKcalPerDayMax);
     }
 
-    private boolean clearProteinResults() {
+    private boolean clearProteinOutput() {
         return UiUtil.clearFields(mGramsPerDayMin, mGramsPerDayMax);
     }
 
-    private boolean clearFluidResults() {
+    private boolean clearFluidOutput() {
         return UiUtil.clearFields(mMlPerDayMin, mMlPerDayMax);
+    }
+
+    private void clearAllOutputsAndToastIfNecessary(RadioButton btn
+            , MutableLiveData<String> oldValue) {
+        // just to make things easier to understand
+        boolean isInitialSelectionAndNotDefault =
+                oldValue.getValue() == null && !UiUtil.isDefaultRadioBtnChecked(btn);
+        boolean isNotInitialSelectionAndDiffThanLast =
+                oldValue.getValue() != null
+                        && !btn.getText().toString().equals(oldValue.getValue());
+
+        if (isInitialSelectionAndNotDefault || isNotInitialSelectionAndDiffThanLast) {
+            setUnits();
+            // clear output fields and show Toast as to why
+            if (clearAllOutput()) {
+                UiUtil.showToast(mApplicationContext
+                        , R.string.toast_results_cleared_unit_change
+                        , Toast.LENGTH_LONG);
+            }
+        }
+
+        oldValue.setValue(btn.getText().toString());
     }
     //endregion
 
     //region SavedState methods
     void saveState() {
+        mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue.getValue());
         mState.set(WEIGHT_ERROR_MSG_KEY, mWeightErrorMsg.getValue());
         mState.set(KCAL_PER_KG_MIN_ERROR_MSG_KEY, mKcalPerKgMinErrorMsg.getValue());
         mState.set(KCAL_PER_KG_MAX_ERROR_MSG_KEY, mKcalPerKgMaxErrorMsg.getValue());
@@ -368,6 +375,7 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private void restoreState() {
+        mSelectedUnitOldValue = mState.getLiveData(SELECTED_UNIT_OLD_VALUE_KEY);
         mWeightErrorMsg = mState.getLiveData(WEIGHT_ERROR_MSG_KEY);
         mKcalPerKgMinErrorMsg = mState.getLiveData(KCAL_PER_KG_MIN_ERROR_MSG_KEY);
         mKcalPerKgMaxErrorMsg = mState.getLiveData(KCAL_PER_KG_MAX_ERROR_MSG_KEY);

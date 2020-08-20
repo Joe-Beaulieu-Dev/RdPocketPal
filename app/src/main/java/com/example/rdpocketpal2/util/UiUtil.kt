@@ -7,12 +7,30 @@ import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.os.Build
 import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
 import com.example.rdpocketpal2.R
+
+//region Logic
+fun isDefaultRadioBtnChecked(btn: RadioButton): Boolean {
+    // check types to be safe
+    if ((btn.parent is RadioGroup)
+            && ((btn.parent as RadioGroup)
+                    .getChildAt(DEFAULT_RADIO_BTN_INDEX) is RadioButton)) {
+        // the actual check of if the default RadioButton is selected
+        return ((btn.parent as RadioGroup)
+                .getChildAt(DEFAULT_RADIO_BTN_INDEX) as RadioButton)
+                .isChecked
+    }
+    // types don't match what we need, return false
+    return false
+}
+//endregion
 
 //region Validation
 fun validateFieldsAndSetErrors(context: Context, vararg fieldErrorPair: FieldErrorPair): Boolean {

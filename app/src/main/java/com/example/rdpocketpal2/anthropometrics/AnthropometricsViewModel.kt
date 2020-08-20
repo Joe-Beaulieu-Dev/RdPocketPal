@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.model.PreferenceRepository
@@ -12,6 +13,9 @@ import com.example.rdpocketpal2.model.UserPreferences
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException
 import com.example.rdpocketpal2.util.*
 import kotlinx.coroutines.launch
+
+private const val SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue"
+private const val SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue"
 
 class AnthropometricsViewModel(application: Application, savedStateHandle: SavedStateHandle)
     : AndroidViewModel(application), LifecycleObserver {
@@ -39,9 +43,11 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     //endregion
 
     //region SavedState data
-    var mState: SavedStateHandle = savedStateHandle
-    private val SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue"
-    private var mSelectedUnitOldValue: String? = mState.get(SELECTED_UNIT_OLD_VALUE_KEY)
+    private var mState: SavedStateHandle = savedStateHandle
+    private val mSelectedSexOldValue: MutableLiveData<String> =
+            mState.getLiveData(SELECTED_SEX_OLD_VALUE_KEY)
+    private val mSelectedUnitOldValue: MutableLiveData<String> =
+            mState.getLiveData(SELECTED_UNIT_OLD_VALUE_KEY)
     //endregion
 
     private var mApplicationContext: Context = application.applicationContext
@@ -71,17 +77,16 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
         }
     }
 
+    fun onSexRadioBtnClicked(btn: RadioButton) {
+        clearOutputsAndToastIfNecessary(btn
+                , mSelectedSexOldValue
+                , R.string.toast_results_cleared_sex_change)
+    }
+
     fun onUnitRadioBtnClicked(btn: RadioButton) {
-        setUnits()
-        if (mSelectedUnitOldValue != null
-                && btn.text.toString() != mSelectedUnitOldValue) {
-            if (clearOutput()) {
-                showToast(mApplicationContext
-                        , R.string.toast_results_cleared_unit_change
-                        , Toast.LENGTH_LONG)
-            }
-        }
-        mSelectedUnitOldValue = btn.text.toString()
+        clearOutputsAndToastIfNecessary(btn
+                , mSelectedUnitOldValue
+                , R.string.toast_results_cleared_unit_change)
     }
     //endregion
 
@@ -149,6 +154,29 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
         return clearFields(mBmi, mIbw, mPercentIbw, mAdjustedIbw)
     }
 
+    private fun clearOutputsAndToastIfNecessary(btn: RadioButton
+                                                , oldValue: MutableLiveData<String>
+                                                , @StringRes errorToast: Int) {
+        // just to make things easier to understand
+        val isInitialSelectionAndNotDefault =
+                oldValue.value == null && !isDefaultRadioBtnChecked(btn)
+        val isNotInitialSelectionAndDiffThanLast =
+                oldValue.value != null && btn.text.toString() != oldValue.value
+
+        if (isInitialSelectionAndNotDefault || isNotInitialSelectionAndDiffThanLast) {
+            // if we're dealing with the Unit RadioButton, set the units
+            if (oldValue == mSelectedUnitOldValue) {
+                setUnits()
+            }
+            // clear output fields and show Toast as to why
+            if (clearOutput()) {
+                showToast(mApplicationContext, errorToast, Toast.LENGTH_LONG)
+            }
+        }
+
+        oldValue.value = btn.text.toString()
+    }
+
     @Throws(FatalCalculationException::class)
     private fun getSex(): SexK {
         return when (mSelectedSex.value) {
@@ -201,7 +229,8 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     //region SavedState methods
     fun saveState() {
-        mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue)
+        mState.set(SELECTED_SEX_OLD_VALUE_KEY, mSelectedSexOldValue.value)
+        mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue.value)
     }
     //endregion
 }

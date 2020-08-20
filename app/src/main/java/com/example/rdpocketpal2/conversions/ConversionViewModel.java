@@ -194,21 +194,6 @@ public class ConversionViewModel extends AndroidViewModel {
     private boolean isFieldEmptyOrNull(MutableLiveData<String> field) {
         return field.getValue() == null || field.getValue() != null && field.getValue().equals("");
     }
-
-//    private boolean validateFieldAndSetError(MutableLiveData<String> field,
-//                                          MutableLiveData<String> fieldError) {
-//        // if invalid, set error message
-//        if (!NumberUtil.isDouble(field)) {
-//            setNumberError(fieldError);
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private void setNumberError(MutableLiveData<String> fieldError) {
-//        // set error message for LiveData associated with field
-//        fieldError.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
-//    }
     //endregion
 
     //region Helper methods
@@ -295,8 +280,6 @@ public class ConversionViewModel extends AndroidViewModel {
 
     void clearAllFields() {
         UiUtil.clearFields(mFieldLeft, mFieldRight);
-//        UiUtil.clearField(mFieldLeft);
-//        UiUtil.clearField(mFieldRight);
     }
 
     private void resetError(MutableLiveData<String> errorField) {

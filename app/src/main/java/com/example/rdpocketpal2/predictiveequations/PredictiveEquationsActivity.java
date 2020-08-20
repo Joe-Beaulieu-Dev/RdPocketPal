@@ -123,7 +123,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         if (!mConfigurationChanged) {
             // clear result data when equation is changed and show Toast
             // this is done so results don't clash with user input/equation selection
-            mViewModel.clearResultDataFromActivity();
+            mViewModel.clearOutputDataFromActivity();
         }
         // reset value as it being true is only relevant when onChanged() is initially
         // auto-called due to a config change

@@ -5,6 +5,13 @@ package com.example.rdpocketpal2.util
 import androidx.annotation.IntDef
 
 /*
+ **************
+ ** Defaults **
+ **************
+ */
+const val DEFAULT_RADIO_BTN_INDEX = 0
+
+/*
  *********
  ** Sex **
  *********
