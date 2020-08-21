@@ -1,100 +1,112 @@
 package com.example.rdpocketpal2.util;
 
+import com.example.rdpocketpal2.testutil.TestConstants;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MetricEquationUtilTest {
     //region Test data
-    // User input values
-    private static final double WEIGHT = 75;
-    private static final double HEIGHT = 175;
-    private static final int AGE = 25;
-    private static final double TMAX = 37;
-    private static final double HEART_RATE = 75;
-    private static final double VE = 7;
-    private static final double DELTA = 0.001;
-
-    // Mifflin values
-    private static final double MIFFLIN_MALE_ANSWER = 1723.75;
-    private static final double MIFFLIN_FEMALE_ANSWER = 1557.75;
-
-    // Benedict values
-    private static final double BENEDICT_MALE_ANSWER = 1798.5;
-    private static final double BENEDICT_FEMALE_ANSWER = 1572.5;
-
-    // Penn State 2003b values
-    private static final double PENN_STATE_2003B_MIFFLIN_INPUT = 1723.75;
-    private static final double PENN_STATE_2003b_ANSWER = 1838.8;
-
-    // Penn State 2010 values
-    private static final double PENN_STATE_2010_MIFFLIN_INPUT = 1723.75;
-    private static final double PENN_STATE_2010_ANSWER = 1731.8625;
-
     // Brandi values
     private static final double BRANDI_BENEDICT_INPUT = 1798.5;
     private static final double BRANDI_ANSWER = 1885.56;
 
     // Quick Method values
-    public static final double QUICK_METHOD_WEIGHT_INPUT = 75;
-    public static final double QUICK_METHOD_FACTOR_INPUT = 2;
-    public static final double QUICK_METHOD_ANSWER = 150;
+    private static final double QUICK_METHOD_WEIGHT_INPUT = 75;
+    private static final double QUICK_METHOD_FACTOR_INPUT = 2;
+    private static final double QUICK_METHOD_ANSWER = 150;
+
+    // BMI values
+    private static final double BMI_ANSWER = 24.4897959;
+
+    // IBW values
+    private static final double IBW_MALE_ANSWER = 159.38582677;
+    private static final double IBW_FEMALE_ANSWER = 144.488188975;
+    private static final double IBW_MALE_CHILD_ANSWER = 88.992125983;
+    private static final double IBW_FEMALE_CHILD_ANSWER = 85.8267716525;
+
+    // Percent IBW values
+    private static final double PERCENT_IBW_ANSWER = 103.73989958;
+
+    // Adjusted IBW values
+    private static final double ADJUSTED_IBW_ANSWER = 160.8760442375;
     //endregion
 
     //region Predictive Equations
     @Test
     public void calculateBmrMifflin_male_isCorrect() {
-        assertEquals(MIFFLIN_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.MALE, WEIGHT, HEIGHT, AGE)
-                , DELTA
+        assertEquals(TestConstants.MIFFLIN_MALE_ANSWER
+                , MetricEquationUtil.calculateBmrMifflin(Constants.MALE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC
+                        , TestConstants.AGE)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrMifflin_female_isCorrect() {
-        assertEquals(MIFFLIN_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.FEMALE, WEIGHT, HEIGHT, AGE)
-                , DELTA
+        assertEquals(TestConstants.MIFFLIN_FEMALE_ANSWER
+                , MetricEquationUtil.calculateBmrMifflin(Constants.FEMALE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC
+                        , TestConstants.AGE)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrBenedict_male_isCorrect() {
-        assertEquals(BENEDICT_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.MALE, WEIGHT, HEIGHT, AGE)
-                , DELTA
+        assertEquals(TestConstants.BENEDICT_MALE_ANSWER
+                , MetricEquationUtil.calculateBmrBenedict(Constants.MALE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC
+                        , TestConstants.AGE)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrBenedict_female_isCorrect() {
-        assertEquals(BENEDICT_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.FEMALE, WEIGHT, HEIGHT, AGE)
-                , DELTA
+        assertEquals(TestConstants.BENEDICT_FEMALE_ANSWER
+                , MetricEquationUtil.calculateBmrBenedict(Constants.FEMALE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC
+                        , TestConstants.AGE)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrPennState2003b_isCorrect() {
-        assertEquals(PENN_STATE_2003b_ANSWER
-                , MetricEquationUtil.calculateBmrPennState2003b(PENN_STATE_2003B_MIFFLIN_INPUT, TMAX, VE)
-                , DELTA
+        assertEquals(TestConstants.PENN_STATE_2003b_ANSWER
+                , MetricEquationUtil.calculateBmrPennState2003b(
+                        TestConstants.PENN_STATE_2003B_MIFFLIN_INPUT
+                        , TestConstants.TMAX_METRIC
+                        , TestConstants.VE_METRIC)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrPennState2010_isCorrect() {
-        assertEquals(PENN_STATE_2010_ANSWER
-                , MetricEquationUtil.calculateBmrPennState2010(PENN_STATE_2010_MIFFLIN_INPUT, TMAX, VE)
-                , DELTA
+        assertEquals(TestConstants.PENN_STATE_2010_ANSWER
+                , MetricEquationUtil.calculateBmrPennState2010(
+                        TestConstants.PENN_STATE_2010_MIFFLIN_INPUT
+                        , TestConstants.TMAX_METRIC
+                        , TestConstants.VE_METRIC)
+                , TestConstants.DELTA_THREE
         );
     }
 
     @Test
     public void calculateBmrBrandi_isCorrect() {
         assertEquals(BRANDI_ANSWER
-                , MetricEquationUtil.calculateBmrBrandi(BRANDI_BENEDICT_INPUT, HEART_RATE, VE)
-                , DELTA
+                , MetricEquationUtil.calculateBmrBrandi(BRANDI_BENEDICT_INPUT
+                        , TestConstants.HEART_RATE
+                        , TestConstants.VE_METRIC)
+                , TestConstants.DELTA_THREE
         );
     }
     //endregion
@@ -103,10 +115,68 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateQuickMethod_isCorrect() {
         assertEquals(QUICK_METHOD_ANSWER
-                , MetricEquationUtil.calculateQuickMethod(
-                        QUICK_METHOD_WEIGHT_INPUT, QUICK_METHOD_FACTOR_INPUT)
-                , DELTA
+                , MetricEquationUtil.calculateQuickMethod(QUICK_METHOD_WEIGHT_INPUT
+                        , QUICK_METHOD_FACTOR_INPUT)
+                , TestConstants.DELTA_THREE
         );
+    }
+    //endregion
+
+    //region Anthropometrics
+    @Test
+    public void calculateBmi_isCorrect() {
+        assertEquals(BMI_ANSWER
+                , MetricEquationUtil.calculateBmi(TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculateIbwHamwi_male_adult_isCorrect() {
+        assertEquals(IBW_MALE_ANSWER
+                , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculateIbwHamwi_female_adult_isCorrect() {
+        assertEquals(IBW_FEMALE_ANSWER
+                , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculateIbwHamwi_male_child_isCorrect() {
+        assertEquals(IBW_MALE_CHILD_ANSWER
+                , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_STANDARD)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculateIbwHamwi_female_child_isCorrect() {
+        assertEquals(IBW_FEMALE_CHILD_ANSWER
+                , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_STANDARD)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculatePercentIbw_isCorrect() {
+        assertEquals(PERCENT_IBW_ANSWER
+                , MetricEquationUtil.calculatePercentIbw(IBW_MALE_ANSWER
+                        , TestConstants.WEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
+    }
+
+    @Test
+    public void calculateAdjustedIbw_isCorrect() {
+        assertEquals(ADJUSTED_IBW_ANSWER
+                , MetricEquationUtil.calculateAdjustedIbw(IBW_MALE_ANSWER
+                        , TestConstants.WEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
     //endregion
 }
