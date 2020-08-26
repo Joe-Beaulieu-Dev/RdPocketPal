@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--  Shadow  -->
+    <!-- Shadow -->
     <item android:left="1dp">
         <shape android:shape="rectangle">
             <corners android:radius="25dp" />
@@ -9,7 +9,7 @@
         </shape>
     </item>
 
-    <!--  Foreground  -->
+    <!-- Foreground -->
     <item
         android:bottom="2dp"
         android:right="1.5dp">
