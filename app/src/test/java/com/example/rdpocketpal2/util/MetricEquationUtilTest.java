@@ -7,31 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MetricEquationUtilTest {
-    //region Test data
-    // Brandi values
-    private static final double BRANDI_BENEDICT_INPUT = 1798.5;
-    private static final double BRANDI_ANSWER = 1885.56;
-
-    // Quick Method values
-    private static final double QUICK_METHOD_WEIGHT_INPUT = 75;
-    private static final double QUICK_METHOD_FACTOR_INPUT = 2;
-    private static final double QUICK_METHOD_ANSWER = 150;
-
-    // BMI values
-    private static final double BMI_ANSWER = 24.4897959;
-
-    // IBW values
-    private static final double IBW_MALE_ANSWER = 159.38582677;
-    private static final double IBW_FEMALE_ANSWER = 144.488188975;
-    private static final double IBW_MALE_CHILD_ANSWER = 88.992125983;
-    private static final double IBW_FEMALE_CHILD_ANSWER = 85.8267716525;
-
-    // Percent IBW values
-    private static final double PERCENT_IBW_ANSWER = 103.73989958;
-
-    // Adjusted IBW values
-    private static final double ADJUSTED_IBW_ANSWER = 160.8760442375;
-    //endregion
 
     //region Predictive Equations
     @Test
@@ -102,8 +77,8 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculateBmrBrandi_isCorrect() {
-        assertEquals(BRANDI_ANSWER
-                , MetricEquationUtil.calculateBmrBrandi(BRANDI_BENEDICT_INPUT
+        assertEquals(TestConstants.BRANDI_ANSWER
+                , MetricEquationUtil.calculateBmrBrandi(TestConstants.BRANDI_BENEDICT_INPUT
                         , TestConstants.HEART_RATE
                         , TestConstants.VE_METRIC)
                 , TestConstants.DELTA_THREE
@@ -114,9 +89,9 @@ public class MetricEquationUtilTest {
     //region Quick Method
     @Test
     public void calculateQuickMethod_isCorrect() {
-        assertEquals(QUICK_METHOD_ANSWER
-                , MetricEquationUtil.calculateQuickMethod(QUICK_METHOD_WEIGHT_INPUT
-                        , QUICK_METHOD_FACTOR_INPUT)
+        assertEquals(TestConstants.QUICK_METHOD_ANSWER_METRIC
+                , MetricEquationUtil.calculateQuickMethod(TestConstants.QUICK_METHOD_WEIGHT
+                        , TestConstants.QUICK_METHOD_FACTOR)
                 , TestConstants.DELTA_THREE
         );
     }
@@ -125,7 +100,7 @@ public class MetricEquationUtilTest {
     //region Anthropometrics
     @Test
     public void calculateBmi_isCorrect() {
-        assertEquals(BMI_ANSWER
+        assertEquals(TestConstants.BMI_ANSWER
                 , MetricEquationUtil.calculateBmi(TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC)
                 , TestConstants.DELTA_SIX);
@@ -133,7 +108,7 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculateIbwHamwi_male_adult_isCorrect() {
-        assertEquals(IBW_MALE_ANSWER
+        assertEquals(TestConstants.IBW_MALE_STANDARD_ANSWER
                 , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
                         , TestConstants.HEIGHT_STANDARD)
                 , TestConstants.DELTA_SIX);
@@ -141,7 +116,7 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculateIbwHamwi_female_adult_isCorrect() {
-        assertEquals(IBW_FEMALE_ANSWER
+        assertEquals(TestConstants.IBW_FEMALE_STANDARD_ANSWER
                 , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
                         , TestConstants.HEIGHT_STANDARD)
                 , TestConstants.DELTA_SIX);
@@ -149,7 +124,7 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculateIbwHamwi_male_child_isCorrect() {
-        assertEquals(IBW_MALE_CHILD_ANSWER
+        assertEquals(TestConstants.IBW_MALE_CHILD_STANDARD_ANSWER
                 , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
                         , TestConstants.HEIGHT_CHILD_STANDARD)
                 , TestConstants.DELTA_SIX);
@@ -157,7 +132,7 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculateIbwHamwi_female_child_isCorrect() {
-        assertEquals(IBW_FEMALE_CHILD_ANSWER
+        assertEquals(TestConstants.IBW_FEMALE_CHILD_STANDARD_ANSWER
                 , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
                         , TestConstants.HEIGHT_CHILD_STANDARD)
                 , TestConstants.DELTA_SIX);
@@ -165,17 +140,17 @@ public class MetricEquationUtilTest {
 
     @Test
     public void calculatePercentIbw_isCorrect() {
-        assertEquals(PERCENT_IBW_ANSWER
-                , MetricEquationUtil.calculatePercentIbw(IBW_MALE_ANSWER
-                        , TestConstants.WEIGHT_STANDARD)
+        assertEquals(TestConstants.PERCENT_IBW_ANSWER
+                , MetricEquationUtil.calculatePercentIbw(TestConstants.IBW_MALE_METRIC_ANSWER
+                        , TestConstants.WEIGHT_METRIC)
                 , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateAdjustedIbw_isCorrect() {
-        assertEquals(ADJUSTED_IBW_ANSWER
-                , MetricEquationUtil.calculateAdjustedIbw(IBW_MALE_ANSWER
-                        , TestConstants.WEIGHT_STANDARD)
+        assertEquals(TestConstants.ADJUSTED_IBW_METRIC_ANSWER
+                , MetricEquationUtil.calculateAdjustedIbw(TestConstants.IBW_MALE_METRIC_ANSWER
+                        , TestConstants.WEIGHT_METRIC)
                 , TestConstants.DELTA_SIX);
     }
     //endregion

@@ -8,22 +8,15 @@ import static org.junit.Assert.assertEquals;
 
 public class CalculationUtilTest {
     //region Test data
-    // Brandi values
-    private static final double BRANDI_BENEDICT_INPUT = 1572.5;
-    private static final double BRANDI_ANSWER = 1668.6;
-
-    // Calorie Min/Max values
+    // Calorie Min/Max
     private static final double CALORIE_MIN_MAX_BMR = 1234.5;
     private static final double CALORIE_ACTIVITY_FACTOR_MIN = 1;
     private static final double CALORIE_ACTIVITY_FACTOR_MAX = 2;
     private static final double CALORIE_MIN_ANSWER = 1234.5;
     private static final double CALORIE_MAX_ANSWER = 2469;
 
-    // Quick Method values
+    // Quick Method
     private static final double QUICK_METHOD_ANSWER_STANDARD = 90.718474;
-    private static final double QUICK_METHOD_ANSWER_METRIC = 200;
-    private static final double QUICK_METHOD_WEIGHT = 100;
-    private static final double QUICK_METHOD_FACTOR = 2;
     //endregion
 
     //region Predictive Equations
@@ -169,8 +162,8 @@ public class CalculationUtilTest {
 
     @Test
     public void calculateBmrBrandi_isCorrect() {
-        assertEquals(BRANDI_ANSWER
-                , CalculationUtil.calculateBmrBrandi(BRANDI_BENEDICT_INPUT
+        assertEquals(TestConstants.BRANDI_ANSWER
+                , CalculationUtil.calculateBmrBrandi(TestConstants.BRANDI_BENEDICT_INPUT
                         , TestConstants.HEART_RATE
                         , TestConstants.VE_METRIC)
                 , TestConstants.DELTA_THREE
@@ -197,10 +190,10 @@ public class CalculationUtilTest {
     //region Quick Method
     @Test
     public void calculateQuickMethod_metric_isCorrect() {
-        assertEquals(QUICK_METHOD_ANSWER_METRIC
+        assertEquals(TestConstants.QUICK_METHOD_ANSWER_METRIC
                 , CalculationUtil.calculateQuickMethod(Constants.METRIC
-                        , QUICK_METHOD_WEIGHT
-                        , QUICK_METHOD_FACTOR)
+                        , TestConstants.QUICK_METHOD_WEIGHT
+                        , TestConstants.QUICK_METHOD_FACTOR)
                 , TestConstants.DELTA_SIX);
     }
 
@@ -208,8 +201,8 @@ public class CalculationUtilTest {
     public void calculateQuickMethod_standard_isCorrect() {
         assertEquals(QUICK_METHOD_ANSWER_STANDARD
                 , CalculationUtil.calculateQuickMethod(Constants.STANDARD
-                        , QUICK_METHOD_WEIGHT
-                        , QUICK_METHOD_FACTOR)
+                        , TestConstants.QUICK_METHOD_WEIGHT
+                        , TestConstants.QUICK_METHOD_FACTOR)
                 , TestConstants.DELTA_SIX);
     }
     //endregion
@@ -217,67 +210,132 @@ public class CalculationUtilTest {
     //region Anthropometrics
     @Test
     public void calculateBmi_metric_isCorrect() {
-
+        assertEquals(TestConstants.BMI_ANSWER
+                , CalculationUtil.calculateBmi(UnitK.Metric.INSTANCE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateBmi_standard_isCorrect() {
-
+        assertEquals(TestConstants.BMI_ANSWER
+                , CalculationUtil.calculateBmi(UnitK.Standard.INSTANCE
+                        , TestConstants.WEIGHT_STANDARD
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_metric_male_adult_isCorrect() {
-
+        assertEquals(TestConstants.IBW_MALE_METRIC_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Metric.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_metric_male_child_isCorrect() {
-
+        assertEquals(TestConstants.IBW_MALE_CHILD_METRIC_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Metric.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_metric_female_adult_isCorrect() {
-
+        assertEquals(TestConstants.IBW_FEMALE_METRIC_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Metric.INSTANCE
+                        , SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_metric_female_child_isCorrect() {
-
+        assertEquals(TestConstants.IBW_FEMALE_CHILD_METRIC_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Metric.INSTANCE
+                        , SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_standard_male_adult_isCorrect() {
-
+        assertEquals(TestConstants.IBW_MALE_STANDARD_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Standard.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_standard_male_child_isCorrect() {
-
+        assertEquals(TestConstants.IBW_MALE_CHILD_STANDARD_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Standard.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_standard_female_adult_isCorrect() {
-
+        assertEquals(TestConstants.IBW_FEMALE_STANDARD_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Standard.INSTANCE
+                        , SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateIbwHamwi_standard_female_child_isCorrect() {
-
+        assertEquals(TestConstants.IBW_FEMALE_CHILD_STANDARD_ANSWER
+                , CalculationUtil.calculateIbwHamwi(UnitK.Standard.INSTANCE
+                        , SexK.Female.INSTANCE
+                        , TestConstants.HEIGHT_CHILD_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
-    public void calculatePercentIbw_isCorrect() {
+    public void calculatePercentIbw_metric_isCorrect() {
+        assertEquals(TestConstants.PERCENT_IBW_ANSWER
+                , CalculationUtil.calculatePercentIbw(UnitK.Metric.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
+    }
 
+    @Test
+    public void calculatePercentIbw_standard_isCorrect() {
+        assertEquals(TestConstants.PERCENT_IBW_ANSWER
+                , CalculationUtil.calculatePercentIbw(UnitK.Standard.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.WEIGHT_STANDARD
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateAdjustedIbw_metric_isCorrect() {
-
+        assertEquals(TestConstants.ADJUSTED_IBW_METRIC_ANSWER
+                , CalculationUtil.calculateAdjustedIbw(UnitK.Metric.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.WEIGHT_METRIC
+                        , TestConstants.HEIGHT_METRIC)
+                , TestConstants.DELTA_SIX);
     }
 
     @Test
     public void calculateAdjustedIbw_standard_isCorrect() {
-
+        assertEquals(TestConstants.ADJUSTED_IBW_STANDARD_ANSWER
+                , CalculationUtil.calculateAdjustedIbw(UnitK.Standard.INSTANCE
+                        , SexK.Male.INSTANCE
+                        , TestConstants.WEIGHT_STANDARD
+                        , TestConstants.HEIGHT_STANDARD)
+                , TestConstants.DELTA_SIX);
     }
     //endregion
 }

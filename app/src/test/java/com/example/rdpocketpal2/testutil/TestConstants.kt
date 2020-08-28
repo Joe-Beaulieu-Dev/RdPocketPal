@@ -2,16 +2,16 @@
 
 package com.example.rdpocketpal2.testutil
 
-// general values
+// Deltas
 const val DELTA_THREE = 0.001
 const val DELTA_SIX = 0.000001
 
-// User input values
+// User input
 const val WEIGHT_METRIC = 75.0
 const val WEIGHT_STANDARD = 165.3466966387
 const val HEIGHT_METRIC = 175.0
 const val HEIGHT_STANDARD = 68.8976377953
-// metric equivalent: 138cm
+const val HEIGHT_CHILD_METRIC = 138
 const val HEIGHT_CHILD_STANDARD = 54.330708661
 const val AGE = 25
 const val TMAX_METRIC = 37.0
@@ -19,18 +19,40 @@ const val TMAX_STANDARD = 98.6
 const val HEART_RATE = 75.0
 const val VE_METRIC = 7.0
 
-// Mifflin values
+// Mifflin
 const val MIFFLIN_MALE_ANSWER = 1723.75
 const val MIFFLIN_FEMALE_ANSWER = 1557.75
-
-// Benedict values
+// Benedict
 const val BENEDICT_MALE_ANSWER = 1798.5
 const val BENEDICT_FEMALE_ANSWER = 1572.5
-
-// Penn State 2003b values
+// Penn State 2003b
 const val PENN_STATE_2003B_MIFFLIN_INPUT = 1723.75
 const val PENN_STATE_2003b_ANSWER = 1838.8
-
-// Penn State 2010 values
+// Penn State 2010
 const val PENN_STATE_2010_MIFFLIN_INPUT = 1723.75
 const val PENN_STATE_2010_ANSWER = 1731.8625
+// Brandi values
+const val BRANDI_BENEDICT_INPUT = 1798.5
+const val BRANDI_ANSWER = 1885.56
+// Quick Method
+const val QUICK_METHOD_WEIGHT = 100.0
+const val QUICK_METHOD_FACTOR = 2.0
+const val QUICK_METHOD_ANSWER_METRIC = 200.0
+
+// BMI
+const val BMI_ANSWER = 24.4897959
+// IBW Metric
+const val IBW_MALE_METRIC_ANSWER = 72.2961949090137
+const val IBW_FEMALE_METRIC_ANSWER = 65.53874007417814
+const val IBW_MALE_CHILD_METRIC_ANSWER = 40.3661493359675
+const val IBW_FEMALE_CHILD_METRIC_ANSWER = 38.93036876330629
+// IBW Standard
+const val IBW_MALE_STANDARD_ANSWER = 159.38582677
+const val IBW_FEMALE_STANDARD_ANSWER = 144.488188975
+const val IBW_MALE_CHILD_STANDARD_ANSWER = 88.992125983
+const val IBW_FEMALE_CHILD_STANDARD_ANSWER = 85.8267716525
+// Percent IBW
+const val PERCENT_IBW_ANSWER = 103.73989958
+// Adjusted IBW
+const val ADJUSTED_IBW_METRIC_ANSWER = 72.972146181912464
+const val ADJUSTED_IBW_STANDARD_ANSWER = 160.8760442375
