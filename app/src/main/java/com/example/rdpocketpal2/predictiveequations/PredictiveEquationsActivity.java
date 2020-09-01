@@ -1,20 +1,22 @@
 package com.example.rdpocketpal2.predictiveequations;
 
 import android.content.Intent;
-import android.os.Build;
+import android.content.res.Resources;
+import android.content.res.Resources.Theme;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityPredictiveEquationsBinding;
 import com.example.rdpocketpal2.predictiveequations.PredictiveEquationsViewModel.Equations;
 import com.example.rdpocketpal2.settings.SettingsActivity;
+import com.example.rdpocketpal2.util.UiUtil;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,40 +57,26 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
 
         // set up UI elements
         setUpEquationSpinner();
-        setUpButtonRipple();
+        setUpAllBtnRipples();
     }
 
     private void setUpEquationSpinner() {
         // style Spinner and set Adapter
-        Spinner equationSpinner = findViewById(R.id.pe_equation_spinner);
+        Spinner equationSpinner = mBinding.peEquationSpinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.predictive_equations, R.layout.spinner_item_dark_grey);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dark_grey);
         equationSpinner.setAdapter(adapter);
     }
 
-    private void setUpButtonRipple() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Male button
-            Button sexMale = findViewById(R.id.pe_sex_male);
-            sexMale.setForeground(getResources()
-                    .getDrawable(R.drawable.ripple_oval, getTheme()));
+    private void setUpAllBtnRipples() {
+        Resources res = getResources();
+        Theme theme = getTheme();
 
-            // Female button
-            Button sexFemale = findViewById(R.id.pe_sex_female);
-            sexFemale.setForeground(getResources()
-                    .getDrawable(R.drawable.ripple_oval, getTheme()));
-
-            // Clear button
-            Button clear = findViewById(R.id.pe_clear_btn);
-            clear.setForeground(getResources()
-                    .getDrawable(R.drawable.ripple_rectangle, getTheme()));
-
-            // Calculate button
-            Button calculate = findViewById(R.id.pe_calculate_btn);
-            calculate.setForeground(getResources()
-                    .getDrawable(R.drawable.ripple_rectangle, getTheme()));
-        }
+        UiUtil.setUpBtnRippleOval(res, theme, mBinding.peSexMale);
+        UiUtil.setUpBtnRippleOval(res, theme, mBinding.peSexFemale);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.peClearBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.peCalculateBtn);
     }
 
     // Observer's onChanged() is called not only when observed LiveData is changed, but also
@@ -113,30 +101,37 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                 // then change layout constraints to eliminate gaps
                 if (s.equals(getString(R.string.mifflin_st_jear))
                         || s.equals(getString(R.string.harris_benedict))) {
+                    // hide and clear Tmax, Heart Rate, and Ve
                     setVisibilities(View.GONE, View.GONE, View.GONE);
                     setConstraints(PredictiveEquationsViewModel.MIFFLIN);
+                    clearFieldsAndErrors(mBinding.peTmaxEditText
+                            , mBinding.peHeartRateEditText, mBinding.peVeEditText);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
                         || s.equals(getString(R.string.penn_state_2010))) {
+                    // hide and clear Heart Rate, show Tmax and Ve
                     setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
                     setConstraints(PredictiveEquationsViewModel.PENN2003B);
+                    clearFieldsAndErrors(mBinding.peHeartRateEditText);
                 } else if (s.equals(getString(R.string.brandi))) {
+                    // hide and clear Tmax, show Heart Rate and Ve
                     setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
                     setConstraints(PredictiveEquationsViewModel.BRANDI);
+                    clearFieldsAndErrors(mBinding.peTmaxEditText);
                 }
 
                 // this is the method where the reason onChanged() was called is important
-                clearDataIfNecessary();
+                clearOutputDataIfNecessary();
             }
         });
     }
 
-    private void clearDataIfNecessary() {
+    private void clearOutputDataIfNecessary() {
         // do nothing if this method's caller (Observer<T>.onChanged()) was called
         // due to a config change
         if (!mConfigurationChanged) {
             // clear result data when equation is changed and show Toast
             // this is done so results don't clash with user input/equation selection
-            mViewModel.clearResultDataFromActivity();
+            mViewModel.clearOutputDataFromActivity();
         }
         // reset value as it being true is only relevant when onChanged() is initially
         // auto-called due to a config change
@@ -145,7 +140,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
 
     private void setConstraints(@Equations int equation) {
         // create ConstraintSet
-        ConstraintLayout layout = findViewById(R.id.pe_input_first_three_rows);
+        ConstraintLayout layout = mBinding.peInputFirstThreeRows;
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
 
@@ -174,15 +169,37 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     }
 
     private void setVisibilities(int tmaxVisibility, int hrVisibility, int veVisibility) {
-        findViewById(R.id.pe_tmax_textView).setVisibility(tmaxVisibility);
-        findViewById(R.id.pe_tmax_editText).setVisibility(tmaxVisibility);
-        findViewById(R.id.pe_tmax_unit_label).setVisibility(tmaxVisibility);
-        findViewById(R.id.pe_heart_rate_textView).setVisibility(hrVisibility);
-        findViewById(R.id.pe_heart_rate_editText).setVisibility(hrVisibility);
-        findViewById(R.id.pe_heart_rate_unit_label).setVisibility(hrVisibility);
-        findViewById(R.id.pe_ve_textView).setVisibility(veVisibility);
-        findViewById(R.id.pe_ve_editText).setVisibility(veVisibility);
-        findViewById(R.id.pe_ve_unit_label).setVisibility(veVisibility);
+        // Tmax
+        mBinding.peTmaxTextView.setVisibility(tmaxVisibility);
+        mBinding.peTmaxEditText.setVisibility(tmaxVisibility);
+        mBinding.peTmaxUnitLabel.setVisibility(tmaxVisibility);
+        // Heart rate
+        mBinding.peHeartRateTextView.setVisibility(hrVisibility);
+        mBinding.peHeartRateEditText.setVisibility(hrVisibility);
+        mBinding.peHeartRateUnitLabel.setVisibility(hrVisibility);
+        // Ve
+        mBinding.peVeTextView.setVisibility(veVisibility);
+        mBinding.peVeEditText.setVisibility(veVisibility);
+        mBinding.peVeUnitLabel.setVisibility(veVisibility);
+    }
+
+    private void clearFieldsAndErrors(EditText... editTexts) {
+        for (EditText editText: editTexts) {
+            editText.setText(null);
+            // Have to clear the errors like this because if it's done via setError()
+            // than it won't trigger the binding adapter for the error field. This is because
+            // this adapter is attached to a custom xml attribute, because there is no
+            // xml attribute that exists for an EditText's error. Since the binding adapter's
+            // onChange() fires via an OnFocusChangeListener, and not from some sort of non-existent
+            // preexisting OnErrorChangeListener, direct calls to setError() will not cause any
+            // activity in the EditText's binding adapters, and therefore the underlying bound data
+            // will not change.
+            switch (editText.getId()) {
+                case R.id.pe_tmax_editText: mViewModel.clearTmaxError();
+                case R.id.pe_heart_rate_editText: mViewModel.clearHeartRateError();
+                case R.id.pe_ve_editText: mViewModel.clearVeError();
+            }
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents.intended
@@ -29,12 +30,6 @@ import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.matchers.ToastMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
-
-//region Testing constants
-const val EMPTY_STRING = ""
-const val INVALID_ENTRY_NOT_A_NUMBER: String = "."
-const val VALID_ENTRY_INT_STRING = "1"
-//endregion
 
 @DslMarker
 annotation class TestRobotMarker
@@ -113,6 +108,19 @@ open class TestRobot {
     //region Toast
     fun checkToastDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
+    }
+
+    // TODO ToastMatcher just loops when there's no Toast on screen
+    fun checkToastNotDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId))
+                .inRoot(ToastMatcher())
+                .check(doesNotExist())
+    }
+    //endregion
+
+    //region RadioButton
+    protected fun checkRadioBtnIsChecked(@IdRes id: Int): ViewInteraction {
+        return onView(withId(id)).check(matches(isChecked()))
     }
     //endregion
 

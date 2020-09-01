@@ -10,27 +10,29 @@ import com.example.rdpocketpal2.settings.withSettingsRobot
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
 import com.example.rdpocketpal2.testutil.INVALID_ENTRY_NOT_A_NUMBER
 import com.example.rdpocketpal2.testutil.TestUtil
+import com.example.rdpocketpal2.testutil.VALID_ENTRY_INT_STRING
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 //region Test constants
-// input
-const val WEIGHT_METRIC: String = "75"
-const val WEIGHT_STANDARD: String = "165.346565409"
-const val FACTOR_MIN: String = "20.25"
-const val FACTOR_MAX: String = "30"
-// min output
-const val OUTPUT_MIN_ZERO_DECIMALS_ROUNDED: String = "1519"
-const val OUTPUT_MIN_ONE_DECIMAL_ROUNDED: String = "1518.8"
-const val OUTPUT_MIN_ONE_DECIMAL_TRUNCATED: String = "1518.7"
-const val OUTPUT_MIN_TWO_DECIMALS_ROUNDED: String = "1518.75"
-// max output
-const val OUTPUT_MAX_ZERO_DECIMALS_ROUNDED: String = "2250"
-const val OUTPUT_MAX_ONE_DECIMAL_ROUNDED: String = "2250"
-const val OUTPUT_MAX_ONE_DECIMAL_TRUNCATED: String = "2250"
-const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED: String = "2250"
+// Input
+private const val WEIGHT_METRIC: String = "75"
+// TODO this value not correct conversion from 75kg, doesn't affect tests though
+private const val WEIGHT_STANDARD: String = "165.346565409"
+private const val FACTOR_MIN: String = "20.25"
+private const val FACTOR_MAX: String = "30"
+// Min output
+private const val OUTPUT_MIN_ZERO_DECIMALS_ROUNDED: String = "1519"
+private const val OUTPUT_MIN_ONE_DECIMAL_ROUNDED: String = "1518.8"
+private const val OUTPUT_MIN_ONE_DECIMAL_TRUNCATED: String = "1518.7"
+private const val OUTPUT_MIN_TWO_DECIMALS_ROUNDED: String = "1518.75"
+// Max output
+private const val OUTPUT_MAX_ZERO_DECIMALS_ROUNDED: String = "2250"
+private const val OUTPUT_MAX_ONE_DECIMAL_ROUNDED: String = "2250"
+private const val OUTPUT_MAX_ONE_DECIMAL_TRUNCATED: String = "2250"
+private const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED: String = "2250"
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -60,9 +62,9 @@ class QuickMethodTest {
         // set input units and validate unit labels
         withQuickMethodRobot {
             // set to metric
-            setInputMetric()
+            setUnitMetric()
             // validate
-            checkUnitMetric(activityRule)
+            checkUnitMetricWeight(activityRule)
         }
     }
 
@@ -71,9 +73,9 @@ class QuickMethodTest {
         // set input units and validate unit labels
         withQuickMethodRobot {
             // set to metric
-            setInputStandard()
+            setUnitStandard()
             // validate
-            checkUnitStandard(activityRule)
+            checkUnitStandardWeight(activityRule)
         }
     }
     //endregion
@@ -84,7 +86,7 @@ class QuickMethodTest {
         // enter metric data into Calorie section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputMetric()
+            setUnitMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
             inCalories {
@@ -103,7 +105,7 @@ class QuickMethodTest {
         // enter standard data into Calorie section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputStandard()
+            setUnitStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
             inCalories {
@@ -123,7 +125,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inCalories {
                 // set text on all fields
-                setAllFieldsProgrammatically(WEIGHT_METRIC)
+                setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
                 // clear fields
                 clickClear()
                 // validate
@@ -139,7 +141,7 @@ class QuickMethodTest {
         // enter metric data into Protein section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputMetric()
+            setUnitMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
             inProtein {
@@ -158,7 +160,7 @@ class QuickMethodTest {
         // enter standard data into Protein section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputStandard()
+            setUnitStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
             inProtein {
@@ -178,7 +180,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inProtein {
                 // set text on all fields
-                setAllFieldsProgrammatically(WEIGHT_METRIC)
+                setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
                 // clear fields
                 clickClear()
                 // validate
@@ -194,7 +196,7 @@ class QuickMethodTest {
         // enter metric data into Fluids section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputMetric()
+            setUnitMetric()
             // input and calculate
             enterWeight(WEIGHT_METRIC)
             inFluids {
@@ -213,7 +215,7 @@ class QuickMethodTest {
         // enter standard data into Fluids section, calculate, and verify
         withQuickMethodRobot {
             // set to metric
-            setInputStandard()
+            setUnitStandard()
             // input and calculate
             enterWeight(WEIGHT_STANDARD)
             inFluids {
@@ -233,7 +235,7 @@ class QuickMethodTest {
         withQuickMethodRobot {
             inFluids {
                 // set text on all fields
-                setAllFieldsProgrammatically(WEIGHT_METRIC)
+                setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
                 // clear fields
                 clickClear()
                 // validate
@@ -248,27 +250,27 @@ class QuickMethodTest {
     fun clearFields_unitRadioBtnPress() {
         withQuickMethodRobot {
             // input
-            setAllFieldsProgrammatically(WEIGHT_METRIC)
+            setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
 
             // change units
-            setInputStandard()
+            setUnitStandard()
 
             // check that outputs cleared and inputs remained
             inCalories {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
+                checkMinInput(VALID_ENTRY_INT_STRING)
+                checkMaxInput(VALID_ENTRY_INT_STRING)
                 checkMinOutput(EMPTY_STRING)
                 checkMaxOutput(EMPTY_STRING)
             }
             inProtein {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
+                checkMinInput(VALID_ENTRY_INT_STRING)
+                checkMaxInput(VALID_ENTRY_INT_STRING)
                 checkMinOutput(EMPTY_STRING)
                 checkMaxOutput(EMPTY_STRING)
             }
             inFluids {
-                checkMinInput(WEIGHT_METRIC)
-                checkMaxInput(WEIGHT_METRIC)
+                checkMinInput(VALID_ENTRY_INT_STRING)
+                checkMaxInput(VALID_ENTRY_INT_STRING)
                 checkMinOutput(EMPTY_STRING)
                 checkMaxOutput(EMPTY_STRING)
             }
@@ -419,18 +421,37 @@ class QuickMethodTest {
 
     //region Field persistence
     @Test
-    fun orientationChange_fieldPersistence() {
+    fun fieldPersistence_orientationChange() {
         // enter data into all fields, change orientation twice, and check that input persists
         withQuickMethodRobot {
-            // set all fields
+            // entry
+            setUnitMetric()
             setAllFieldsProgrammatically(WEIGHT_METRIC)
-
-            // rotate screen
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
-
-            // validate all fields
+            // validation
+            checkUnitMetric()
             checkAllProgrammaticallySetFields(WEIGHT_METRIC)
+            // entry
+            setUnitStandard()
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validation
+            checkUnitStandard()
+        }
+    }
+
+    @Test
+    fun orientationChange_repeatUnitSelection() {
+        withQuickMethodRobot {
+            // entry
+            setUnitMetric()
+            setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
+            setUnitMetric()
+            // validation
+            checkAllProgrammaticallySetFields(VALID_ENTRY_INT_STRING)
+            // check Toast not displayed
+//            checkToastNotDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
     //endregion

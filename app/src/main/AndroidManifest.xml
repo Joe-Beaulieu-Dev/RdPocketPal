@@ -3,7 +3,7 @@
     package="com.example.rdpocketpal2">
 
     <application
-        android:name="com.example.rdpocketpal2.application.MyApplication"
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,6 +31,10 @@
         <activity
             android:name=".quickmethod.QuickMethodActivity"
             android:label="@string/title_quick_method"
+            android:parentActivityName=".home.HomeActivity" />
+        <!-- Anthropometrics -->
+        <activity android:name=".anthropometrics.AnthropometricsActivity"
+            android:label="@string/title_anthropometrics"
             android:parentActivityName=".home.HomeActivity" />
         <!-- Conversions -->
         <activity

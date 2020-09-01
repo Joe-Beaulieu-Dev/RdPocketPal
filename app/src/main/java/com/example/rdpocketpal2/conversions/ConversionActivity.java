@@ -1,7 +1,6 @@
 package com.example.rdpocketpal2.conversions;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,9 +12,9 @@ import android.widget.Spinner;
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityConversionBinding;
 import com.example.rdpocketpal2.settings.SettingsActivity;
+import com.example.rdpocketpal2.util.UiUtil;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -55,7 +54,7 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void setUpConversionSpinner() {
         // initialize and assign ArrayAdapter to Spinner
-        Spinner spinner = findViewById(R.id.conv_conversion_spinner);
+        Spinner spinner = mBinding.convConversionSpinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -64,7 +63,7 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void setUpElementSpinner() {
         // initialize and assign ArrayAdapter to Spinner
-        Spinner spinner = findViewById(R.id.conv_element_spinner);
+        Spinner spinner = mBinding.convElementSpinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.element_list, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -89,8 +88,8 @@ public class ConversionActivity extends AppCompatActivity {
                 // update the unit labels for the input/output fields
                 // when the conversion type changes
                 mViewModel.updateFieldLabelData();
-                // clear input/output fields when User changes conversion type
-                mViewModel.clearAllFields();
+                // clear input/output fields and errors when User changes conversion type
+                mViewModel.clearAllFieldAndErrors();
             }
         });
     }
@@ -99,8 +98,8 @@ public class ConversionActivity extends AppCompatActivity {
         mViewModel.getElementData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                // clear input/output fields when User changes element type
-                mViewModel.clearAllFields();
+                // clear input/output fields and errors when User changes element type
+                mViewModel.clearAllFieldAndErrors();
             }
         });
     }
@@ -114,20 +113,11 @@ public class ConversionActivity extends AppCompatActivity {
         }
 
         // set visibility
-        findViewById(R.id.conv_element_spinner).setVisibility(visibility);
+        mBinding.convElementSpinner.setVisibility(visibility);
     }
 
     private void setUpAllBtnRipples() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Clear Button
-            setUpBtnRipple(R.id.conv_clear_btn);
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setUpBtnRipple(int btnId) {
-        findViewById(btnId).setForeground(getResources()
-                .getDrawable(R.drawable.ripple_rectangle, getTheme()));
+        UiUtil.setUpBtnRippleRectangle(getResources(), getTheme(), mBinding.convClearBtn);
     }
 
     @Override

@@ -5,6 +5,13 @@ package com.example.rdpocketpal2.util
 import androidx.annotation.IntDef
 
 /*
+ **************
+ ** Defaults **
+ **************
+ */
+const val DEFAULT_RADIO_BTN_INDEX = 0
+
+/*
  *********
  ** Sex **
  *********
@@ -14,6 +21,11 @@ import androidx.annotation.IntDef
 annotation class Sex
 const val MALE = 0
 const val FEMALE = 1
+
+sealed class SexK {
+    object Male : SexK()
+    object Female : SexK()
+}
 
 /*
  ************
@@ -25,6 +37,11 @@ const val FEMALE = 1
 annotation class Unit
 const val METRIC = 0
 const val STANDARD = 1
+
+sealed class UnitK {
+    object Metric : UnitK()
+    object Standard : UnitK()
+}
 
 /*
  **************

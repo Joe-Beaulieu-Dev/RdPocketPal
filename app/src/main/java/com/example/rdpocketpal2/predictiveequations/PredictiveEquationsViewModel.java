@@ -14,6 +14,7 @@ import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
 import com.example.rdpocketpal2.util.Constants;
+import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
 import com.example.rdpocketpal2.util.UiUtil;
@@ -24,9 +25,11 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.SavedStateHandle;
@@ -34,6 +37,11 @@ import androidx.lifecycle.SavedStateHandle;
 public class PredictiveEquationsViewModel extends AndroidViewModel implements
         CoroutineCallbackListener, LifecycleObserver {
     private static final String LOG_TAG = "PredictiveEqViewModel";
+    // this is fine because we're storing the application context here
+    @SuppressLint("StaticFieldLeak")
+    private Context mApplicationContext;
+    private SavedStateHandle mState;
+    private UserPreferences mPrefs;
 
     //region LiveData
     // User input LiveData
@@ -68,7 +76,13 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     public MutableLiveData<String> mTmaxUnitLabel = new MutableLiveData<>();
     //endregion
 
-    //region LiveData SavedState Keys
+    //region SavedState data
+    // Data
+    private static final String SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue";
+    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
+    private MutableLiveData<String> mSelectedSexOldValue = new MutableLiveData<>();
+    private MutableLiveData<String> mSelectedUnitOldValue = new MutableLiveData<>();
+
     // Error message keys
     private static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
     private static final String HEIGHT_ERROR_MSG_KEY = "heightErrorMsgKey";
@@ -79,12 +93,6 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     private static final String ACTIVITY_FACTOR_MIN_ERROR_MSG_KEY = "activityFactorMinErrorMsgKey";
     private static final String ACTIVITY_FACTOR_MAX_ERROR_MSG_KEY = "activityFactorMaxErrorMsgKey";
     //endregion
-
-    // this is fine because we're storing the application context here
-    @SuppressLint("StaticFieldLeak")
-    private Context mApplicationContext;
-    private SavedStateHandle mState;
-    private UserPreferences mPrefs;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MIFFLIN, BENEDICT, PENN2003B, PENN2010, BRANDI})
@@ -144,32 +152,16 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         }
     }
 
-    public void onSexRadioBtnClicked() {
-        // clear results so they don't clash with inputs and show Toast
-        if (clearResults()) {
-            UiUtil.showToast(mApplicationContext
-                    , R.string.toast_results_cleared_sex_change, Toast.LENGTH_LONG);
-        }
+    public void onSexRadioBtnClicked(RadioButton btn) {
+        clearOutputsAndToastIfNecessary(btn
+                , mSelectedSexOldValue
+                , R.string.toast_results_cleared_sex_change);
     }
 
     public void onUnitRadioBtnClicked(RadioButton btn) {
-        if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            setUiDataToMetric();
-
-            // clear results so they don't clash with inputs and show Toast
-            if (clearResults()) {
-                UiUtil.showToast(mApplicationContext
-                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
-            }
-        } else if (btn.getText().toString().equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            setUiDataToStandard();
-
-            // clear results so they don't clash with inputs and show Toast
-            if (clearResults()) {
-                UiUtil.showToast(mApplicationContext
-                        , R.string.toast_results_cleared_unit_change, Toast.LENGTH_LONG);
-            }
-        }
+        clearOutputsAndToastIfNecessary(btn
+                , mSelectedUnitOldValue
+                , R.string.toast_results_cleared_unit_change);
     }
     //endregion
 
@@ -360,147 +352,102 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
 
     private boolean validateMifflinOrBenedictFields() {
-        return validateWeightHeightAge();
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+        );
     }
 
     private boolean validatePennStateFields() {
-        boolean allFieldsValid = true;
-
-        if (!validateWeightHeightAge()) {
-            allFieldsValid = false;
-        }
-        if (!isTmaxValid()) {
-            allFieldsValid = false;
-        }
-        if (!isVeValid()) {
-            allFieldsValid = false;
-        }
-
-        return allFieldsValid;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+                , new FieldErrorPair(mTmax, mTmaxErrorMsg)
+                , new FieldErrorPair(mVe, mVeErrorMsg)
+        );
     }
 
     private boolean validateBrandiFields() {
-        boolean allFieldsValid = true;
-
-        if (!validateWeightHeightAge()) {
-            allFieldsValid = false;
-        }
-        if (!isHeartRateValid()) {
-            allFieldsValid = false;
-        }
-        if (!isVeValid()) {
-            allFieldsValid = false;
-        }
-
-        return allFieldsValid;
-    }
-
-    private boolean validateWeightHeightAge() {
-        boolean isValid = true;
-
-        if (!NumberUtil.isDouble(mWeight)) {
-            setEnterNumberError(mWeightErrorMsg);
-            isValid = false;
-        }
-        if (!NumberUtil.isDouble(mHeight)) {
-            setEnterNumberError(mHeightErrorMsg);
-            isValid = false;
-        }
-        if (!NumberUtil.isDouble(mAge)) {
-            setEnterNumberError(mAgeErrorMsg);
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    private boolean isTmaxValid() {
-        if (!NumberUtil.isDouble(mTmax)) {
-            setEnterNumberError(mTmaxErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isHeartRateValid() {
-        if (!NumberUtil.isDouble(mHeartRate)) {
-            setEnterNumberError(mHeartRateErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isVeValid() {
-        if (!NumberUtil.isDouble(mVe)) {
-            setEnterNumberError(mVeErrorMsg);
-            return false;
-        }
-        return true;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mWeight, mWeightErrorMsg)
+                , new FieldErrorPair(mHeight, mHeightErrorMsg)
+                , new FieldErrorPair(mAge, mAgeErrorMsg)
+                , new FieldErrorPair(mHeartRate, mHeartRateErrorMsg)
+                , new FieldErrorPair(mVe, mVeErrorMsg)
+        );
     }
 
     private boolean isActivityLevelMinValid() {
-        if (!NumberUtil.isDouble(mActivityFactorMin)) {
-            setEnterNumberError(mActivityFactorMinErrorMsg);
-            return false;
-        }
-        return true;
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mActivityFactorMin, mActivityFactorMinErrorMsg)
+        );
     }
 
     private boolean isActivityLevelMaxValid() {
-        if (!NumberUtil.isDouble(mActivityFactorMax)) {
-            setEnterNumberError(mActivityFactorMaxErrorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    private void setEnterNumberError(MutableLiveData<String> fieldData) {
-        fieldData.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
+        return UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                , new FieldErrorPair(mActivityFactorMax, mActivityFactorMaxErrorMsg)
+        );
     }
     //endregion
 
     //region Clear fields
     private void clearAllFields() {
-        UiUtil.clearField(mWeight);
-        UiUtil.clearField(mHeight);
-        UiUtil.clearField(mAge);
-        UiUtil.clearField(mTmax);
-        UiUtil.clearField(mVe);
-        UiUtil.clearField(mHeartRate);
-        UiUtil.clearField(mActivityFactorMin);
-        UiUtil.clearField(mActivityFactorMax);
-        UiUtil.clearField(mBmr);
-        UiUtil.clearField(mCalorieMin);
-        UiUtil.clearField(mCalorieMax);
+        UiUtil.clearFields(mWeight
+                , mHeight
+                , mAge
+                , mTmax
+                , mVe
+                , mHeartRate
+                , mActivityFactorMin
+                , mActivityFactorMax
+                , mBmr
+                , mCalorieMin
+                , mCalorieMax
+        );
     }
 
-    public void clearResultDataFromActivity() {
-        if (clearResults()) {
+    public void clearOutputDataFromActivity() {
+        if (clearOutput()) {
             UiUtil.showToast(mApplicationContext
                     , R.string.toast_results_cleared_equation_change, Toast.LENGTH_LONG);
         }
     }
 
-    private boolean clearResults() {
-        boolean anyFieldsCleared = false;
+    private boolean clearOutput() {
+        return UiUtil.clearFields(mBmr, mCalorieMin, mCalorieMax);
+    }
 
-        // clear fields and set flag
-        if (UiUtil.clearField(mBmr)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mCalorieMin)) {
-            anyFieldsCleared = true;
-        }
-        if (UiUtil.clearField(mCalorieMax)) {
-            anyFieldsCleared = true;
+    private void clearOutputsAndToastIfNecessary(RadioButton btn
+            , MutableLiveData<String> oldValue
+            , @StringRes int errorToast) {
+        // just to make things easier to understand
+        boolean isInitialSelectionAndNotDefault =
+                oldValue.getValue() == null && !UiUtil.isDefaultRadioBtnChecked(btn);
+        boolean isNotInitialSelectionAndDiffThanLast =
+                oldValue.getValue() != null
+                        && !btn.getText().toString().equals(oldValue.getValue());
+
+        if (isInitialSelectionAndNotDefault || isNotInitialSelectionAndDiffThanLast) {
+            // if we're dealing with the Unit RadioButton, set the units
+            if (oldValue == mSelectedUnitOldValue) {
+                setUnits();
+            }
+            // clear output fields and show Toast as to why
+            if (clearOutput()) {
+                UiUtil.showToast(mApplicationContext, errorToast, Toast.LENGTH_LONG);
+            }
         }
 
-        return anyFieldsCleared;
+        oldValue.setValue(btn.getText().toString());
     }
     //endregion
 
     //region SavedState methods
     void saveState() {
+        mState.set(SELECTED_SEX_OLD_VALUE_KEY, mSelectedSexOldValue.getValue());
+        mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue.getValue());
         // unlike other values in the UI, error messages do not get persisted upon system initiated
         // process death, so they must be saved to the SavedStateHandle
         mState.set(WEIGHT_ERROR_MSG_KEY, mWeightErrorMsg.getValue());
@@ -514,6 +461,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
 
     private void restoreState() {
+        mSelectedSexOldValue = mState.getLiveData(SELECTED_SEX_OLD_VALUE_KEY);
+        mSelectedUnitOldValue = mState.getLiveData(SELECTED_UNIT_OLD_VALUE_KEY);
         // restore all error message LiveData
         mWeightErrorMsg = mState.getLiveData(WEIGHT_ERROR_MSG_KEY);
         mHeightErrorMsg = mState.getLiveData(HEIGHT_ERROR_MSG_KEY);
@@ -526,9 +475,23 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     }
     //endregion
 
-    MutableLiveData<String> getSelectedEquation() {
+    //region View methods
+    LiveData<String> getSelectedEquation() {
         return mSelectedEquation;
     }
+
+    void clearTmaxError() {
+        mTmaxErrorMsg.setValue(null);
+    }
+
+    void clearHeartRateError() {
+        mHeartRateErrorMsg.setValue(null);
+    }
+
+    void clearVeError() {
+        mVeErrorMsg.setValue(null);
+    }
+    //endregion
 
     //region Callbacks
     @Override
@@ -570,9 +533,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
                 setUiDataToStandard();
             }
         } catch (ValidationException e) {
-            e.printStackTrace();
             // units don't get displayed, but will never happen
-            // really need to get rid of this Exception (Sealed Classes would be nice here XD)
+            e.printStackTrace();
         }
     }
     //endregion

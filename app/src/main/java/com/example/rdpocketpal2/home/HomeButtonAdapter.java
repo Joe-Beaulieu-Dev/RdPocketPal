@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rdpocketpal2.R;
+import com.example.rdpocketpal2.anthropometrics.AnthropometricsActivity;
 import com.example.rdpocketpal2.conversions.ConversionActivity;
 import com.example.rdpocketpal2.predictiveequations.PredictiveEquationsActivity;
 import com.example.rdpocketpal2.quickmethod.QuickMethodActivity;
@@ -21,7 +22,7 @@ public class HomeButtonAdapter extends RecyclerView.Adapter<HomeButtonAdapter.Ho
             new HomeButton(R.drawable.ic_quick_method_purple_48dp, R.string.btn_quick_method
                     , QuickMethodActivity.class),
             new HomeButton(R.drawable.ic_anthropometrics_purple_48dp, R.string.btn_anthropometrics
-                    , PredictiveEquationsActivity.class),
+                    , AnthropometricsActivity.class),
             new HomeButton(R.drawable.ic_conversions_purple_48dp, R.string.btn_conversions
                     , ConversionActivity.class)
     };

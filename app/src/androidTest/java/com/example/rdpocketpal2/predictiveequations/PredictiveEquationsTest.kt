@@ -17,58 +17,58 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 //region Test data
-// User input values
-const val WEIGHT_METRIC = "75.0"
-const val WEIGHT_STANDARD = "165.3466966387"
-const val HEIGHT_METRIC = "175.0"
-const val HEIGHT_STANDARD = "68.8976377953"
-const val AGE = "25"
-const val TMAX_METRIC = "37.0"
-const val TMAX_STANDARD = "98.6"
-const val HEART_RATE = "75.0"
-const val VE_METRIC = "7.0"
-const val ACTIVITY_FACTOR_MIN = "1"
-const val ACTIVITY_FACTOR_MAX = "2"
+// Input values
+private const val WEIGHT_METRIC = "75.0"
+private const val WEIGHT_STANDARD = "165.3466966387"
+private const val HEIGHT_METRIC = "175.0"
+private const val HEIGHT_STANDARD = "68.8976377953"
+private const val AGE = "25"
+private const val TMAX_METRIC = "37.0"
+private const val TMAX_STANDARD = "98.6"
+private const val HEART_RATE = "75.0"
+private const val VE_METRIC = "7.0"
+private const val ACTIVITY_FACTOR_MIN = "1"
+private const val ACTIVITY_FACTOR_MAX = "2"
 
 // Mifflin values
-const val MIFFLIN_MALE_ANSWER_BMR = "1723.75"
-const val MIFFLIN_MALE_ANSWER_MIN = "1723.75"
-const val MIFFLIN_MALE_ANSWER_MAX = "3447.5"
-const val MIFFLIN_FEMALE_ANSWER_BMR = "1557.75"
-const val MIFFLIN_FEMALE_ANSWER_MIN = "1557.75"
-const val MIFFLIN_FEMALE_ANSWER_MAX = "3115.5"
+private const val MIFFLIN_MALE_ANSWER_BMR = "1723.75"
+private const val MIFFLIN_MALE_ANSWER_MIN = "1723.75"
+private const val MIFFLIN_MALE_ANSWER_MAX = "3447.5"
+private const val MIFFLIN_FEMALE_ANSWER_BMR = "1557.75"
+private const val MIFFLIN_FEMALE_ANSWER_MIN = "1557.75"
+private const val MIFFLIN_FEMALE_ANSWER_MAX = "3115.5"
 
 // Benedict values
-const val BENEDICT_MALE_ANSWER_BMR = "1798.5"
-const val BENEDICT_MALE_ANSWER_MIN = "1798.5"
-const val BENEDICT_MALE_ANSWER_MAX = "3597"
-const val BENEDICT_FEMALE_ANSWER_BMR = "1572.5"
-const val BENEDICT_FEMALE_ANSWER_MIN = "1572.5"
-const val BENEDICT_FEMALE_ANSWER_MAX = "3145"
+private const val BENEDICT_MALE_ANSWER_BMR = "1798.5"
+private const val BENEDICT_MALE_ANSWER_MIN = "1798.5"
+private const val BENEDICT_MALE_ANSWER_MAX = "3597"
+private const val BENEDICT_FEMALE_ANSWER_BMR = "1572.5"
+private const val BENEDICT_FEMALE_ANSWER_MIN = "1572.5"
+private const val BENEDICT_FEMALE_ANSWER_MAX = "3145"
 
 // Penn State 2003b values
-const val PENN_STATE_2003b_MALE_ANSWER_BMR = "1838.8"
-const val PENN_STATE_2003b_MALE_ANSWER_MIN = "1838.8"
-const val PENN_STATE_2003b_MALE_ANSWER_MAX = "3677.6"
-const val PENN_STATE_2003b_FEMALE_ANSWER_BMR = "1679.44"
-const val PENN_STATE_2003b_FEMALE_ANSWER_MIN = "1679.44"
-const val PENN_STATE_2003b_FEMALE_ANSWER_MAX = "3358.88"
+private const val PENN_STATE_2003b_MALE_ANSWER_BMR = "1838.8"
+private const val PENN_STATE_2003b_MALE_ANSWER_MIN = "1838.8"
+private const val PENN_STATE_2003b_MALE_ANSWER_MAX = "3677.6"
+private const val PENN_STATE_2003b_FEMALE_ANSWER_BMR = "1679.44"
+private const val PENN_STATE_2003b_FEMALE_ANSWER_MIN = "1679.44"
+private const val PENN_STATE_2003b_FEMALE_ANSWER_MAX = "3358.88"
 
 // Penn State 2010 values
-const val PENN_STATE_2010_MALE_ANSWER_BMR = "1731.86"
-const val PENN_STATE_2010_MALE_ANSWER_MIN = "1731.86"
-const val PENN_STATE_2010_MALE_ANSWER_MAX = "3463.73"
-const val PENN_STATE_2010_FEMALE_ANSWER_BMR = "1614"
-const val PENN_STATE_2010_FEMALE_ANSWER_MIN = "1614"
-const val PENN_STATE_2010_FEMALE_ANSWER_MAX = "3228.01"
+private const val PENN_STATE_2010_MALE_ANSWER_BMR = "1731.86"
+private const val PENN_STATE_2010_MALE_ANSWER_MIN = "1731.86"
+private const val PENN_STATE_2010_MALE_ANSWER_MAX = "3463.73"
+private const val PENN_STATE_2010_FEMALE_ANSWER_BMR = "1614"
+private const val PENN_STATE_2010_FEMALE_ANSWER_MIN = "1614"
+private const val PENN_STATE_2010_FEMALE_ANSWER_MAX = "3228.01"
 
 // Brandi values
-const val BRANDI_ANSWER_MALE_BMR = "1885.56"
-const val BRANDI_ANSWER_MALE_MIN = "1885.56"
-const val BRANDI_ANSWER_MALE_MAX = "3771.12"
-const val BRANDI_ANSWER_FEMALE_BMR = "1668.6"
-const val BRANDI_ANSWER_FEMALE_MIN = "1668.6"
-const val BRANDI_ANSWER_FEMALE_MAX = "3337.2"
+private const val BRANDI_ANSWER_MALE_BMR = "1885.56"
+private const val BRANDI_ANSWER_MALE_MIN = "1885.56"
+private const val BRANDI_ANSWER_MALE_MAX = "3771.12"
+private const val BRANDI_ANSWER_FEMALE_BMR = "1668.6"
+private const val BRANDI_ANSWER_FEMALE_MIN = "1668.6"
+private const val BRANDI_ANSWER_FEMALE_MAX = "3337.2"
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -922,6 +922,8 @@ class PredictiveEquationsTest {
     fun fieldPersistence_orientationChange() {
         withPredictiveEquationsRobot {
             // entry
+            setSexMale()
+            setUnitMetric()
             selectPennState2003b(activityRule)
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
@@ -937,6 +939,8 @@ class PredictiveEquationsTest {
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             // validation
+            checkSexMale()
+            checkUnitMetric()
             checkWeight(VALID_ENTRY_INT_STRING)
             checkHeight(VALID_ENTRY_INT_STRING)
             checkAge(VALID_ENTRY_INT_STRING)
@@ -949,13 +953,103 @@ class PredictiveEquationsTest {
             checkCalorieMax(VALID_ENTRY_INT_STRING)
 
             // enter fields that don't display in penn state equations
+            setSexFemale()
+            setUnitStandard()
             selectBrandi(activityRule)
             enterHeartRate(VALID_ENTRY_INT_STRING)
             // rotate screen
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
             // validation
+            checkSexFemale()
+            checkUnitStandard()
             checkHeartRate(VALID_ENTRY_INT_STRING)
+        }
+    }
+
+    @Test
+    fun fieldPersistence_repeatSexSelection() {
+        withPredictiveEquationsRobot {
+            // entry
+            setSexMale()
+            selectPennState2003b(activityRule)
+            enterWeight(VALID_ENTRY_INT_STRING)
+            enterHeight(VALID_ENTRY_INT_STRING)
+            enterAge(VALID_ENTRY_INT_STRING)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            enterVe(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
+            setSexMale()
+            // validation
+            checkWeight(VALID_ENTRY_INT_STRING)
+            checkHeight(VALID_ENTRY_INT_STRING)
+            checkAge(VALID_ENTRY_INT_STRING)
+            checkTmax(VALID_ENTRY_INT_STRING)
+            checkVe(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMin(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMax(VALID_ENTRY_INT_STRING)
+            checkBmr(VALID_ENTRY_INT_STRING)
+            checkCalorieMin(VALID_ENTRY_INT_STRING)
+            checkCalorieMax(VALID_ENTRY_INT_STRING)
+            // check Toast not displayed
+//            checkToastNotDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+
+            // enter fields that don't display in penn state equations
+            setSexFemale()
+            selectBrandi(activityRule)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
+            setSexFemale()
+            //validation
+            checkHeartRate(VALID_ENTRY_INT_STRING)
+            // check Toast not displayed
+//            checkToastNotDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+        }
+    }
+
+    @Test
+    fun fieldPersistence_repeatUnitSelection() {
+        withPredictiveEquationsRobot {
+            // entry
+            setUnitMetric()
+            selectPennState2003b(activityRule)
+            enterWeight(VALID_ENTRY_INT_STRING)
+            enterHeight(VALID_ENTRY_INT_STRING)
+            enterAge(VALID_ENTRY_INT_STRING)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            enterVe(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
+            setUnitMetric()
+            // validation
+            checkWeight(VALID_ENTRY_INT_STRING)
+            checkHeight(VALID_ENTRY_INT_STRING)
+            checkAge(VALID_ENTRY_INT_STRING)
+            checkTmax(VALID_ENTRY_INT_STRING)
+            checkVe(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMin(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMax(VALID_ENTRY_INT_STRING)
+            checkBmr(VALID_ENTRY_INT_STRING)
+            checkCalorieMin(VALID_ENTRY_INT_STRING)
+            checkCalorieMax(VALID_ENTRY_INT_STRING)
+            // check Toast not displayed
+//            checkToastNotDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+
+            // enter fields that don't display in penn state equations
+            setUnitStandard()
+            selectBrandi(activityRule)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
+            setUnitStandard()
+            //validation
+            checkHeartRate(VALID_ENTRY_INT_STRING)
+            // check Toast not displayed
+//            checkToastNotDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
         }
     }
     //endregion

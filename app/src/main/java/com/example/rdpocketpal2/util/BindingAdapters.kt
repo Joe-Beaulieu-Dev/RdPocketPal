@@ -43,10 +43,10 @@ fun EditText.setErrorListener(listener: InverseBindingListener) {
 
 //region RadioGroup
 @BindingAdapter("selectedRadioBtn")
-fun RadioGroup.setSelectedSexBtnText(selection: String?) {
+fun RadioGroup.setSelectedBtnText(selection: String?) {
     // set initial value
     if (selection == null) {
-        check(getChildAt(0).id)
+        check(getChildAt(DEFAULT_RADIO_BTN_INDEX).id)
         return
     }
 

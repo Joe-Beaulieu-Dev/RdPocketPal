@@ -1,7 +1,7 @@
 package com.example.rdpocketpal2.quickmethod;
 
 import android.content.Intent;
-import android.os.Build;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityQuickMethodBinding;
 import com.example.rdpocketpal2.settings.SettingsActivity;
+import com.example.rdpocketpal2.util.UiUtil;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.SavedStateViewModelFactory;
@@ -44,28 +44,15 @@ public class QuickMethodActivity extends AppCompatActivity {
     }
 
     private void setUpAllBtnRipples() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Protein Clear button
-            setUpBtnRipple(R.id.qm_protein_clear_btn);
-            // Protein Calculate button
-            setUpBtnRipple(R.id.qm_protein_calculate_btn);
+        Resources res = getResources();
+        Resources.Theme theme = getTheme();
 
-            // Fluid Clear button
-            setUpBtnRipple(R.id.qm_fluid_clear_btn);
-            // Fluid Calculate button
-            setUpBtnRipple(R.id.qm_fluid_calculate_btn);
-
-            // Calorie Clear button
-            setUpBtnRipple(R.id.qm_calorie_clear_btn);
-            // Calorie Calculate button
-            setUpBtnRipple(R.id.qm_calorie_calculate_btn);
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setUpBtnRipple(int btnId) {
-        findViewById(btnId).setForeground(getResources()
-                .getDrawable(R.drawable.ripple_rectangle, getTheme()));
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmProteinClearBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmProteinCalculateBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmFluidClearBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmFluidCalculateBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmCalorieClearBtn);
+        UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmCalorieCalculateBtn);
     }
 
     @Override

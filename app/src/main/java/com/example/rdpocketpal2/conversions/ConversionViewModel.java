@@ -12,6 +12,7 @@ import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
 import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.ConversionUtil;
 import com.example.rdpocketpal2.util.Element;
+import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.UiUtil;
 
@@ -21,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
@@ -167,39 +169,31 @@ public class ConversionViewModel extends AndroidViewModel {
         // if not empty or null and not a double -> not valid, set error, toast
         // if not empty, not null, and a double -> valid
         if (!isFieldEmptyOrNull(inputField)) {
-            if (!validateFieldAndSetError(inputField, errorField)) {
+            // field contains data, validate it
+            if (!UiUtil.validateFieldsAndSetErrors(mApplicationContext
+                    , new FieldErrorPair(inputField, errorField))) {
+                // field data not valid, error already set during validation, show Toast
                 UiUtil.showToast(mApplicationContext
                         , R.string.toast_invalid_fields, Toast.LENGTH_SHORT);
                 return false;
             }
         } else {
+            // field doesn't contain any data, clear output field's data and error msg
             clearAllFields();
             resetError(errorField == mFieldLeftErrorMsg ? mFieldRightErrorMsg : mFieldLeftErrorMsg);
             return false;
         }
-        // input is valid, reset error message of output field (edge case -> if user has error
-        // messages in both fields, the output field's message needs to be reset)
+
+        // input is valid, reset error message of output field because of edge case
+        //
+        // edge case -> if user has error messages in both fields,
+        // the output field's message needs to be reset
         resetError(errorField == mFieldLeftErrorMsg ? mFieldRightErrorMsg : mFieldLeftErrorMsg);
         return true;
     }
 
     private boolean isFieldEmptyOrNull(MutableLiveData<String> field) {
         return field.getValue() == null || field.getValue() != null && field.getValue().equals("");
-    }
-
-    private boolean validateFieldAndSetError(MutableLiveData<String> field,
-                                          MutableLiveData<String> fieldError) {
-        // if invalid, set error message
-        if (!NumberUtil.isDouble(field)) {
-            setNumberError(fieldError);
-            return false;
-        }
-        return true;
-    }
-
-    private void setNumberError(MutableLiveData<String> fieldError) {
-        // set error message for LiveData associated with field
-        fieldError.setValue(mApplicationContext.getResources().getString(R.string.error_enter_a_number));
     }
     //endregion
 
@@ -285,9 +279,8 @@ public class ConversionViewModel extends AndroidViewModel {
         mFieldRightLabel.setValue(mApplicationContext.getResources().getString(rightFieldStringId));
     }
 
-    void clearAllFields() {
-        UiUtil.clearField(mFieldLeft);
-        UiUtil.clearField(mFieldRight);
+    private void clearAllFields() {
+        UiUtil.clearFields(mFieldLeft, mFieldRight);
     }
 
     private void resetError(MutableLiveData<String> errorField) {
@@ -300,12 +293,18 @@ public class ConversionViewModel extends AndroidViewModel {
     //endregion
 
     //region View methods
-    MutableLiveData<String> getConversionTypeData() {
+    LiveData<String> getConversionTypeData() {
         return mConversionType;
     }
 
-    MutableLiveData<String> getElementData() {
+    LiveData<String> getElementData() {
         return mElement;
+    }
+
+    void clearAllFieldAndErrors() {
+        clearAllFields();
+        mFieldLeftErrorMsg.setValue(null);
+        mFieldRightErrorMsg.setValue(null);
     }
 
     void updateFieldLabelData() {
