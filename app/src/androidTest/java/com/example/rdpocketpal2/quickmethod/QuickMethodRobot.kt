@@ -16,7 +16,7 @@ open class QuickMethodRobot : TestRobot() {
         enterText(R.id.qm_weight_editText, weight)
     }
 
-    fun checkWeight(weight: String) {
+    private fun checkWeight(weight: String) {
         checkText(R.id.qm_weight_editText, weight)
     }
 
@@ -59,21 +59,29 @@ open class QuickMethodRobot : TestRobot() {
     //endregion
 
     //region Units
-    fun setInputMetric() {
+    fun setUnitMetric() {
         // click metric RadioButton
         clickViewId(R.id.qm_unit_metric)
     }
 
-    fun setInputStandard() {
+    fun setUnitStandard() {
         // click standard RadioButton
         clickViewId(R.id.qm_unit_standard)
     }
 
-    fun <T : Activity> checkUnitMetric(rule: ActivityTestRule<T>) {
+    fun checkUnitMetric() {
+        checkRadioBtnIsChecked(R.id.qm_unit_metric)
+    }
+
+    fun checkUnitStandard() {
+        checkRadioBtnIsChecked(R.id.qm_unit_standard)
+    }
+
+    fun <T : Activity> checkUnitMetricWeight(rule: ActivityTestRule<T>) {
         checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_kg))
     }
 
-    fun <T : Activity> checkUnitStandard(rule: ActivityTestRule<T>) {
+    fun <T : Activity> checkUnitStandardWeight(rule: ActivityTestRule<T>) {
         checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_lb))
     }
     //endregion

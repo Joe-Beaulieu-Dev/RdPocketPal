@@ -37,6 +37,14 @@ class PredictiveEquationsRobot : TestRobot() {
     fun setSexFemale() {
         clickViewId(R.id.pe_sex_female)
     }
+
+    fun checkSexMale() {
+        checkRadioBtnIsChecked(R.id.pe_sex_male)
+    }
+
+    fun checkSexFemale() {
+        checkRadioBtnIsChecked(R.id.pe_sex_female)
+    }
     //endregion
 
     //region Units
@@ -46,6 +54,14 @@ class PredictiveEquationsRobot : TestRobot() {
 
     fun setUnitStandard() {
         clickViewId(R.id.pe_unit_standard)
+    }
+
+    fun checkUnitMetric() {
+        checkRadioBtnIsChecked(R.id.pe_unit_metric)
+    }
+
+    fun checkUnitStandard() {
+        checkRadioBtnIsChecked(R.id.pe_unit_standard)
     }
 
     fun <T : Activity> checkUnitMetricWeight(activityRule: ActivityTestRule<T>) {

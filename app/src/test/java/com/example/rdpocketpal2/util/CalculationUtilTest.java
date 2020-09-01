@@ -320,7 +320,7 @@ public class CalculationUtilTest {
 
     @Test
     public void calculateAdjustedIbw_metric_isCorrect() {
-        assertEquals(TestConstants.ADJUSTED_IBW_METRIC_ANSWER
+        assertEquals(TestConstants.ADJUSTED_BW_METRIC_ANSWER
                 , CalculationUtil.calculateAdjustedIbw(UnitK.Metric.INSTANCE
                         , SexK.Male.INSTANCE
                         , TestConstants.WEIGHT_METRIC
@@ -330,7 +330,7 @@ public class CalculationUtilTest {
 
     @Test
     public void calculateAdjustedIbw_standard_isCorrect() {
-        assertEquals(TestConstants.ADJUSTED_IBW_STANDARD_ANSWER
+        assertEquals(TestConstants.ADJUSTED_BW_STANDARD_ANSWER
                 , CalculationUtil.calculateAdjustedIbw(UnitK.Standard.INSTANCE
                         , SexK.Male.INSTANCE
                         , TestConstants.WEIGHT_STANDARD
