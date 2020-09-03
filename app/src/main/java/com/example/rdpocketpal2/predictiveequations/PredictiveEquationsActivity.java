@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityPredictiveEquationsBinding;
@@ -34,7 +37,6 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     private static final String KEY_ORIENTATION_CHANGED = "orientationChanged";
     private boolean mConfigurationChanged = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,13 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         getLifecycle().addObserver(mViewModel);
 
         // set up UI elements
+        setUpUiElements();
+    }
+
+    private void setUpUiElements() {
         setUpEquationSpinner();
         setUpAllBtnRipples();
+        setUpKeyboardNextBtn();
     }
 
     private void setUpEquationSpinner() {
@@ -77,6 +84,11 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         UiUtil.setUpBtnRippleOval(res, theme, mBinding.peSexFemale);
         UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.peClearBtn);
         UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.peCalculateBtn);
+    }
+
+    private void setUpKeyboardNextBtn() {
+        setNextBtnBehaviorForEditText(mBinding.peWeightEditText, mBinding.peHeightEditText);
+        setNextBtnBehaviorForEditText(mBinding.peHeightEditText, mBinding.peAgeEditText);
     }
 
     // Observer's onChanged() is called not only when observed LiveData is changed, but also
@@ -101,22 +113,12 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                 // then change layout constraints to eliminate gaps
                 if (s.equals(getString(R.string.mifflin_st_jear))
                         || s.equals(getString(R.string.harris_benedict))) {
-                    // hide and clear Tmax, Heart Rate, and Ve
-                    setVisibilities(View.GONE, View.GONE, View.GONE);
-                    setConstraints(PredictiveEquationsViewModel.MIFFLIN);
-                    clearFieldsAndErrors(mBinding.peTmaxEditText
-                            , mBinding.peHeartRateEditText, mBinding.peVeEditText);
+                    setEditTextAttributes(PredictiveEquationsViewModel.MIFFLIN);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
                         || s.equals(getString(R.string.penn_state_2010))) {
-                    // hide and clear Heart Rate, show Tmax and Ve
-                    setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
-                    setConstraints(PredictiveEquationsViewModel.PENN2003B);
-                    clearFieldsAndErrors(mBinding.peHeartRateEditText);
+                    setEditTextAttributes(PredictiveEquationsViewModel.PENN2003B);
                 } else if (s.equals(getString(R.string.brandi))) {
-                    // hide and clear Tmax, show Heart Rate and Ve
-                    setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
-                    setConstraints(PredictiveEquationsViewModel.BRANDI);
-                    clearFieldsAndErrors(mBinding.peTmaxEditText);
+                    setEditTextAttributes(PredictiveEquationsViewModel.BRANDI);
                 }
 
                 // this is the method where the reason onChanged() was called is important
@@ -125,47 +127,50 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         });
     }
 
-    private void clearOutputDataIfNecessary() {
-        // do nothing if this method's caller (Observer<T>.onChanged()) was called
-        // due to a config change
-        if (!mConfigurationChanged) {
-            // clear result data when equation is changed and show Toast
-            // this is done so results don't clash with user input/equation selection
-            mViewModel.clearOutputDataFromActivity();
-        }
-        // reset value as it being true is only relevant when onChanged() is initially
-        // auto-called due to a config change
-        mConfigurationChanged = false;
-    }
-
-    private void setConstraints(@Equations int equation) {
-        // create ConstraintSet
-        ConstraintLayout layout = mBinding.peInputFirstThreeRows;
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(layout);
-
-        // create constraints
+    private void setEditTextAttributes(@Equations int equation) {
         switch (equation) {
             case PredictiveEquationsViewModel.MIFFLIN:
             case PredictiveEquationsViewModel.BENEDICT:
+                setMifflinBenedictAttributes();
                 break;
             case PredictiveEquationsViewModel.PENN2003B:
             case PredictiveEquationsViewModel.PENN2010:
-                // changed constraint
-                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
-                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                setPennStateAttributes();
                 break;
             case PredictiveEquationsViewModel.BRANDI:
-                // changed constraints
-                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.START, R.id.pe_height_editText, ConstraintSet.START);
-                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.TOP, R.id.pe_height_editText, ConstraintSet.BOTTOM);
-                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
-                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                setBrandiAttributes();
                 break;
         }
+    }
 
-        // apply constraints
-        constraintSet.applyTo(layout);
+    public void setMifflinBenedictAttributes() {
+        // hide and clear Tmax, Heart Rate, and Ve
+        // define soft keyboard Next button behavior
+        setVisibilities(View.GONE, View.GONE, View.GONE);
+        setConstraints(PredictiveEquationsViewModel.MIFFLIN);
+        setNextBtnBehaviorForEditText(mBinding.peAgeEditText
+                , mBinding.peActivityFactorMinEditText);
+        clearFieldsAndErrors(mBinding.peTmaxEditText
+                , mBinding.peHeartRateEditText, mBinding.peVeEditText);
+    }
+
+    public void setPennStateAttributes() {
+        // hide and clear Heart Rate, show Tmax and Ve
+        // define soft keyboard Next button behavior
+        setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
+        setConstraints(PredictiveEquationsViewModel.PENN2003B);
+        setNextBtnBehaviorForEditText(mBinding.peAgeEditText, mBinding.peTmaxEditText);
+        clearFieldsAndErrors(mBinding.peHeartRateEditText);
+    }
+
+    public void setBrandiAttributes() {
+        // hide and clear Tmax, show Heart Rate and Ve
+        // define soft keyboard Next button behavior
+        setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
+        setConstraints(PredictiveEquationsViewModel.BRANDI);
+        setNextBtnBehaviorForEditText(mBinding.peAgeEditText
+                , mBinding.peHeartRateEditText);
+        clearFieldsAndErrors(mBinding.peTmaxEditText);
     }
 
     private void setVisibilities(int tmaxVisibility, int hrVisibility, int veVisibility) {
@@ -183,11 +188,54 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         mBinding.peVeUnitLabel.setVisibility(veVisibility);
     }
 
+    private void setConstraints(@Equations int equation) {
+        // create ConstraintSet
+        ConstraintLayout layout = mBinding.peInputFirstThreeRows;
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(layout);
+
+        // create constraints
+        switch (equation) {
+            case PredictiveEquationsViewModel.MIFFLIN:
+            case PredictiveEquationsViewModel.BENEDICT:
+                break;
+            case PredictiveEquationsViewModel.PENN2003B:
+            case PredictiveEquationsViewModel.PENN2010:
+                // change constraints
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                break;
+            case PredictiveEquationsViewModel.BRANDI:
+                // change constraints
+                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.START, R.id.pe_height_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_heart_rate_editText, ConstraintSet.TOP, R.id.pe_height_editText, ConstraintSet.BOTTOM);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.START, R.id.pe_age_editText, ConstraintSet.START);
+                constraintSet.connect(R.id.pe_ve_editText, ConstraintSet.TOP, R.id.pe_age_editText, ConstraintSet.BOTTOM);
+                break;
+        }
+
+        // apply constraints
+        constraintSet.applyTo(layout);
+    }
+
+    private void setNextBtnBehaviorForEditText(EditText source, final EditText target) {
+        source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // Next button on soft keyboard
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    target.requestFocus();
+                }
+                return false;
+            }
+        });
+    }
+
     private void clearFieldsAndErrors(EditText... editTexts) {
         for (EditText editText: editTexts) {
             editText.setText(null);
             // Have to clear the errors like this because if it's done via setError()
-            // than it won't trigger the binding adapter for the error field. This is because
+            // then it won't trigger the binding adapter for the error field. This is because
             // this adapter is attached to a custom xml attribute, because there is no
             // xml attribute that exists for an EditText's error. Since the binding adapter's
             // onChange() fires via an OnFocusChangeListener, and not from some sort of non-existent
@@ -200,6 +248,19 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
                 case R.id.pe_ve_editText: mViewModel.clearVeError();
             }
         }
+    }
+
+    private void clearOutputDataIfNecessary() {
+        // do nothing if this method's caller (Observer<T>.onChanged()) was called
+        // due to a config change
+        if (!mConfigurationChanged) {
+            // clear result data when equation is changed and show Toast
+            // this is done so results don't clash with user input/equation selection
+            mViewModel.clearOutputDataFromActivity();
+        }
+        // reset value as it being true is only relevant when onChanged() is initially
+        // auto-called due to a config change
+        mConfigurationChanged = false;
     }
 
     @Override
