@@ -23,7 +23,11 @@
             android:paddingTop="@dimen/margin_medium"
             android:paddingBottom="@dimen/margin_medium">
 
-            <!-- HomeButton image -->
+            <!--
+                 HomeButton image
+                 Ignoring ContentDescription because View is
+                 used multiple times with different images
+            -->
             <ImageView
                 android:id="@+id/btn_home_icon"
                 android:layout_width="wrap_content"
@@ -32,6 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_anthropometrics_purple_48dp" />
 
             <!-- HomeButton text -->
