@@ -18,21 +18,20 @@ import org.junit.runner.RunWith
 
 //region Test constants
 // Input
-private const val WEIGHT_METRIC: String = "75"
-// TODO this value not correct conversion from 75kg, doesn't affect tests though
-private const val WEIGHT_STANDARD: String = "165.346565409"
-private const val FACTOR_MIN: String = "20.25"
-private const val FACTOR_MAX: String = "30"
+private const val WEIGHT_METRIC = "75"
+private const val WEIGHT_STANDARD = "165.3466966387"
+private const val FACTOR_MIN = "20.25"
+private const val FACTOR_MAX = "30"
 // Min output
-private const val OUTPUT_MIN_ZERO_DECIMALS_ROUNDED: String = "1519"
-private const val OUTPUT_MIN_ONE_DECIMAL_ROUNDED: String = "1518.8"
-private const val OUTPUT_MIN_ONE_DECIMAL_TRUNCATED: String = "1518.7"
-private const val OUTPUT_MIN_TWO_DECIMALS_ROUNDED: String = "1518.75"
+private const val OUTPUT_MIN_ZERO_DECIMALS_ROUNDED = "1519"
+private const val OUTPUT_MIN_ONE_DECIMAL_ROUNDED = "1518.8"
+private const val OUTPUT_MIN_ONE_DECIMAL_TRUNCATED = "1518.7"
+private const val OUTPUT_MIN_TWO_DECIMALS_ROUNDED = "1518.75"
 // Max output
-private const val OUTPUT_MAX_ZERO_DECIMALS_ROUNDED: String = "2250"
-private const val OUTPUT_MAX_ONE_DECIMAL_ROUNDED: String = "2250"
-private const val OUTPUT_MAX_ONE_DECIMAL_TRUNCATED: String = "2250"
-private const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED: String = "2250"
+private const val OUTPUT_MAX_ZERO_DECIMALS_ROUNDED = "2250"
+private const val OUTPUT_MAX_ONE_DECIMAL_ROUNDED = "2250"
+private const val OUTPUT_MAX_ONE_DECIMAL_TRUNCATED = "2250"
+private const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED = "2250"
 //endregion
 
 @RunWith(AndroidJUnit4::class)

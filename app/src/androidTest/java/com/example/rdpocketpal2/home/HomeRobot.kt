@@ -3,6 +3,7 @@ package com.example.rdpocketpal2.home
 import android.app.Activity
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
+import com.example.rdpocketpal2.anthropometrics.AnthropometricsActivity
 import com.example.rdpocketpal2.conversions.ConversionActivity
 import com.example.rdpocketpal2.predictiveequations.PredictiveEquationsActivity
 import com.example.rdpocketpal2.quickmethod.QuickMethodActivity
@@ -42,8 +43,7 @@ class HomeRobot : TestRobot() {
     }
 
     fun checkAnthropometricsActivityIsDisplayed() {
-        // TODO change this once this Activity is actually created
-        checkActivityIsDisplayed(PredictiveEquationsActivity::class.java.name)
+        checkActivityIsDisplayed(AnthropometricsActivity::class.java.name)
     }
 
     fun checkConversionsActivityIsDisplayed() {
