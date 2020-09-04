@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.databinding.ActivityPredictiveEquationsBinding;
@@ -87,8 +84,8 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     }
 
     private void setUpKeyboardNextBtn() {
-        setNextBtnBehaviorForEditText(mBinding.peWeightEditText, mBinding.peHeightEditText);
-        setNextBtnBehaviorForEditText(mBinding.peHeightEditText, mBinding.peAgeEditText);
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.peWeightEditText, mBinding.peHeightEditText);
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.peHeightEditText, mBinding.peAgeEditText);
     }
 
     // Observer's onChanged() is called not only when observed LiveData is changed, but also
@@ -148,7 +145,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         // define soft keyboard Next button behavior
         setVisibilities(View.GONE, View.GONE, View.GONE);
         setConstraints(PredictiveEquationsViewModel.MIFFLIN);
-        setNextBtnBehaviorForEditText(mBinding.peAgeEditText
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.peAgeEditText
                 , mBinding.peActivityFactorMinEditText);
         clearFieldsAndErrors(mBinding.peTmaxEditText
                 , mBinding.peHeartRateEditText, mBinding.peVeEditText);
@@ -159,7 +156,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         // define soft keyboard Next button behavior
         setVisibilities(View.VISIBLE, View.GONE, View.VISIBLE);
         setConstraints(PredictiveEquationsViewModel.PENN2003B);
-        setNextBtnBehaviorForEditText(mBinding.peAgeEditText, mBinding.peTmaxEditText);
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.peAgeEditText, mBinding.peTmaxEditText);
         clearFieldsAndErrors(mBinding.peHeartRateEditText);
     }
 
@@ -168,7 +165,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         // define soft keyboard Next button behavior
         setVisibilities(View.GONE, View.VISIBLE, View.VISIBLE);
         setConstraints(PredictiveEquationsViewModel.BRANDI);
-        setNextBtnBehaviorForEditText(mBinding.peAgeEditText
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.peAgeEditText
                 , mBinding.peHeartRateEditText);
         clearFieldsAndErrors(mBinding.peTmaxEditText);
     }
@@ -218,18 +215,18 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         constraintSet.applyTo(layout);
     }
 
-    private void setNextBtnBehaviorForEditText(EditText source, final EditText target) {
-        source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // Next button on soft keyboard
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    target.requestFocus();
-                }
-                return false;
-            }
-        });
-    }
+//    private void setNextBtnBehaviorForEditText(EditText source, final EditText target) {
+//        source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                // Next button on soft keyboard
+//                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+//                    target.requestFocus();
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
     private void clearFieldsAndErrors(EditText... editTexts) {
         for (EditText editText: editTexts) {

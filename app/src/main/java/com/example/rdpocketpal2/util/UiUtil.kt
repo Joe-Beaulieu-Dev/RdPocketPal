@@ -6,15 +6,25 @@ import android.content.Context
 import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.os.Build
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
 import com.example.rdpocketpal2.R
+
+//region Navigation
+fun setNextBtnBehaviorForEditText(source: EditText, target: EditText) {
+    source.setOnEditorActionListener { _, actionId, _ ->
+        // Next button on soft keyboard
+        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+            target.requestFocus()
+        }
+        false
+    }
+}
+//endregion
 
 //region Logic
 fun isDefaultRadioBtnChecked(btn: RadioButton): Boolean {
@@ -44,9 +54,7 @@ fun validateFieldsAndSetErrors(context: Context, vararg fieldErrorPair: FieldErr
     return allInputsValid
 }
 
-private fun validateFieldAndSetError(context: Context
-                             , field: MutableLiveData<String>
-                             , errorField: MutableLiveData<String>): Boolean {
+private fun validateFieldAndSetError(context: Context, field: MutableLiveData<String>, errorField: MutableLiveData<String>): Boolean {
     return if (!isFieldValid(field)) {
         setError(context, errorField)
         false
@@ -98,8 +106,7 @@ fun setUpBtnRippleRectangle(res: Resources, theme: Theme, btn: Button) {
     setUpBtnRipple(res, theme, btn, R.drawable.ripple_rectangle)
 }
 
-private fun setUpBtnRipple(res: Resources, theme: Theme?
-                           , btn: Button, @DrawableRes drawableId: Int) {
+private fun setUpBtnRipple(res: Resources, theme: Theme?, btn: Button, @DrawableRes drawableId: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         btn.foreground = ResourcesCompat.getDrawable(res, drawableId, theme)
     }
@@ -107,7 +114,7 @@ private fun setUpBtnRipple(res: Resources, theme: Theme?
 //endregion
 
 //region Toasts
-fun showToast(context: Context, @StringRes stringId: Int, duration : Int) {
+fun showToast(context: Context, @StringRes stringId: Int, duration: Int) {
     // can't reference @View.DURATION in the parameters so have to do this
     if (duration != Toast.LENGTH_SHORT && duration != Toast.LENGTH_LONG) {
         return
@@ -117,7 +124,7 @@ fun showToast(context: Context, @StringRes stringId: Int, duration : Int) {
     Toast.makeText(context, context.resources.getString(stringId), duration).show()
 }
 
-fun showToast(context: Context, msg: String?, duration : Int) {
+fun showToast(context: Context, msg: String?, duration: Int) {
     // can't reference @View.DURATION in the parameters so have to do this
     if (duration != Toast.LENGTH_SHORT && duration != Toast.LENGTH_LONG) {
         return

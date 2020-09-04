@@ -41,6 +41,7 @@ public class QuickMethodActivity extends AppCompatActivity {
 
         // set up UI elements
         setUpAllBtnRipples();
+        setUpKeyboardNextBtn();
     }
 
     private void setUpAllBtnRipples() {
@@ -53,6 +54,15 @@ public class QuickMethodActivity extends AppCompatActivity {
         UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmFluidCalculateBtn);
         UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmCalorieClearBtn);
         UiUtil.setUpBtnRippleRectangle(res, theme, mBinding.qmCalorieCalculateBtn);
+    }
+
+    private void setUpKeyboardNextBtn() {
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.qmCalorieKcalPerKgMin
+                , mBinding.qmCalorieKcalPerKgMax);
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.qmProteinGramsPerKgMin
+                , mBinding.qmProteinGramsPerKgMax);
+        UiUtil.setNextBtnBehaviorForEditText(mBinding.qmFluidMlPerKgMin
+                , mBinding.qmFluidMlPerKgMax);
     }
 
     @Override

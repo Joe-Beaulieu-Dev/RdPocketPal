@@ -46,33 +46,15 @@ public class ConversionActivity extends AppCompatActivity {
         setUpUi();
     }
 
+    private void observeLiveData() {
+        observeConversionTypeData();
+        observeElementData();
+    }
+
     private void setUpUi() {
         setUpConversionSpinner();
         setUpElementSpinner();
         setUpAllBtnRipples();
-    }
-
-    private void setUpConversionSpinner() {
-        // initialize and assign ArrayAdapter to Spinner
-        Spinner spinner = mBinding.convConversionSpinner;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    private void setUpElementSpinner() {
-        // initialize and assign ArrayAdapter to Spinner
-        Spinner spinner = mBinding.convElementSpinner;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.element_list, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    private void observeLiveData() {
-        observeConversionTypeData();
-        observeElementData();
     }
 
     private void observeConversionTypeData() {
@@ -104,6 +86,28 @@ public class ConversionActivity extends AppCompatActivity {
         });
     }
 
+    private void setUpConversionSpinner() {
+        // initialize and assign ArrayAdapter to Spinner
+        Spinner spinner = mBinding.convConversionSpinner;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void setUpElementSpinner() {
+        // initialize and assign ArrayAdapter to Spinner
+        Spinner spinner = mBinding.convElementSpinner;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.element_list, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void setUpAllBtnRipples() {
+        UiUtil.setUpBtnRippleRectangle(getResources(), getTheme(), mBinding.convClearBtn);
+    }
+
     private void setElementSpinnerVisibility(int visibility) {
         // @View.Visibility is hidden, so have to check validity
         if (visibility != View.VISIBLE
@@ -114,10 +118,6 @@ public class ConversionActivity extends AppCompatActivity {
 
         // set visibility
         mBinding.convElementSpinner.setVisibility(visibility);
-    }
-
-    private void setUpAllBtnRipples() {
-        UiUtil.setUpBtnRippleRectangle(getResources(), getTheme(), mBinding.convClearBtn);
     }
 
     @Override
