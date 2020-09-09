@@ -53,7 +53,6 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void setUpUi() {
         setUpConversionSpinner();
-        setUpElementSpinner();
         setUpAllBtnRipples();
     }
 
@@ -63,6 +62,11 @@ public class ConversionActivity extends AppCompatActivity {
             public void onChanged(String s) {
                 if (s.equals(getResources().getString(R.string.text_gm_to_meq))
                         || s.equals(getResources().getString(R.string.text_mg_to_meq))) {
+                    setElementSpinnerToMeqSet();
+                    setElementSpinnerVisibility(View.VISIBLE);
+                } else if (s.equals(getResources().getString(R.string.text_gm_to_mmol))
+                        || s.equals(getResources().getString(R.string.text_mg_to_mmol))) {
+                    setElementSpinnerToMmolSet();
                     setElementSpinnerVisibility(View.VISIBLE);
                 } else {
                     setElementSpinnerVisibility(View.GONE);
@@ -71,7 +75,7 @@ public class ConversionActivity extends AppCompatActivity {
                 // when the conversion type changes
                 mViewModel.updateFieldLabelData();
                 // clear input/output fields and errors when User changes conversion type
-                mViewModel.clearAllFieldAndErrors();
+                mViewModel.clearAllFieldsAndErrors();
             }
         });
     }
@@ -81,7 +85,7 @@ public class ConversionActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 // clear input/output fields and errors when User changes element type
-                mViewModel.clearAllFieldAndErrors();
+                mViewModel.clearAllFieldsAndErrors();
             }
         });
     }
@@ -95,11 +99,18 @@ public class ConversionActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-    private void setUpElementSpinner() {
-        // initialize and assign ArrayAdapter to Spinner
+    private void setElementSpinnerToMeqSet() {
         Spinner spinner = mBinding.convElementSpinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.element_list, R.layout.spinner_item);
+                .createFromResource(this, R.array.element_list_meq, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void setElementSpinnerToMmolSet() {
+        Spinner spinner = mBinding.convElementSpinner;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.element_list_mmol, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

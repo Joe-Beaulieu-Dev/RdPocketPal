@@ -100,15 +100,20 @@
     <string name="text_mg">mg</string>
     <string name="text_gm">gm</string>
     <string name="text_meq">mEq</string>
+    <string name="text_mmol">mmol</string>
     <string name="text_in_to_cm">Inches &lt;=> Centimeters</string>
     <string name="text_lb_to_kg">Pounds &lt;=> Kilograms</string>
     <string name="text_gm_to_meq">Grams &lt;=> Milliequivalents</string>
     <string name="text_mg_to_meq">Milligrams &lt;=> Milliequivalents</string>
+    <string name="text_gm_to_mmol">Grams &lt;=> Millimoles</string>
+    <string name="text_mg_to_mmol">Milligrams &lt;=> Millimoles</string>
     <string-array name="conversion_list">
         <item>@string/text_in_to_cm</item>
         <item>@string/text_lb_to_kg</item>
         <item>@string/text_gm_to_meq</item>
         <item>@string/text_mg_to_meq</item>
+        <item>@string/text_gm_to_mmol</item>
+        <item>@string/text_mg_to_mmol</item>
     </string-array>
     <string name="text_calcium">(Ca) Calcium</string>
     <string name="text_chlorine">(Cl) Chlorine</string>
@@ -116,13 +121,15 @@
     <string name="text_phosphorus">(P) Phosphorus</string>
     <string name="text_potassium">(K) Potassium</string>
     <string name="text_sodium">(Na) Sodium</string>
-    <string-array name="element_list">
+    <string-array name="element_list_meq">
         <item>@string/text_calcium</item>
         <item>@string/text_chlorine</item>
         <item>@string/text_magnesium</item>
-        <item>@string/text_phosphorus</item>
         <item>@string/text_potassium</item>
         <item>@string/text_sodium</item>
+    </string-array>
+    <string-array name="element_list_mmol">
+        <item>@string/text_phosphorus</item>
     </string-array>
 
     <!-- Global strings -->

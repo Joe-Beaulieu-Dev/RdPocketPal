@@ -63,7 +63,8 @@ public class ConversionViewModel extends AndroidViewModel {
 
     // Conversion types
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({IN_TO_CM, CM_TO_IN, LB_TO_KG, KG_TO_LB, GM_TO_MEQ, MEQ_TO_GM, MG_TO_MEQ, MEQ_TO_MG})
+    @IntDef({IN_TO_CM, CM_TO_IN, LB_TO_KG, KG_TO_LB, GM_TO_MEQ, MEQ_TO_GM, MG_TO_MEQ
+            , MEQ_TO_MG, GM_TO_MMOL, MMOL_TO_GM, MG_TO_MMOL, MMOL_TO_MG})
     private @interface Conversion {}
     private static final int IN_TO_CM = 0;
     private static final int CM_TO_IN = 1;
@@ -73,6 +74,10 @@ public class ConversionViewModel extends AndroidViewModel {
     private static final int MEQ_TO_GM = 5;
     private static final int MG_TO_MEQ = 6;
     private static final int MEQ_TO_MG = 7;
+    private static final int GM_TO_MMOL = 8;
+    private static final int MMOL_TO_GM = 9;
+    private static final int MG_TO_MMOL = 10;
+    private static final int MMOL_TO_MG = 11;
 
     public ConversionViewModel(@NonNull Application application, SavedStateHandle handle) {
         super(application);
@@ -148,6 +153,18 @@ public class ConversionViewModel extends AndroidViewModel {
                         , NumberUtil.parseDouble(inputField));
             case MEQ_TO_MG:
                 return ConversionUtil.milliequivalentsToMilligrams(getElement()
+                        , NumberUtil.parseDouble(inputField));
+            case GM_TO_MMOL:
+                return ConversionUtil.gramsToMillimoles(getElement()
+                        , NumberUtil.parseDouble(inputField));
+            case MMOL_TO_GM:
+                return ConversionUtil.millimolesToGrams(getElement()
+                        , NumberUtil.parseDouble(inputField));
+            case MG_TO_MMOL:
+                return ConversionUtil.milligramsToMillimoles(getElement()
+                        , NumberUtil.parseDouble(inputField));
+            case MMOL_TO_MG:
+                return ConversionUtil.millimolesToMilligrams(getElement()
                         , NumberUtil.parseDouble(inputField));
             default:
                 // this should never happen, just here to quiet the ide
@@ -232,6 +249,18 @@ public class ConversionViewModel extends AndroidViewModel {
             } else if (inputField == FIELD_RIGHT) {
                 return MEQ_TO_MG;
             }
+        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_gm_to_mmol))) {
+            if (inputField == FIELD_LEFT) {
+                return GM_TO_MMOL;
+            } else if (inputField == FIELD_RIGHT) {
+                return MMOL_TO_GM;
+            }
+        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_mg_to_mmol))) {
+            if (inputField == FIELD_LEFT) {
+                return MG_TO_MMOL;
+            } else if (inputField == FIELD_RIGHT) {
+                return MMOL_TO_MG;
+            }
         }
 
         // this should never happen, just here to quiet the ide
@@ -301,7 +330,7 @@ public class ConversionViewModel extends AndroidViewModel {
         return mElement;
     }
 
-    void clearAllFieldAndErrors() {
+    void clearAllFieldsAndErrors() {
         clearAllFields();
         mFieldLeftErrorMsg.setValue(null);
         mFieldRightErrorMsg.setValue(null);
@@ -321,6 +350,12 @@ public class ConversionViewModel extends AndroidViewModel {
             } else if (mConversionType.getValue().equals(mApplicationContext
                     .getResources().getString(R.string.text_mg_to_meq))) {
                 setFieldLabels(R.string.text_mg, R.string.text_meq);
+            } else if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_gm_to_mmol))) {
+                setFieldLabels(R.string.text_gm, R.string.text_mmol);
+            } else if (mConversionType.getValue().equals(mApplicationContext
+                    .getResources().getString(R.string.text_mg_to_mmol))) {
+                setFieldLabels(R.string.text_mg, R.string.text_mmol);
             }
         }
     }

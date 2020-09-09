@@ -70,6 +70,10 @@ class ConversionsRobot : TestRobot() {
     fun inGmMeq(fn: GmMeqRobot.() -> Unit) = GmMeqRobot().apply(fn)
 
     fun inMgMeq(fn: MgMeqRobot.() -> Unit) = MgMeqRobot().apply(fn)
+
+    fun inGmMmol(fn: GmMmolRobot.() -> Unit) = GmMmolRobot().apply(fn)
+
+    fun inMgMmol(fn: MgMmolRobot.() -> Unit) = MgMmolRobot().apply(fn)
     //endregion
 }
 

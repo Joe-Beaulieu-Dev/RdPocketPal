@@ -20,10 +20,6 @@ open class MeqRobot : TestRobot() {
         clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_magnesium)
     }
 
-    fun <T : Activity> selectPhosphorus(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_phosphorus)
-    }
-
     fun <T : Activity> selectPotassium(activityRule: ActivityTestRule<T>) {
         clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_potassium)
     }

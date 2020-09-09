@@ -107,7 +107,8 @@ object MetricEquationUtil {
      */
     @JvmStatic
     fun calculateBmi(weight: Double, height: Double): Double {
-        return weight / (height / 100).pow(2.0)
+        // check for division by zero
+        return if (height == 0.0) 0.0 else weight / (height / 100).pow(2.0)
     }
 
     /**

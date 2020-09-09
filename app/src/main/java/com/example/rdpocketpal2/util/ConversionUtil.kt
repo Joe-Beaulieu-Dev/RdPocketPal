@@ -63,8 +63,6 @@ object ConversionUtil {
                 gramsToMilliequivalents(CHLORINE_ATOMIC_WEIGHT, CHLORINE_VALENCE, grams)
             MAGNESIUM ->
                 gramsToMilliequivalents(MAGNESIUM_ATOMIC_WEIGHT, MAGNESIUM_VALENCE, grams)
-            PHOSPHORUS ->
-                gramsToMilliequivalents(PHOSPHORUS_ATOMIC_WEIGHT, PHOSPHORUS_VALENCE, grams)
             POTASSIUM ->
                 gramsToMilliequivalents(POTASSIUM_ATOMIC_WEIGHT, POTASSIUM_VALENCE, grams)
             SODIUM ->
@@ -83,8 +81,6 @@ object ConversionUtil {
                 milliequivalentsToGrams(CHLORINE_ATOMIC_WEIGHT, CHLORINE_VALENCE, milliequivalents)
             MAGNESIUM ->
                 milliequivalentsToGrams(MAGNESIUM_ATOMIC_WEIGHT, MAGNESIUM_VALENCE, milliequivalents)
-            PHOSPHORUS ->
-                milliequivalentsToGrams(PHOSPHORUS_ATOMIC_WEIGHT, PHOSPHORUS_VALENCE, milliequivalents)
             POTASSIUM ->
                 milliequivalentsToGrams(POTASSIUM_ATOMIC_WEIGHT, POTASSIUM_VALENCE, milliequivalents)
             SODIUM ->
@@ -103,8 +99,6 @@ object ConversionUtil {
                 milligramsToMilliequivalents(CHLORINE_ATOMIC_WEIGHT, CHLORINE_VALENCE, milligrams)
             MAGNESIUM ->
                 milligramsToMilliequivalents(MAGNESIUM_ATOMIC_WEIGHT, MAGNESIUM_VALENCE, milligrams)
-            PHOSPHORUS ->
-                milligramsToMilliequivalents(PHOSPHORUS_ATOMIC_WEIGHT, PHOSPHORUS_VALENCE, milligrams)
             POTASSIUM ->
                 milligramsToMilliequivalents(POTASSIUM_ATOMIC_WEIGHT, POTASSIUM_VALENCE, milligrams)
             SODIUM ->
@@ -123,8 +117,6 @@ object ConversionUtil {
                 milliequivalentsToMilligrams(CHLORINE_ATOMIC_WEIGHT, CHLORINE_VALENCE, milliequivalents)
             MAGNESIUM ->
                 milliequivalentsToMilligrams(MAGNESIUM_ATOMIC_WEIGHT, MAGNESIUM_VALENCE, milliequivalents)
-            PHOSPHORUS ->
-                milliequivalentsToMilligrams(PHOSPHORUS_ATOMIC_WEIGHT, PHOSPHORUS_VALENCE, milliequivalents)
             POTASSIUM ->
                 milliequivalentsToMilligrams(POTASSIUM_ATOMIC_WEIGHT, POTASSIUM_VALENCE, milliequivalents)
             SODIUM ->
@@ -149,14 +141,67 @@ object ConversionUtil {
     private fun milligramsToMilliequivalents(atomicWeight: Double,
                                              valence: Int,
                                              milligrams: Double): Double {
-        return (milligrams * valence) / atomicWeight
+        // check for division by zero
+        return if (atomicWeight == 0.0) 0.0 else (milligrams * valence) / atomicWeight
 
     }
 
     private fun milliequivalentsToMilligrams(atomicWeight: Double,
                                              valence: Int,
                                              milliequivalents: Double): Double {
-        return (milliequivalents * atomicWeight) / valence
+        // check for division by zero
+        return if (valence == 0) 0.0 else (milliequivalents * atomicWeight) / valence
+    }
+
+    @JvmStatic
+    fun gramsToMillimoles(@Element element: Int, grams: Double): Double {
+        return when(element) {
+            PHOSPHORUS -> gramsToMillimoles(PHOSPHORUS_ATOMIC_WEIGHT, grams)
+            else -> 0.0
+        }
+    }
+
+    @JvmStatic
+    fun millimolesToGrams(@Element element: Int, millimoles: Double): Double {
+        return when(element) {
+            PHOSPHORUS -> millimolesToGrams(PHOSPHORUS_ATOMIC_WEIGHT, millimoles)
+            else -> 0.0
+        }
+    }
+
+    @JvmStatic
+    fun milligramsToMillimoles(@Element element: Int, milligrams: Double): Double {
+        return when(element) {
+            PHOSPHORUS -> milligramsToMillimoles(PHOSPHORUS_ATOMIC_WEIGHT, milligrams)
+            else -> 0.0
+        }
+    }
+
+    @JvmStatic
+    fun millimolesToMilligrams(@Element element: Int, millimoles: Double): Double {
+        return when(element) {
+            PHOSPHORUS -> millimolesToMilligrams(PHOSPHORUS_ATOMIC_WEIGHT, millimoles)
+            else -> 0.0
+        }
+    }
+
+    private fun gramsToMillimoles(atomicWeight: Double, grams: Double): Double {
+        // convert grams to milligrams and defer to milligram equation
+        return milligramsToMillimoles(atomicWeight, grams * 1000)
+    }
+
+    private fun millimolesToGrams(atomicWeight: Double, millimoles: Double): Double {
+        // defer calculation to milligram equation and convert result to grams
+        return millimolesToMilligrams(atomicWeight, millimoles) / 1000
+    }
+
+    private fun milligramsToMillimoles(atomicWeight: Double, milligrams: Double): Double {
+        // check for division by zero
+        return if (atomicWeight == 0.0) 0.0 else milligrams / atomicWeight
+    }
+
+    private fun millimolesToMilligrams(atomicWeight: Double, millimoles: Double): Double {
+        return millimoles * atomicWeight
     }
     //endregion
 }

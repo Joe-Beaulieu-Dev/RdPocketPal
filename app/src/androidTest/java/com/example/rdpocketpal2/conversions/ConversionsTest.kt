@@ -13,37 +13,49 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 //region Test data
+// general
+private const val TEN_GRAMS = "10"
+private const val TEN_THOUSAND_MILLIGRAMS = "10000"
+
 // in to cm
 private const val IN_TO_CM_INCHES = "1"
 private const val IN_TO_CM_CENTIMETERS = "2.54"
+
 // lb to kg
 private const val LB_TO_KG_POUNDS = "1"
 private const val LB_TO_GK_R2L_POUNDS_OUTPUT = "0.99999" // 6th decimal is a 4 so it doesn't round to 1
 private const val LB_TO_KG_KILOGRAMS = "0.45359"
+
 // gm to meq
-private const val GM_TO_MEQ_GRAMS = "10"
 private const val GM_TO_MEQ_CALCIUM_MEQ = "499.0269"
 private const val GM_TO_MEQ_CHLORINE_MEQ = "282.08745"
 private const val GM_TO_MEQ_MAGNESIUM_MEQ = "822.87595"
-private const val GM_TO_MEQ_PHOSPHORUS_MEQ = "968.55427"
 private const val GM_TO_MEQ_POTASSIUM_MEQ = "255.76756"
 private const val GM_TO_MEQ_SODIUM_MEQ = "434.97173"
+
 // mg to meq input
-private const val MG_TO_MEQ_MILLIGRAMS = "10000"
 private const val MG_TO_MEQ_CALCIUM_MEQ_INPUT = "499.0268975498"
 private const val MG_TO_MEQ_CHLORINE_MEQ_INPUT = "282.0874471086"
 private const val MG_TO_MEQ_MAGNESIUM_MEQ_INPUT = "822.8759514503"
-private const val MG_TO_MEQ_PHOSPHORUS_MEQ_INPUT = "968.5542713243"
 private const val MG_TO_MEQ_POTASSIUM_MEQ_INPUT = "255.7675584429"
 private const val MG_TO_MEQ_SODIUM_MEQ_INPUT = "434.9717268378"
+
 // mg to meq output
 // values rounded to 5 decimal places. Conversions screen locked to Rounding 5 for preferences
 private const val MG_TO_MEQ_CALCIUM_MEQ_OUTPUT = "499.0269"
 private const val MG_TO_MEQ_CHLORINE_MEQ_OUTPUT = "282.08745"
 private const val MG_TO_MEQ_MAGNESIUM_MEQ_OUTPUT = "822.87595"
-private const val MG_TO_MEQ_PHOSPHORUS_MEQ_OUTPUT = "968.55427"
 private const val MG_TO_MEQ_POTASSIUM_MEQ_OUTPUT = "255.76756"
 private const val MG_TO_MEQ_SODIUM_MEQ_OUTPUT = "434.97173"
+
+// gm to mmol
+private const val GM_TO_MMOL_PHOSPHORUS_MMOL = "322.85142"
+
+// mg to mmol input
+private const val MG_TO_MMOL_PHOSPHORUS_MMOL_INPUT = "322.85142377477884677471427648996"
+
+// mg to mmol output
+private const val MG_TO_MMOL_PHOSPHORUS_MMOL_OUTPUT = "322.85142"
 //endregion
 
 @RunWith(AndroidJUnit4::class)
@@ -109,7 +121,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectCalcium(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
             }
         }
@@ -122,7 +134,7 @@ class ConversionsTest {
                 navigateToGmMeq(activityRule)
                 selectCalcium(activityRule)
                 enterMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
             }
         }
     }
@@ -135,7 +147,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectChlorine(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CHLORINE_MEQ)
             }
         }
@@ -148,7 +160,7 @@ class ConversionsTest {
                 navigateToGmMeq(activityRule)
                 selectChlorine(activityRule)
                 enterMilliequivalents(GM_TO_MEQ_CHLORINE_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
             }
         }
     }
@@ -159,7 +171,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectMagnesium(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_MAGNESIUM_MEQ)
             }
         }
@@ -172,31 +184,7 @@ class ConversionsTest {
                 navigateToGmMeq(activityRule)
                 selectMagnesium(activityRule)
                 enterMilliequivalents(GM_TO_MEQ_MAGNESIUM_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
-            }
-        }
-    }
-
-    @Test
-    fun gmToMeq_phosphorus_leftToRight_isCorrect() {
-        withConversionsRobot {
-            inGmMeq {
-                navigateToGmMeq(activityRule)
-                selectPhosphorus(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
-                checkMilliequivalents(GM_TO_MEQ_PHOSPHORUS_MEQ)
-            }
-        }
-    }
-
-    @Test
-    fun gmToMeq_phosphorus_rightToLeft_isCorrect() {
-        withConversionsRobot {
-            inGmMeq {
-                navigateToGmMeq(activityRule)
-                selectPhosphorus(activityRule)
-                enterMilliequivalents(GM_TO_MEQ_PHOSPHORUS_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
             }
         }
     }
@@ -207,7 +195,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectPotassium(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_POTASSIUM_MEQ)
             }
         }
@@ -220,7 +208,7 @@ class ConversionsTest {
                 navigateToGmMeq(activityRule)
                 selectPotassium(activityRule)
                 enterMilliequivalents(GM_TO_MEQ_POTASSIUM_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
             }
         }
     }
@@ -231,7 +219,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectSodium(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_SODIUM_MEQ)
             }
         }
@@ -244,7 +232,7 @@ class ConversionsTest {
                 navigateToGmMeq(activityRule)
                 selectSodium(activityRule)
                 enterMilliequivalents(GM_TO_MEQ_SODIUM_MEQ)
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
             }
         }
     }
@@ -257,7 +245,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectCalcium(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
                 checkMilliequivalents(MG_TO_MEQ_CALCIUM_MEQ_OUTPUT)
             }
         }
@@ -270,7 +258,7 @@ class ConversionsTest {
                 navigateToMgMeq(activityRule)
                 selectCalcium(activityRule)
                 enterMilliequivalents(MG_TO_MEQ_CALCIUM_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
             }
         }
     }
@@ -281,7 +269,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectChlorine(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
                 checkMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ_OUTPUT)
             }
         }
@@ -294,7 +282,7 @@ class ConversionsTest {
                 navigateToMgMeq(activityRule)
                 selectChlorine(activityRule)
                 enterMilliequivalents(MG_TO_MEQ_CHLORINE_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
             }
         }
     }
@@ -305,7 +293,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectMagnesium(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
                 checkMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ_OUTPUT)
             }
         }
@@ -318,31 +306,7 @@ class ConversionsTest {
                 navigateToMgMeq(activityRule)
                 selectMagnesium(activityRule)
                 enterMilliequivalents(MG_TO_MEQ_MAGNESIUM_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
-            }
-        }
-    }
-
-    @Test
-    fun mgToMeq_phosphorus_leftToRight_isCorrect() {
-        withConversionsRobot {
-            inMgMeq {
-                navigateToMgMeq(activityRule)
-                selectPhosphorus(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
-                checkMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ_OUTPUT)
-            }
-        }
-    }
-
-    @Test
-    fun mgToMeq_phosphorus_rightToLeft_isCorrect() {
-        withConversionsRobot {
-            inMgMeq {
-                navigateToMgMeq(activityRule)
-                selectPhosphorus(activityRule)
-                enterMilliequivalents(MG_TO_MEQ_PHOSPHORUS_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
             }
         }
     }
@@ -353,7 +317,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectPotassium(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
                 checkMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ_OUTPUT)
             }
         }
@@ -366,7 +330,7 @@ class ConversionsTest {
                 navigateToMgMeq(activityRule)
                 selectPotassium(activityRule)
                 enterMilliequivalents(MG_TO_MEQ_POTASSIUM_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
             }
         }
     }
@@ -377,7 +341,7 @@ class ConversionsTest {
             inMgMeq {
                 navigateToMgMeq(activityRule)
                 selectSodium(activityRule)
-                enterMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
                 checkMilliequivalents(MG_TO_MEQ_SODIUM_MEQ_OUTPUT)
             }
         }
@@ -390,7 +354,59 @@ class ConversionsTest {
                 navigateToMgMeq(activityRule)
                 selectSodium(activityRule)
                 enterMilliequivalents(MG_TO_MEQ_SODIUM_MEQ_INPUT)
-                checkMilligrams(MG_TO_MEQ_MILLIGRAMS)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
+            }
+        }
+    }
+    //endregion
+
+    //region gm to mmol
+    @Test
+    fun gmToMmol_phosphorus_leftToRight_isCorrect() {
+        withConversionsRobot {
+            inGmMmol {
+                navigateToGmMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterGrams(TEN_GRAMS)
+                checkMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
+            }
+        }
+    }
+
+    @Test
+    fun gmToMmol_phosphorus_rightToLeft_isCorrect() {
+        withConversionsRobot {
+            inGmMmol {
+                navigateToGmMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
+                checkGrams(TEN_GRAMS)
+            }
+        }
+    }
+    //endregion
+
+    //region mg to mmol
+    @Test
+    fun mgToMmol_phosphorus_leftToRight_isCorrect() {
+        withConversionsRobot {
+            inMgMmol {
+                navigateToMgMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterMilligrams(TEN_THOUSAND_MILLIGRAMS)
+                checkMillimoles(MG_TO_MMOL_PHOSPHORUS_MMOL_OUTPUT)
+            }
+        }
+    }
+
+    @Test
+    fun mgToMmol_phosphorus_rightToLeft_isCorrect() {
+        withConversionsRobot {
+            inMgMmol {
+                navigateToMgMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterMillimoles(MG_TO_MMOL_PHOSPHORUS_MMOL_INPUT)
+                checkMilligrams(TEN_THOUSAND_MILLIGRAMS)
             }
         }
     }
@@ -435,7 +451,7 @@ class ConversionsTest {
             inGmMeq {
                 navigateToGmMeq(activityRule)
                 selectChlorine(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CHLORINE_MEQ)
             }
             selectRandomElement(activityRule)
@@ -537,11 +553,11 @@ class ConversionsTest {
                 // entry
                 navigateToGmMeq(activityRule)
                 selectCalcium(activityRule)
-                enterGrams(GM_TO_MEQ_GRAMS)
+                enterGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
                 selectCalcium(activityRule)
                 // validation
-                checkGrams(GM_TO_MEQ_GRAMS)
+                checkGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
             }
         }

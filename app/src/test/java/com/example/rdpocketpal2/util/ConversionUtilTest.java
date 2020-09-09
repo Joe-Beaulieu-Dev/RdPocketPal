@@ -36,13 +36,15 @@ public class ConversionUtilTest {
     private static final double LITERS_TO_GALLONS_INPUT = 378.541;
     private static final double LITERS_TO_GALLONS_ANSWER = 100;
 
-    // grams to milliequivalents values
+    // grams/milligrams to milliequivalents values
     private static final double GM_TO_MEQ_CALCIUM = 499.0268975498;
     private static final double GM_TO_MEQ_CHLORINE = 282.0874471086;
     private static final double GM_TO_MEQ_MAGNESIUM = 822.8759514503;
-    private static final double GM_TO_MEQ_PHOSPHORUS = 968.5542713243;
     private static final double GM_TO_MEQ_POTASSIUM = 255.7675584429;
     private static final double GM_TO_MEQ_SODIUM = 434.9717268378;
+
+    // grams/milligrams to millimoles values
+    private static final double GM_TO_MMOL_PHOSPHORUS = 322.85142377477884677471427648996;
     //endregion
 
     //region Weight
@@ -138,12 +140,6 @@ public class ConversionUtilTest {
                 , DELTA_EIGHT
         );
 
-        // phosphorus
-        assertEquals(GM_TO_MEQ_PHOSPHORUS
-                , ConversionUtil.gramsToMilliequivalents(Constants.PHOSPHORUS, TEN_GRAMS)
-                , DELTA_EIGHT
-        );
-
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
                 , ConversionUtil.gramsToMilliequivalents(Constants.POTASSIUM, TEN_GRAMS)
@@ -174,12 +170,6 @@ public class ConversionUtilTest {
         // magnesium
         assertEquals(TEN_GRAMS
                 , ConversionUtil.milliequivalentsToGrams(Constants.MAGNESIUM, GM_TO_MEQ_MAGNESIUM)
-                , DELTA_EIGHT
-        );
-
-        // phosphorus
-        assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(Constants.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
                 , DELTA_EIGHT
         );
 
@@ -216,12 +206,6 @@ public class ConversionUtilTest {
                 , DELTA_EIGHT
         );
 
-        // phosphorus
-        assertEquals(GM_TO_MEQ_PHOSPHORUS
-                , ConversionUtil.milligramsToMilliequivalents(Constants.PHOSPHORUS, TEN_THOUSAND_MILLIGRAMS)
-                , DELTA_EIGHT
-        );
-
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
                 , ConversionUtil.milligramsToMilliequivalents(Constants.POTASSIUM, TEN_THOUSAND_MILLIGRAMS)
@@ -255,12 +239,6 @@ public class ConversionUtilTest {
                 , DELTA_EIGHT
         );
 
-        // phosphorus
-        assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(Constants.PHOSPHORUS, GM_TO_MEQ_PHOSPHORUS)
-                , DELTA_EIGHT
-        );
-
         // potassium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
                 , ConversionUtil.milliequivalentsToMilligrams(Constants.POTASSIUM, GM_TO_MEQ_POTASSIUM)
@@ -270,6 +248,42 @@ public class ConversionUtilTest {
         // sodium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
                 , ConversionUtil.milliequivalentsToMilligrams(Constants.SODIUM, GM_TO_MEQ_SODIUM)
+                , DELTA_EIGHT
+        );
+    }
+
+    @Test
+    public void gramsToMillimoles_isCorrect() {
+        // phosphorus
+        assertEquals(GM_TO_MMOL_PHOSPHORUS
+                , ConversionUtil.gramsToMillimoles(Constants.PHOSPHORUS, TEN_GRAMS)
+                , DELTA_EIGHT
+        );
+    }
+
+    @Test
+    public void millimolesToGrams_isCorrect() {
+        // phosphorus
+        assertEquals(TEN_GRAMS
+                , ConversionUtil.millimolesToGrams(Constants.PHOSPHORUS, GM_TO_MMOL_PHOSPHORUS)
+                , DELTA_EIGHT
+        );
+    }
+
+    @Test
+    public void milligramsToMillimoles_isCorrect() {
+        // phosphorus
+        assertEquals(GM_TO_MMOL_PHOSPHORUS
+                , ConversionUtil.milligramsToMillimoles(Constants.PHOSPHORUS, TEN_THOUSAND_MILLIGRAMS)
+                , DELTA_EIGHT
+        );
+    }
+
+    @Test
+    public void millimolesToMilligrams_isCorrect() {
+        // phosphorus
+        assertEquals(TEN_THOUSAND_MILLIGRAMS
+                , ConversionUtil.millimolesToMilligrams(Constants.PHOSPHORUS, GM_TO_MMOL_PHOSPHORUS)
                 , DELTA_EIGHT
         );
     }
