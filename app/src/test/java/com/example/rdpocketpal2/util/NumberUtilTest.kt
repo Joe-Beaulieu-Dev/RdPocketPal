@@ -12,46 +12,47 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
 
+//region Test data
+// general values
+private const val DELTA = 0.001
+
+// Parsing values
+private val PARSE_DOUBLE_INPUT: MutableLiveData<String> = MutableLiveData("1.2")
+private const val PARSE_DOUBLE_OUTPUT = 1.2
+private val PARSE_INT_INPUT: MutableLiveData<String> = MutableLiveData("1")
+private const val PARSE_INT_OUTPUT = 1
+
+// Type check values
+private val IS_DOUBLE_LIVEDATA_VALID_INPUT: MutableLiveData<String> = MutableLiveData("1.2")
+private val IS_DOUBLE_LIVEDATA_INVALID_INPUT_NOT_NULL: MutableLiveData<String> = MutableLiveData(".")
+private val IS_DOUBLE_LIVEDATA_INVALID_INPUT_NULL: MutableLiveData<String> = MutableLiveData()
+private const val IS_DOUBLE_STRING_VALID_INPUT = "1.2"
+private const val IS_DOUBLE_STRING_INVALID_INPUT_NOT_NULL = "."
+private val IS_DOUBLE_STRING_INVALID_INPUT_NULL: String? = null
+
+// Round/Truncate values
+private const val ROUNDING_KEY = "Rounding"
+private const val TRUNCATION_KEY = "Truncation"
+private const val INVALID_REDUCTION_METHOD_KEY = "Roundation"
+private const val INVALID_SCALE = -1
+// Rounding values
+private const val ROUND_INPUT = 12.90154
+private const val ROUND_ZERO_DIGITS = "13"
+private const val ROUND_ONE_DIGIT = "12.9"
+private const val ROUND_TWO_DIGITS = "12.9"
+private const val ROUND_THREE_DIGITS = "12.902"
+private const val ROUND_FOUR_DIGITS = "12.9015"
+private const val ROUND_FIVE_DIGITS = "12.90154"
+// Truncation values
+private const val TRUNCATE_INPUT = 12.34
+private const val TRUNCATE_ZERO_DIGITS = "12"
+private const val TRUNCATE_ONE_DIGIT = "12.3"
+private const val TRUNCATE_TWO_DIGITS = "12.34"
+private const val TRUNCATE_THREE_DIGITS = "12.34"
+//endregion
+
 @RunWith(MockitoJUnitRunner::class)
 class NumberUtilTest {
-    //region Test data
-    // general values
-    private val DELTA = 0.001
-
-    // Parsing values
-    private val PARSE_DOUBLE_INPUT: MutableLiveData<String> = MutableLiveData("1.2")
-    private val PARSE_DOUBLE_OUTPUT = 1.2
-    private val PARSE_INT_INPUT: MutableLiveData<String> = MutableLiveData("1")
-    private val PARSE_INT_OUTPUT = 1
-
-    // Type check values
-    private val IS_DOUBLE_LIVEDATA_VALID_INPUT: MutableLiveData<String> = MutableLiveData("1.2")
-    private val IS_DOUBLE_LIVEDATA_INVALID_INPUT_NOT_NULL: MutableLiveData<String> = MutableLiveData(".")
-    private val IS_DOUBLE_LIVEDATA_INVALID_INPUT_NULL: MutableLiveData<String> = MutableLiveData()
-    private val IS_DOUBLE_STRING_VALID_INPUT = "1.2"
-    private val IS_DOUBLE_STRING_INVALID_INPUT_NOT_NULL = "."
-    private val IS_DOUBLE_STRING_INVALID_INPUT_NULL: String? = null
-
-    // Round/Truncate values
-    private val ROUNDING_KEY = "Rounding"
-    private val TRUNCATION_KEY = "Truncation"
-    private val INVALID_REDUCTION_METHOD_KEY = "Roundation"
-    private val INVALID_SCALE = -1
-    // Rounding values
-    private val ROUND_INPUT = 12.90154
-    private val ROUND_ZERO_DIGITS = "13"
-    private val ROUND_ONE_DIGIT = "12.9"
-    private val ROUND_TWO_DIGITS = "12.9"
-    private val ROUND_THREE_DIGITS = "12.902"
-    private val ROUND_FOUR_DIGITS = "12.9015"
-    private val ROUND_FIVE_DIGITS = "12.90154"
-    // Truncation values
-    private val TRUNCATE_INPUT = 12.34
-    private val TRUNCATE_ZERO_DIGITS = "12"
-    private val TRUNCATE_ONE_DIGIT = "12.3"
-    private val TRUNCATE_TWO_DIGITS = "12.34"
-    private val TRUNCATE_THREE_DIGITS = "12.34"
-    //endregion
 
     @Mock
     private val context = mock(Context::class.java)
