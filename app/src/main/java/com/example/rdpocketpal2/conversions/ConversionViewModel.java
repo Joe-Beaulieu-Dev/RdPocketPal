@@ -9,9 +9,7 @@ import android.widget.Toast;
 import com.example.rdpocketpal2.R;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException;
-import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.ConversionUtil;
-import com.example.rdpocketpal2.util.Element;
 import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.UiUtil;
@@ -267,8 +265,7 @@ public class ConversionViewModel extends AndroidViewModel {
         throw new FatalCalculationException("Conversion type selection or input field not valid");
     }
 
-    @Element
-    private int getElement() throws FatalCalculationException {
+    private Element getElement() throws FatalCalculationException {
         String element = mElement.getValue();
 
         if (element == null) {
@@ -279,22 +276,22 @@ public class ConversionViewModel extends AndroidViewModel {
         // used in order to decide which element was chosen
         if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_calcium))) {
-            return Constants.CALCIUM;
+            return new Calcium();
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_chlorine))) {
-            return Constants.CHLORINE;
+            return new Chlorine();
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_magnesium))) {
-            return Constants.MAGNESIUM;
+            return new Magnesium();
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_phosphorus))) {
-            return Constants.PHOSPHORUS;
+            return new Phosphorus();
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_potassium))) {
-            return Constants.POTASSIUM;
+            return new Potassium();
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_sodium))) {
-            return Constants.SODIUM;
+            return new Sodium();
         }
 
         // this should never happen, just here to quiet the ide
