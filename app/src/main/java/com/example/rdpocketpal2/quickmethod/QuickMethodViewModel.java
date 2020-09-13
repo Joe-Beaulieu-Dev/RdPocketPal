@@ -13,10 +13,10 @@ import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.UiUtil;
+import com.example.rdpocketpal2.util.Unit;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -267,7 +267,7 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     //endregion
 
     //region Helper Methods
-    private int getUnit() throws FatalCalculationException {
+    private Unit getUnit() throws FatalCalculationException {
         String unit = mUnitSelection.getValue();
 
         if (unit == null) {
@@ -277,9 +277,9 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (unit.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return Constants.METRIC;
+            return Unit.METRIC;
         } else if (unit.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return Constants.STANDARD;
+            return Unit.STANDARD;
         } else {
             throw new FatalCalculationException("Unit selection not valid");
         }
@@ -426,8 +426,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
     }
 
     private void setUnits() {
-        int unit = getUnit();
-        if (unit == Constants.METRIC) {
+        Unit unit = getUnit();
+        if (unit == Unit.METRIC) {
             setUiDataToMetric();
         } else {
             setUiDataToStandard();

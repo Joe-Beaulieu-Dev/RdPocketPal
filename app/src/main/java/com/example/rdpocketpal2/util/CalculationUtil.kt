@@ -4,50 +4,46 @@ object CalculationUtil {
 
     //region Predictive Equations
     @JvmStatic
-    fun calculateBmrMifflin(@Unit unit: Int, @Sex sex: Int,
+    fun calculateBmrMifflin(unit: Unit, sex: Sex,
                             weight: Double, height: Double, age: Int): Double {
         return when (unit) {
-            METRIC -> MetricEquationUtil.calculateBmrMifflin(sex, weight, height, age)
-            STANDARD -> MetricEquationUtil.calculateBmrMifflin(sex
+            Unit.METRIC -> MetricEquationUtil.calculateBmrMifflin(sex, weight, height, age)
+            Unit.STANDARD -> MetricEquationUtil.calculateBmrMifflin(sex
                     , ConversionUtil.poundsToKilograms(weight)
                     , ConversionUtil.inchesToCentimeters(height)
                     , age)
-            else -> 0.0
         }
     }
 
     @JvmStatic
-    fun calculateBmrBenedict(@Unit unit: Int, @Sex sex: Int,
-                            weight: Double, height: Double, age: Int): Double {
+    fun calculateBmrBenedict(unit: Unit, sex: Sex,
+                             weight: Double, height: Double, age: Int): Double {
         return when (unit) {
-            METRIC -> MetricEquationUtil.calculateBmrBenedict(sex, weight, height, age)
-            STANDARD -> MetricEquationUtil.calculateBmrBenedict(sex
+            Unit.METRIC -> MetricEquationUtil.calculateBmrBenedict(sex, weight, height, age)
+            Unit.STANDARD -> MetricEquationUtil.calculateBmrBenedict(sex
                     , ConversionUtil.poundsToKilograms(weight)
                     , ConversionUtil.inchesToCentimeters(height)
                     , age)
-            else -> 0.0
         }
     }
 
     @JvmStatic
-    fun calculateBmrPennState2003b(@Unit unit: Int, mifflinBmr: Double, tmax: Double, ve: Double): Double {
+    fun calculateBmrPennState2003b(unit: Unit, mifflinBmr: Double, tmax: Double, ve: Double): Double {
         return when (unit) {
-            METRIC -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr, tmax, ve)
-            STANDARD -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr
+            Unit.METRIC -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr, tmax, ve)
+            Unit.STANDARD -> MetricEquationUtil.calculateBmrPennState2003b(mifflinBmr
                     , ConversionUtil.fahrenheitToCelsius(tmax)
                     , ve)
-            else -> 0.0
         }
     }
 
     @JvmStatic
-    fun calculateBmrPennState2010(@Unit unit: Int, mifflinBmr: Double, tmax: Double, ve: Double): Double {
+    fun calculateBmrPennState2010(unit: Unit, mifflinBmr: Double, tmax: Double, ve: Double): Double {
         return when (unit) {
-            METRIC -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr, tmax, ve)
-            STANDARD -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr
+            Unit.METRIC -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr, tmax, ve)
+            Unit.STANDARD -> MetricEquationUtil.calculateBmrPennState2010(mifflinBmr
                     , ConversionUtil.fahrenheitToCelsius(tmax)
                     , ve)
-            else -> 0.0
         }
     }
 
@@ -69,50 +65,49 @@ object CalculationUtil {
 
     //region Quick Method
     @JvmStatic
-    fun calculateQuickMethod(@Unit unit: Int, weight: Double, factor: Double): Double {
+    fun calculateQuickMethod(unit: Unit, weight: Double, factor: Double): Double {
         return when (unit) {
-            METRIC -> MetricEquationUtil.calculateQuickMethod(weight, factor)
-            STANDARD -> MetricEquationUtil.calculateQuickMethod(
+            Unit.METRIC -> MetricEquationUtil.calculateQuickMethod(weight, factor)
+            Unit.STANDARD -> MetricEquationUtil.calculateQuickMethod(
                     ConversionUtil.poundsToKilograms(weight), factor)
-            else -> 0.0
         }
     }
     //endregion
 
     //region Anthropometrics
     @JvmStatic
-    fun calculateBmi(unit: UnitK, weight: Double, height: Double): Double {
+    fun calculateBmi(unit: Unit, weight: Double, height: Double): Double {
         return when (unit) {
-            is UnitK.Metric -> MetricEquationUtil.calculateBmi(weight, height)
-            is UnitK.Standard -> MetricEquationUtil.calculateBmi(
+            Unit.METRIC -> MetricEquationUtil.calculateBmi(weight, height)
+            Unit.STANDARD -> MetricEquationUtil.calculateBmi(
                     ConversionUtil.poundsToKilograms(weight)
                     , ConversionUtil.inchesToCentimeters(height))
         }
     }
 
     @JvmStatic
-    fun calculateIbwHamwi(unit: UnitK, sex: SexK, height: Double): Double {
+    fun calculateIbwHamwi(unit: Unit, sex: Sex, height: Double): Double {
         return when (unit) {
-            is UnitK.Metric -> ConversionUtil.poundsToKilograms(
+            Unit.METRIC -> ConversionUtil.poundsToKilograms(
                     MetricEquationUtil.calculateIbwHamwi(sex
                             , ConversionUtil.centimetersToInches(height)))
-            is UnitK.Standard -> MetricEquationUtil.calculateIbwHamwi(sex, height)
+            Unit.STANDARD -> MetricEquationUtil.calculateIbwHamwi(sex, height)
         }
     }
 
     @JvmStatic
-    fun calculatePercentIbw(unit: UnitK, sex: SexK, weight: Double, height: Double): Double {
+    fun calculatePercentIbw(unit: Unit, sex: Sex, weight: Double, height: Double): Double {
         // unit doesn't actually matter here, except for calculating the base IBW
         return MetricEquationUtil.calculatePercentIbw(calculateIbwHamwi(unit, sex, height), weight)
     }
 
     @JvmStatic
-    fun calculateAdjustedIbw(unit: UnitK, sex: SexK, weight: Double, height: Double): Double {
+    fun calculateAdjustedIbw(unit: Unit, sex: Sex, weight: Double, height: Double): Double {
         return when (unit) {
-            UnitK.Metric -> MetricEquationUtil.calculateAdjustedIbw(
+            Unit.METRIC -> MetricEquationUtil.calculateAdjustedIbw(
                     calculateIbwHamwi(unit, sex, height)
                     , weight)
-            UnitK.Standard -> ConversionUtil.kilogramsToPounds(
+            Unit.STANDARD -> ConversionUtil.kilogramsToPounds(
                     MetricEquationUtil.calculateAdjustedIbw(ConversionUtil.poundsToKilograms(
                             calculateIbwHamwi(unit, sex, height))
                             , ConversionUtil.poundsToKilograms(weight)))

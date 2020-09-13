@@ -12,7 +12,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrMifflin_male_isCorrect() {
         assertEquals(TestConstants.MIFFLIN_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.MALE
+                , MetricEquationUtil.calculateBmrMifflin(Sex.MALE
                         , TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC
                         , TestConstants.AGE)
@@ -23,7 +23,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrMifflin_female_isCorrect() {
         assertEquals(TestConstants.MIFFLIN_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrMifflin(Constants.FEMALE
+                , MetricEquationUtil.calculateBmrMifflin(Sex.FEMALE
                         , TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC
                         , TestConstants.AGE)
@@ -34,7 +34,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrBenedict_male_isCorrect() {
         assertEquals(TestConstants.BENEDICT_MALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.MALE
+                , MetricEquationUtil.calculateBmrBenedict(Sex.MALE
                         , TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC
                         , TestConstants.AGE)
@@ -45,7 +45,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateBmrBenedict_female_isCorrect() {
         assertEquals(TestConstants.BENEDICT_FEMALE_ANSWER
-                , MetricEquationUtil.calculateBmrBenedict(Constants.FEMALE
+                , MetricEquationUtil.calculateBmrBenedict(Sex.FEMALE
                         , TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC
                         , TestConstants.AGE)
@@ -109,7 +109,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateIbwHamwi_male_adult_isCorrect() {
         assertEquals(TestConstants.IBW_MALE_STANDARD_ANSWER
-                , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
+                , MetricEquationUtil.calculateIbwHamwi(Sex.MALE
                         , TestConstants.HEIGHT_STANDARD)
                 , TestConstants.DELTA_SIX);
     }
@@ -117,7 +117,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateIbwHamwi_female_adult_isCorrect() {
         assertEquals(TestConstants.IBW_FEMALE_STANDARD_ANSWER
-                , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
+                , MetricEquationUtil.calculateIbwHamwi(Sex.FEMALE
                         , TestConstants.HEIGHT_STANDARD)
                 , TestConstants.DELTA_SIX);
     }
@@ -125,7 +125,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateIbwHamwi_male_child_isCorrect() {
         assertEquals(TestConstants.IBW_MALE_CHILD_STANDARD_ANSWER
-                , MetricEquationUtil.calculateIbwHamwi(SexK.Male.INSTANCE
+                , MetricEquationUtil.calculateIbwHamwi(Sex.MALE
                         , TestConstants.HEIGHT_CHILD_STANDARD)
                 , TestConstants.DELTA_SIX);
     }
@@ -133,7 +133,7 @@ public class MetricEquationUtilTest {
     @Test
     public void calculateIbwHamwi_female_child_isCorrect() {
         assertEquals(TestConstants.IBW_FEMALE_CHILD_STANDARD_ANSWER
-                , MetricEquationUtil.calculateIbwHamwi(SexK.Female.INSTANCE
+                , MetricEquationUtil.calculateIbwHamwi(Sex.FEMALE
                         , TestConstants.HEIGHT_CHILD_STANDARD)
                 , TestConstants.DELTA_SIX);
     }

@@ -15,11 +15,10 @@ object MetricEquationUtil {
      * @return BMR in kcals
      */
     @JvmStatic
-    fun calculateBmrMifflin(@Sex sex: Int, weight: Double, height: Double, age: Int): Double {
+    fun calculateBmrMifflin(sex: Sex, weight: Double, height: Double, age: Int): Double {
         return when (sex) {
-            MALE -> (10 * weight) + (6.25 * height) - (5 * age) + 5
-            FEMALE -> (10 * weight) + (6.25 * height) - (5 * age) - 161
-            else -> 0.0
+            Sex.MALE -> (10 * weight) + (6.25 * height) - (5 * age) + 5
+            Sex.FEMALE -> (10 * weight) + (6.25 * height) - (5 * age) - 161
         }
     }
 
@@ -33,11 +32,10 @@ object MetricEquationUtil {
      * @return BMR in kcals
      */
     @JvmStatic
-    fun calculateBmrBenedict(@Sex sex: Int, weight: Double, height: Double, age: Int): Double {
+    fun calculateBmrBenedict(sex: Sex, weight: Double, height: Double, age: Int): Double {
         return when (sex) {
-            MALE -> 66 + (13.7 * weight) + (5 * height) - (6.8 * age)
-            FEMALE -> 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
-            else -> 0.0
+            Sex.MALE -> 66 + (13.7 * weight) + (5 * height) - (6.8 * age)
+            Sex.FEMALE -> 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
         }
     }
 
@@ -119,10 +117,10 @@ object MetricEquationUtil {
      * @return IBW in lbs
      */
     @JvmStatic
-    fun calculateIbwHamwi(sex: SexK, height: Double): Double {
+    fun calculateIbwHamwi(sex: Sex, height: Double): Double {
         return when (sex) {
-            SexK.Male -> calculateIbwMale(height)
-            SexK.Female -> calculateIbwFemale(height)
+            Sex.MALE -> calculateIbwMale(height)
+            Sex.FEMALE -> calculateIbwFemale(height)
         }
     }
 

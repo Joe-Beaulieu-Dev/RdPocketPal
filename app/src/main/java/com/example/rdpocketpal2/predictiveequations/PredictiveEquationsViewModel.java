@@ -13,7 +13,6 @@ import com.example.rdpocketpal2.model.PreferenceRepository;
 import com.example.rdpocketpal2.model.QueryResult;
 import com.example.rdpocketpal2.model.UserPreferences;
 import com.example.rdpocketpal2.util.CalculationUtil;
-import com.example.rdpocketpal2.util.Constants;
 import com.example.rdpocketpal2.util.FieldErrorPair;
 import com.example.rdpocketpal2.util.NumberUtil;
 import com.example.rdpocketpal2.util.Sex;
@@ -167,8 +166,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
 
     //region Calculation methods
     private double calculateBmr(@Equations int equation) throws ValidationException {
-        int unit = getUnitSelection();
-        int sex = getSexSelection();
+        Unit unit = getUnitSelection();
+        Sex sex = getSexSelection();
 
         // perform bmr calculation
         switch (equation) {
@@ -195,7 +194,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         return CalculationUtil.calculateCalorieMax(bmr, NumberUtil.parseDouble(mActivityFactorMax));
     }
 
-    private double calculateMifflin(@Unit int unit, @Sex int sex) throws NumberFormatException {
+    private double calculateMifflin(Unit unit, Sex sex) throws NumberFormatException {
         return CalculationUtil.calculateBmrMifflin(unit
                 , sex
                 , NumberUtil.parseDouble(mWeight)
@@ -204,7 +203,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         );
     }
 
-    private double calculateBenedict(@Unit int unit, @Sex int sex) throws NumberFormatException {
+    private double calculateBenedict(Unit unit, Sex sex) throws NumberFormatException {
         return CalculationUtil.calculateBmrBenedict(unit
                 , sex
                 , NumberUtil.parseDouble(mWeight)
@@ -213,7 +212,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         );
     }
 
-    private double calculatePennState2003b(@Unit int unit) throws ValidationException, NumberFormatException {
+    private double calculatePennState2003b(Unit unit) throws ValidationException, NumberFormatException {
         double bmrMifflin = calculateBmr(MIFFLIN);
 
         return CalculationUtil.calculateBmrPennState2003b(unit
@@ -223,7 +222,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         );
     }
 
-    private double calculatePennState2010(@Unit int unit) throws ValidationException, NumberFormatException {
+    private double calculatePennState2010(Unit unit) throws ValidationException, NumberFormatException {
         double bmrMifflin = calculateBmr(MIFFLIN);
 
         return CalculationUtil.calculateBmrPennState2010(unit
@@ -268,7 +267,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         }
     }
 
-    private int getUnitSelection() throws ValidationException {
+    private Unit getUnitSelection() throws ValidationException {
         String selection = mSelectedUnit.getValue();
 
         if (selection == null) {
@@ -278,15 +277,15 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         // compare selection String to String Resource currently being
         // used in order to decide which units are being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_metric))) {
-            return Constants.METRIC;
+            return Unit.METRIC;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_standard))) {
-            return Constants.STANDARD;
+            return Unit.STANDARD;
         } else {
             throw new ValidationException("Unit selection not valid");
         }
     }
 
-    private int getSexSelection() throws ValidationException {
+    private Sex getSexSelection() throws ValidationException {
         String selection = mSelectedSex.getValue();
 
         if (selection == null) {
@@ -296,9 +295,9 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
         // compare selection String to String Resource currently being
         // used in order to decide which sex is being used
         if (selection.equals(mApplicationContext.getResources().getString(R.string.text_male))) {
-            return Constants.MALE;
+            return Sex.MALE;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.text_female))) {
-            return Constants.FEMALE;
+            return Sex.FEMALE;
         } else {
             throw new ValidationException("Sex selection not valid");
         }
@@ -526,8 +525,8 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
 
     private void setUnits() {
         try {
-            int unit = getUnitSelection();
-            if (unit == Constants.METRIC) {
+            Unit unit = getUnitSelection();
+            if (unit == Unit.METRIC) {
                 setUiDataToMetric();
             } else {
                 setUiDataToStandard();

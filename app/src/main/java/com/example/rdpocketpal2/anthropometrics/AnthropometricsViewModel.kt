@@ -12,6 +12,7 @@ import com.example.rdpocketpal2.model.QueryResult
 import com.example.rdpocketpal2.model.UserPreferences
 import com.example.rdpocketpal2.quickmethod.FatalCalculationException
 import com.example.rdpocketpal2.util.*
+import com.example.rdpocketpal2.util.Unit
 import kotlinx.coroutines.launch
 
 private const val SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue"
@@ -67,8 +68,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
                     is QueryResult.Success<UserPreferences> -> calculate(prefs.data)
                     is QueryResult.Failure ->
                         // error accessing settings, show Toast
-                        showToast(mApplicationContext
-                                , R.string.toast_failed_to_access_settings, Toast.LENGTH_LONG)
+                        showToast(mApplicationContext, R.string.toast_failed_to_access_settings, Toast.LENGTH_LONG)
                 }
             }
         } else {
@@ -78,23 +78,17 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     }
 
     fun onSexRadioBtnClicked(btn: RadioButton) {
-        clearOutputsAndToastIfNecessary(btn
-                , mSelectedSexOldValue
-                , R.string.toast_results_cleared_sex_change)
+        clearOutputsAndToastIfNecessary(btn, mSelectedSexOldValue, R.string.toast_results_cleared_sex_change)
     }
 
     fun onUnitRadioBtnClicked(btn: RadioButton) {
-        clearOutputsAndToastIfNecessary(btn
-                , mSelectedUnitOldValue
-                , R.string.toast_results_cleared_unit_change)
+        clearOutputsAndToastIfNecessary(btn, mSelectedUnitOldValue, R.string.toast_results_cleared_unit_change)
     }
     //endregion
 
     //region Validation
     private fun allInputValid(): Boolean {
-        return validateFieldsAndSetErrors(mApplicationContext
-                , FieldErrorPair(mWeight, mWeightErrorMsg)
-                , FieldErrorPair(mHeight, mHeightErrorMsg))
+        return validateFieldsAndSetErrors(mApplicationContext, FieldErrorPair(mWeight, mWeightErrorMsg), FieldErrorPair(mHeight, mHeightErrorMsg))
     }
     //endregion
 
@@ -112,36 +106,22 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
 
     @Throws(FatalCalculationException::class)
     private fun calculateBmi(prefs: UserPreferences) {
-        mBmi.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
-                , CalculationUtil.calculateBmi(getUnit()
-                , NumberUtil.parseDouble(mWeight)
-                , NumberUtil.parseDouble(mHeight)))
+        mBmi.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs, CalculationUtil.calculateBmi(getUnit(), NumberUtil.parseDouble(mWeight), NumberUtil.parseDouble(mHeight)))
     }
 
     @Throws(FatalCalculationException::class)
     private fun calculateIbw(prefs: UserPreferences) {
-        mIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
-                , CalculationUtil.calculateIbwHamwi(getUnit()
-                , getSex()
-                , NumberUtil.parseDouble(mHeight)))
+        mIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs, CalculationUtil.calculateIbwHamwi(getUnit(), getSex(), NumberUtil.parseDouble(mHeight)))
     }
 
     @Throws(FatalCalculationException::class)
     private fun calculatePercentIbw(prefs: UserPreferences) {
-        mPercentIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
-                , CalculationUtil.calculatePercentIbw(getUnit()
-                , getSex()
-                , NumberUtil.parseDouble(mWeight)
-                , NumberUtil.parseDouble(mHeight)))
+        mPercentIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs, CalculationUtil.calculatePercentIbw(getUnit(), getSex(), NumberUtil.parseDouble(mWeight), NumberUtil.parseDouble(mHeight)))
     }
 
     @Throws(FatalCalculationException::class)
     private fun calculateAdjustedIbw(prefs: UserPreferences) {
-        mAdjustedIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs
-                , CalculationUtil.calculateAdjustedIbw(getUnit()
-                , getSex()
-                , NumberUtil.parseDouble(mWeight)
-                , NumberUtil.parseDouble(mHeight)))
+        mAdjustedIbw.value = NumberUtil.roundOrTruncate(mApplicationContext, prefs, CalculationUtil.calculateAdjustedIbw(getUnit(), getSex(), NumberUtil.parseDouble(mWeight), NumberUtil.parseDouble(mHeight)))
     }
     //endregion
 
@@ -154,9 +134,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
         return clearFields(mBmi, mIbw, mPercentIbw, mAdjustedIbw)
     }
 
-    private fun clearOutputsAndToastIfNecessary(btn: RadioButton
-                                                , oldValue: MutableLiveData<String>
-                                                , @StringRes errorToast: Int) {
+    private fun clearOutputsAndToastIfNecessary(btn: RadioButton, oldValue: MutableLiveData<String>, @StringRes errorToast: Int) {
         // just to make things easier to understand
         val isInitialSelectionAndNotDefault =
                 oldValue.value == null && !isDefaultRadioBtnChecked(btn)
@@ -178,27 +156,27 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     }
 
     @Throws(FatalCalculationException::class)
-    private fun getSex(): SexK {
+    private fun getSex(): Sex {
         return when (mSelectedSex.value) {
-            mApplicationContext.getString(R.string.text_male) -> SexK.Male
-            mApplicationContext.getString(R.string.text_female) -> SexK.Female
+            mApplicationContext.getString(R.string.text_male) -> Sex.MALE
+            mApplicationContext.getString(R.string.text_female) -> Sex.FEMALE
             else -> throw FatalCalculationException("Sex selection not valid")
         }
     }
 
     @Throws(FatalCalculationException::class)
-    private fun getUnit(): UnitK {
+    private fun getUnit(): Unit {
         return when (mSelectedUnit.value) {
-            mApplicationContext.getString(R.string.text_metric) -> UnitK.Metric
-            mApplicationContext.getString(R.string.text_standard) -> UnitK.Standard
+            mApplicationContext.getString(R.string.text_metric) -> Unit.METRIC
+            mApplicationContext.getString(R.string.text_standard) -> Unit.STANDARD
             else -> throw FatalCalculationException("Unit selection not valid")
         }
     }
 
     private fun setUnits() {
         when (getUnit()) {
-            is UnitK.Metric -> setUnitsMetric()
-            is UnitK.Standard -> setUnitsStandard()
+            Unit.METRIC -> setUnitsMetric()
+            Unit.STANDARD -> setUnitsStandard()
         }
     }
 
