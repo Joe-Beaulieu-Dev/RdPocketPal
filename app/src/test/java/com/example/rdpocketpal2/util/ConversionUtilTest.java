@@ -1,11 +1,6 @@
 package com.example.rdpocketpal2.util;
 
-import com.example.rdpocketpal2.conversions.Calcium;
-import com.example.rdpocketpal2.conversions.Chlorine;
-import com.example.rdpocketpal2.conversions.Magnesium;
-import com.example.rdpocketpal2.conversions.Phosphorus;
-import com.example.rdpocketpal2.conversions.Potassium;
-import com.example.rdpocketpal2.conversions.Sodium;
+import com.example.rdpocketpal2.conversions.Element;
 
 import org.junit.Test;
 
@@ -131,31 +126,31 @@ public class ConversionUtilTest {
     public void gramsToMilliequivalents_isCorrect() {
         // calcium
         assertEquals(GM_TO_MEQ_CALCIUM
-                , ConversionUtil.gramsToMilliequivalents(new Calcium(), TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(Element.Calcium, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(GM_TO_MEQ_CHLORINE
-                , ConversionUtil.gramsToMilliequivalents(new Chlorine(), TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(Element.Chlorine, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(GM_TO_MEQ_MAGNESIUM
-                , ConversionUtil.gramsToMilliequivalents(new Magnesium(), TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(Element.Magnesium, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
-                , ConversionUtil.gramsToMilliequivalents(new Potassium(), TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(Element.Potassium, TEN_GRAMS)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(GM_TO_MEQ_SODIUM
-                , ConversionUtil.gramsToMilliequivalents(new Sodium(), TEN_GRAMS)
+                , ConversionUtil.gramsToMilliequivalents(Element.Sodium, TEN_GRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -164,31 +159,31 @@ public class ConversionUtilTest {
     public void milliequivalentsToGrams_isCorrect() {
         // calcium
         assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(new Calcium(), GM_TO_MEQ_CALCIUM)
+                , ConversionUtil.milliequivalentsToGrams(Element.Calcium, GM_TO_MEQ_CALCIUM)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(new Chlorine(), GM_TO_MEQ_CHLORINE)
+                , ConversionUtil.milliequivalentsToGrams(Element.Chlorine, GM_TO_MEQ_CHLORINE)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(new Magnesium(), GM_TO_MEQ_MAGNESIUM)
+                , ConversionUtil.milliequivalentsToGrams(Element.Magnesium, GM_TO_MEQ_MAGNESIUM)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(new Potassium(), GM_TO_MEQ_POTASSIUM)
+                , ConversionUtil.milliequivalentsToGrams(Element.Potassium, GM_TO_MEQ_POTASSIUM)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(TEN_GRAMS
-                , ConversionUtil.milliequivalentsToGrams(new Sodium(), GM_TO_MEQ_SODIUM)
+                , ConversionUtil.milliequivalentsToGrams(Element.Sodium, GM_TO_MEQ_SODIUM)
                 , DELTA_EIGHT
         );
     }
@@ -197,31 +192,31 @@ public class ConversionUtilTest {
     public void milligramsToMilliequivalents_isCorrect() {
         // calcium
         assertEquals(GM_TO_MEQ_CALCIUM
-                , ConversionUtil.milligramsToMilliequivalents(new Calcium(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(Element.Calcium, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(GM_TO_MEQ_CHLORINE
-                , ConversionUtil.milligramsToMilliequivalents(new Chlorine(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(Element.Chlorine, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(GM_TO_MEQ_MAGNESIUM
-                , ConversionUtil.milligramsToMilliequivalents(new Magnesium(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(Element.Magnesium, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(GM_TO_MEQ_POTASSIUM
-                , ConversionUtil.milligramsToMilliequivalents(new Potassium(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(Element.Potassium, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(GM_TO_MEQ_SODIUM
-                , ConversionUtil.milligramsToMilliequivalents(new Sodium(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMilliequivalents(Element.Sodium, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -230,31 +225,31 @@ public class ConversionUtilTest {
     public void milliequivalentsToMilligrams_isCorrect() {
         // calcium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(new Calcium(), GM_TO_MEQ_CALCIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(Element.Calcium, GM_TO_MEQ_CALCIUM)
                 , DELTA_EIGHT
         );
 
         // chlorine
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(new Chlorine(), GM_TO_MEQ_CHLORINE)
+                , ConversionUtil.milliequivalentsToMilligrams(Element.Chlorine, GM_TO_MEQ_CHLORINE)
                 , DELTA_EIGHT
         );
 
         // magnesium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(new Magnesium(), GM_TO_MEQ_MAGNESIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(Element.Magnesium, GM_TO_MEQ_MAGNESIUM)
                 , DELTA_EIGHT
         );
 
         // potassium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(new Potassium(), GM_TO_MEQ_POTASSIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(Element.Potassium, GM_TO_MEQ_POTASSIUM)
                 , DELTA_EIGHT
         );
 
         // sodium
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.milliequivalentsToMilligrams(new Sodium(), GM_TO_MEQ_SODIUM)
+                , ConversionUtil.milliequivalentsToMilligrams(Element.Sodium, GM_TO_MEQ_SODIUM)
                 , DELTA_EIGHT
         );
     }
@@ -263,7 +258,7 @@ public class ConversionUtilTest {
     public void gramsToMillimoles_isCorrect() {
         // phosphorus
         assertEquals(GM_TO_MMOL_PHOSPHORUS
-                , ConversionUtil.gramsToMillimoles(new Phosphorus(), TEN_GRAMS)
+                , ConversionUtil.gramsToMillimoles(Element.Phosphorus, TEN_GRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -272,7 +267,7 @@ public class ConversionUtilTest {
     public void millimolesToGrams_isCorrect() {
         // phosphorus
         assertEquals(TEN_GRAMS
-                , ConversionUtil.millimolesToGrams(new Phosphorus(), GM_TO_MMOL_PHOSPHORUS)
+                , ConversionUtil.millimolesToGrams(Element.Phosphorus, GM_TO_MMOL_PHOSPHORUS)
                 , DELTA_EIGHT
         );
     }
@@ -281,7 +276,7 @@ public class ConversionUtilTest {
     public void milligramsToMillimoles_isCorrect() {
         // phosphorus
         assertEquals(GM_TO_MMOL_PHOSPHORUS
-                , ConversionUtil.milligramsToMillimoles(new Phosphorus(), TEN_THOUSAND_MILLIGRAMS)
+                , ConversionUtil.milligramsToMillimoles(Element.Phosphorus, TEN_THOUSAND_MILLIGRAMS)
                 , DELTA_EIGHT
         );
     }
@@ -290,7 +285,7 @@ public class ConversionUtilTest {
     public void millimolesToMilligrams_isCorrect() {
         // phosphorus
         assertEquals(TEN_THOUSAND_MILLIGRAMS
-                , ConversionUtil.millimolesToMilligrams(new Phosphorus(), GM_TO_MMOL_PHOSPHORUS)
+                , ConversionUtil.millimolesToMilligrams(Element.Phosphorus, GM_TO_MMOL_PHOSPHORUS)
                 , DELTA_EIGHT
         );
     }

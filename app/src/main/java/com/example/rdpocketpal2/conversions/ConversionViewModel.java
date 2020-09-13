@@ -276,22 +276,22 @@ public class ConversionViewModel extends AndroidViewModel {
         // used in order to decide which element was chosen
         if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_calcium))) {
-            return new Calcium();
+            return Element.Calcium;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_chlorine))) {
-            return new Chlorine();
+            return Element.Chlorine;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_magnesium))) {
-            return new Magnesium();
+            return Element.Magnesium;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_phosphorus))) {
-            return new Phosphorus();
+            return Element.Phosphorus;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_potassium))) {
-            return new Potassium();
+            return Element.Potassium;
         } else if (element.equals(mApplicationContext
                 .getResources().getString(R.string.text_sodium))) {
-            return new Sodium();
+            return Element.Sodium;
         }
 
         // this should never happen, just here to quiet the ide
