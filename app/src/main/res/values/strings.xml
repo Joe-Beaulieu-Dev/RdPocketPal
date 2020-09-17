@@ -25,7 +25,6 @@
     <string name="text_numeric_scale">Displayed Decimal Places</string>
     <string name="text_numeric_scale_desc">digits will be displayed after the decimal point in all results</string>
     <string name="text_decimal_reduction_method">Decimal Reduction Method</string>
-    <string name="text_decimal_reduction_method_desc">How the number of decimal places will be reduced</string>
     <!-- Preference keys -->
     <string name="key_numeric_scale">numericScale</string>
     <string name="key_decimal_reduction_method">decimalReductionMethod</string>
@@ -69,7 +68,6 @@
     <string name="text_fahrenheit">&#xb0;F</string>
     <string name="text_beats_per_minute">bpm</string>
     <string name="text_liters_per_minute">L/min</string>
-    <string name="text_gallons_per_minute">gal/min</string>
     <string name="text_kcals">kcals</string>
 
     <!-- Quick Method -->
