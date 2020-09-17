@@ -34,7 +34,7 @@ object MetricEquationUtil {
     @JvmStatic
     fun calculateBmrBenedict(sex: Sex, weight: Double, height: Double, age: Int): Double {
         return when (sex) {
-            Sex.MALE -> 66 + (13.7 * weight) + (5 * height) - (6.8 * age)
+            Sex.MALE -> 66 + (13.75 * weight) + (5 * height) - (6.8 * age)
             Sex.FEMALE -> 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
         }
     }
