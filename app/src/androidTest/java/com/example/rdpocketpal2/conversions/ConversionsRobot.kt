@@ -17,8 +17,8 @@ class ConversionsRobot : TestRobot() {
 
     //region Spinners
     fun <T : Activity> selectRandomElement(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(R.id.conv_element_spinner
-                , getNewSpinnerSelection(activityRule, R.id.conv_element_spinner))
+        clickSpinnerItem(R.id.conv_element_spinner_meq
+                , getNewSpinnerSelection(activityRule, R.id.conv_element_spinner_meq))
     }
 
     private fun <T : Activity> getNewSpinnerSelection(activityRule: ActivityTestRule<T>

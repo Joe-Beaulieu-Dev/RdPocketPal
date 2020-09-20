@@ -9,7 +9,7 @@ open class MmolRobot : TestRobot() {
 
     //region Entry
     fun <T : Activity> selectPhosphorus(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_phosphorus)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_mmol, R.string.text_phosphorus)
     }
 
     fun enterMillimoles(millimoles: String) {

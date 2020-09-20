@@ -66,10 +66,10 @@ public class QuickMethodViewModel extends AndroidViewModel implements
 
     //region SavedState data
     // Data
-    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
     private MutableLiveData<String> mSelectedUnitOldValue = new MutableLiveData<>();
 
-    // Error message keys
+    // Keys
+    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
     private static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
     private static final String KCAL_PER_KG_MIN_ERROR_MSG_KEY = "kcalPerKgMinErrorMsgKey";
     private static final String KCAL_PER_KG_MAX_ERROR_MSG_KEY = "kcalPerKgMaxErrorMsgKey";
@@ -432,6 +432,40 @@ public class QuickMethodViewModel extends AndroidViewModel implements
         } else {
             setUiDataToStandard();
         }
+    }
+    //endregion
+
+    //region Test against process death
+    // couldn't find a way to test process death with Espresso, so just leaving this method here
+    @SuppressLint("unused")
+    private void checkPersistenceAfterSystemInitProcessDeath() {
+        String input = "Unit: " + mUnitSelection.getValue()
+                + "\nWeight: " + mWeight.getValue()
+                + "\nKcal min IN: " + mKcalPerKgMin.getValue()
+                + "\nKcal max IN: " + mKcalPerKgMax.getValue()
+                + "\nGrams min IN: " + mGramsPerKgMin.getValue()
+                + "\nGrams max IN: " + mGramsPerKgMax.getValue()
+                + "\nML min IN: " + mMlPerKgMin.getValue()
+                + "\nML max IN: " + mMlPerKgMax.getValue();
+
+        String output = "Kcal min OUT: " + mKcalPerDayMin.getValue()
+                + "\nKcal max OUT: " + mKcalPerDayMax.getValue()
+                + "\nGrams min OUT: " + mGramsPerDayMin.getValue()
+                + "\nGrams max OUT: " + mGramsPerDayMax.getValue()
+                + "\nML min OUT: " + mMlPerDayMin.getValue()
+                + "\nML max OUT: " + mMlPerDayMax.getValue();
+
+        String errors = "Weight Err: " + mWeightErrorMsg.getValue()
+                + "\nKcal min Err: " + mKcalPerKgMinErrorMsg.getValue()
+                + "\nKcal max Err: " + mKcalPerKgMaxErrorMsg.getValue()
+                + "\nGrams min Err: " + mGramsPerKgMinErrorMsg.getValue()
+                + "\nGrams max Err: " + mGramsPerKgMaxErrorMsg.getValue()
+                + "\nML min Err: " + mMlPerKgMinErrorMsg.getValue()
+                + "\nML max Err: " + mMlPerKgMaxErrorMsg.getValue();
+
+        UiUtil.showToast(mApplicationContext
+                , input + "\n" + output + "\n" + errors
+                , Toast.LENGTH_LONG);
     }
     //endregion
 }

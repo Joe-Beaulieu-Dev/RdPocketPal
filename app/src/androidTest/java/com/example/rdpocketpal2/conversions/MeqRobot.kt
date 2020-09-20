@@ -9,23 +9,23 @@ open class MeqRobot : TestRobot() {
 
     //region Entry
     fun <T : Activity> selectCalcium(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_calcium)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_meq, R.string.text_calcium)
     }
 
     fun <T : Activity> selectChlorine(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_chlorine)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_meq, R.string.text_chlorine)
     }
 
     fun <T : Activity> selectMagnesium(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_magnesium)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_meq, R.string.text_magnesium)
     }
 
     fun <T : Activity> selectPotassium(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_potassium)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_meq, R.string.text_potassium)
     }
 
     fun <T : Activity> selectSodium(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_element_spinner, R.string.text_sodium)
+        clickSpinnerItem(activityRule, R.id.conv_element_spinner_meq, R.string.text_sodium)
     }
 
     fun enterMilliequivalents(milliequivalents: String) {

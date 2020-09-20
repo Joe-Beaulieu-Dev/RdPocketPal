@@ -1,5 +1,6 @@
 package com.example.rdpocketpal2.anthropometrics
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.widget.RadioButton
@@ -17,6 +18,8 @@ import kotlinx.coroutines.launch
 
 private const val SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue"
 private const val SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue"
+private const val WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey"
+private const val HEIGHT_ERROR_MSG_KEY = "heightErrorMsgKey"
 
 class AnthropometricsViewModel(application: Application, savedStateHandle: SavedStateHandle)
     : AndroidViewModel(application), LifecycleObserver {
@@ -38,17 +41,14 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     val mIbwUnitLabel = MutableLiveData<String>()
     val mAdjustedIbwUnitLabel = MutableLiveData<String>()
 
-    // Error messages
-    val mWeightErrorMsg =  MutableLiveData<String>()
-    val mHeightErrorMsg =  MutableLiveData<String>()
-    //endregion
-
     //region SavedState data
     private var mState: SavedStateHandle = savedStateHandle
     private val mSelectedSexOldValue: MutableLiveData<String> =
             mState.getLiveData(SELECTED_SEX_OLD_VALUE_KEY)
     private val mSelectedUnitOldValue: MutableLiveData<String> =
             mState.getLiveData(SELECTED_UNIT_OLD_VALUE_KEY)
+    val mWeightErrorMsg: MutableLiveData<String> =  mState.getLiveData(WEIGHT_ERROR_MSG_KEY)
+    val mHeightErrorMsg: MutableLiveData<String> =  mState.getLiveData(HEIGHT_ERROR_MSG_KEY)
     //endregion
 
     private var mApplicationContext: Context = application.applicationContext
@@ -234,6 +234,29 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     fun saveState() {
         mState.set(SELECTED_SEX_OLD_VALUE_KEY, mSelectedSexOldValue.value)
         mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue.value)
+        mState.set(WEIGHT_ERROR_MSG_KEY, mWeightErrorMsg.value)
+        mState.set(HEIGHT_ERROR_MSG_KEY, mHeightErrorMsg.value)
+    }
+    //endregion
+
+    //region Test against process death
+    // couldn't find a way to test process death with Espresso, so just leaving this method here
+    @SuppressLint("unused")
+    private fun checkPersistenceAfterSystemInitProcessDeath() {
+        val input = "Sex: ${mSelectedSex.value}" +
+                "\nUnit: ${mSelectedUnit.value}" +
+                "\nWeight: ${mWeight.value}" +
+                "\nHeight: ${mHeight.value}"
+
+        val output = "BMI: ${mBmi.value}" +
+                "\nIBW: ${mIbw.value}" +
+                "\n%IBW: ${mPercentIbw.value}" +
+                "\nAdj. IBW: ${mAdjustedIbw.value}"
+
+        val errors = "Weight err: ${mWeightErrorMsg.value}" +
+                "\nHeight err: ${mHeightErrorMsg.value}"
+
+        showToast(mApplicationContext, "$input\n$output\n$errors", Toast.LENGTH_LONG)
     }
     //endregion
 }

@@ -77,12 +77,12 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
 
     //region SavedState data
     // Data
-    private static final String SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue";
-    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
     private MutableLiveData<String> mSelectedSexOldValue = new MutableLiveData<>();
     private MutableLiveData<String> mSelectedUnitOldValue = new MutableLiveData<>();
 
-    // Error message keys
+    // Keys
+    private static final String SELECTED_SEX_OLD_VALUE_KEY = "selectedSexOldValue";
+    private static final String SELECTED_UNIT_OLD_VALUE_KEY = "selectedUnitOldValue";
     private static final String WEIGHT_ERROR_MSG_KEY = "weightErrorMsgKey";
     private static final String HEIGHT_ERROR_MSG_KEY = "heightErrorMsgKey";
     private static final String AGE_ERROR_MSG_KEY = "ageErrorMsgKey";
@@ -447,8 +447,6 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
     void saveState() {
         mState.set(SELECTED_SEX_OLD_VALUE_KEY, mSelectedSexOldValue.getValue());
         mState.set(SELECTED_UNIT_OLD_VALUE_KEY, mSelectedUnitOldValue.getValue());
-        // unlike other values in the UI, error messages do not get persisted upon system initiated
-        // process death, so they must be saved to the SavedStateHandle
         mState.set(WEIGHT_ERROR_MSG_KEY, mWeightErrorMsg.getValue());
         mState.set(HEIGHT_ERROR_MSG_KEY, mHeightErrorMsg.getValue());
         mState.set(AGE_ERROR_MSG_KEY, mAgeErrorMsg.getValue());
@@ -535,6 +533,41 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
             // units don't get displayed, but will never happen
             e.printStackTrace();
         }
+    }
+    //endregion
+
+    //region Test against process death
+    // couldn't find a way to test process death with Espresso, so just leaving this method here
+    @SuppressLint("unused")
+    private void checkPersistenceAfterSystemInitProcessDeath() {
+        String input = "Eq: " + mSelectedEquation.getValue()
+                + "\nSex: " + mSelectedSex.getValue()
+                + "\nUnit: " + mSelectedUnit.getValue()
+                + "\nWeight: " + mWeight.getValue()
+                + "\nHeight: " + mHeight.getValue()
+                + "\nAge: " + mAge.getValue()
+                + "\nTmax: " + mTmax.getValue()
+                + "\nHR: " + mHeartRate.getValue()
+                + "\nVe: " + mVe.getValue()
+                + "\nAF min: " + mActivityFactorMin.getValue()
+                + "\nAF max: " + mActivityFactorMax.getValue();
+
+        String output = "BMR: " + mBmr.getValue()
+                + "\nCal min: " + mCalorieMin.getValue()
+                + "\nCal max: " + mCalorieMax.getValue();
+
+        String errors = "Weight Err: " + mWeightErrorMsg.getValue()
+                + "\nHeight Err: " + mHeightErrorMsg.getValue()
+                + "\nAge Err: " + mAgeErrorMsg.getValue()
+                + "\nTmax Err: " + mTmaxErrorMsg.getValue()
+                + "\nHR Err: " + mHeartRateErrorMsg.getValue()
+                + "\nVe Err: " + mVeErrorMsg.getValue()
+                + "\nAF min Err: " + mActivityFactorMinErrorMsg.getValue()
+                + "\nAF max Err: " + mActivityFactorMaxErrorMsg.getValue();
+
+        UiUtil.showToast(mApplicationContext
+                , input + "\n" + output + "\n" + errors
+                , Toast.LENGTH_LONG);
     }
     //endregion
 

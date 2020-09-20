@@ -114,7 +114,7 @@ class ConversionsTest {
     }
     //endregion
 
-    //region lb to kg
+    //region gm to mEq
     @Test
     fun gmToMeq_calcium_leftToRight_isCorrect() {
         withConversionsRobot {
@@ -138,9 +138,7 @@ class ConversionsTest {
             }
         }
     }
-    //endregion
 
-    //region gm to mEq
     @Test
     fun gmToMeq_chlorine_leftToRight_isCorrect() {
         withConversionsRobot {
@@ -446,7 +444,7 @@ class ConversionsTest {
     }
 
     @Test
-    fun clearFields_elementSpinnerSelection() {
+    fun clearFields_elementMeqSpinnerSelection() {
         withConversionsRobot {
             inGmMeq {
                 navigateToGmMeq(activityRule)
@@ -527,6 +525,38 @@ class ConversionsTest {
                 checkInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
+
+            // input
+            inGmMeq {
+                navigateToGmMeq(activityRule)
+                selectCalcium(activityRule)
+                enterGrams(TEN_GRAMS)
+                checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
+            }
+            // rotate screen
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validate field persistence
+            inGmMeq {
+                checkGrams(TEN_GRAMS)
+                checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
+            }
+
+            // input
+            inGmMmol {
+                navigateToGmMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterGrams(TEN_GRAMS)
+                checkMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
+            }
+            // rotate screen
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            // validate field persistence
+            inGmMmol {
+                checkGrams(TEN_GRAMS)
+                checkMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
+            }
         }
     }
 
@@ -547,7 +577,7 @@ class ConversionsTest {
     }
 
     @Test
-    fun fieldPersistence_repeatElementSpinnerSelection() {
+    fun fieldPersistence_repeatElementMeqSpinnerSelection() {
         withConversionsRobot {
             inGmMeq {
                 // entry
@@ -559,6 +589,23 @@ class ConversionsTest {
                 // validation
                 checkGrams(TEN_GRAMS)
                 checkMilliequivalents(GM_TO_MEQ_CALCIUM_MEQ)
+            }
+        }
+    }
+
+    @Test
+    fun fieldPersistence_repeatElementMmolSpinnerSelection() {
+        withConversionsRobot {
+            inGmMmol {
+                // entry
+                navigateToGmMmol(activityRule)
+                selectPhosphorus(activityRule)
+                enterGrams(TEN_GRAMS)
+                checkMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
+                selectPhosphorus(activityRule)
+                // validation
+                checkGrams(TEN_GRAMS)
+                checkMillimoles(GM_TO_MMOL_PHOSPHORUS_MMOL)
             }
         }
     }

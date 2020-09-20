@@ -48,11 +48,14 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void observeLiveData() {
         observeConversionTypeData();
-        observeElementData();
+        observeElementMeqData();
+        observeElementMmolData();
     }
 
     private void setUpUi() {
         setUpConversionSpinner();
+        setUpElementMeqSpinner();
+        setUpElementMmolSpinner();
         setUpAllBtnRipples();
     }
 
@@ -62,14 +65,15 @@ public class ConversionActivity extends AppCompatActivity {
             public void onChanged(String s) {
                 if (s.equals(getResources().getString(R.string.text_gm_to_meq))
                         || s.equals(getResources().getString(R.string.text_mg_to_meq))) {
-                    setElementSpinnerToMeqSet();
-                    setElementSpinnerVisibility(View.VISIBLE);
+                    mBinding.convElementSpinnerMeq.setVisibility(View.VISIBLE);
+                    mBinding.convElementSpinnerMmol.setVisibility(View.GONE);
                 } else if (s.equals(getResources().getString(R.string.text_gm_to_mmol))
                         || s.equals(getResources().getString(R.string.text_mg_to_mmol))) {
-                    setElementSpinnerToMmolSet();
-                    setElementSpinnerVisibility(View.VISIBLE);
+                    mBinding.convElementSpinnerMeq.setVisibility(View.GONE);
+                    mBinding.convElementSpinnerMmol.setVisibility(View.VISIBLE);
                 } else {
-                    setElementSpinnerVisibility(View.GONE);
+                    mBinding.convElementSpinnerMeq.setVisibility(View.GONE);
+                    mBinding.convElementSpinnerMmol.setVisibility(View.GONE);
                 }
                 // update the unit labels for the input/output fields
                 // when the conversion type changes
@@ -80,8 +84,18 @@ public class ConversionActivity extends AppCompatActivity {
         });
     }
 
-    private void observeElementData() {
-        mViewModel.getElementData().observe(this, new Observer<String>() {
+    private void observeElementMeqData() {
+        mViewModel.getElementMeqData().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // clear input/output fields and errors when User changes element type
+                mViewModel.clearAllFieldsAndErrors();
+            }
+        });
+    }
+
+    private void observeElementMmolData() {
+        mViewModel.getElementMmolData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 // clear input/output fields and errors when User changes element type
@@ -99,16 +113,16 @@ public class ConversionActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-    private void setElementSpinnerToMeqSet() {
-        Spinner spinner = mBinding.convElementSpinner;
+    private void setUpElementMeqSpinner() {
+        Spinner spinner = mBinding.convElementSpinnerMeq;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.element_list_meq, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
 
-    private void setElementSpinnerToMmolSet() {
-        Spinner spinner = mBinding.convElementSpinner;
+    private void setUpElementMmolSpinner() {
+        Spinner spinner = mBinding.convElementSpinnerMmol;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.element_list_mmol, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -117,18 +131,6 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void setUpAllBtnRipples() {
         UiUtil.setUpBtnRippleRectangle(getResources(), getTheme(), mBinding.convClearBtn);
-    }
-
-    private void setElementSpinnerVisibility(int visibility) {
-        // @View.Visibility is hidden, so have to check validity
-        if (visibility != View.VISIBLE
-                && visibility != View.INVISIBLE
-                && visibility != View.GONE) {
-            return;
-        }
-
-        // set visibility
-        mBinding.convElementSpinner.setVisibility(visibility);
     }
 
     @Override

@@ -28,7 +28,8 @@ public class ConversionViewModel extends AndroidViewModel {
     //region LiveData
     // UI data
     public MutableLiveData<String> mConversionType = new MutableLiveData<>();
-    public MutableLiveData<String> mElement = new MutableLiveData<>();
+    public MutableLiveData<String> mElementMeq = new MutableLiveData<>();
+    public MutableLiveData<String> mElementMmol = new MutableLiveData<>();
     public MutableLiveData<String> mFieldLeft = new MutableLiveData<>();
     public MutableLiveData<String> mFieldRight = new MutableLiveData<>();
 
@@ -99,7 +100,15 @@ public class ConversionViewModel extends AndroidViewModel {
         // check for focus to break loops
         if (editText.hasFocus()) {
             if (validateInputDataAndToast(FIELD_LEFT)) {
-                convertAndSetResult(getConversionType(FIELD_LEFT), FIELD_LEFT);
+                try {
+                    convertAndSetResult(getConversionType(FIELD_LEFT), FIELD_LEFT);
+                } catch (NullPointerException | FatalCalculationException e) {
+                    // this shouldn't happen unless the Spinners' Adapters don't load their data,
+                    // or their data/the code is broken. The User will just have to refresh here
+                    UiUtil.showToast(mApplicationContext
+                            , "Conversion error. Please reload screen."
+                            , Toast.LENGTH_SHORT);
+                }
             }
         }
     }
@@ -108,7 +117,15 @@ public class ConversionViewModel extends AndroidViewModel {
         // check for focus to break loops
         if (editText.hasFocus()) {
             if (validateInputDataAndToast(FIELD_RIGHT)) {
-                convertAndSetResult(getConversionType(FIELD_RIGHT), FIELD_RIGHT);
+                try {
+                    convertAndSetResult(getConversionType(FIELD_RIGHT), FIELD_RIGHT);
+                } catch (NullPointerException | FatalCalculationException e) {
+                    // this shouldn't happen unless the Spinners' Adapters don't load their data,
+                    // or their data/the code is broken. The User will just have to refresh here
+                    UiUtil.showToast(mApplicationContext
+                            , "Conversion error. Please reload screen."
+                            , Toast.LENGTH_SHORT);
+                }
             }
         }
     }
@@ -141,31 +158,30 @@ public class ConversionViewModel extends AndroidViewModel {
             case KG_TO_LB:
                 return ConversionUtil.kilogramsToPounds(NumberUtil.parseDouble(inputField));
             case GM_TO_MEQ:
-                return ConversionUtil.gramsToMilliequivalents(getElement()
+                return ConversionUtil.gramsToMilliequivalents(getElementMeq()
                         , NumberUtil.parseDouble(inputField));
             case MEQ_TO_GM:
-                return ConversionUtil.milliequivalentsToGrams(getElement()
+                return ConversionUtil.milliequivalentsToGrams(getElementMeq()
                         , NumberUtil.parseDouble(inputField));
             case MG_TO_MEQ:
-                return ConversionUtil.milligramsToMilliequivalents(getElement()
+                return ConversionUtil.milligramsToMilliequivalents(getElementMeq()
                         , NumberUtil.parseDouble(inputField));
             case MEQ_TO_MG:
-                return ConversionUtil.milliequivalentsToMilligrams(getElement()
+                return ConversionUtil.milliequivalentsToMilligrams(getElementMeq()
                         , NumberUtil.parseDouble(inputField));
             case GM_TO_MMOL:
-                return ConversionUtil.gramsToMillimoles(getElement()
+                return ConversionUtil.gramsToMillimoles(getElementMmol()
                         , NumberUtil.parseDouble(inputField));
             case MMOL_TO_GM:
-                return ConversionUtil.millimolesToGrams(getElement()
+                return ConversionUtil.millimolesToGrams(getElementMmol()
                         , NumberUtil.parseDouble(inputField));
             case MG_TO_MMOL:
-                return ConversionUtil.milligramsToMillimoles(getElement()
+                return ConversionUtil.milligramsToMillimoles(getElementMmol()
                         , NumberUtil.parseDouble(inputField));
             case MMOL_TO_MG:
-                return ConversionUtil.millimolesToMilligrams(getElement()
+                return ConversionUtil.millimolesToMilligrams(getElementMmol()
                         , NumberUtil.parseDouble(inputField));
             default:
-                // this should never happen, just here to quiet the ide
                 throw new FatalCalculationException("Conversion type not valid");
         }
     }
@@ -265,13 +281,27 @@ public class ConversionViewModel extends AndroidViewModel {
         throw new FatalCalculationException("Conversion type selection or input field not valid");
     }
 
-    private Element getElement() throws FatalCalculationException {
-        String element = mElement.getValue();
+    private Element getElementMeq() throws FatalCalculationException {
+        String element = mElementMeq.getValue();
 
         if (element == null) {
             throw new NullPointerException();
         }
 
+        return parseElement(element);
+    }
+
+    private Element getElementMmol() throws FatalCalculationException {
+        String element = mElementMmol.getValue();
+
+        if (element == null) {
+            throw new NullPointerException();
+        }
+
+        return parseElement(element);
+    }
+
+    private Element parseElement(String element) {
         // compare selection String to String Resource currently being
         // used in order to decide which element was chosen
         if (element.equals(mApplicationContext
@@ -294,7 +324,6 @@ public class ConversionViewModel extends AndroidViewModel {
             return Element.SODIUM;
         }
 
-        // this should never happen, just here to quiet the ide
         throw new FatalCalculationException("Element selection not valid");
     }
 
@@ -323,8 +352,12 @@ public class ConversionViewModel extends AndroidViewModel {
         return mConversionType;
     }
 
-    LiveData<String> getElementData() {
-        return mElement;
+    LiveData<String> getElementMeqData() {
+        return mElementMeq;
+    }
+
+    LiveData<String> getElementMmolData() {
+        return mElementMmol;
     }
 
     void clearAllFieldsAndErrors() {
@@ -369,6 +402,23 @@ public class ConversionViewModel extends AndroidViewModel {
         // retrieve error message data
         mFieldLeftErrorMsg = mState.getLiveData(FIELD_LEFT_ERROR_MSG_KEY);
         mFieldRightErrorMsg = mState.getLiveData(FIELD_RIGHT_ERROR_MSG_KEY);
+    }
+    //endregion
+
+    //region Test against process death
+    // couldn't find a way to test process death with Espresso, so just leaving this method here
+    @SuppressLint("unused")
+    private void checkPersistenceAfterSystemInitProcessDeath() {
+        String inputOutput = "Conv type: " + mConversionType.getValue()
+                + "\nElem mEq: " + mElementMeq.getValue()
+                + "\nElem mmol: " + mElementMmol.getValue()
+                + "\nLeft: " + mFieldLeft.getValue()
+                + "\nRight: " + mFieldRight.getValue();
+
+        String errors = "Left err: " + mFieldLeftErrorMsg.getValue()
+                + "\nRight err: " + mFieldRightErrorMsg.getValue();
+
+        UiUtil.showToast(mApplicationContext, inputOutput + "\n" + errors, Toast.LENGTH_LONG);
     }
     //endregion
 }
