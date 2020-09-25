@@ -787,7 +787,12 @@ class PredictiveEquationsTest {
     @Test
     fun checkError_age_notANumber_displays() {
         withPredictiveEquationsRobot {
-            enterAge(INVALID_ENTRY_NOT_A_NUMBER)
+            // Age field has inputType: number which does not allow non-integer input
+            // on the number pad, so invalid input must be set programmatically.
+            // Binding adapter validates input on focus change, so focus must be given to
+            // the field for the error message to have the potential to be set.
+            programmaticallySetAge(".")
+            giveFocusToAge()
             loseFocusToWeight()
             checkAgeNanError(activityRule)
         }

@@ -47,8 +47,8 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
             mState.getLiveData(SELECTED_SEX_OLD_VALUE_KEY)
     private val mSelectedUnitOldValue: MutableLiveData<String> =
             mState.getLiveData(SELECTED_UNIT_OLD_VALUE_KEY)
-    val mWeightErrorMsg: MutableLiveData<String> =  mState.getLiveData(WEIGHT_ERROR_MSG_KEY)
-    val mHeightErrorMsg: MutableLiveData<String> =  mState.getLiveData(HEIGHT_ERROR_MSG_KEY)
+    val mWeightErrorMsg: MutableLiveData<String> = mState.getLiveData(WEIGHT_ERROR_MSG_KEY)
+    val mHeightErrorMsg: MutableLiveData<String> = mState.getLiveData(HEIGHT_ERROR_MSG_KEY)
     //endregion
 
     private var mApplicationContext: Context = application.applicationContext

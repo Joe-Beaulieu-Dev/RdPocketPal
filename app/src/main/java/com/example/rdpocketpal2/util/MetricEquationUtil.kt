@@ -6,7 +6,7 @@ object MetricEquationUtil {
 
     //region Predictive Equations
     /**
-     * Calculates BMR using the Mifflin St. Jear equation.
+     * Calculates BMR using the Mifflin-St. Jeor equation.
      *
      * @param sex    Male or Female
      * @param weight weight in kg
@@ -42,7 +42,7 @@ object MetricEquationUtil {
     /**
      * Calculates BMR using the Penn State 2003b equation.
      *
-     * @param mifflinBmr BMR in kcals calculated via the Mifflin St. Jear equation
+     * @param mifflinBmr BMR in kcals calculated via the Mifflin-St. Jeor equation
      * @param tmax       weight in Celsius
      * @param ve         Ve in L/min
      * @return BMR in kcals
@@ -55,7 +55,7 @@ object MetricEquationUtil {
     /**
      * Calculates BMR using the Penn State 2010 equation.
      *
-     * @param mifflinBmr BMR in kcals calculated via the Mifflin St. Jear equation
+     * @param mifflinBmr BMR in kcals calculated via the Mifflin-St. Jeor equation
      * @param tmax       weight in Celsius
      * @param ve         Ve in L/min
      * @return BMR in kcals
@@ -68,7 +68,7 @@ object MetricEquationUtil {
     /**
      * Calculates BMR using the Penn State 2010 equation.
      *
-     * @param benedictBmr BMR in kcals calculated via the Mifflin St. Jear equation
+     * @param benedictBmr BMR in kcals calculated via the Mifflin-St. Jeor equation
      * @param heartRate   heart rate in bpm
      * @param ve          Ve in L/min
      * @return BMR in kcals

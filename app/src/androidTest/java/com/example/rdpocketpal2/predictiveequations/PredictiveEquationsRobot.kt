@@ -9,7 +9,7 @@ class PredictiveEquationsRobot : TestRobot() {
 
     //region Spinner
     fun <T : Activity> selectMifflin(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.pe_equation_spinner, R.string.mifflin_st_jear)
+        clickSpinnerItem(activityRule, R.id.pe_equation_spinner, R.string.mifflin_st_jeor)
     }
 
     fun <T : Activity> selectBenedict(activityRule: ActivityTestRule<T>) {
@@ -132,6 +132,10 @@ class PredictiveEquationsRobot : TestRobot() {
         enterText(R.id.pe_activity_factor_max_editText, string)
     }
 
+    fun programmaticallySetAge(string: String) {
+        setTextProgrammatically(R.id.pe_age_editText, string)
+    }
+
     fun programmaticallySetBmr(string: String) {
         setTextProgrammatically(R.id.pe_bmr_editText, string)
     }
@@ -142,6 +146,10 @@ class PredictiveEquationsRobot : TestRobot() {
 
     fun programmaticallySetCalorieMax(string: String) {
         setTextProgrammatically(R.id.pe_calorie_max_editText, string)
+    }
+
+    fun giveFocusToAge() {
+        clickViewId(R.id.pe_age_editText)
     }
 
     fun loseFocusToWeight() {

@@ -52,13 +52,13 @@
     <string name="text_bmr">BMR:</string>
     <string name="text_calorie_min">Calorie min:</string>
     <string name="text_calorie_max">Calorie max:</string>
-    <string name="mifflin_st_jear">Mifflin St. Jear</string>
+    <string name="mifflin_st_jeor">Mifflin-St. Jeor</string>
     <string name="harris_benedict">Harris Benedict</string>
     <string name="penn_state_2003b">Penn State 2003b</string>
     <string name="penn_state_2010">Penn State 2010</string>
     <string name="brandi">Brandi</string>
     <string-array name="predictive_equations">
-        <item>@string/mifflin_st_jear</item>
+        <item>@string/mifflin_st_jeor</item>
         <item>@string/harris_benedict</item>
         <item>@string/penn_state_2003b</item>
         <item>@string/penn_state_2010</item>

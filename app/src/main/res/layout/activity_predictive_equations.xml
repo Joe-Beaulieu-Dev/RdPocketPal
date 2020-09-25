@@ -305,7 +305,7 @@
                             android:layout_height="wrap_content"
                             android:ems="3"
                             android:importantForAutofill="no"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:text="@={viewModel.mAge}"
                             app:errorMsg="@={viewModel.mAgeErrorMsg}"
                             app:layout_constraintStart_toStartOf="@id/pe_weight_editText"

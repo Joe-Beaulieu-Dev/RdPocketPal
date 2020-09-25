@@ -252,7 +252,7 @@ public class PredictiveEquationsViewModel extends AndroidViewModel implements
 
         // compare selection String to String Resource currently being
         // used in order to decide which equation we are calculating
-        if (selection.equals(mApplicationContext.getResources().getString(R.string.mifflin_st_jear))) {
+        if (selection.equals(mApplicationContext.getResources().getString(R.string.mifflin_st_jeor))) {
             return MIFFLIN;
         } else if (selection.equals(mApplicationContext.getResources().getString(R.string.harris_benedict))) {
             return BENEDICT;

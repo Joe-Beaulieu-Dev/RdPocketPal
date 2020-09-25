@@ -108,7 +108,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
             public void onChanged(String s) {
                 // change view visibility based on selected equation,
                 // then change layout constraints to eliminate gaps
-                if (s.equals(getString(R.string.mifflin_st_jear))
+                if (s.equals(getString(R.string.mifflin_st_jeor))
                         || s.equals(getString(R.string.harris_benedict))) {
                     setEditTextAttributes(PredictiveEquationsViewModel.MIFFLIN);
                 } else if (s.equals(getString(R.string.penn_state_2003b))
