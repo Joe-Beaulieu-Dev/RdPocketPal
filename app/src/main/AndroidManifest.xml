@@ -10,6 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- AdMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3221996738700475~8887844463" />
         <!-- Home -->
         <activity android:name=".home.HomeActivity">
             <intent-filter>
@@ -33,7 +37,8 @@
             android:label="@string/title_quick_method"
             android:parentActivityName=".home.HomeActivity" />
         <!-- Anthropometrics -->
-        <activity android:name=".anthropometrics.AnthropometricsActivity"
+        <activity
+            android:name=".anthropometrics.AnthropometricsActivity"
             android:label="@string/title_anthropometrics"
             android:parentActivityName=".home.HomeActivity" />
         <!-- Conversions -->

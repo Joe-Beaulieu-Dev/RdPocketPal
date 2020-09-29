@@ -215,19 +215,6 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
         constraintSet.applyTo(layout);
     }
 
-//    private void setNextBtnBehaviorForEditText(EditText source, final EditText target) {
-//        source.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                // Next button on soft keyboard
-//                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-//                    target.requestFocus();
-//                }
-//                return false;
-//            }
-//        });
-//    }
-
     private void clearFieldsAndErrors(EditText... editTexts) {
         for (EditText editText: editTexts) {
             editText.setText(null);

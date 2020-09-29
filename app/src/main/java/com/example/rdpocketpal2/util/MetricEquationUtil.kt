@@ -23,7 +23,7 @@ object MetricEquationUtil {
     }
 
     /**
-     * Calculates BMR using the Harris Benedict equation.
+     * Calculates BMR using the Harris-Benedict equation.
      *
      * @param sex    Male or Female
      * @param weight weight in kg
