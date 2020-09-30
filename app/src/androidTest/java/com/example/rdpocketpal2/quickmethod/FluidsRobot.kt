@@ -1,7 +1,6 @@
 package com.example.rdpocketpal2.quickmethod
 
 import android.app.Activity
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.testutil.EMPTY_STRING
@@ -66,7 +65,7 @@ class FluidsRobot : TestRobot() {
 
     fun leaveField() {
         clickViewId(R.id.qm_weight_editText)
-        pressBack()
+        pressBackButton()
     }
 
     fun setAllFieldsProgrammatically(text: String) {

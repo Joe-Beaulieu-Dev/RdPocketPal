@@ -973,6 +973,65 @@ class PredictiveEquationsTest {
     }
 
     @Test
+    fun fieldPersistence_openAndCloseSettings() {
+        withPredictiveEquationsRobot {
+            // entry
+            setSexMale()
+            setUnitMetric()
+            selectPennState2003b(activityRule)
+            enterWeight(VALID_ENTRY_INT_STRING)
+            enterHeight(VALID_ENTRY_INT_STRING)
+            enterAge(VALID_ENTRY_INT_STRING)
+            enterTmax(VALID_ENTRY_INT_STRING)
+            enterVe(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMin(VALID_ENTRY_INT_STRING)
+            enterActivityFactorMax(VALID_ENTRY_INT_STRING)
+            programmaticallySetBmr(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
+            programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
+            // open and close Settings
+            Intents.init()
+            openPreferences()
+            withSettingsRobot {
+                checkSettingsActivityIsDisplayed()
+                pressBackButton()
+            }
+            Intents.release()
+            // validation
+            checkSexMale()
+            checkUnitMetric()
+            checkWeight(VALID_ENTRY_INT_STRING)
+            checkHeight(VALID_ENTRY_INT_STRING)
+            checkAge(VALID_ENTRY_INT_STRING)
+            checkTmax(VALID_ENTRY_INT_STRING)
+            checkVe(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMin(VALID_ENTRY_INT_STRING)
+            checkActivityFactorMax(VALID_ENTRY_INT_STRING)
+            checkBmr(VALID_ENTRY_INT_STRING)
+            checkCalorieMin(VALID_ENTRY_INT_STRING)
+            checkCalorieMax(VALID_ENTRY_INT_STRING)
+
+            // enter fields that don't display in penn state equations
+            setSexFemale()
+            setUnitStandard()
+            selectBrandi(activityRule)
+            enterHeartRate(VALID_ENTRY_INT_STRING)
+            // open and close Settings
+            Intents.init()
+            openPreferences()
+            withSettingsRobot {
+                checkSettingsActivityIsDisplayed()
+                pressBackButton()
+            }
+            Intents.release()
+            // validation
+            checkSexFemale()
+            checkUnitStandard()
+            checkHeartRate(VALID_ENTRY_INT_STRING)
+        }
+    }
+
+    @Test
     fun fieldPersistence_repeatSexSelection() {
         withPredictiveEquationsRobot {
             // entry

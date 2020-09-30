@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
@@ -102,6 +103,10 @@ open class TestRobot {
 
     protected fun clickViewText(@IdRes viewId: Int): ViewInteraction {
         return onView(withText(viewId)).perform(click())
+    }
+
+    fun pressBackButton() {
+        pressBack()
     }
     //endregion
 

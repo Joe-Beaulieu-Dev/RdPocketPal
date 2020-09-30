@@ -2,7 +2,6 @@ package com.example.rdpocketpal2.quickmethod
 
 import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.rule.ActivityTestRule
 import com.example.rdpocketpal2.R
 import com.example.rdpocketpal2.settings.withSettingsRobot
@@ -30,7 +29,7 @@ open class QuickMethodRobot : TestRobot() {
 
     fun leaveField() {
         clickViewId(R.id.qm_calorie_kcal_per_kg_min)
-        pressBack()
+        pressBackButton()
     }
     //endregion
 
@@ -43,7 +42,7 @@ open class QuickMethodRobot : TestRobot() {
             setDisplayedDecimalPlaces(scale)
         }
         // exit settings screen
-        pressBack()
+        pressBackButton()
     }
 
     fun setDecimalReductionMethodViaUi(@StringRes stringId: Int) {
@@ -54,7 +53,7 @@ open class QuickMethodRobot : TestRobot() {
             setDecimalReductionMethod(stringId)
         }
         // exit settings screen
-        pressBack()
+        pressBackButton()
     }
     //endregion
 

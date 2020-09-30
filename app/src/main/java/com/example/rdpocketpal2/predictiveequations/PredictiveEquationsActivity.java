@@ -31,8 +31,8 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     private PredictiveEquationsViewModel mViewModel;
     private ActivityPredictiveEquationsBinding mBinding;
 
-    private static final String KEY_ORIENTATION_CHANGED = "orientationChanged";
-    private boolean mConfigurationChanged = false;
+    private static final String KEY_RETAIN_OUTPUT_DATA = "retainOutputData";
+    private boolean mRetainOutputData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,15 +236,15 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
 
     private void clearOutputDataIfNecessary() {
         // do nothing if this method's caller (Observer<T>.onChanged()) was called
-        // due to a config change
-        if (!mConfigurationChanged) {
+        // due to a config change/the activity pausing but not finishing
+        if (!mRetainOutputData) {
             // clear result data when equation is changed and show Toast
             // this is done so results don't clash with user input/equation selection
             mViewModel.clearOutputDataFromActivity();
         }
         // reset value as it being true is only relevant when onChanged() is initially
         // auto-called due to a config change
-        mConfigurationChanged = false;
+        mRetainOutputData = false;
     }
 
     @Override
@@ -266,19 +266,22 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        if (!isFinishing()) {
+            mRetainOutputData = true;
+        }
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
-        observeEquationSpinnerData();
         super.onResume();
+        observeEquationSpinnerData();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        // Activity was killed due to a configuration change and is going to be recreated
-        // https://developer.android.com/guide/components/activities/activity-lifecycle#ondestroy
-        if (!isFinishing()) {
-            outState.putBoolean(KEY_ORIENTATION_CHANGED, true);
-        }
-        // save the state of the ViewModel to deal with system initiated process death
+        outState.putBoolean(KEY_RETAIN_OUTPUT_DATA, mRetainOutputData);
         mViewModel.saveState();
         super.onSaveInstanceState(outState);
     }
@@ -286,7 +289,7 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mConfigurationChanged = savedInstanceState
-                .getBoolean(KEY_ORIENTATION_CHANGED, false);
+        mRetainOutputData = savedInstanceState
+                .getBoolean(KEY_RETAIN_OUTPUT_DATA, false);
     }
 }
