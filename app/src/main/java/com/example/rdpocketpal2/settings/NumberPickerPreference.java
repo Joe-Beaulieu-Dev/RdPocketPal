@@ -26,19 +26,32 @@ public class NumberPickerPreference extends DialogPreference {
     private int mValue;
     private int mDialogLayoutResId = R.layout.pref_dialog_number_picker;
 
+    public NumberPickerPreference(Context context) {
+        this(context, null);
+    }
+
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.dialogPreferenceStyle);
     }
 
     public NumberPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public NumberPickerPreference(Context context, AttributeSet attrs,
+                                  int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         // apply custom attributes
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference);
+        TypedArray array = context.obtainStyledAttributes(attrs
+                , R.styleable.NumberPickerPreference);
         try {
-            mMinValue = array.getInt(R.styleable.NumberPickerPreference_minValue, DEFAULT_MIN_VALUE);
-            mMaxValue = array.getInt(R.styleable.NumberPickerPreference_maxValue, DEFAULT_MAX_VALUE);
-            mWrapSelectorWheel = array.getBoolean(R.styleable.NumberPickerPreference_wrapSelectorWheel
+            mMinValue = array.getInt(R.styleable.NumberPickerPreference_minValue
+                    , DEFAULT_MIN_VALUE);
+            mMaxValue = array.getInt(R.styleable.NumberPickerPreference_maxValue
+                    , DEFAULT_MAX_VALUE);
+            mWrapSelectorWheel = array.getBoolean(
+                    R.styleable.NumberPickerPreference_wrapSelectorWheel
                     , DEFAULT_WRAP_SELECTOR_WHEEL);
         } finally {
             array.recycle();
