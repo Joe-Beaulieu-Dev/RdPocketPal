@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.rdpocketpal2.conversions.ConversionViewModel" />
+            type="com.josephbeaulieu.rdpocketpal.conversions.ConversionViewModel" />
     </data>
 
     <!--

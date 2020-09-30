@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rdpocketpal2">
+    package="com.josephbeaulieu.rdpocketpal">
 
     <application
-        android:name=".application.MyApplication"
+        android:name="com.josephbeaulieu.rdpocketpal.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3221996738700475~8887844463" />
         <!-- Home -->
-        <activity android:name=".home.HomeActivity">
+        <activity android:name="com.josephbeaulieu.rdpocketpal.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,28 +24,28 @@
         </activity>
         <!-- Settings -->
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.josephbeaulieu.rdpocketpal.settings.SettingsActivity"
             android:label="@string/title_settings" />
         <!-- Predictive Equations -->
         <activity
-            android:name=".predictiveequations.PredictiveEquationsActivity"
+            android:name="com.josephbeaulieu.rdpocketpal.predictiveequations.PredictiveEquationsActivity"
             android:label="@string/title_predictive_equations"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.josephbeaulieu.rdpocketpal.home.HomeActivity" />
         <!-- Quick Method -->
         <activity
-            android:name=".quickmethod.QuickMethodActivity"
+            android:name="com.josephbeaulieu.rdpocketpal.quickmethod.QuickMethodActivity"
             android:label="@string/title_quick_method"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.josephbeaulieu.rdpocketpal.home.HomeActivity" />
         <!-- Anthropometrics -->
         <activity
-            android:name=".anthropometrics.AnthropometricsActivity"
+            android:name="com.josephbeaulieu.rdpocketpal.anthropometrics.AnthropometricsActivity"
             android:label="@string/title_anthropometrics"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.josephbeaulieu.rdpocketpal.home.HomeActivity" />
         <!-- Conversions -->
         <activity
-            android:name=".conversions.ConversionActivity"
+            android:name="com.josephbeaulieu.rdpocketpal.conversions.ConversionActivity"
             android:label="@string/title_conversions"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.josephbeaulieu.rdpocketpal.home.HomeActivity" />
     </application>
 
 </manifest>

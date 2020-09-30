@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.rdpocketpal2.predictiveequations.PredictiveEquationsViewModel" />
+            type="com.josephbeaulieu.rdpocketpal.predictiveequations.PredictiveEquationsViewModel" />
     </data>
 
     <!-- ScrollView that holds the whole UI -->

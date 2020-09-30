@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.rdpocketpal2.anthropometrics.AnthropometricsViewModel" />
+            type="com.josephbeaulieu.rdpocketpal.anthropometrics.AnthropometricsViewModel" />
     </data>
 
     <!-- ScrollView that holds the whole UI -->

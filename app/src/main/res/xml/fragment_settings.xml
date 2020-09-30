@@ -9,7 +9,7 @@
         app:iconSpaceReserved="false">
 
         <!-- Numeric Scale -->
-        <com.example.rdpocketpal2.settings.NumberPickerPreference
+        <com.josephbeaulieu.rdpocketpal.settings.NumberPickerPreference
             android:defaultValue="2"
             android:key="@string/key_numeric_scale"
             android:title="@string/text_numeric_scale"
