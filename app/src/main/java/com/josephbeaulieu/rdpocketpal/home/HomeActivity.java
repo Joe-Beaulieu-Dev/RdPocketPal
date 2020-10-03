@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.josephbeaulieu.rdpocketpal.R;
-import com.josephbeaulieu.rdpocketpal.ads.BannerAd;
+import com.josephbeaulieu.rdpocketpal.ad.BannerAd;
 import com.josephbeaulieu.rdpocketpal.settings.SettingsActivity;
 
 import androidx.annotation.NonNull;

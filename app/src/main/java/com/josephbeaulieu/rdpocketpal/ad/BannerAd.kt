@@ -1,4 +1,4 @@
-package com.josephbeaulieu.rdpocketpal.ads
+package com.josephbeaulieu.rdpocketpal.ad
 
 import android.content.Context
 import android.os.Build

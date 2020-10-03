@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.josephbeaulieu.rdpocketpal">
 
+    <!-- For loading banner ad loadAd() -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- App -->
     <application
         android:name="com.josephbeaulieu.rdpocketpal.application.MyApplication"
         android:allowBackup="true"
