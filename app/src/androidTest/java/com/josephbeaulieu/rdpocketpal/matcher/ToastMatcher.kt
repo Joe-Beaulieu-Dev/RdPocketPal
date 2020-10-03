@@ -1,4 +1,4 @@
-package com.josephbeaulieu.rdpocketpal.matchers
+package com.josephbeaulieu.rdpocketpal.matcher
 
 import android.view.WindowManager
 import androidx.test.espresso.Root

@@ -28,7 +28,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.josephbeaulieu.rdpocketpal.R
-import com.josephbeaulieu.rdpocketpal.matchers.ToastMatcher
+import com.josephbeaulieu.rdpocketpal.action.CustomViewActions.nestedScrollTo
+import com.josephbeaulieu.rdpocketpal.matcher.ToastMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 
@@ -40,23 +41,24 @@ open class TestRobot {
 
     //region Text entry
     protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction {
-        return onView(withId(viewId)).perform(typeText(text), closeSoftKeyboard())
+        return onView(withId(viewId)).perform(nestedScrollTo(), typeText(text), closeSoftKeyboard())
     }
 
     protected fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction {
-        return onView(withId(id)).perform(object : ViewAction {
-            override fun getDescription(): String {
-                return "Set the value of an EditText programmatically"
-            }
+        return onView(withId(id)).perform(nestedScrollTo(),
+                object : ViewAction {
+                    override fun getDescription(): String {
+                        return "Set the value of an EditText programmatically"
+                    }
 
-            override fun getConstraints(): Matcher<View> {
-                return isAssignableFrom(EditText::class.java)
-            }
+                    override fun getConstraints(): Matcher<View> {
+                        return isAssignableFrom(EditText::class.java)
+                    }
 
-            override fun perform(uiController: UiController?, view: View?) {
-                (view as EditText).setText(text)
-            }
-        })
+                    override fun perform(uiController: UiController?, view: View?) {
+                        (view as EditText).setText(text)
+                    }
+                })
     }
     //endregion
 
@@ -68,14 +70,14 @@ open class TestRobot {
     }
 
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
-        return onView(withId(viewId)).check(matches(withText(text)))
+        return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(withText(text)))
     }
 
-    protected fun checkViewWithTextIsDisplayed(@StringRes stringId: Int): ViewInteraction {
+    protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).check(matches(isDisplayed()))
     }
 
-    protected fun checkViewWithTextIsDisplayed(text: String): ViewInteraction {
+    protected fun checkViewWithTextIsDisplayedNoScroll(text: String): ViewInteraction {
         return onView(withText(text)).check(matches(isDisplayed()))
     }
     //endregion
@@ -84,24 +86,27 @@ open class TestRobot {
     protected fun <T : Activity> checkEditTextError(activityRule: ActivityTestRule<T>
                                                     , @IdRes viewId: Int
                                                     , @StringRes stringId: Int): ViewInteraction {
-        return onView(withId(viewId)).check(matches(
-                hasErrorText(TestUtil.getString(activityRule, stringId))))
+        return onView(withId(viewId))
+                .perform(nestedScrollTo())
+                .check(matches(hasErrorText(TestUtil.getString(activityRule, stringId))))
     }
 
     protected fun checkEditTextNoError(@IdRes viewId: Int): ViewInteraction {
         // need to use this value because of overload resolution
         // ambiguity on hasErrorText() when just using null
         val nullString: String? = null
-        return onView(withId(viewId)).check(matches(hasErrorText(nullString)))
+        return onView(withId(viewId))
+                .perform(nestedScrollTo())
+                .check(matches(hasErrorText(nullString)))
     }
     //endregion
 
     //region Click
     protected fun clickViewId(@IdRes viewId: Int): ViewInteraction {
-        return onView(withId(viewId)).perform(click())
+        return onView(withId(viewId)).perform(nestedScrollTo(), click())
     }
 
-    protected fun clickViewText(@IdRes viewId: Int): ViewInteraction {
+    protected fun clickViewTextNoScroll(@IdRes viewId: Int): ViewInteraction {
         return onView(withText(viewId)).perform(click())
     }
 
@@ -125,7 +130,7 @@ open class TestRobot {
 
     //region RadioButton
     protected fun checkRadioBtnIsChecked(@IdRes id: Int): ViewInteraction {
-        return onView(withId(id)).check(matches(isChecked()))
+        return onView(withId(id)).perform(nestedScrollTo()).check(matches(isChecked()))
     }
     //endregion
 
@@ -146,7 +151,9 @@ open class TestRobot {
 
     protected fun checkSpinnerSelection(@IdRes spinnerId: Int
                                         , @StringRes stringId: Int): ViewInteraction {
-        return onView(withId(spinnerId)).check(matches(withSpinnerText(stringId)))
+        return onView(withId(spinnerId))
+                .perform(nestedScrollTo())
+                .check(matches(withSpinnerText(stringId)))
     }
     //endregion
 
