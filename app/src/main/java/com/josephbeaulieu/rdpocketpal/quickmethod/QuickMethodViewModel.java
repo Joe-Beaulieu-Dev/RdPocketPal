@@ -397,7 +397,8 @@ public class QuickMethodViewModel extends AndroidViewModel implements
             // get and log exception
             Exception e = ((QueryResult.Failure) result).getException();
             if (e.getMessage() != null) {
-                Log.e(LOG_TAG, e.getMessage(), e);
+                // disabled for release
+//                Log.e(LOG_TAG, e.getMessage(), e);
             }
 
             // display feedback to user
