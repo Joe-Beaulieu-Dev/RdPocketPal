@@ -15,9 +15,7 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-
-private const val TEST_BANNER_AD_ID = "ca-app-pub-3940256099942544/6300978111"
-private const val PROD_BANNER_AD_ID = "ca-app-pub-3221996738700475/3715408836"
+import com.josephbeaulieu.rdpocketpal.BuildConfig
 
 class BannerAd(val context: Context, val adContainerView: ViewGroup) : LifecycleObserver {
     private val adView = AdView(context)
@@ -25,7 +23,7 @@ class BannerAd(val context: Context, val adContainerView: ViewGroup) : Lifecycle
 
     fun loadBanner() {
         adSize = getAdSize()
-        adView.adUnitId = TEST_BANNER_AD_ID
+        adView.adUnitId = BuildConfig.HOME_BANNER_TEST_ID
         adView.adSize = adSize
 
         val adRequest = AdRequest.Builder().build()
