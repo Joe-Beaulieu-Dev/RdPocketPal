@@ -61,37 +61,11 @@
                             android:id="@+id/conv_conversion_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toTopOf="@id/conv_element_spinner_meq"
+                            app:layout_constraintBottom_toTopOf="@id/conv_field_left"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:selectedSpinnerItem="@={viewModel.mConversionType}"
                             tools:listitem="@layout/spinner_item" />
-
-                        <!-- mEq Element Spinner -->
-                        <Spinner
-                            android:id="@+id/conv_element_spinner_meq"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@id/conv_element_spinner_mmol"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/conv_conversion_spinner"
-                            app:selectedSpinnerItem="@={viewModel.mElementMeq}"
-                            tools:listitem="@layout/spinner_item"
-                            tools:visibility="visible" />
-
-                        <!-- mmol Element Spinner -->
-                        <Spinner
-                            android:id="@+id/conv_element_spinner_mmol"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@id/conv_field_left"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/conv_element_spinner_meq"
-                            app:selectedSpinnerItem="@={viewModel.mElementMmol}"
-                            tools:listitem="@layout/spinner_item"
-                            tools:visibility="visible" />
 
                         <!--
                             ************
@@ -112,7 +86,7 @@
                             app:errorMsg="@={viewModel.mFieldLeftErrorMsg}"
                             app:layout_constraintEnd_toStartOf="@id/conv_field_left_label"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/conv_element_spinner_mmol"
+                            app:layout_constraintTop_toBottomOf="@id/conv_conversion_spinner"
                             tools:ignore="LabelFor" />
 
                         <!-- Left field label -->

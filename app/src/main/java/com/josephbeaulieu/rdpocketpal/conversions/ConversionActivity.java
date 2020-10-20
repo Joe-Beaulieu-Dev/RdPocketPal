@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -48,14 +47,10 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void observeLiveData() {
         observeConversionTypeData();
-        observeElementMeqData();
-        observeElementMmolData();
     }
 
     private void setUpUi() {
         setUpConversionSpinner();
-        setUpElementMeqSpinner();
-        setUpElementMmolSpinner();
         setUpAllBtnRipples();
     }
 
@@ -63,18 +58,6 @@ public class ConversionActivity extends AppCompatActivity {
         mViewModel.getConversionTypeData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if (s.equals(getResources().getString(R.string.text_gm_to_meq))
-                        || s.equals(getResources().getString(R.string.text_mg_to_meq))) {
-                    mBinding.convElementSpinnerMeq.setVisibility(View.VISIBLE);
-                    mBinding.convElementSpinnerMmol.setVisibility(View.GONE);
-                } else if (s.equals(getResources().getString(R.string.text_gm_to_mmol))
-                        || s.equals(getResources().getString(R.string.text_mg_to_mmol))) {
-                    mBinding.convElementSpinnerMeq.setVisibility(View.GONE);
-                    mBinding.convElementSpinnerMmol.setVisibility(View.VISIBLE);
-                } else {
-                    mBinding.convElementSpinnerMeq.setVisibility(View.GONE);
-                    mBinding.convElementSpinnerMmol.setVisibility(View.GONE);
-                }
                 // update the unit labels for the input/output fields
                 // when the conversion type changes
                 mViewModel.updateFieldLabelData();
@@ -84,47 +67,10 @@ public class ConversionActivity extends AppCompatActivity {
         });
     }
 
-    private void observeElementMeqData() {
-        mViewModel.getElementMeqData().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // clear input/output fields and errors when User changes element type
-                mViewModel.clearAllFieldsAndErrors();
-            }
-        });
-    }
-
-    private void observeElementMmolData() {
-        mViewModel.getElementMmolData().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // clear input/output fields and errors when User changes element type
-                mViewModel.clearAllFieldsAndErrors();
-            }
-        });
-    }
-
     private void setUpConversionSpinner() {
-        // initialize and assign ArrayAdapter to Spinner
         Spinner spinner = mBinding.convConversionSpinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    private void setUpElementMeqSpinner() {
-        Spinner spinner = mBinding.convElementSpinnerMeq;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.element_list_meq, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    private void setUpElementMmolSpinner() {
-        Spinner spinner = mBinding.convElementSpinnerMmol;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.element_list_mmol, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

@@ -141,7 +141,7 @@ open class TestRobot {
         return clickSpinnerItem(spinnerId, TestUtil.getString(activityRule, stringId))
     }
 
-    protected fun clickSpinnerItem(@IdRes spinnerId: Int
+    private fun clickSpinnerItem(@IdRes spinnerId: Int
                                    , selection: String): ViewInteraction {
         // click conversion spinner
         clickViewId(spinnerId)

@@ -28,8 +28,6 @@ public class ConversionViewModel extends AndroidViewModel {
     //region LiveData
     // UI data
     public MutableLiveData<String> mConversionType = new MutableLiveData<>();
-    public MutableLiveData<String> mElementMeq = new MutableLiveData<>();
-    public MutableLiveData<String> mElementMmol = new MutableLiveData<>();
     public MutableLiveData<String> mFieldLeft = new MutableLiveData<>();
     public MutableLiveData<String> mFieldRight = new MutableLiveData<>();
 
@@ -62,21 +60,12 @@ public class ConversionViewModel extends AndroidViewModel {
 
     // Conversion types
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({IN_TO_CM, CM_TO_IN, LB_TO_KG, KG_TO_LB, GM_TO_MEQ, MEQ_TO_GM, MG_TO_MEQ
-            , MEQ_TO_MG, GM_TO_MMOL, MMOL_TO_GM, MG_TO_MMOL, MMOL_TO_MG})
+    @IntDef({IN_TO_CM, CM_TO_IN, LB_TO_KG, KG_TO_LB})
     private @interface Conversion {}
     private static final int IN_TO_CM = 0;
     private static final int CM_TO_IN = 1;
     private static final int LB_TO_KG = 2;
     private static final int KG_TO_LB = 3;
-    private static final int GM_TO_MEQ = 4;
-    private static final int MEQ_TO_GM = 5;
-    private static final int MG_TO_MEQ = 6;
-    private static final int MEQ_TO_MG = 7;
-    private static final int GM_TO_MMOL = 8;
-    private static final int MMOL_TO_GM = 9;
-    private static final int MG_TO_MMOL = 10;
-    private static final int MMOL_TO_MG = 11;
 
     public ConversionViewModel(@NonNull Application application, SavedStateHandle handle) {
         super(application);
@@ -157,30 +146,6 @@ public class ConversionViewModel extends AndroidViewModel {
                 return ConversionUtil.poundsToKilograms(NumberUtil.parseDouble(inputField));
             case KG_TO_LB:
                 return ConversionUtil.kilogramsToPounds(NumberUtil.parseDouble(inputField));
-            case GM_TO_MEQ:
-                return ConversionUtil.gramsToMilliequivalents(getElementMeq()
-                        , NumberUtil.parseDouble(inputField));
-            case MEQ_TO_GM:
-                return ConversionUtil.milliequivalentsToGrams(getElementMeq()
-                        , NumberUtil.parseDouble(inputField));
-            case MG_TO_MEQ:
-                return ConversionUtil.milligramsToMilliequivalents(getElementMeq()
-                        , NumberUtil.parseDouble(inputField));
-            case MEQ_TO_MG:
-                return ConversionUtil.milliequivalentsToMilligrams(getElementMeq()
-                        , NumberUtil.parseDouble(inputField));
-            case GM_TO_MMOL:
-                return ConversionUtil.gramsToMillimoles(getElementMmol()
-                        , NumberUtil.parseDouble(inputField));
-            case MMOL_TO_GM:
-                return ConversionUtil.millimolesToGrams(getElementMmol()
-                        , NumberUtil.parseDouble(inputField));
-            case MG_TO_MMOL:
-                return ConversionUtil.milligramsToMillimoles(getElementMmol()
-                        , NumberUtil.parseDouble(inputField));
-            case MMOL_TO_MG:
-                return ConversionUtil.millimolesToMilligrams(getElementMmol()
-                        , NumberUtil.parseDouble(inputField));
             default:
                 throw new FatalCalculationException("Conversion type not valid");
         }
@@ -251,80 +216,9 @@ public class ConversionViewModel extends AndroidViewModel {
             } else if (inputField == FIELD_RIGHT) {
                 return KG_TO_LB;
             }
-        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_gm_to_meq))) {
-            if (inputField == FIELD_LEFT) {
-                return GM_TO_MEQ;
-            } else if (inputField == FIELD_RIGHT) {
-                return MEQ_TO_GM;
-            }
-        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_mg_to_meq))) {
-            if (inputField == FIELD_LEFT) {
-                return MG_TO_MEQ;
-            } else if (inputField == FIELD_RIGHT) {
-                return MEQ_TO_MG;
-            }
-        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_gm_to_mmol))) {
-            if (inputField == FIELD_LEFT) {
-                return GM_TO_MMOL;
-            } else if (inputField == FIELD_RIGHT) {
-                return MMOL_TO_GM;
-            }
-        } else if (type.equals(mApplicationContext.getResources().getString(R.string.text_mg_to_mmol))) {
-            if (inputField == FIELD_LEFT) {
-                return MG_TO_MMOL;
-            } else if (inputField == FIELD_RIGHT) {
-                return MMOL_TO_MG;
-            }
         }
 
-        // this should never happen, just here to quiet the ide
         throw new FatalCalculationException("Conversion type selection or input field not valid");
-    }
-
-    private Element getElementMeq() throws FatalCalculationException {
-        String element = mElementMeq.getValue();
-
-        if (element == null) {
-            throw new NullPointerException();
-        }
-
-        return parseElement(element);
-    }
-
-    private Element getElementMmol() throws FatalCalculationException {
-        String element = mElementMmol.getValue();
-
-        if (element == null) {
-            throw new NullPointerException();
-        }
-
-        return parseElement(element);
-    }
-
-    private Element parseElement(String element) {
-        // compare selection String to String Resource currently being
-        // used in order to decide which element was chosen
-        if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_calcium))) {
-            return Element.CALCIUM;
-        } else if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_chlorine))) {
-            return Element.CHLORINE;
-        } else if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_magnesium))) {
-            return Element.MAGNESIUM;
-        } else if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_phosphorus))) {
-            return Element.PHOSPHORUS;
-        } else if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_potassium))) {
-            return Element.POTASSIUM;
-        } else if (element.equals(mApplicationContext
-                .getResources().getString(R.string.text_sodium))) {
-            return Element.SODIUM;
-        }
-
-        throw new FatalCalculationException("Element selection not valid");
     }
 
     private void setFieldLabels(int leftFieldStringId, int rightFieldStringId) {
@@ -352,14 +246,6 @@ public class ConversionViewModel extends AndroidViewModel {
         return mConversionType;
     }
 
-    LiveData<String> getElementMeqData() {
-        return mElementMeq;
-    }
-
-    LiveData<String> getElementMmolData() {
-        return mElementMmol;
-    }
-
     void clearAllFieldsAndErrors() {
         clearAllFields();
         mFieldLeftErrorMsg.setValue(null);
@@ -374,18 +260,6 @@ public class ConversionViewModel extends AndroidViewModel {
             } else if (mConversionType.getValue().equals(mApplicationContext
                     .getResources().getString(R.string.text_lb_to_kg))) {
                 setFieldLabels(R.string.text_lb, R.string.text_kg);
-            } else if (mConversionType.getValue().equals(mApplicationContext
-                    .getResources().getString(R.string.text_gm_to_meq))) {
-                setFieldLabels(R.string.text_gm, R.string.text_meq);
-            } else if (mConversionType.getValue().equals(mApplicationContext
-                    .getResources().getString(R.string.text_mg_to_meq))) {
-                setFieldLabels(R.string.text_mg, R.string.text_meq);
-            } else if (mConversionType.getValue().equals(mApplicationContext
-                    .getResources().getString(R.string.text_gm_to_mmol))) {
-                setFieldLabels(R.string.text_gm, R.string.text_mmol);
-            } else if (mConversionType.getValue().equals(mApplicationContext
-                    .getResources().getString(R.string.text_mg_to_mmol))) {
-                setFieldLabels(R.string.text_mg, R.string.text_mmol);
             }
         }
     }
@@ -410,8 +284,6 @@ public class ConversionViewModel extends AndroidViewModel {
     @SuppressLint("unused")
     private void checkPersistenceAfterSystemInitProcessDeath() {
         String inputOutput = "Conv type: " + mConversionType.getValue()
-                + "\nElem mEq: " + mElementMeq.getValue()
-                + "\nElem mmol: " + mElementMmol.getValue()
                 + "\nLeft: " + mFieldLeft.getValue()
                 + "\nRight: " + mFieldRight.getValue();
 
