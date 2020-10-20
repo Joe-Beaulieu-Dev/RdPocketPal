@@ -18,6 +18,10 @@
     <dimen name="font_size_large">20sp</dimen>
     <dimen name="font_size_extra_large">24sp</dimen>
 
+    <!-- Ems -->
+    <integer name="ems_field_small">3</integer>
+    <integer name="ems_field_large">5</integer>
+
     <!-- Layout biases -->
     <integer name="bias_left">0</integer>
 </resources>
