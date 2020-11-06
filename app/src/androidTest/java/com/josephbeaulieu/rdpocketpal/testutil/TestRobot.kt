@@ -193,7 +193,7 @@ open class TestRobot {
         openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().targetContext)
         // open settings screen
-        onView(withText(R.string.text_settings)).perform(click())
+        onView(withText(R.string.menu_settings)).perform(click())
     }
     //endregion
 

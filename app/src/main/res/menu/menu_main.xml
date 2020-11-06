@@ -2,10 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Disclaimer -->
+    <item
+        android:id="@+id/main_menu_disclaimer"
+        android:title="@string/title_disclaimer"
+        app:showAsAction="never" />
+
     <!-- Settings -->
     <item
         android:id="@+id/main_menu_settings"
-        android:title="@string/text_settings"
+        android:title="@string/menu_settings"
         app:showAsAction="never" />
 
 </menu>

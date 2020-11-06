@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_large">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/disc_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_disclaimer_dialog"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size_extra_large"
+        app:layout_constraintBottom_toTopOf="@+id/disc_dialog_text_scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Disclaimer container ScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/disc_dialog_text_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/disc_dialog_btn_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disc_dialog_title">
+
+        <!-- Disclaimer Text -->
+        <TextView
+            android:id="@+id/disc_dialog_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_disclaimer"
+            android:textSize="@dimen/font_size_large" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Button Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/disc_dialog_btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disc_dialog_text_scrollView">
+
+        <!-- Agree button -->
+        <Button
+            android:id="@+id/disc_dialog_agree"
+            style="@style/PositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_agree"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/disc_dialog_decline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Decline button -->
+        <Button
+            android:id="@+id/disc_dialog_decline"
+            style="@style/NegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_decline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/disc_dialog_agree"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

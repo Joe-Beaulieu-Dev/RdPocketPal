@@ -45,6 +45,12 @@ class PreferenceRepository {
             listener.onCoroutineFinished(result)
         }
     }
+
+    fun getUserThroughDisclaimer(context: Context, listener: CoroutineCallbackListener) {
+        CoroutineScope(Dispatchers.Main).launch {
+            listener.onCoroutineFinished(getUserThroughDisclaimer(context))
+        }
+    }
     //endregion
 
     //region Kotlin Usage
@@ -129,4 +135,36 @@ class PreferenceRepository {
         }
     }
     //endregion
+
+    private suspend fun getUserThroughDisclaimer(context: Context): QueryResult<Boolean>? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                // get pref
+                val sharedPrefs = context.getSharedPreferences(
+                        context.getString(R.string.key_disclaimer_pref_file), Context.MODE_PRIVATE)
+                val pref = sharedPrefs.getBoolean(
+                        context.getString(R.string.key_user_through_disclaimer), false)
+
+                //return pref
+                QueryResult.Success(pref)
+            } catch (e: ClassCastException) {
+                e.printStackTrace()
+                QueryResult.Failure(e)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+                QueryResult.Failure(e)
+            }
+        }
+    }
+
+    fun setUserThroughDisclaimer(context: Context, isUserThroughDisclaimer: Boolean) {
+        val sharedPref = context.getSharedPreferences(
+                context.getString(R.string.key_disclaimer_pref_file)
+                , Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            putBoolean(context.getString(R.string.key_user_through_disclaimer)
+                    , isUserThroughDisclaimer)
+            apply()
+        }
+    }
 }
