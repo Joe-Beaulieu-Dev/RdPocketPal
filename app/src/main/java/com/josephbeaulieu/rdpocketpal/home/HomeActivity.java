@@ -1,6 +1,8 @@
 package com.josephbeaulieu.rdpocketpal.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,27 +14,33 @@ import com.josephbeaulieu.rdpocketpal.R;
 import com.josephbeaulieu.rdpocketpal.ad.BannerAd;
 import com.josephbeaulieu.rdpocketpal.disclaimer.DisclaimerActivity;
 import com.josephbeaulieu.rdpocketpal.disclaimer.DisclaimerDialogFragment;
-import com.josephbeaulieu.rdpocketpal.model.CoroutineCallbackListener;
-import com.josephbeaulieu.rdpocketpal.model.PreferenceRepository;
-import com.josephbeaulieu.rdpocketpal.model.QueryResult;
 import com.josephbeaulieu.rdpocketpal.settings.SettingsActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeActivity extends AppCompatActivity implements
-        HomeButtonAdapter.HomeButtonListener, CoroutineCallbackListener {
+        HomeButtonAdapter.HomeButtonListener {
+
+    private HomeViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // set up ViewModel
+        mViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
+                .get(HomeViewModel.class);
+
         // query prefs to see if the Disclaimer should be shown, and show if necessary
-        queryIfShowDisclaimer();
+        setUpDisclaimer();
         // set up Banner Ad
         setUpBannerAd();
         // set up RecyclerView
@@ -60,13 +68,26 @@ public class HomeActivity extends AppCompatActivity implements
         }
     }
 
-    private void queryIfShowDisclaimer() {
-        PreferenceRepository repo = new PreferenceRepository();
-        repo.getUserThroughDisclaimer(this, this);
+    private void setUpDisclaimer() {
+        getLifecycle().addObserver(mViewModel);
+        SharedPreferences prefs = getSharedPreferences(
+                getString(R.string.key_disclaimer_pref_file),
+                Context.MODE_PRIVATE);
+        prefs.registerOnSharedPreferenceChangeListener(mViewModel);
+        observeDisclaimerStatus();
     }
 
-    private void showDisclaimerIfNecessary(boolean isUserThroughDisclaimer) {
-        if (!isUserThroughDisclaimer && !isDisclaimerShowing()) {
+    private void observeDisclaimerStatus() {
+        mViewModel.getDisclaimerAcceptedThisSession().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean disclaimerAcceptedThisSession) {
+                showDisclaimerIfNecessary(disclaimerAcceptedThisSession);
+            }
+        });
+    }
+
+    private void showDisclaimerIfNecessary(boolean disclaimerAcceptedThisSession) {
+        if (!disclaimerAcceptedThisSession && !isDisclaimerShowing()) {
             showDisclaimer();
         }
     }
@@ -86,6 +107,13 @@ public class HomeActivity extends AppCompatActivity implements
                 .show(getSupportFragmentManager(), DisclaimerDialogFragment.Companion.getTag());
     }
 
+    private void setUpBannerAd() {
+        BannerAd bannerAd = new BannerAd(this
+                , (FrameLayout) findViewById(R.id.home_banner_ad_container));
+        getLifecycle().addObserver(bannerAd);
+        bannerAd.loadBanner();
+    }
+
     private void setUpRecyclerView() {
         View root = findViewById(android.R.id.content);
 
@@ -94,30 +122,8 @@ public class HomeActivity extends AppCompatActivity implements
         homeButtons.setAdapter(new HomeButtonAdapter(this));
     }
 
-    private void setUpBannerAd() {
-        BannerAd bannerAd = new BannerAd(this
-                , (FrameLayout) findViewById(R.id.home_banner_ad_container));
-        getLifecycle().addObserver(bannerAd);
-        bannerAd.loadBanner();
-    }
-
     @Override
     public void onClick(Class clazz) {
         startActivity(new Intent(this, clazz));
-    }
-
-    @Override
-    public <T> void onCoroutineFinished(QueryResult<T> result) {
-        if (result instanceof QueryResult.Success
-                && (((QueryResult.Success<T>) result).getData() instanceof Boolean) ) {
-            boolean isUserThroughDisclaimer = (Boolean) ((QueryResult.Success<T>) result).getData();
-            showDisclaimerIfNecessary(isUserThroughDisclaimer);
-        } else {
-            // if there was an issue retrieving the disclaimer pref, set
-            // the flag to false and show the disclaimer anyways
-            PreferenceRepository repo = new PreferenceRepository();
-            repo.setUserThroughDisclaimer(this, false);
-            showDisclaimer();
-        }
     }
 }

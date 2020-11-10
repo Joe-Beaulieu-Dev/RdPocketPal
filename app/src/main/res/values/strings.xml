@@ -31,7 +31,7 @@
     <string name="key_disclaimer_pref_file">com.josephbeaulieu.rdpocketpal.prefs.disclaimer</string>
     <string name="key_numeric_scale">numericScale</string>
     <string name="key_decimal_reduction_method">decimalReductionMethod</string>
-    <string name="key_user_through_disclaimer">userThroughDisclaimer</string>
+    <string name="key_disclaimer_accepted_this_session">disclaimerAcceptedThisSession</string>
     <string name="key_rounding">Rounding</string>
     <string name="key_truncation">Truncation</string>
     <string-array name="decimal_reduction_method_choices">

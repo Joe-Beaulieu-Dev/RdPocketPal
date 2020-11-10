@@ -11,7 +11,7 @@ import java.io.IOException
 
 class PreferenceRepository {
 
-    //region Java Usage
+    //region Numeric
     /**
      * Get Decimal Reduction Method and Numeric Scale preferences. Intended for usage in Java code.
      * Launches a new coroutine on [Dispatchers.Main] and utilizes a callback to return value.
@@ -46,14 +46,6 @@ class PreferenceRepository {
         }
     }
 
-    fun getUserThroughDisclaimer(context: Context, listener: CoroutineCallbackListener) {
-        CoroutineScope(Dispatchers.Main).launch {
-            listener.onCoroutineFinished(getUserThroughDisclaimer(context))
-        }
-    }
-    //endregion
-
-    //region Kotlin Usage
     /**
      * Get Decimal Reduction Method and Numeric Scale preferences, which are returned in a
      * [QueryResult.Success<UserPreferences>] object. If any preference cannot be retrieved, then
@@ -136,14 +128,15 @@ class PreferenceRepository {
     }
     //endregion
 
-    private suspend fun getUserThroughDisclaimer(context: Context): QueryResult<Boolean>? {
+    //region Disclaimer
+    suspend fun getDisclaimerAcceptedThisSession(context: Context): QueryResult<Boolean>? {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 // get pref
                 val sharedPrefs = context.getSharedPreferences(
                         context.getString(R.string.key_disclaimer_pref_file), Context.MODE_PRIVATE)
                 val pref = sharedPrefs.getBoolean(
-                        context.getString(R.string.key_user_through_disclaimer), false)
+                        context.getString(R.string.key_disclaimer_accepted_this_session), false)
 
                 //return pref
                 QueryResult.Success(pref)
@@ -157,14 +150,15 @@ class PreferenceRepository {
         }
     }
 
-    fun setUserThroughDisclaimer(context: Context, isUserThroughDisclaimer: Boolean) {
+    fun setDisclaimerAcceptedThisSession(context: Context, disclaimerAcceptedThisSession: Boolean) {
         val sharedPref = context.getSharedPreferences(
                 context.getString(R.string.key_disclaimer_pref_file)
                 , Context.MODE_PRIVATE)
         with (sharedPref.edit()) {
-            putBoolean(context.getString(R.string.key_user_through_disclaimer)
-                    , isUserThroughDisclaimer)
+            putBoolean(context.getString(R.string.key_disclaimer_accepted_this_session)
+                    , disclaimerAcceptedThisSession)
             apply()
         }
     }
+    //endregion
 }

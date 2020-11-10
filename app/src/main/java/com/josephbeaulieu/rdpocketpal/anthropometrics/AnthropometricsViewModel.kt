@@ -40,6 +40,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     val mHeightUnitLabel =  MutableLiveData<String>()
     val mIbwUnitLabel = MutableLiveData<String>()
     val mAdjustedIbwUnitLabel = MutableLiveData<String>()
+    //endregion
 
     //region SavedState data
     private var mState: SavedStateHandle = savedStateHandle

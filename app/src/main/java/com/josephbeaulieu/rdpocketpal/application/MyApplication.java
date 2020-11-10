@@ -26,6 +26,6 @@ public class MyApplication extends MultiDexApplication {
 
     public void resetUserThroughDisclaimerPref() {
         PreferenceRepository repo = new PreferenceRepository();
-        repo.setUserThroughDisclaimer(this, false);
+        repo.setDisclaimerAcceptedThisSession(this, false);
     }
 }

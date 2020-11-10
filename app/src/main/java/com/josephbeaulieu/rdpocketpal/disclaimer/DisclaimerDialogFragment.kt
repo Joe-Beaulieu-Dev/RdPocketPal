@@ -59,7 +59,7 @@ class DisclaimerDialogFragment : DialogFragment() {
         // set the flag for the User passing through the Disclaimer into the app
         if (mContext != null) {
             val repo = PreferenceRepository()
-            repo.setUserThroughDisclaimer(mContext!!, true)
+            repo.setDisclaimerAcceptedThisSession(mContext!!, true)
         }
         dismiss()
     }
