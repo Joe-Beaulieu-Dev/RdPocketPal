@@ -4,6 +4,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.josephbeaulieu.rdpocketpal.disclaimer.withDisclaimerDialogFragmentRobot
 import com.josephbeaulieu.rdpocketpal.settings.withSettingsRobot
 import org.junit.After
 import org.junit.Before
@@ -22,6 +23,9 @@ class HomeTest {
     @Before
     fun before() {
         Intents.init()
+        withDisclaimerDialogFragmentRobot {
+            clickAgree()
+        }
     }
 
     @After

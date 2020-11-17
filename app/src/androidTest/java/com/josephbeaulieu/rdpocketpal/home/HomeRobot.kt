@@ -1,6 +1,7 @@
 package com.josephbeaulieu.rdpocketpal.home
 
 import android.app.Activity
+import android.app.Instrumentation
 import androidx.test.rule.ActivityTestRule
 import com.josephbeaulieu.rdpocketpal.R
 import com.josephbeaulieu.rdpocketpal.anthropometrics.AnthropometricsActivity
@@ -34,6 +35,12 @@ class HomeRobot : TestRobot() {
     //endregion
 
     //region Check Activities
+    fun checkHomeActivityIsDisplayed(instrumentation: Instrumentation) {
+        // have to check like this in the context of the HomeActivity because Intents.intended()
+        // will not detect the "initially launched" Activity
+        checkActionBarTitle(instrumentation, R.string.app_name)
+    }
+
     fun checkPredictiveEquationsActivityIsDisplayed() {
         checkActivityIsDisplayed(PredictiveEquationsActivity::class.java.name)
     }

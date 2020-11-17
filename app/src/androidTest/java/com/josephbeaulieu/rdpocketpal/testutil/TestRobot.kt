@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Instrumentation
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
@@ -73,12 +74,30 @@ open class TestRobot {
         return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(withText(text)))
     }
 
+    fun checkActionBarTitle(instrumentation: Instrumentation, @StringRes stringId: Int) {
+        val res: Resources = instrumentation.targetContext.resources
+        val actionbarId: Int = res.getIdentifier("action_bar_container"
+                , "id"
+                , instrumentation.targetContext.packageName)
+        onView(withId(actionbarId)).check(matches(hasDescendant(withText(stringId))))
+    }
+    //endregion
+
+    //region View visibility
+    protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction {
+        return onView(withId(viewId)).check(matches(isDisplayed()))
+    }
+
     protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).check(matches(isDisplayed()))
     }
 
     protected fun checkViewWithTextIsDisplayedNoScroll(text: String): ViewInteraction {
         return onView(withText(text)).check(matches(isDisplayed()))
+    }
+
+    protected fun checkViewWithTextIsNotDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId)).check(doesNotExist())
     }
     //endregion
 
@@ -106,8 +125,17 @@ open class TestRobot {
         return onView(withId(viewId)).perform(nestedScrollTo(), click())
     }
 
-    protected fun clickViewTextNoScroll(@IdRes viewId: Int): ViewInteraction {
-        return onView(withText(viewId)).perform(click())
+    protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction {
+        return onView(withId(viewId)).perform(click())
+    }
+
+    protected fun clickViewTextNoScroll(@StringRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId)).perform(click())
+    }
+
+    fun pressUpNavigation() {
+        onView(withContentDescription(androidx.appcompat.R.string.abc_action_bar_up_description))
+                .perform(click())
     }
 
     fun pressBackButton() {
