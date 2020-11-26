@@ -22,7 +22,7 @@
             android:id="@+id/disclaimer_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_disclaimer"
+            android:text="@string/text_disclaimer_main_body"
             android:textSize="@dimen/font_size_large" />
 
     </androidx.core.widget.NestedScrollView>
