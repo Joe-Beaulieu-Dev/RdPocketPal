@@ -1,5 +1,6 @@
 package com.josephbeaulieu.rdpocketpal.disclaimer
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.josephbeaulieu.rdpocketpal.R
 import com.josephbeaulieu.rdpocketpal.model.PreferenceRepository
+
 
 class DisclaimerDialogFragment : DialogFragment() {
 
@@ -26,6 +28,17 @@ class DisclaimerDialogFragment : DialogFragment() {
 
         fun getTag(): String {
             return TAG
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // make disclaimer take up the entire screen
+        val dialog: Dialog? = dialog
+        if (dialog != null) {
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT
+                    , ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }
 
@@ -59,12 +72,13 @@ class DisclaimerDialogFragment : DialogFragment() {
         // set the flag for the User passing through the Disclaimer into the app
         if (mContext != null) {
             val repo = PreferenceRepository()
-            repo.setDisclaimerAcceptedThisSession(mContext!!, true)
+            repo.setIfDisclaimerAccepted(mContext!!, true)
         }
         dismiss()
     }
 
     private fun onDeclineClicked() {
+        // kill app
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> activity?.finishAndRemoveTask()
             else -> activity?.finishAffinity()

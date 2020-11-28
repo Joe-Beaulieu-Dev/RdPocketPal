@@ -12,38 +12,38 @@ import kotlinx.coroutines.launch
 class HomeViewModel(application: Application) : AndroidViewModel(application)
         , LifecycleObserver, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private val mDisclaimerAcceptedThisSession = MutableLiveData<Boolean>()
+    private val mDisclaimerAccepted = MutableLiveData<Boolean>()
     private var mApplicationContext: Context = application.applicationContext
 
-    private fun queryIfDisclaimerAcceptedThisSession() {
+    private fun queryIfDisclaimerAccepted() {
         viewModelScope.launch {
-            when (val pref = PreferenceRepository().getDisclaimerAcceptedThisSession(getApplication())) {
+            when (val pref = PreferenceRepository().getIfDisclaimerAccepted(getApplication())) {
                 is QueryResult.Success<Boolean> -> {
-                    mDisclaimerAcceptedThisSession.value = pref.data
+                    mDisclaimerAccepted.value = pref.data
                 }
                 else -> {
                     // If there is an issue, set the value to false and return false. The Disclaimer
                     // should always be shown if there is any question as to if the User has
                     // accepted it.
-                    PreferenceRepository().setDisclaimerAcceptedThisSession(mApplicationContext, false)
-                    mDisclaimerAcceptedThisSession.value = false
+                    PreferenceRepository().setIfDisclaimerAccepted(mApplicationContext, false)
+                    mDisclaimerAccepted.value = false
                 }
             }
         }
     }
 
-    fun getDisclaimerAcceptedThisSession(): LiveData<Boolean> {
-        return mDisclaimerAcceptedThisSession
+    fun getIfDisclaimerAccepted(): LiveData<Boolean> {
+        return mDisclaimerAccepted
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        queryIfDisclaimerAcceptedThisSession()
+        queryIfDisclaimerAccepted()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == mApplicationContext.getString(R.string.key_disclaimer_accepted_this_session)) {
-            queryIfDisclaimerAcceptedThisSession()
+        if (key == mApplicationContext.getString(R.string.key_disclaimer_accepted)) {
+            queryIfDisclaimerAccepted()
         }
     }
 }

@@ -31,7 +31,7 @@
     <string name="key_disclaimer_pref_file">com.josephbeaulieu.rdpocketpal.prefs.disclaimer</string>
     <string name="key_numeric_scale">numericScale</string>
     <string name="key_decimal_reduction_method">decimalReductionMethod</string>
-    <string name="key_disclaimer_accepted_this_session">disclaimerAcceptedThisSession</string>
+    <string name="key_disclaimer_accepted">disclaimerAccepted</string>
     <string name="key_rounding">Rounding</string>
     <string name="key_truncation">Truncation</string>
     <string-array name="decimal_reduction_method_choices">
@@ -126,8 +126,10 @@
 
     <!-- Disclaimer -->
     <string name="title_disclaimer_dialog">Disclaimer</string>
-    <string name="text_agree">Agree</string>
-    <string name="text_decline">Decline &amp; Exit</string>
+    <string name="text_agree">Continue</string>
+    <string name="text_decline">Exit App</string>
+    <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
+        read and understand the Disclaimer.</string>
     <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
         OF THE APPLICATION, YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the
         application, including without limitation, all data, information, text, graphics, links and

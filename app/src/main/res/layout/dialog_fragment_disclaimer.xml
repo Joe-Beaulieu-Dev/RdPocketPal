@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@+id/disc_dialog_btn_container"
+        app:layout_constraintBottom_toTopOf="@+id/disc_dialog_read_and_understand"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/disc_dialog_title">
@@ -39,6 +39,20 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!-- User read and understands text -->
+    <TextView
+        android:id="@+id/disc_dialog_read_and_understand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:text="@string/text_read_and_understand"
+        app:layout_constraintBottom_toTopOf="@+id/disc_dialog_btn_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="@integer/bias_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disc_dialog_text_scrollView" />
+
     <!-- Button Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/disc_dialog_btn_container"
@@ -47,9 +61,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/disc_dialog_text_scrollView">
+        app:layout_constraintTop_toBottomOf="@+id/disc_dialog_read_and_understand">
 
-        <!-- Agree button -->
+        <!-- Exit button -->
+        <Button
+            android:id="@+id/disc_dialog_decline"
+            style="@style/NegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_decline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/disc_dialog_agree"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Continue button -->
         <Button
             android:id="@+id/disc_dialog_agree"
             style="@style/PositiveButtonStyle"
@@ -59,18 +86,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/disc_dialog_decline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Decline button -->
-        <Button
-            android:id="@+id/disc_dialog_decline"
-            style="@style/NegativeButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_decline"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/disc_dialog_agree"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

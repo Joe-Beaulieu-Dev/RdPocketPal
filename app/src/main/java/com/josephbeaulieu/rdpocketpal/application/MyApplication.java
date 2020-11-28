@@ -3,7 +3,6 @@ package com.josephbeaulieu.rdpocketpal.application;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.josephbeaulieu.rdpocketpal.model.PreferenceRepository;
 import com.josephbeaulieu.rdpocketpal.util.StethoInitializer;
 
 import androidx.multidex.MultiDexApplication;
@@ -20,12 +19,5 @@ public class MyApplication extends MultiDexApplication {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        // reset preference flag for if the User has passed through the disclaimer this session
-        resetUserThroughDisclaimerPref();
-    }
-
-    public void resetUserThroughDisclaimerPref() {
-        PreferenceRepository repo = new PreferenceRepository();
-        repo.setDisclaimerAcceptedThisSession(this, false);
     }
 }

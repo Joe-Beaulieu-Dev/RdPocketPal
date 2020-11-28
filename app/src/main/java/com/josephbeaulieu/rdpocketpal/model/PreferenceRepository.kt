@@ -129,14 +129,14 @@ class PreferenceRepository {
     //endregion
 
     //region Disclaimer
-    suspend fun getDisclaimerAcceptedThisSession(context: Context): QueryResult<Boolean>? {
+    suspend fun getIfDisclaimerAccepted(context: Context): QueryResult<Boolean>? {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 // get pref
                 val sharedPrefs = context.getSharedPreferences(
                         context.getString(R.string.key_disclaimer_pref_file), Context.MODE_PRIVATE)
                 val pref = sharedPrefs.getBoolean(
-                        context.getString(R.string.key_disclaimer_accepted_this_session), false)
+                        context.getString(R.string.key_disclaimer_accepted), false)
 
                 //return pref
                 QueryResult.Success(pref)
@@ -150,13 +150,12 @@ class PreferenceRepository {
         }
     }
 
-    fun setDisclaimerAcceptedThisSession(context: Context, disclaimerAcceptedThisSession: Boolean) {
+    fun setIfDisclaimerAccepted(context: Context, disclaimerAccepted: Boolean) {
         val sharedPref = context.getSharedPreferences(
                 context.getString(R.string.key_disclaimer_pref_file)
                 , Context.MODE_PRIVATE)
         with (sharedPref.edit()) {
-            putBoolean(context.getString(R.string.key_disclaimer_accepted_this_session)
-                    , disclaimerAcceptedThisSession)
+            putBoolean(context.getString(R.string.key_disclaimer_accepted), disclaimerAccepted)
             apply()
         }
     }

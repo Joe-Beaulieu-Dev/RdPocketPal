@@ -39,11 +39,12 @@ public class HomeActivity extends AppCompatActivity implements
                 ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
                 .get(HomeViewModel.class);
 
-        // query prefs to see if the Disclaimer should be shown, and show if necessary
+        setUpUi();
+    }
+
+    public void setUpUi() {
         setUpDisclaimer();
-        // set up Banner Ad
         setUpBannerAd();
-        // set up RecyclerView
         setUpRecyclerView();
     }
 
@@ -68,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements
         }
     }
 
+    //region Disclaimer
     private void setUpDisclaimer() {
         getLifecycle().addObserver(mViewModel);
         SharedPreferences prefs = getSharedPreferences(
@@ -78,16 +80,16 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     private void observeDisclaimerStatus() {
-        mViewModel.getDisclaimerAcceptedThisSession().observe(this, new Observer<Boolean>() {
+        mViewModel.getIfDisclaimerAccepted().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean disclaimerAcceptedThisSession) {
-                showDisclaimerIfNecessary(disclaimerAcceptedThisSession);
+            public void onChanged(Boolean disclaimerAccepted) {
+                showDisclaimerIfNecessary(disclaimerAccepted);
             }
         });
     }
 
-    private void showDisclaimerIfNecessary(boolean disclaimerAcceptedThisSession) {
-        if (!disclaimerAcceptedThisSession && !isDisclaimerShowing()) {
+    private void showDisclaimerIfNecessary(boolean disclaimerAccepted) {
+        if (!disclaimerAccepted && !isDisclaimerShowing()) {
             showDisclaimer();
         }
     }
@@ -106,6 +108,7 @@ public class HomeActivity extends AppCompatActivity implements
         DisclaimerDialogFragment.Companion.newInstance()
                 .show(getSupportFragmentManager(), DisclaimerDialogFragment.Companion.getTag());
     }
+    //endregion
 
     private void setUpBannerAd() {
         BannerAd bannerAd = new BannerAd(this
