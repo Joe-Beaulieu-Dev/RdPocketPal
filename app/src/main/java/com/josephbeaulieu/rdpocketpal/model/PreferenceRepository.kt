@@ -154,7 +154,7 @@ class PreferenceRepository {
         val sharedPref = context.getSharedPreferences(
                 context.getString(R.string.key_disclaimer_pref_file)
                 , Context.MODE_PRIVATE)
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putBoolean(context.getString(R.string.key_disclaimer_accepted), disclaimerAccepted)
             apply()
         }

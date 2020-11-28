@@ -7,6 +7,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.josephbeaulieu.rdpocketpal.home.HomeActivity
 import com.josephbeaulieu.rdpocketpal.home.withHomeRobot
+import com.josephbeaulieu.rdpocketpal.testutil.TestUtil
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,10 +21,28 @@ class DisclaimerDialogFragmentTest {
     var activityTestRule: ActivityTestRule<HomeActivity> =
             ActivityTestRule(HomeActivity::class.java)
 
+    @Before
+    fun before() {
+        TestUtil.setIfDisclaimerAccepted(
+                InstrumentationRegistry.getInstrumentation().targetContext, false)
+    }
+
     @Test
     fun checkDisclaimerDisplays_initialCreation() {
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
+        }
+    }
+
+    @Test
+    fun checkDisclaimerComponents_display() {
+        withDisclaimerDialogFragmentRobot {
+            checkDisclaimerDialogIsShowing()
+            checkTitleIsShowing()
+            checkDisclaimerTextIsShowing()
+            checkReadAnUnderstandTextIsShowing()
+            checkExitBtnIsShowing()
+            checkContinueBtnIsShowing()
         }
     }
 
@@ -38,10 +58,10 @@ class DisclaimerDialogFragmentTest {
     }
 
     @Test
-    fun checkDisclaimerDoesNotDisplay_afterAgree_rotation() {
+    fun checkDisclaimerDoesNotDisplay_afterContinue_rotation() {
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
-            clickAgree()
+            clickContinue()
             rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
             checkDisclaimerDialogIsNotShowing()
             rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
@@ -50,11 +70,11 @@ class DisclaimerDialogFragmentTest {
     }
 
     @Test
-    fun checkDisclaimerDoesNotDisplay_afterAgree_leaveActivityAndReturn() {
+    fun checkDisclaimerDoesNotDisplay_afterContinue_leaveActivityAndReturn() {
         Intents.init()
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
-            clickAgree()
+            clickContinue()
             withHomeRobot {
                 launchAnthropometrics(activityTestRule)
                 checkAnthropometricsActivityIsDisplayed()

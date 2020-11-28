@@ -64,8 +64,8 @@ class DisclaimerDialogFragment : DialogFragment() {
     }
 
     private fun setUpClickListeners(view: View) {
-        view.findViewById<Button>(R.id.disc_dialog_agree).setOnClickListener { onAgreeClicked() }
-        view.findViewById<Button>(R.id.disc_dialog_decline).setOnClickListener { onDeclineClicked() }
+        view.findViewById<Button>(R.id.disc_dialog_continue).setOnClickListener { onAgreeClicked() }
+        view.findViewById<Button>(R.id.disc_dialog_exit).setOnClickListener { onDeclineClicked() }
     }
 
     private fun onAgreeClicked() {

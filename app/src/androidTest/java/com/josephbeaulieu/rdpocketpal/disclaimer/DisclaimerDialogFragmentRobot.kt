@@ -6,12 +6,12 @@ import com.josephbeaulieu.rdpocketpal.testutil.TestRobot
 class DisclaimerDialogFragmentRobot : TestRobot() {
 
     //region Buttons
-    fun clickAgree() {
-        clickViewIdNoScroll(R.id.disc_dialog_agree)
+    fun clickContinue() {
+        clickViewIdNoScroll(R.id.disc_dialog_continue)
     }
 
-    fun clickDecline() {
-        clickViewIdNoScroll(R.id.disc_dialog_decline)
+    fun clickExit() {
+        clickViewIdNoScroll(R.id.disc_dialog_exit)
     }
     //endregion
 
@@ -22,6 +22,26 @@ class DisclaimerDialogFragmentRobot : TestRobot() {
 
     fun checkDisclaimerDialogIsNotShowing() {
         checkViewWithTextIsNotDisplayedNoScroll(R.string.title_disclaimer_dialog)
+    }
+
+    fun checkTitleIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_title)
+    }
+
+    fun checkDisclaimerTextIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_text)
+    }
+
+    fun checkReadAnUnderstandTextIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_read_and_understand)
+    }
+
+    fun checkExitBtnIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_exit)
+    }
+
+    fun checkContinueBtnIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_continue)
     }
     //endregion
 }

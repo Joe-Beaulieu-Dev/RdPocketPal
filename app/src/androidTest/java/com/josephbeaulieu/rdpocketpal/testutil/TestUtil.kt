@@ -37,4 +37,16 @@ object TestUtil {
             commit()
         }
     }
+
+    fun setIfDisclaimerAccepted(context: Context, disclaimerAccepted: Boolean) {
+        val prefs = context.getSharedPreferences(
+                context.getString(R.string.key_disclaimer_pref_file)
+                , Context.MODE_PRIVATE)
+
+        // set pref
+        with(prefs.edit()) {
+            putBoolean(context.getString(R.string.key_disclaimer_accepted), disclaimerAccepted)
+            apply()
+        }
+    }
 }

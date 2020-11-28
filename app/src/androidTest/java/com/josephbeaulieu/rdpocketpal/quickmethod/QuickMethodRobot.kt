@@ -33,30 +33,6 @@ open class QuickMethodRobot : TestRobot() {
     }
     //endregion
 
-    //region Preferences
-    fun setNumericScaleViaUi(scale: Int) {
-        // open preferences
-        openPreferences()
-        // set settings value
-        withSettingsRobot {
-            setDisplayedDecimalPlaces(scale)
-        }
-        // exit settings screen
-        pressBackButton()
-    }
-
-    fun setDecimalReductionMethodViaUi(@StringRes stringId: Int) {
-        // open preferences
-        openPreferences()
-        // set settings value
-        withSettingsRobot {
-            setDecimalReductionMethod(stringId)
-        }
-        // exit settings screen
-        pressBackButton()
-    }
-    //endregion
-
     //region Units
     fun setUnitMetric() {
         // click metric RadioButton
@@ -85,6 +61,7 @@ open class QuickMethodRobot : TestRobot() {
     }
     //endregion
 
+    //region Mass field entry/validation
     fun setAllFieldsProgrammatically(text: String) {
         setTextProgrammatically(R.id.qm_weight_editText, text)
         inCalories {
@@ -110,6 +87,31 @@ open class QuickMethodRobot : TestRobot() {
             checkAllProgrammaticallySetFields(text)
         }
     }
+    //endregion
+
+    //region Preferences
+    fun setNumericScaleViaUi(scale: Int) {
+        // open preferences
+        openPreferences()
+        // set settings value
+        withSettingsRobot {
+            setDisplayedDecimalPlaces(scale)
+        }
+        // exit settings screen
+        pressBackButton()
+    }
+
+    fun setDecimalReductionMethodViaUi(@StringRes stringId: Int) {
+        // open preferences
+        openPreferences()
+        // set settings value
+        withSettingsRobot {
+            setDecimalReductionMethod(stringId)
+        }
+        // exit settings screen
+        pressBackButton()
+    }
+    //endregion
 
     //region Robot builders
     fun inCalories(fn: CalorieRobot.() -> Unit) = CalorieRobot().apply(fn)

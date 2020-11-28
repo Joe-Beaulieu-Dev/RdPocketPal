@@ -3,13 +3,11 @@ package com.josephbeaulieu.rdpocketpal.home
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.josephbeaulieu.rdpocketpal.disclaimer.withDisclaimerDialogFragmentRobot
 import com.josephbeaulieu.rdpocketpal.settings.withSettingsRobot
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import com.josephbeaulieu.rdpocketpal.testutil.TestUtil
+import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -20,12 +18,18 @@ class HomeTest {
     var activityTestRule: ActivityTestRule<HomeActivity> =
             ActivityTestRule(HomeActivity::class.java)
 
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun beforeClass() {
+            TestUtil.setIfDisclaimerAccepted(
+                    InstrumentationRegistry.getInstrumentation().targetContext, true)
+        }
+    }
+
     @Before
     fun before() {
         Intents.init()
-        withDisclaimerDialogFragmentRobot {
-            clickAgree()
-        }
     }
 
     @After

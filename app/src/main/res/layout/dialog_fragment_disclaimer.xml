@@ -65,27 +65,27 @@
 
         <!-- Exit button -->
         <Button
-            android:id="@+id/disc_dialog_decline"
+            android:id="@+id/disc_dialog_exit"
             style="@style/NegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_decline"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/disc_dialog_agree"
+            app:layout_constraintEnd_toStartOf="@id/disc_dialog_continue"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Continue button -->
         <Button
-            android:id="@+id/disc_dialog_agree"
+            android:id="@+id/disc_dialog_continue"
             style="@style/PositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_agree"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/disc_dialog_decline"
+            app:layout_constraintStart_toEndOf="@id/disc_dialog_exit"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
