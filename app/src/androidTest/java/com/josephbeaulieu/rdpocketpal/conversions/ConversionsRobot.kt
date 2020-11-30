@@ -31,6 +31,12 @@ class ConversionsRobot : TestRobot() {
     }
     //endregion
 
+    //region Visibility
+    fun checkSettingsNoteIsShowing() {
+        checkViewWithIdIsDisplayedNoScroll(R.id.conv_settings_note)
+    }
+    //endregion
+
     //region Robot builders
     fun inInCm(fn: InCmRobot.() -> Unit) = InCmRobot().apply(fn)
 

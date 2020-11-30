@@ -43,6 +43,14 @@ class DisclaimerDialogFragmentTest {
             checkReadAnUnderstandTextIsShowing()
             checkExitBtnIsShowing()
             checkContinueBtnIsShowing()
+            // rotate screen and check again
+            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            checkDisclaimerDialogIsShowing()
+            checkTitleIsShowing()
+            checkDisclaimerTextIsShowing()
+            checkReadAnUnderstandTextIsShowing()
+            checkExitBtnIsShowing()
+            checkContinueBtnIsShowing()
         }
     }
 

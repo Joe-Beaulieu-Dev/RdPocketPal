@@ -31,6 +31,17 @@ class ConversionsTest {
     val activityRule: ActivityTestRule<ConversionActivity> =
             ActivityTestRule(ConversionActivity::class.java)
 
+    //region Visibility
+    @Test
+    fun settingsNote_isVisible() {
+        withConversionsRobot {
+            checkSettingsNoteIsShowing()
+            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            checkSettingsNoteIsShowing()
+        }
+    }
+    //endregion
+
     //region in to cm
     @Test
     fun inToCm_leftToRight_isCorrect() {

@@ -10,21 +10,31 @@
             type="com.josephbeaulieu.rdpocketpal.conversions.ConversionViewModel" />
     </data>
 
-    <!--
-         Master layout to wrap the ScrollView so it can
-         fill the screen, and the CardView can be centered
-    -->
+    <!-- Master layout for everything to bind to -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/conv_top_level_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ScrollView that holds the entire layout -->
+        <!-- Top Anchor -->
+        <View
+            android:id="@+id/conv_top_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/conv_scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <!-- ScrollView that holds the conversion components -->
         <androidx.core.widget.NestedScrollView
             android:id="@+id/conv_scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/conv_settings_note"
+            app:layout_constraintTop_toBottomOf="@+id/conv_top_anchor">
 
             <!-- Top level Conversion layout -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,6 +181,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <!-- Hard-coded Settings Note -->
+        <TextView
+            android:id="@+id/conv_settings_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center"
+            android:text="@string/text_conversion_settings_note"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conv_scrollView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
