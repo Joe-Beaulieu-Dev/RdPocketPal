@@ -132,15 +132,17 @@
     <string name="text_decline">Exit App</string>
     <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
         read and understand the Disclaimer.</string>
-    <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
-        OF THE APPLICATION, YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the
-        application, including without limitation, all data, information, text, graphics, links and
-        other materials are provided as a convenience to our application users and are meant to be
+    <string name="text_disclaimer">
+        <b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE OF THE APPLICATION,
+            YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the application,
+        including without limitation, all data, information, text, graphics, links and other
+        materials are provided as a convenience to our application users and are meant to be
         used for informational purposes only. We do not take responsibility for decisions taken by
-        the user based solely on the information provided in this application. It is recommended
-        that you first consult with your doctor about any dietary changes, especially if you are
-        pregnant or nursing or have any health issues such as diabetes, thyroid dysfunction, etc.,
-        as your health-care provider may need to adjust the medication you are taking.
+        the user based solely and/or partially on the information provided in this application. It
+        is recommended that you first consult with your doctor about any dietary changes,
+        especially if you are pregnant or nursing or have any health issues such as diabetes,
+        thyroid dysfunction, etc., as your health-care provider may need to adjust the medication
+        you are taking.
 
         \n\nThis application is not intended to diagnose, cure, mitigate, treat or prevent any
         disease, nor as a substitute for medical treatment, nor as an alternative to medical or
@@ -155,34 +157,35 @@
         \n\nThe resources listed on this application are not intended to be fully systematic or
         complete, nor does inclusion imply any endorsement or recommendation. We make no
         warranties, express or implied, about the value or utility for any purpose of the
-        information and resources contained in this application.  RD Pocket Pal shall have
-        no responsibility for any damage to your phone or tablet or loss of data that results
-        from your use of the application or its content.
+        information and resources contained in this application.  RD Pocket Pal shall have no
+        responsibility for any damage to your phone or tablet or loss of data that results from
+        your use of the application or its content.
 
         \n\nYou agree to hold harmless, Octrobi, LLC, and each of its officers, members, directors,
         employees, agents, and assigns from and against any and all claims, actions, demands,
         liabilities, judgements, and settlements, including without limitation, from any direct,
         indirect, incidental, consequential, special, exemplary, punitive, or any other claim you
         and/or any third-party may have and/or incur in connection with your use of this
-        application, including without limitation any economic harm, personal harm, lost profits,
-        damages to business, data or phone systems, or any damages whatsoever  resulting from
-        reliance on any content or resulting from any interruptions, work stoppages, phone or
-        tablet failures, deletion of files, errors, omissions, inaccuracies, defects, viruses,
-        delays, misuse, incorrect implementation, or mistakes of any kind. Under no circumstances
-        may the aforesaid Octrobi, LLC, or any of its officers, members, directors, employees,
-        agents, and assigns or the actions of any such entities or individuals be interpreted as
-        publishers, or their actions be interpreted as the actions of publishers, of the
-        information uploaded, downloaded, compiled, disseminated, or otherwise associated with
-        RD Pocket Pal pursuant to 47 U.S.C. § 230 of the Communications Decency Act.
+        application, including without limitation any economic harm, personal harm, injury, death,
+        partial or complete disability, lost profits, damages to business, data or phone systems,
+        or any damages whatsoever resulting from reliance on any content or resulting from any
+        interruptions, work stoppages, phone or tablet failures, deletion of files, errors,
+        omissions, inaccuracies, defects, viruses, delays, misuse, incorrect implementation, or
+        mistakes of any kind. Under no circumstances may the aforesaid Octrobi, LLC, or any of its
+        officers, members, directors, employees, agents, and assigns or the actions of any such
+        entities or individuals be interpreted as publishers, or their actions be interpreted as
+        the actions of publishers, of the information uploaded, downloaded, compiled, disseminated,
+        or otherwise associated with RD Pocket Pal pursuant to 47 U.S.C. § 230 of the
+        Communications Decency Act.
 
         \n\nThe application may include inaccuracies and typographical errors. Changes and
         improvements are periodically made to the application and the information therein. We do
         not warrant or assume any legal liability or responsibility for the completeness, or
         usefulness of any information provided.
 
-        \n\nThis application is not intended to replace clinical judgment and professional expertise
-        in estimating needs or the prescribing of enteral or parenteral nutrition, but is meant as
-        an aid for making general, routine calculations.
+        \n\nThis application is not intended to replace clinical judgment and professional
+        expertise in estimating needs or the prescribing of enteral or parenteral nutrition, but is
+        meant as an aid for making general, routine calculations.
 
         \n\nUnder no circumstances may the aforesaid Octrobi, LLC, or any of its officers, members,
         directors, employees, agents, and assigns or the actions of any such entities or
