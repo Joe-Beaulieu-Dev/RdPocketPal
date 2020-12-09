@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.josephbeaulieu.rdpocketpal">
+    package="com.octrobi.rdpocketpal">
 
     <!-- For loading banner ad loadAd() -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- App -->
     <application
-        android:name=".application.MyApplication"
+        android:name="com.octrobi.rdpocketpal.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +18,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/APP_ID" />
         <!-- Home -->
-        <activity android:name=".home.HomeActivity">
+        <activity android:name="com.octrobi.rdpocketpal.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,31 +27,31 @@
         </activity>
         <!-- Predictive Equations -->
         <activity
-            android:name=".predictiveequations.PredictiveEquationsActivity"
+            android:name="com.octrobi.rdpocketpal.predictiveequations.PredictiveEquationsActivity"
             android:label="@string/title_predictive_equations"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.octrobi.rdpocketpal.home.HomeActivity" />
         <!-- Quick Method -->
         <activity
-            android:name=".quickmethod.QuickMethodActivity"
+            android:name="com.octrobi.rdpocketpal.quickmethod.QuickMethodActivity"
             android:label="@string/title_quick_method"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.octrobi.rdpocketpal.home.HomeActivity" />
         <!-- Anthropometrics -->
         <activity
-            android:name=".anthropometrics.AnthropometricsActivity"
+            android:name="com.octrobi.rdpocketpal.anthropometrics.AnthropometricsActivity"
             android:label="@string/title_anthropometrics"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.octrobi.rdpocketpal.home.HomeActivity" />
         <!-- Conversions -->
         <activity
-            android:name=".conversions.ConversionActivity"
+            android:name="com.octrobi.rdpocketpal.conversions.ConversionActivity"
             android:label="@string/title_conversions"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName="com.octrobi.rdpocketpal.home.HomeActivity" />
         <!-- Disclaimer -->
         <activity
-            android:name=".disclaimer.DisclaimerActivity"
+            android:name="com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity"
             android:label="@string/title_disclaimer" />
         <!-- Settings -->
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.octrobi.rdpocketpal.settings.SettingsActivity"
             android:label="@string/title_settings" />
     </application>
 

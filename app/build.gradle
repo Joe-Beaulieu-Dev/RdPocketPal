@@ -11,7 +11,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.josephbeaulieu.rdpocketpal"
+        applicationId "com.octrobi.rdpocketpal"
         minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
