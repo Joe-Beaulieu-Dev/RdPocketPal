@@ -132,11 +132,10 @@
     <string name="text_decline">Exit App</string>
     <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
         read and understand the Disclaimer.</string>
-    <string name="text_disclaimer">
-        <b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE OF THE APPLICATION,
-            YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the application,
-        including without limitation, all data, information, text, graphics, links and other
-        materials are provided as a convenience to our application users and are meant to be
+    <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
+        OF THE APPLICATION, YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the
+        application, including without limitation, all data, information, text, graphics, links and
+        other materials are provided as a convenience to our application users and are meant to be
         used for informational purposes only. We do not take responsibility for decisions taken by
         the user based solely and/or partially on the information provided in this application. It
         is recommended that you first consult with your doctor about any dietary changes,
