@@ -5,17 +5,23 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Padding -->
-    <dimen name="padding_cardview">8dp</dimen>
+    <dimen name="padding_cardView">8dp</dimen>
 
     <!-- Margins -->
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_medium">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
-    <dimen name="margin_extra_large">32dp</dimen>
 
     <!-- Font sizes -->
     <dimen name="font_size_small">12sp</dimen>
     <dimen name="font_size_medium">16sp</dimen>
     <dimen name="font_size_large">20sp</dimen>
     <dimen name="font_size_extra_large">24sp</dimen>
+
+    <!-- Ems -->
+    <integer name="ems_field_small">3</integer>
+    <integer name="ems_field_large">5</integer>
+
+    <!-- Layout biases -->
+    <integer name="bias_left">0</integer>
 </resources>

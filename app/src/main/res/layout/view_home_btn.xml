@@ -5,25 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--    CardView for HomeButtons-->
+    <!-- CardView for HomeButtons -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:contentPadding="@dimen/padding_cardview"
+        app:contentPadding="@dimen/padding_cardView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        Contains the image and text for the HomeButton-->
+        <!-- Contains the image and text for the HomeButton -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_medium"
             android:paddingBottom="@dimen/margin_medium">
 
-            <!--            HomeButton image-->
+            <!--
+                 HomeButton image
+                 Ignoring ContentDescription because View is
+                 used multiple times with different images
+            -->
             <ImageView
                 android:id="@+id/btn_home_icon"
                 android:layout_width="wrap_content"
@@ -32,18 +36,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_anthropometrics_purple_48dp" />
 
-            <!--            HomeButton text-->
+            <!-- HomeButton text -->
             <TextView
                 android:id="@+id/btn_home_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/matte_black"
+                android:textSize="@dimen/font_size_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_home_icon"
-                android:textSize="@dimen/font_size_medium"
                 tools:text="@string/btn_anthropometrics" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

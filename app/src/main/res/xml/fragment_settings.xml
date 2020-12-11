@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Numeric Preferences -->
+    <PreferenceCategory
+        android:title="@string/text_numeric"
+        app:allowDividerBelow="false"
+        app:iconSpaceReserved="false">
+
+        <!-- Numeric Scale -->
+        <com.octrobi.rdpocketpal.settings.NumberPickerPreference
+            android:defaultValue="2"
+            android:key="@string/key_numeric_scale"
+            android:title="@string/text_numeric_scale"
+            app:iconSpaceReserved="false"
+            app:maxValue="5"
+            app:minValue="0"
+            app:wrapSelectorWheel="true" />
+
+        <!-- Rounding Method -->
+        <ListPreference
+            android:defaultValue="@string/key_rounding"
+            android:entries="@array/decimal_reduction_method_choices"
+            android:entryValues="@array/decimal_reduction_method_choices"
+            android:key="@string/key_decimal_reduction_method"
+            android:title="@string/text_decimal_reduction_method"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

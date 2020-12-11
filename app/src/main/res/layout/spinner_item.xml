@@ -7,9 +7,6 @@
     android:ellipsize="marquee"
     android:singleLine="true"
     android:textAlignment="inherit"
-    android:textSize="@dimen/font_size_large"
     android:textColor="@color/black"
-    tools:text="Mifflin St. Jear" />
-
-    <!-- Original Android style in simple_spinner_item.xml -->
-    <!-- style="?android:attr/spinnerItemStyle" -->
+    android:textSize="@dimen/font_size_large"
+    tools:text="Sample item" />

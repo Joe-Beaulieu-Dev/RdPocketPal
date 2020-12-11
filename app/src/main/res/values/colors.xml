@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!-- Base colors -->
+    <color name="colorPrimary">#5213ab</color>
+    <color name="colorPrimaryDark">#320e81</color>
+    <color name="colorAccent">#118e81</color>
+    <color name="windowBackground">#bebebe</color>
+    <color name="headerBackground">#eeeeee</color>
+
+    <!-- Standalone colors -->
+    <color name="black">#000000</color>
+    <color name="matte_black">#383838</color>
+    <color name="darkGrey">#939393</color>
     <color name="grey">#D3D3D3</color>
     <color name="lightGrey">#E9E9E9</color>
-    <color name="darkGrey">#939393</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="pink">#ff538d</color>
 
+    <!-- CardView Colors -->
+    <color name="cardViewBackgroundLight">#f7f7f7</color>
 
-    <color name="ripple_light_grey">#ebe5f7</color>
-
-    <!-- Original pink -->
-    <!-- <color name="pink">#FF4081</color> -->
+    <!-- Button -->
+    <color name="btnPink">#c33061</color>
+    <color name="btnGreen">#118e81</color>
+    <color name="rippleLightGrey">#ebe5f7</color>
 </resources>

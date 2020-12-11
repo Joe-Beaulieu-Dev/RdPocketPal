@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.octrobi.rdpocketpal.conversions.ConversionViewModel" />
+    </data>
+
+    <!-- Master layout for everything to bind to -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conv_top_level_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Top Anchor -->
+        <View
+            android:id="@+id/conv_top_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/conv_scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <!-- ScrollView that holds the conversion components -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/conv_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/conv_settings_note"
+            app:layout_constraintTop_toBottomOf="@+id/conv_top_anchor">
+
+            <!-- Top level Conversion layout -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/conv_internal_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".conversions.ConversionActivity">
+
+                <!-- CardView that holds the conversion area -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/conv_cardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Conversion layout -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/conv_conversion_internal_cardView_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_large">
+
+                        <!--
+                            **************
+                            ** Spinners **
+                            **************
+                         -->
+
+                        <!-- Conversion type Spinner -->
+                        <Spinner
+                            android:id="@+id/conv_conversion_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toTopOf="@id/conv_field_left"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:selectedSpinnerItem="@={viewModel.mConversionType}"
+                            tools:listitem="@layout/spinner_item" />
+
+                        <!--
+                            ************
+                            ** Fields **
+                            ************
+                         -->
+
+                        <!-- Left field -->
+                        <EditText
+                            android:id="@+id/conv_field_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:afterTextChanged="@{() -> viewModel.onLeftFieldChanged(convFieldLeft)}"
+                            android:ems="@integer/ems_field_large"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mFieldLeft}"
+                            app:errorMsg="@={viewModel.mFieldLeftErrorMsg}"
+                            app:layout_constraintEnd_toStartOf="@id/conv_field_left_label"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/conv_conversion_spinner"
+                            tools:ignore="LabelFor" />
+
+                        <!-- Left field label -->
+                        <TextView
+                            android:id="@+id/conv_field_left_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.mFieldLeftLabel}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/conv_field_left"
+                            app:layout_constraintEnd_toStartOf="@id/conv_dual_arrows"
+                            app:layout_constraintStart_toEndOf="@id/conv_field_left"
+                            tools:text="@string/text_in" />
+
+                        <!--
+                            ************
+                            ** Arrows **
+                            ************
+                         -->
+
+                        <ImageView
+                            android:id="@+id/conv_dual_arrows"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_medium"
+                            android:layout_marginEnd="@dimen/margin_medium"
+                            android:src="@drawable/ic_compare_arrows_grey_24dp"
+                            app:layout_constraintBottom_toBottomOf="@id/conv_field_left"
+                            app:layout_constraintEnd_toStartOf="@id/conv_field_right"
+                            app:layout_constraintStart_toEndOf="@id/conv_field_left_label"
+                            app:layout_constraintTop_toTopOf="@id/conv_field_left"
+                            tools:ignore="ContentDescription" />
+
+                        <!-- Right field -->
+                        <EditText
+                            android:id="@+id/conv_field_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:afterTextChanged="@{() -> viewModel.onRightFieldChanged(convFieldRight)}"
+                            android:ems="@integer/ems_field_large"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.mFieldRight}"
+                            app:errorMsg="@={viewModel.mFieldRightErrorMsg}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/conv_field_left"
+                            app:layout_constraintEnd_toStartOf="@id/conv_field_right_label"
+                            app:layout_constraintStart_toEndOf="@id/conv_dual_arrows"
+                            tools:ignore="LabelFor" />
+
+                        <!-- Right field label -->
+                        <TextView
+                            android:id="@+id/conv_field_right_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.mFieldRightLabel}"
+                            app:layout_constraintBaseline_toBaselineOf="@id/conv_field_right"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/conv_field_right"
+                            tools:text="@string/text_cm" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!--
+                    *************
+                    ** Buttons **
+                    *************
+                -->
+
+                <!-- Clear button -->
+                <Button
+                    android:id="@+id/conv_clear_btn"
+                    style="@style/ClearBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:onClick="@{() -> viewModel.onClearClicked()}"
+                    android:text="@string/text_clear"
+                    app:layout_constraintEnd_toEndOf="@id/conv_cardView"
+                    app:layout_constraintTop_toBottomOf="@id/conv_cardView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Hard-coded Settings Note -->
+        <TextView
+            android:id="@+id/conv_settings_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center"
+            android:text="@string/text_conversion_settings_note"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conv_scrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

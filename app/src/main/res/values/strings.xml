@@ -1,19 +1,43 @@
 <resources>
+    <!-- App name -->
     <string name="app_name">RD Pocket Pal</string>
-
-    <!-- Home Buttons -->
-    <string name="btn_predictive_equations">Predictive\nEquations</string>
-    <string name="btn_quick_method">Quick\nMethod</string>
-    <string name="btn_anthropometrics">Anthropometrics\n</string>
-    <string name="btn_parenteral_nutrition">Parenteral\nNutrition</string>
-    <string name="btn_conversions">Conversions\n</string>
 
     <!-- Activity Names -->
     <string name="title_predictive_equations">Predictive Equations</string>
     <string name="title_quick_method">Quick Method</string>
     <string name="title_anthropometrics">Anthropometrics</string>
-    <string name="title_parenteral_nutrition">Parenteral Nutrition</string>
     <string name="title_conversions">Conversions</string>
+    <string name="title_disclaimer">Disclaimer</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="btn_predictive_equations">Predictive\nEquations</string>
+    <string name="btn_quick_method">Quick\nMethod</string>
+    <string name="btn_anthropometrics">Anthropometrics\n</string>
+    <string name="btn_conversions">Conversions\n</string>
+
+    <!-- Main Menu -->
+    <string name="menu_disclaimer">Disclaimer</string>
+    <string name="menu_settings">Settings</string>
+    <string name="text_already_viewing_disclaimer">You\'re already viewing the Disclaimer ;)</string>
+    <string name="text_already_viewing_settings">You\'re already viewing the Settings ;)</string>
+
+    <!-- Settings -->
+    <string name="text_numeric">Numeric</string>
+    <string name="text_numeric_scale">Displayed Decimal Places</string>
+    <string name="text_numeric_scale_desc">digits will be displayed after the decimal point in all results</string>
+    <string name="text_decimal_reduction_method">Decimal Reduction Method</string>
+    <!-- Preference keys -->
+    <string name="key_disclaimer_pref_file">com.octrobi.rdpocketpal.prefs.disclaimer</string>
+    <string name="key_numeric_scale">numericScale</string>
+    <string name="key_decimal_reduction_method">decimalReductionMethod</string>
+    <string name="key_disclaimer_accepted">disclaimerAccepted</string>
+    <string name="key_rounding">Rounding</string>
+    <string name="key_truncation">Truncation</string>
+    <string-array name="decimal_reduction_method_choices">
+        <item>@string/key_rounding</item>
+        <item>@string/key_truncation</item>
+    </string-array>
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>
@@ -26,34 +50,35 @@
     <string name="text_tmax">Tmax:</string>
     <string name="text_heart_rate">HR:</string>
     <string name="text_ve">Ve:</string>
-    <string name="text_activity_level_min">Activity level min:</string>
-    <string name="text_activity_level_max">Activity level max:</string>
+    <string name="text_activity_factor_min">Activity factor min:</string>
+    <string name="text_activity_factor_max">Activity factor max:</string>
     <string name="text_bmr">BMR:</string>
     <string name="text_calorie_min">Calorie min:</string>
     <string name="text_calorie_max">Calorie max:</string>
-    <string name="mifflin_st_jear">Mifflin St. Jear</string>
-    <string name="harris_benedict">Harris Benedict</string>
+    <string name="mifflin_st_jeor">Mifflin-St. Jeor</string>
+    <string name="harris_benedict">Harris-Benedict</string>
     <string name="penn_state_2003b">Penn State 2003b</string>
     <string name="penn_state_2010">Penn State 2010</string>
     <string name="brandi">Brandi</string>
     <string-array name="predictive_equations">
-        <item>@string/mifflin_st_jear</item>
+        <item>@string/mifflin_st_jeor</item>
         <item>@string/harris_benedict</item>
         <item>@string/penn_state_2003b</item>
         <item>@string/penn_state_2010</item>
         <item>@string/brandi</item>
     </string-array>
-    <string name="hint_celsius">&#xb0;C</string>
-    <string name="hint_fahrenheit">&#xb0;F</string>
-    <string name="hint_beats_per_minute">bpm</string>
-    <string name="hint_liters_per_minute">L/min</string>
-    <string name="hint_gallons_per_minute">gal/min</string>
+    <string name="text_celsius">&#xb0;C</string>
+    <string name="text_fahrenheit">&#xb0;F</string>
+    <string name="text_beats_per_minute">bpm</string>
+    <string name="text_liters_per_minute">L/min</string>
     <string name="text_kcals">kcals</string>
 
     <!-- Quick Method -->
     <string name="text_protein">Protein</string>
     <string name="text_fluids">Fluids</string>
     <string name="text_calories">Calories</string>
+    <string name="hint_min">min</string>
+    <string name="hint_max">max</string>
     <!-- Calories -->
     <string name="text_kcal_per_kilogram">kcal/kg</string>
     <string name="text_kcal_per_day">kcal/day</string>
@@ -64,22 +89,107 @@
     <string name="text_ml_per_kilogram">ml/kg</string>
     <string name="text_ml_per_day">ml/day</string>
 
+    <!-- Anthropometrics -->
+    <string name="text_bmi">BMI:</string>
+    <string name="text_ibw">IBW:</string>
+    <string name="text_percent_ibw">%IBW:</string>
+    <string name="text_adjusted_bw">Adj. BW:</string>
+    <string name="text_kg_per_m2">kg/m^2</string>
+    <string name="text_percent_sign">%</string>
+
+    <!-- Conversions -->
+    <string name="text_conversion_settings_note">All results on this screen will always be rounded
+        to 5 decimal places, regardless of User settings.</string>
+    <string name="text_in_to_cm">Inches &lt;=> Centimeters</string>
+    <string name="text_lb_to_kg">Pounds &lt;=> Kilograms</string>
+    <string-array name="conversion_list">
+        <item>@string/text_in_to_cm</item>
+        <item>@string/text_lb_to_kg</item>
+    </string-array>
+
     <!-- Global strings -->
     <string name="text_weight">Weight:</string>
     <string name="text_calculate">Calculate</string>
     <string name="text_clear">Clear</string>
+    <string name="toast_failed_to_access_settings">Failed to access user settings</string>
     <string name="toast_invalid_fields">Please correct the marked fields</string>
+    <string name="toast_results_cleared_equation_change">Results cleared due to equation change</string>
+    <string name="toast_results_cleared_sex_change">Results cleared due to sex change</string>
     <string name="toast_results_cleared_unit_change">Results cleared due to unit change</string>
-    <string name="hint_pounds">lb</string>
-    <string name="hint_kilograms">kg</string>
-    <string name="hint_inches">in</string>
-    <string name="hint_centimeters">cm</string>
-    <string name="hint_years">years</string>
-    <string name="hint_min">min</string>
-    <string name="hint_max">max</string>
-    <string name="hint_x">X</string>
+    <string name="text_lb">lb</string>
+    <string name="text_kg">kg</string>
+    <string name="text_in">in</string>
+    <string name="text_cm">cm</string>
+    <string name="text_yr">yr</string>
     <string name="text_em_dash">&#x2014;</string>
 
     <!-- Error messages -->
     <string name="error_enter_a_number">Enter a number</string>
+
+    <!-- Disclaimer -->
+    <string name="title_disclaimer_dialog">Disclaimer</string>
+    <string name="text_agree">Continue</string>
+    <string name="text_decline">Exit App</string>
+    <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
+        read and understand the Disclaimer.</string>
+    <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
+        OF THE APPLICATION, YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the
+        application, including without limitation, all data, information, text, graphics, links and
+        other materials are provided as a convenience to our application users and are meant to be
+        used for informational purposes only. We do not take responsibility for decisions taken by
+        the user based solely and/or partially on the information provided in this application. It
+        is recommended that you first consult with your doctor about any dietary changes,
+        especially if you are pregnant or nursing or have any health issues such as diabetes,
+        thyroid dysfunction, etc., as your health-care provider may need to adjust the medication
+        you are taking.
+
+        \n\nThis application is not intended to diagnose, cure, mitigate, treat or prevent any
+        disease, nor as a substitute for medical treatment, nor as an alternative to medical or
+        professional advice.  Seek the advice of a qualified health care provider for any questions
+        regarding personal health or medical conditions. Never disregard, avoid, or delay in
+        obtaining medical advice from your doctor or other qualified health care provider because of
+        something you have found on the RD Pocket Pal application.  If you have or suspect that you
+        have a medical problem or condition, please contact a qualified health care professional
+        immediately. If you are in the United States and are experiencing a medical emergency,
+        please call 911.
+
+        \n\nThe resources listed on this application are not intended to be fully systematic or
+        complete, nor does inclusion imply any endorsement or recommendation. We make no
+        warranties, express or implied, about the value or utility for any purpose of the
+        information and resources contained in this application.  RD Pocket Pal shall have no
+        responsibility for any damage to your phone or tablet or loss of data that results from
+        your use of the application or its content.
+
+        \n\nYou agree to hold harmless, Octrobi, LLC, and each of its officers, members, directors,
+        employees, agents, and assigns from and against any and all claims, actions, demands,
+        liabilities, judgements, and settlements, including without limitation, from any direct,
+        indirect, incidental, consequential, special, exemplary, punitive, or any other claim you
+        and/or any third-party may have and/or incur in connection with your use of this
+        application, including without limitation any economic harm, personal harm, injury, death,
+        partial or complete disability, lost profits, damages to business, data or phone systems,
+        or any damages whatsoever resulting from reliance on any content or resulting from any
+        interruptions, work stoppages, phone or tablet failures, deletion of files, errors,
+        omissions, inaccuracies, defects, viruses, delays, misuse, incorrect implementation, or
+        mistakes of any kind. Under no circumstances may the aforesaid Octrobi, LLC, or any of its
+        officers, members, directors, employees, agents, and assigns or the actions of any such
+        entities or individuals be interpreted as publishers, or their actions be interpreted as
+        the actions of publishers, of the information uploaded, downloaded, compiled, disseminated,
+        or otherwise associated with RD Pocket Pal pursuant to 47 U.S.C. § 230 of the
+        Communications Decency Act.
+
+        \n\nThe application may include inaccuracies and typographical errors. Changes and
+        improvements are periodically made to the application and the information therein. We do
+        not warrant or assume any legal liability or responsibility for the completeness, or
+        usefulness of any information provided.
+
+        \n\nThis application is not intended to replace clinical judgment and professional
+        expertise in estimating needs or the prescribing of enteral or parenteral nutrition, but is
+        meant as an aid for making general, routine calculations.
+
+        \n\nUnder no circumstances may the aforesaid Octrobi, LLC, or any of its officers, members,
+        directors, employees, agents, and assigns or the actions of any such entities or
+        individuals be considered, under any interpretation of the Health Insurance Portability and
+        Accountability Act of 1996 as revised by the HIPAA Omnibus Rule of 2013, to be Business
+        Associates of any covered entity.
+    </string>
 </resources>
