@@ -91,8 +91,8 @@ open class QuickMethodRobot : TestRobot() {
 
     //region Preferences
     fun setNumericScaleViaUi(scale: Int) {
-        // open preferences
-        openPreferences()
+        // open settings
+        openSettings()
         // set settings value
         withSettingsRobot {
             setDisplayedDecimalPlaces(scale)
@@ -102,8 +102,8 @@ open class QuickMethodRobot : TestRobot() {
     }
 
     fun setDecimalReductionMethodViaUi(@StringRes stringId: Int) {
-        // open preferences
-        openPreferences()
+        // open settings
+        openSettings()
         // set settings value
         withSettingsRobot {
             setDecimalReductionMethod(stringId)

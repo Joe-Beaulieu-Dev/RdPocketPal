@@ -215,8 +215,16 @@ open class TestRobot {
     }
     //endregion
 
-    //region Preferences
-    fun openPreferences() {
+    //region Menu
+    fun openDisclaimer() {
+        // open overflow menu
+        openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().targetContext)
+        // open disclaimer screen
+        onView(withText(R.string.menu_disclaimer)).perform(click())
+    }
+
+    fun openSettings() {
         // open overflow menu
         openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().targetContext)
