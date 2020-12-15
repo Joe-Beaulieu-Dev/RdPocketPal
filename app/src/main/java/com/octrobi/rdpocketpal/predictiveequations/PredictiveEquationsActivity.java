@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.octrobi.rdpocketpal.R;
 import com.octrobi.rdpocketpal.databinding.ActivityPredictiveEquationsBinding;
+import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity;
 import com.octrobi.rdpocketpal.predictiveequations.PredictiveEquationsViewModel.Equations;
 import com.octrobi.rdpocketpal.settings.SettingsActivity;
 import com.octrobi.rdpocketpal.util.UiUtil;
@@ -257,6 +258,9 @@ public class PredictiveEquationsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.main_menu_disclaimer:
+                startActivity(new Intent(this, DisclaimerActivity.class));
+                return true;
             case R.id.main_menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
