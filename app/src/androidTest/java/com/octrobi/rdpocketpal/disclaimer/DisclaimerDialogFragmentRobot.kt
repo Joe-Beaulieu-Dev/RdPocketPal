@@ -26,14 +26,17 @@ class DisclaimerDialogFragmentRobot : TestRobot() {
 
     fun checkTitleIsShowing() {
         checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_title)
+        checkViewWithTextIsDisplayedNoScroll(R.string.title_disclaimer_dialog)
     }
 
     fun checkDisclaimerTextIsShowing() {
         checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_text)
+        checkViewWithTextIsDisplayedNoScroll(R.string.text_disclaimer)
     }
 
     fun checkReadAnUnderstandTextIsShowing() {
         checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_read_and_understand)
+        checkViewWithTextIsDisplayedNoScroll(R.string.text_read_and_understand)
     }
 
     fun checkExitBtnIsShowing() {

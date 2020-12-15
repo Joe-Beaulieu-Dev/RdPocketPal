@@ -10,6 +10,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.databinding.ActivityAnthropometricsBinding
+import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity
 import com.octrobi.rdpocketpal.settings.SettingsActivity
 import com.octrobi.rdpocketpal.util.setUpBtnRippleOval
 import com.octrobi.rdpocketpal.util.setUpBtnRippleRectangle
@@ -53,6 +54,10 @@ class AnthropometricsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.main_menu_disclaimer -> {
+                startActivity(Intent(this, DisclaimerActivity::class.java))
+                return true
+            }
             R.id.main_menu_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 return true

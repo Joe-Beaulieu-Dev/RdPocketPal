@@ -1,9 +1,12 @@
 package com.octrobi.rdpocketpal.settings
 
+import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
+import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
+import com.octrobi.rdpocketpal.home.withHomeRobot
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,4 +38,18 @@ class SettingsTest {
             checkDecimalReductionMethodDescription(R.string.key_truncation)
         }
     }
+
+    //region Menu
+    @Test
+    fun checkMenu_disclaimer_launches() {
+        Intents.init()
+        withSettingsRobot {
+            openDisclaimer()
+        }
+        withDisclaimerActivityRobot {
+            checkDisclaimerActivityIsDisplayed()
+        }
+        Intents.release()
+    }
+    //endregion
 }

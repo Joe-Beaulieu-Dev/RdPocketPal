@@ -6,6 +6,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
+import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import com.octrobi.rdpocketpal.testutil.EMPTY_STRING
 import com.octrobi.rdpocketpal.testutil.INVALID_ENTRY_NOT_A_NUMBER
@@ -455,19 +456,33 @@ class QuickMethodTest {
     }
     //endregion
 
-    //region Preferences
+    //region Menu
     @Test
-    fun checkPreferences_areAccessible() {
+    fun checkMenu_disclaimer_launches() {
         Intents.init()
         withQuickMethodRobot {
-            openPreferences()
+            openDisclaimer()
+        }
+        withDisclaimerActivityRobot {
+            checkDisclaimerActivityIsDisplayed()
+        }
+        Intents.release()
+    }
+
+    @Test
+    fun checkMenu_settings_launches() {
+        Intents.init()
+        withQuickMethodRobot {
+            openSettings()
         }
         withSettingsRobot {
             checkSettingsActivityIsDisplayed()
         }
         Intents.release()
     }
+    //endregion
 
+    //region Preferences
     @Test
     fun preferenceChangeRefresh() {
         withQuickMethodRobot {

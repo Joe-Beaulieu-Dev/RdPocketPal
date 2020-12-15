@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import com.octrobi.rdpocketpal.testutil.TestUtil
 import org.junit.*
@@ -71,11 +72,21 @@ class HomeTest {
     }
     //endregion
 
-    //region Preferences
+    //region Menu
     @Test
-    fun checkPreferences_areAccessible() {
+    fun checkMenu_disclaimer_launches() {
         withHomeRobot {
-            openPreferences()
+            openDisclaimer()
+        }
+        withDisclaimerActivityRobot {
+            checkDisclaimerActivityIsDisplayed()
+        }
+    }
+
+    @Test
+    fun checkMenu_settings_launches() {
+        withHomeRobot {
+            openSettings()
         }
         withSettingsRobot {
             checkSettingsActivityIsDisplayed()
