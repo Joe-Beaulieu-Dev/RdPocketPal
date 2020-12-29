@@ -15,6 +15,15 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
+    <!-- Splash Screen -->
+    <style name="AppTheme.SplashScreen">
+        <!-- Get rid of ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Set background -->
+        <item name="android:windowBackground">@drawable/splash_background_and_brocc</item>
+    </style>
+
     <!-- AlertDialog -->
     <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <!-- Background color -->

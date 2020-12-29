@@ -10,6 +10,9 @@
     <string name="title_disclaimer">Disclaimer</string>
     <string name="title_settings">Settings</string>
 
+    <!-- Splash Screen -->
+    <string name="text_version">Version</string>
+
     <!-- Home -->
     <string name="btn_predictive_equations">Predictive\nEquations</string>
     <string name="btn_quick_method">Quick\nMethod</string>

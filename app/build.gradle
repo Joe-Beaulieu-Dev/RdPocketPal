@@ -5,6 +5,8 @@ apply plugin: 'kotlin-kapt'
 def admobPropertiesFile = rootProject.file("admob.properties")
 def admobProperties = new Properties()
 admobProperties.load(new FileInputStream(admobPropertiesFile))
+final VERSION_CODE = 2
+final VERSION_NAME = "1.0.1"
 
 android {
     compileSdkVersion 30
@@ -15,11 +17,13 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 2
-        versionName "1.0.1"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        // Values and Fields
+        resValue("string", "VERSION_NAME", VERSION_NAME)
         // AdMob IDs
         resValue("string", "APP_ID", admobProperties['APP_ID'])
         buildConfigField("String", "HOME_BANNER_PROD_ID", admobProperties['HOME_BANNER_PROD_ID'])
