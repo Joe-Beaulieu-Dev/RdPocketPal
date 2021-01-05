@@ -28,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Get Started -->
+        <activity
+            android:name=".getstarted.GetStartedActivity"
+            android:label="@string/title_get_started" />
         <!-- Home -->
         <activity
             android:name=".home.HomeActivity"

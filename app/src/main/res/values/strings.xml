@@ -3,6 +3,7 @@
     <string name="app_name">RD Pocket Pal</string>
 
     <!-- Activity Names -->
+    <string name="title_get_started">Get Started</string>
     <string name="title_predictive_equations">Predictive Equations</string>
     <string name="title_quick_method">Quick Method</string>
     <string name="title_anthropometrics">Anthropometrics</string>
@@ -12,6 +13,8 @@
 
     <!-- Splash Screen -->
     <string name="text_version">Version</string>
+
+    <!-- Get Started -->
 
     <!-- Home -->
     <string name="btn_predictive_equations">Predictive\nEquations</string>

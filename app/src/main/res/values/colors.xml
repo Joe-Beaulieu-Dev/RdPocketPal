@@ -6,6 +6,7 @@
     <color name="colorAccent">#118e81</color>
     <color name="windowBackground">#bebebe</color>
     <color name="headerBackground">#eeeeee</color>
+    <color name="link">#0000ee</color>
 
     <!-- Standalone colors -->
     <color name="black">#000000</color>
