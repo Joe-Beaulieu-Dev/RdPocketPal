@@ -40,17 +40,13 @@ class DisclaimerDialogFragmentTest {
             checkDisclaimerDialogIsShowing()
             checkTitleIsShowing()
             checkDisclaimerTextIsShowing()
-            checkReadAnUnderstandTextIsShowing()
-            checkExitBtnIsShowing()
-            checkContinueBtnIsShowing()
+            checkCloseBtnIsShowing()
             // rotate screen and check again
             rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
             checkDisclaimerDialogIsShowing()
             checkTitleIsShowing()
             checkDisclaimerTextIsShowing()
-            checkReadAnUnderstandTextIsShowing()
-            checkExitBtnIsShowing()
-            checkContinueBtnIsShowing()
+            checkCloseBtnIsShowing()
         }
     }
 
@@ -69,7 +65,7 @@ class DisclaimerDialogFragmentTest {
     fun checkDisclaimerDoesNotDisplay_afterContinue_rotation() {
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
-            clickContinue()
+            clickClose()
             rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
             checkDisclaimerDialogIsNotShowing()
             rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
@@ -82,7 +78,7 @@ class DisclaimerDialogFragmentTest {
         Intents.init()
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
-            clickContinue()
+            clickClose()
             withHomeRobot {
                 launchAnthropometrics(activityTestRule)
                 checkAnthropometricsActivityIsDisplayed()

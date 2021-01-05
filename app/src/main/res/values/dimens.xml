@@ -24,4 +24,5 @@
 
     <!-- Layout biases -->
     <integer name="bias_left">0</integer>
+    <integer name="bias_right">1</integer>
 </resources>

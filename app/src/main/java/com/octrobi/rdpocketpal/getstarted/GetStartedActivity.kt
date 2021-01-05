@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.DisclaimerDialogFragment
 import com.octrobi.rdpocketpal.home.HomeActivity
+import com.octrobi.rdpocketpal.model.PreferenceRepository
 import com.octrobi.rdpocketpal.util.setUpBtnRippleRectangle
 
 class GetStartedActivity : AppCompatActivity() {
@@ -26,6 +27,8 @@ class GetStartedActivity : AppCompatActivity() {
     }
 
     fun onContinueClicked(btn: View) {
+        // set the flag for the User passing through the Disclaimer into the app
+        PreferenceRepository().setIfDisclaimerAccepted(this, true)
         startActivity(Intent(this, HomeActivity::class.java))
     }
 
@@ -40,7 +43,7 @@ class GetStartedActivity : AppCompatActivity() {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.isUnderlineText = true
+                ds.isUnderlineText = false
             }
         }
 

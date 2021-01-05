@@ -42,7 +42,7 @@
         android:onClick="onContinueClicked"
         android:paddingStart="50dp"
         android:paddingEnd="50dp"
-        android:text="@string/text_agree"
+        android:text="@string/text_continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

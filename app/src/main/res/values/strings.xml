@@ -15,6 +15,7 @@
     <string name="text_version">Version</string>
 
     <!-- Get Started -->
+    <string name="text_continue">Continue</string>
 
     <!-- Home -->
     <string name="btn_predictive_equations">Predictive\nEquations</string>
@@ -134,8 +135,7 @@
 
     <!-- Disclaimer -->
     <string name="title_disclaimer_dialog">Disclaimer</string>
-    <string name="text_agree">Continue</string>
-    <string name="text_decline">Exit App</string>
+    <string name="text_close">Close</string>
     <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
         read and understand the Disclaimer.</string>
     <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
