@@ -1,8 +1,6 @@
 package com.octrobi.rdpocketpal.home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,37 +11,25 @@ import android.widget.FrameLayout;
 import com.octrobi.rdpocketpal.R;
 import com.octrobi.rdpocketpal.ad.BannerAd;
 import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity;
-import com.octrobi.rdpocketpal.disclaimer.DisclaimerDialogFragment;
 import com.octrobi.rdpocketpal.settings.SettingsActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeActivity extends AppCompatActivity implements
         HomeButtonAdapter.HomeButtonListener {
 
-    private HomeViewModel mViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // set up ViewModel
-        mViewModel = new ViewModelProvider(this,
-                ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()))
-                .get(HomeViewModel.class);
-
         setUpUi();
     }
 
     public void setUpUi() {
-        setUpDisclaimer();
         setUpBannerAd();
         setUpRecyclerView();
     }
@@ -68,47 +54,6 @@ public class HomeActivity extends AppCompatActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    //region Disclaimer
-    private void setUpDisclaimer() {
-        getLifecycle().addObserver(mViewModel);
-        SharedPreferences prefs = getSharedPreferences(
-                getString(R.string.key_disclaimer_pref_file),
-                Context.MODE_PRIVATE);
-        prefs.registerOnSharedPreferenceChangeListener(mViewModel);
-        observeDisclaimerStatus();
-    }
-
-    private void observeDisclaimerStatus() {
-        mViewModel.getIfDisclaimerAccepted().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean disclaimerAccepted) {
-                showDisclaimerIfNecessary(disclaimerAccepted);
-            }
-        });
-    }
-
-    private void showDisclaimerIfNecessary(boolean disclaimerAccepted) {
-        if (!disclaimerAccepted && !isDisclaimerShowing()) {
-            showDisclaimer();
-        }
-    }
-
-    private boolean isDisclaimerShowing() {
-        DialogFragment frag = (DialogFragment) getSupportFragmentManager()
-                .findFragmentByTag(DisclaimerDialogFragment.Companion.getTag());
-
-        return frag != null
-                && frag.getDialog() != null
-                && frag.getDialog().isShowing()
-                && !frag.isRemoving();
-    }
-
-    private void showDisclaimer() {
-        DisclaimerDialogFragment.Companion.newInstance()
-                .show(getSupportFragmentManager(), DisclaimerDialogFragment.Companion.getTag());
-    }
-    //endregion
 
     private void setUpBannerAd() {
         BannerAd bannerAd = new BannerAd(this

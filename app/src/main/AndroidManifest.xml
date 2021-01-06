@@ -31,12 +31,12 @@
         <!-- Get Started -->
         <activity
             android:name=".getstarted.GetStartedActivity"
-            android:label="@string/title_get_started" />
+            android:label="@string/title_get_started"
+            android:noHistory="true" />
         <!-- Home -->
         <activity
             android:name=".home.HomeActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".splash.SplashActivity" />
+            android:label="@string/app_name" />
         <!-- Predictive Equations -->
         <activity
             android:name=".predictiveequations.PredictiveEquationsActivity"
