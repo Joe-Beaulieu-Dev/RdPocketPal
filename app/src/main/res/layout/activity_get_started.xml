@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:padding="@dimen/margin_large"
     tools:context=".getstarted.GetStartedActivity">
 
-    <!-- Top anchor for "spread inside" chain -->
-    <View
-        android:id="@+id/start_top_anchor"
+    <!-- Get Started internal layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/start_layout_container"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/start_read_and_understand"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        android:layout_height="match_parent">
 
-    <!-- User read and understands text -->
-    <TextView
-        android:id="@+id/start_read_and_understand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_read_and_understand"
-        android:textColor="@color/black"
-        android:textColorLink="@color/link"
-        android:textSize="@dimen/font_size_extra_large"
-        app:layout_constraintBottom_toTopOf="@+id/start_continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_top_anchor" />
+        <!-- Top anchor for "spread inside" chain -->
+        <View
+            android:id="@+id/start_top_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/start_read_and_understand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <!--  Continue button -->
-    <Button
-        android:id="@+id/start_continue"
-        style="@style/CalculateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:onClick="onContinueClicked"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:text="@string/text_continue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/start_read_and_understand" />
+        <!-- User read and understands text -->
+        <TextView
+            android:id="@+id/start_read_and_understand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_read_and_understand"
+            android:textColor="@color/black"
+            android:textColorLink="@color/link"
+            android:textSize="@dimen/font_size_extra_large"
+            app:layout_constraintBottom_toTopOf="@+id/start_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/start_top_anchor" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--  Continue button -->
+        <Button
+            android:id="@+id/start_continue"
+            style="@style/CalculateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="onContinueClicked"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="@string/text_continue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/start_read_and_understand" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

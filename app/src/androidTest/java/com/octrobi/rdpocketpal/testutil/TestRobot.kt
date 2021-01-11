@@ -31,6 +31,7 @@ import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.action.CustomViewActions.nestedScrollTo
 import com.octrobi.rdpocketpal.matcher.ToastMatcher
+import com.octrobi.rdpocketpal.matcher.clickClickableSpan
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 
@@ -84,8 +85,18 @@ open class TestRobot {
     //endregion
 
     //region View visibility
+    @Suppress("SameParameterValue")
+    protected fun checkViewWithIdIsDisplayed(@IdRes viewId: Int): ViewInteraction {
+        return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
+    }
+
     protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction {
         return onView(withId(viewId)).check(matches(isDisplayed()))
+    }
+
+    @Suppress("SameParameterValue")
+    protected fun checkViewWithTextIsDisplayed(@StringRes stringId: Int): ViewInteraction {
+        return onView(withText(stringId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
     }
 
     protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
@@ -96,12 +107,14 @@ open class TestRobot {
         return onView(withText(text)).check(matches(isDisplayed()))
     }
 
+    @Suppress("SameParameterValue")
     protected fun checkViewWithTextIsNotDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).check(doesNotExist())
     }
     //endregion
 
     //region Error validation
+    @Suppress("SameParameterValue")
     protected fun <T : Activity> checkEditTextError(activityRule: ActivityTestRule<T>
                                                     , @IdRes viewId: Int
                                                     , @StringRes stringId: Int): ViewInteraction {
@@ -125,12 +138,19 @@ open class TestRobot {
         return onView(withId(viewId)).perform(nestedScrollTo(), click())
     }
 
+    @Suppress("SameParameterValue")
     protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction {
         return onView(withId(viewId)).perform(click())
     }
 
     protected fun clickViewTextNoScroll(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).perform(click())
+    }
+
+    @Suppress("SameParameterValue")
+    protected fun clickClickableSpan(@IdRes viewId: Int
+                                     , @StringRes clickTarget: Int): ViewInteraction {
+        return onView(withId(viewId)).perform(nestedScrollTo(), clickClickableSpan(clickTarget))
     }
 
     fun pressUpNavigation() {
@@ -186,6 +206,7 @@ open class TestRobot {
     //endregion
 
     //region RecyclerView
+    @Suppress("SameParameterValue")
     protected fun <T : Activity> clickRecyclerViewItem(activityRule: ActivityTestRule<T>
                                                                  , @IdRes recyclerViewId: Int
                                                                  , @StringRes stringId: Int): ViewInteraction {
@@ -198,6 +219,7 @@ open class TestRobot {
     //endregion
 
     //region NumberPicker
+    @Suppress("SameParameterValue")
     protected fun setNumberPickerValue(@IdRes numberPickerId: Int, num: Int): ViewInteraction {
         return onView(withId(numberPickerId)).perform(object : ViewAction {
             override fun getDescription(): String {
