@@ -36,6 +36,10 @@ class GetStartedRobot : TestRobot() {
     fun checkHomeActivityIsDisplayed() {
         checkActivityIsDisplayed(HomeActivity::class.java.name)
     }
+
+    fun checkGetStartedActivityIsDisplayed() {
+        checkActivityIsDisplayed(GetStartedActivity::class.java.name)
+    }
     //endregion
 }
 

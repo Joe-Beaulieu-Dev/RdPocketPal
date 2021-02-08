@@ -35,6 +35,10 @@ class HomeRobot : TestRobot() {
     //endregion
 
     //region Check Activities
+    fun checkHomeActivityIsDisplayed() {
+        checkActivityIsDisplayed(HomeActivity::class.java.name)
+    }
+
     fun checkHomeActivityIsDisplayed(instrumentation: Instrumentation) {
         // have to check like this in the context of the HomeActivity because Intents.intended()
         // will not detect the "initially launched" Activity

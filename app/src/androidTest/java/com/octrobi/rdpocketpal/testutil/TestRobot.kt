@@ -284,4 +284,18 @@ open class TestRobot {
         intended(hasComponent(className))
     }
     //endregion
+
+    //region Disclaimer
+    fun setDisclaimerToAccepted() {
+        TestUtil.setIfDisclaimerAccepted(
+                InstrumentationRegistry.getInstrumentation().targetContext
+                , true)
+    }
+
+    fun setDisclaimerToNotAccepted() {
+        TestUtil.setIfDisclaimerAccepted(
+                InstrumentationRegistry.getInstrumentation().targetContext
+                , false)
+    }
+    //endregion
 }

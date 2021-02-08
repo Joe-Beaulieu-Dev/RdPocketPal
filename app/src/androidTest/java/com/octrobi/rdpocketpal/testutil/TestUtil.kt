@@ -46,7 +46,7 @@ object TestUtil {
         // set pref
         with(prefs.edit()) {
             putBoolean(context.getString(R.string.key_disclaimer_accepted), disclaimerAccepted)
-            apply()
+            commit()
         }
     }
 }
