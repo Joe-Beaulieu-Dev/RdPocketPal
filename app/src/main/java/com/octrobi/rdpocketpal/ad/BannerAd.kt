@@ -23,7 +23,7 @@ class BannerAd(val context: Context, val adContainerView: ViewGroup) : Lifecycle
 
     fun loadBanner() {
         adSize = getAdSize()
-        adView.adUnitId = BuildConfig.HOME_BANNER_TEST_ID
+        adView.adUnitId = BuildConfig.HOME_BANNER_AD_ID
         adView.adSize = adSize
 
         val adRequest = AdRequest.Builder().build()
@@ -60,7 +60,7 @@ class BannerAd(val context: Context, val adContainerView: ViewGroup) : Lifecycle
     private fun checkApiAndGetDisplay(): Display {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             context.display!!
-        } else  {
+        } else {
             (context as AppCompatActivity).windowManager.defaultDisplay
         }
     }

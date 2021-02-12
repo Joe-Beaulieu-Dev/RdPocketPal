@@ -26,14 +26,18 @@ android {
         resValue("string", "VERSION_NAME", VERSION_NAME)
         // AdMob IDs
         resValue("string", "APP_ID", admobProperties['APP_ID'])
-        buildConfigField("String", "HOME_BANNER_PROD_ID", admobProperties['HOME_BANNER_PROD_ID'])
-        buildConfigField("String", "HOME_BANNER_TEST_ID", admobProperties['HOME_BANNER_TEST_ID'])
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "HOME_BANNER_AD_ID", admobProperties['HOME_BANNER_AD_PROD_ID'])
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            buildConfigField("String", "HOME_BANNER_AD_ID", admobProperties['HOME_BANNER_AD_TEST_ID'])
         }
     }
 
