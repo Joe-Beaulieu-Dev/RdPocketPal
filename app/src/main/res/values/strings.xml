@@ -17,6 +17,8 @@
     <!-- Get Started -->
     <string name="text_disclaimer_link">Disclaimer</string>
     <string name="text_continue">Continue</string>
+    <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
+        read and understand the Disclaimer.</string>
 
     <!-- Home -->
     <string name="btn_predictive_equations">Predictive\nEquations</string>
@@ -137,8 +139,6 @@
     <!-- Disclaimer -->
     <string name="title_disclaimer_dialog">Disclaimer</string>
     <string name="text_close">Close</string>
-    <string name="text_read_and_understand">By clicking \"Continue\" you are asserting that you have
-        read and understand the Disclaimer.</string>
     <string name="text_disclaimer"><b>BY DOWNLOADING, ACCESSING OR USING RD POCKET PAL OR ANY PAGE
         OF THE APPLICATION, YOU SIGNIFY YOUR ASSENT TO THIS DISCLAIMER.</b> The contents of the
         application, including without limitation, all data, information, text, graphics, links and
