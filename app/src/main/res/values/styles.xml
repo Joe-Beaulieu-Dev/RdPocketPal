@@ -1,51 +1,75 @@
 <resources>
 
-    <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--********************
+        ** Base app theme **
+        ********************-->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Base attributes -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <!-- kept because Google's instruction to use android:statusBarColor requires API >= 21
+             https://material.io/blog/migrate-android-material-components -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorAccent</item>
         <item name="fontFamily">@font/poppins_regular</item>
-
         <!-- View attributes -->
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="cardViewStyle">@style/CardViewCustomLight</item>
-
+        <item name="textInputStyle">@style/Widget.App.TextInputStyle</item>
         <!-- AlertDialog -->
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <!-- Splash Screen -->
+    <!--******************************
+        ** TextInputLayout/EditText **
+        ******************************-->
+    <style name="Widget.App.TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="background">@android:color/transparent</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="hintTextColor">@color/colorAccent</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
+    </style>
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="editTextStyle">@style/Widget.App.TextInputEditText.FilledBox</item>
+    </style>
+    <style name="Widget.App.TextInputEditText.FilledBox" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <!-- Cursor color -->
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingTop">30dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <!--*******************
+        ** Splash Screen **
+        *******************-->
     <style name="AppTheme.SplashScreen">
         <!-- Get rid of ActionBar -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!-- Set background -->
         <item name="android:windowBackground">@drawable/splash_background_and_brocc</item>
     </style>
 
-    <!-- AlertDialog -->
+    <!--*****************
+        ** AlertDialog **
+        *****************-->
     <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <!-- Background color -->
         <item name="android:windowBackground">@color/cardViewBackgroundLight</item>
-        <!-- Buttons -->
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <!-- AlertDialog text color -->
         <item name="android:textColorPrimary">@color/matte_black</item>
     </style>
-
-    <!-- AlertDialog Negative Button -->
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/btnPink</item>
     </style>
-
-    <!-- AlertDialog Positive Button -->
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/btnGreen</item>
     </style>
 
+    <!--**************
+        ** CardView **
+        **************-->
     <!-- CardView light -->
     <style name="CardViewCustomLight" parent="CardView">
         <item name="cardBackgroundColor">@color/cardViewBackgroundLight</item>
@@ -58,32 +82,40 @@
         <item name="cardCornerRadius">0dp</item>
     </style>
 
-    <!-- Sex Selection Button -->
-    <style name="SexSelectionBtn" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <!--*******************************
+        ** Sex Selection RadioButton **
+        *******************************-->
+    <style name="SexSelectionBtn" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
         <item name="android:background">@drawable/radio_btn_selector</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:textColor">@drawable/radio_btn_text_color_selector</item>
     </style>
 
-    <!-- Clear Button -->
-    <style name="ClearBtn" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/btn_clear</item>
+    <!--**********************
+        ** Calculate Button **
+        **********************-->
+    <style name="CalculateBtn2" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/CalculateBtnThemeOverlay</item>
+        <item name="shapeAppearance">@style/BtnShape</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+    <style name="CalculateBtnThemeOverlay" parent="">
+        <item name="colorPrimary">@color/btnGreen</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+    <style name="BtnShape">
+        <item name="cornerSize">8dp</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
-    <!-- Calculate Button -->
+    <!-- Calculate Button Old-->
     <style name="CalculateBtn" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/btn_calculate</item>
-    </style>
-
-    <!-- Clear Button Small -->
-    <style name="ClearBtnSmall" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">@dimen/font_size_small</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:minHeight">32dp</item>
-        <item name="android:minWidth">88dp</item>
-        <item name="android:background">@drawable/btn_clear</item>
+        <item name="android:minWidth">115dp</item>
     </style>
 
     <!-- Calculate Button Small -->
@@ -95,7 +127,41 @@
         <item name="android:background">@drawable/btn_calculate</item>
     </style>
 
-    <!-- NumberPickerDialog -->
+    <!--******************
+        ** Clear Button **
+        ******************-->
+    <style name="ClearBtn2" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ClearBtnThemeOverlay</item>
+        <item name="shapeAppearance">@style/BtnShape</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+    <style name="ClearBtnThemeOverlay">
+        <item name="colorPrimary">@color/btnPink</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!-- Clear Button Old-->
+    <style name="ClearBtn" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_clear</item>
+        <item name="android:minWidth">115dp</item>
+    </style>
+
+    <!-- Clear Button Small -->
+    <style name="ClearBtnSmall" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:background">@drawable/btn_clear</item>
+    </style>
+
+    <!--************************
+        ** NumberPickerDialog **
+        ************************-->
     <style name="NumberPickerDialog" parent="Preference.DialogPreference">
         <item name="android:textSize">@dimen/font_size_extra_large</item>
         <!-- Number color -->

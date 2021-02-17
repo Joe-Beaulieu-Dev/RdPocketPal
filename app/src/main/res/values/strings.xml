@@ -51,11 +51,6 @@
 
     <!-- Predictive Equations -->
     <string name="text_equation">Equation:</string>
-    <string name="text_male">Male</string>
-    <string name="text_female">Female</string>
-    <string name="text_metric">Metric</string>
-    <string name="text_standard">Standard</string>
-    <string name="text_height">Height:</string>
     <string name="text_age">Age:</string>
     <string name="text_tmax">Tmax:</string>
     <string name="text_heart_rate">HR:</string>
@@ -100,11 +95,11 @@
     <string name="text_ml_per_day">ml/day</string>
 
     <!-- Anthropometrics -->
-    <string name="text_bmi">BMI:</string>
-    <string name="text_ibw">IBW:</string>
-    <string name="text_percent_ibw">%IBW:</string>
-    <string name="text_adjusted_bw">Adj. BW:</string>
-    <string name="text_kg_per_m2">kg/m^2</string>
+    <string name="text_bmi">BMI</string>
+    <string name="text_ibw">IBW</string>
+    <string name="text_percent_ibw">%IBW</string>
+    <string name="text_adjusted_bw">Adj. BW</string>
+    <string name="text_kg_per_m2">kg/m<sup>2</sup></string>
     <string name="text_percent_sign">%</string>
 
     <!-- Conversions -->
@@ -118,7 +113,13 @@
     </string-array>
 
     <!-- Global strings -->
-    <string name="text_weight">Weight:</string>
+    <string name="text_male">Male</string>
+    <string name="text_female">Female</string>
+    <string name="text_metric">Metric</string>
+    <string name="text_standard">Standard</string>
+    <string name="text_weight">Weight</string>
+    <string name="text_height">Height</string>
+    <string name="text_results">Results</string>
     <string name="text_calculate">Calculate</string>
     <string name="text_clear">Clear</string>
     <string name="toast_failed_to_access_settings">Failed to access user settings</string>
