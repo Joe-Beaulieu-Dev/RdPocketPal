@@ -13,7 +13,6 @@ import com.octrobi.rdpocketpal.databinding.ActivityAnthropometricsBinding
 import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity
 import com.octrobi.rdpocketpal.settings.SettingsActivity
 import com.octrobi.rdpocketpal.util.setUpBtnRippleOval
-import com.octrobi.rdpocketpal.util.setUpBtnRippleRectangle
 
 class AnthropometricsActivity : AppCompatActivity() {
     private lateinit var mViewModel: AnthropometricsViewModel
@@ -42,8 +41,6 @@ class AnthropometricsActivity : AppCompatActivity() {
     private fun setUpAllBtnRipples() {
         setUpBtnRippleOval(resources, theme, mBinding.anthroSexMale)
         setUpBtnRippleOval(resources, theme, mBinding.anthroSexFemale)
-        setUpBtnRippleRectangle(resources, theme, mBinding.anthroClearBtn)
-        setUpBtnRippleRectangle(resources, theme, mBinding.anthroCalculateBtn)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

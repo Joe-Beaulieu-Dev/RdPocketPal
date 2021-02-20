@@ -319,9 +319,9 @@ public class CalculationUtilTest {
     }
 
     @Test
-    public void calculateAdjustedIbw_metric_isCorrect() {
+    public void calculateAdjustedBw_metric_isCorrect() {
         assertEquals(TestConstants.ADJUSTED_BW_METRIC_ANSWER
-                , CalculationUtil.calculateAdjustedIbw(Unit.METRIC
+                , CalculationUtil.calculateAdjustedBw(Unit.METRIC
                         , Sex.MALE
                         , TestConstants.WEIGHT_METRIC
                         , TestConstants.HEIGHT_METRIC)
@@ -329,9 +329,9 @@ public class CalculationUtilTest {
     }
 
     @Test
-    public void calculateAdjustedIbw_standard_isCorrect() {
+    public void calculateAdjustedBw_standard_isCorrect() {
         assertEquals(TestConstants.ADJUSTED_BW_STANDARD_ANSWER
-                , CalculationUtil.calculateAdjustedIbw(Unit.STANDARD
+                , CalculationUtil.calculateAdjustedBw(Unit.STANDARD
                         , Sex.MALE
                         , TestConstants.WEIGHT_STANDARD
                         , TestConstants.HEIGHT_STANDARD)

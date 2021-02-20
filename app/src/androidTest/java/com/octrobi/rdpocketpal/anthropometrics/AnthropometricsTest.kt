@@ -240,7 +240,7 @@ class AnthropometricsTest {
     }
 
     @Test
-    fun calculate_adjustedIbw_metric() {
+    fun calculate_adjustedBw_metric() {
         withAnthropometricsRobot {
             // sex not relevant for adjusted ibw, use default
             setUnitMetric()
@@ -252,7 +252,7 @@ class AnthropometricsTest {
     }
 
     @Test
-    fun calculate_adjustedIbw_standard() {
+    fun calculate_adjustedBw_standard() {
         withAnthropometricsRobot {
             // sex not relevant for adjusted ibw, use default
             setUnitStandard()

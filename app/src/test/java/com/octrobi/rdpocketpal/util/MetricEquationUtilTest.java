@@ -147,9 +147,9 @@ public class MetricEquationUtilTest {
     }
 
     @Test
-    public void calculateAdjustedIbw_isCorrect() {
+    public void calculateAdjustedBw_isCorrect() {
         assertEquals(TestConstants.ADJUSTED_BW_METRIC_ANSWER
-                , MetricEquationUtil.calculateAdjustedIbw(TestConstants.IBW_MALE_METRIC_ANSWER
+                , MetricEquationUtil.calculateAdjustedBw(TestConstants.IBW_MALE_METRIC_ANSWER
                         , TestConstants.WEIGHT_METRIC)
                 , TestConstants.DELTA_SIX);
     }

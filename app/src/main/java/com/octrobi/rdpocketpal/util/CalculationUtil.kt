@@ -102,13 +102,13 @@ object CalculationUtil {
     }
 
     @JvmStatic
-    fun calculateAdjustedIbw(unit: Unit, sex: Sex, weight: Double, height: Double): Double {
+    fun calculateAdjustedBw(unit: Unit, sex: Sex, weight: Double, height: Double): Double {
         return when (unit) {
-            Unit.METRIC -> MetricEquationUtil.calculateAdjustedIbw(
+            Unit.METRIC -> MetricEquationUtil.calculateAdjustedBw(
                     calculateIbwHamwi(unit, sex, height)
                     , weight)
             Unit.STANDARD -> ConversionUtil.kilogramsToPounds(
-                    MetricEquationUtil.calculateAdjustedIbw(ConversionUtil.poundsToKilograms(
+                    MetricEquationUtil.calculateAdjustedBw(ConversionUtil.poundsToKilograms(
                             calculateIbwHamwi(unit, sex, height))
                             , ConversionUtil.poundsToKilograms(weight)))
         }

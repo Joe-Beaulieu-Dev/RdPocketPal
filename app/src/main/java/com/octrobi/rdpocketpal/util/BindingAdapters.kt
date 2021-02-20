@@ -6,7 +6,41 @@ import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import com.google.android.material.textfield.TextInputLayout
 import com.octrobi.rdpocketpal.R
+
+//region TextInputLayout
+@BindingAdapter("errorMsg")
+fun TextInputLayout.setErrorMsg(errorMsg: String?) {
+    // break infinite loops
+    if (error?.toString() != errorMsg) {
+        error = errorMsg
+    }
+}
+
+@InverseBindingAdapter(attribute = "errorMsg")
+fun TextInputLayout.getErrorMsg(): String? {
+    val input = editText?.text?.toString()
+    var newErrMsg: String? = null
+
+    // determine which error msg, if any, to use
+    if (input == "") {
+        // reset error
+        return null
+    } else if (!NumberUtil.isDouble(input)) {
+        newErrMsg = context.getString(R.string.error_enter_a_number)
+    }
+
+    return newErrMsg
+}
+
+@BindingAdapter("errorMsgAttrChanged")
+fun TextInputLayout.setErrorListener(listener: InverseBindingListener) {
+    // set listener and fire
+    editText?.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus -> if (!hasFocus) listener.onChange() }
+}
+//endregion
 
 //region EditText
 @BindingAdapter("errorMsg")
@@ -60,7 +94,7 @@ fun RadioGroup.setSelectedBtnText(selection: String?) {
 }
 
 @InverseBindingAdapter(attribute = "selectedRadioBtn")
-fun RadioGroup.getSelectedBtnText(): String? {
+fun RadioGroup.getSelectedBtnText(): String {
     return findViewById<RadioButton>(checkedRadioButtonId)?.text.toString()
 }
 

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import com.octrobi.rdpocketpal.R
+import com.octrobi.rdpocketpal.application.MyApplication
 import com.octrobi.rdpocketpal.model.PreferenceRepository
 import com.octrobi.rdpocketpal.model.QueryResult
 import com.octrobi.rdpocketpal.model.UserPreferences
@@ -33,13 +34,13 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     val mBmi =  MutableLiveData<String>()
     val mIbw =  MutableLiveData<String>()
     val mPercentIbw =  MutableLiveData<String>()
-    val mAdjustedIbw =  MutableLiveData<String>()
+    val mAdjustedBw =  MutableLiveData<String>()
 
     // Unit labels
     val mWeightUnitLabel =  MutableLiveData<String>()
     val mHeightUnitLabel =  MutableLiveData<String>()
     val mIbwUnitLabel = MutableLiveData<String>()
-    val mAdjustedIbwUnitLabel = MutableLiveData<String>()
+    val mAdjustedBwUnitLabel = MutableLiveData<String>()
     //endregion
 
     //region SavedState data
@@ -104,7 +105,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
             calculateBmi(prefs)
             calculateIbw(prefs)
             calculatePercentIbw(prefs)
-            calculateAdjustedIbw(prefs)
+            calculateAdjustedBw(prefs)
         } catch (e: FatalCalculationException) {
             showToast(mApplicationContext, e.message, Toast.LENGTH_SHORT)
         }
@@ -139,10 +140,10 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     }
 
     @Throws(FatalCalculationException::class)
-    private fun calculateAdjustedIbw(prefs: UserPreferences) {
-        mAdjustedIbw.value = NumberUtil.roundOrTruncate(mApplicationContext
+    private fun calculateAdjustedBw(prefs: UserPreferences) {
+        mAdjustedBw.value = NumberUtil.roundOrTruncate(mApplicationContext
                 , prefs
-                , CalculationUtil.calculateAdjustedIbw(getUnit()
+                , CalculationUtil.calculateAdjustedBw(getUnit()
                 , getSex()
                 , NumberUtil.parseDouble(mWeight)
                 , NumberUtil.parseDouble(mHeight)))
@@ -155,7 +156,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     }
 
     private fun clearOutput(): Boolean {
-        return clearFields(mBmi, mIbw, mPercentIbw, mAdjustedIbw)
+        return clearFields(mBmi, mIbw, mPercentIbw, mAdjustedBw)
     }
 
     private fun clearOutputsAndToastIfNecessary(btn: RadioButton
@@ -207,18 +208,18 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
     }
 
     private fun setUnitsMetric() {
-        mWeightUnitLabel.value = mApplicationContext.getString(R.string.text_kg)
-        mHeightUnitLabel.value = mApplicationContext.getString(R.string.text_cm)
-        mIbwUnitLabel.value = mApplicationContext.getString(R.string.text_kg)
-        mAdjustedIbwUnitLabel.value = mApplicationContext.getString(R.string.text_kg)
+        mWeightUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_kg)
+        mHeightUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_cm)
+        mIbwUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_kg)
+        mAdjustedBwUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_kg)
 
     }
 
     private fun setUnitsStandard() {
-        mWeightUnitLabel.value = mApplicationContext.getString(R.string.text_lb)
-        mHeightUnitLabel.value = mApplicationContext.getString(R.string.text_in)
-        mIbwUnitLabel.value = mApplicationContext.getString(R.string.text_lb)
-        mAdjustedIbwUnitLabel.value = mApplicationContext.getString(R.string.text_lb)
+        mWeightUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_lb)
+        mHeightUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_in)
+        mIbwUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_lb)
+        mAdjustedBwUnitLabel.value = getApplication<MyApplication>().getString(R.string.text_lb)
     }
     //endregion
 
@@ -252,7 +253,7 @@ class AnthropometricsViewModel(application: Application, savedStateHandle: Saved
         val output = "BMI: ${mBmi.value}" +
                 "\nIBW: ${mIbw.value}" +
                 "\n%IBW: ${mPercentIbw.value}" +
-                "\nAdj. IBW: ${mAdjustedIbw.value}"
+                "\nAdj. IBW: ${mAdjustedBw.value}"
 
         val errors = "Weight err: ${mWeightErrorMsg.value}" +
                 "\nHeight err: ${mHeightErrorMsg.value}"

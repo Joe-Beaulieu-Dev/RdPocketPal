@@ -163,7 +163,7 @@ object MetricEquationUtil {
      * @return Adjusted Body Weight in kg or lbs (based on input)
      */
     @JvmStatic
-    fun calculateAdjustedIbw(ibw: Double, weight: Double): Double {
+    fun calculateAdjustedBw(ibw: Double, weight: Double): Double {
         return ((weight - ibw) / 4) + ibw
     }
     //endregion
