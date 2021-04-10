@@ -132,6 +132,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:nextFocusLeft="@id/anthro_height_editText"
+                        android:nextFocusRight="@id/anthro_height_editText"
+                        android:nextFocusUp="@id/anthro_height_editText"
+                        android:nextFocusDown="@id/anthro_height_editText"
+                        android:nextFocusForward="@id/anthro_height_editText"
                         android:text="@={viewModel.mWeight}"
                         tools:text="75" />
 
@@ -223,7 +228,12 @@
                         android:id="@+id/anthro_bmi_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:inputType="numberDecimal"
+                        android:longClickable="false"
                         android:text="@={viewModel.mBmi}"
                         tools:text="24.4898" />
 
@@ -247,7 +257,12 @@
                         android:id="@+id/anthro_ibw_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:inputType="numberDecimal"
+                        android:longClickable="false"
                         android:text="@={viewModel.mIbw}"
                         tools:text="72.29619" />
 
@@ -270,7 +285,12 @@
                         android:id="@+id/anthro_percent_ibw_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:inputType="numberDecimal"
+                        android:longClickable="false"
                         android:text="@={viewModel.mPercentIbw}"
                         tools:text="103.7399" />
 
@@ -294,7 +314,12 @@
                         android:id="@+id/anthro_adjusted_bw_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:inputType="numberDecimal"
+                        android:longClickable="false"
                         android:text="@={viewModel.mAdjustedBw}"
                         tools:text="72.97215" />
 
