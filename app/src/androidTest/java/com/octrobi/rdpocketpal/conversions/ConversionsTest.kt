@@ -3,7 +3,6 @@ package com.octrobi.rdpocketpal.conversions
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
@@ -37,7 +36,7 @@ class ConversionsTest {
     fun settingsNote_isVisible() {
         withConversionsRobot {
             checkSettingsNoteIsShowing()
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule)
             checkSettingsNoteIsShowing()
         }
     }
@@ -182,8 +181,8 @@ class ConversionsTest {
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
             // rotate screen
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule)
+            rotateScreen(activityRule)
             // validate field persistence
             inInCm {
                 checkInches(IN_TO_CM_INCHES)

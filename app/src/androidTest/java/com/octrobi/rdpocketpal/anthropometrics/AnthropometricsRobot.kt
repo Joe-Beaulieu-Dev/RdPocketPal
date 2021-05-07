@@ -1,8 +1,6 @@
 package com.octrobi.rdpocketpal.anthropometrics
 
-import android.app.Activity
 import androidx.annotation.IdRes
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.TestRobot
 
@@ -43,52 +41,52 @@ class AnthropometricsRobot : TestRobot() {
         checkRadioBtnIsChecked(R.id.anthro_unit_standard)
     }
 
-    fun <T : Activity> checkUnitMetricWeight(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_weight_unit_label, R.string.text_kg)
+    fun checkUnitMetricWeight() {
+        checkSuffixText(R.id.anthro_weight_layout, R.string.text_kg)
     }
 
-    fun <T : Activity> checkUnitMetricHeight(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_height_unit_label, R.string.text_cm)
+    fun checkUnitMetricHeight() {
+        checkSuffixText(R.id.anthro_height_layout, R.string.text_cm)
     }
 
-    fun <T : Activity> checkUnitMetricBmi(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_bmi_unit_label, R.string.text_kg_per_m2)
+    fun checkUnitMetricBmi() {
+        checkSuffixText(R.id.anthro_bmi_layout, R.string.text_kg_per_m2)
     }
 
-    fun <T : Activity> checkUnitMetricIbw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_ibw_unit_label, R.string.text_kg)
+    fun checkUnitMetricIbw() {
+        checkSuffixText(R.id.anthro_ibw_layout, R.string.text_kg)
     }
 
-    fun <T : Activity> checkUnitMetricPercentIbw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_percent_ibw_unit_label, R.string.text_percent_sign)
+    fun checkUnitMetricPercentIbw() {
+        checkSuffixText(R.id.anthro_percent_ibw_layout, R.string.text_percent_sign)
     }
 
-    fun <T : Activity> checkUnitMetricAdjustedBw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_adjusted_bw_unit_label, R.string.text_kg)
+    fun checkUnitMetricAdjustedBw() {
+        checkSuffixText(R.id.anthro_adjusted_bw_layout, R.string.text_kg)
     }
 
-    fun <T : Activity> checkUnitStandardWeight(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_weight_unit_label, R.string.text_lb)
+    fun checkUnitStandardWeight() {
+        checkSuffixText(R.id.anthro_weight_layout, R.string.text_lb)
     }
 
-    fun <T : Activity> checkUnitStandardHeight(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_height_unit_label, R.string.text_in)
+    fun checkUnitStandardHeight() {
+        checkSuffixText(R.id.anthro_height_layout, R.string.text_in)
     }
 
-    fun <T : Activity> checkUnitStandardBmi(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_bmi_unit_label, R.string.text_kg_per_m2)
+    fun checkUnitStandardBmi() {
+        checkSuffixText(R.id.anthro_bmi_layout, R.string.text_kg_per_m2)
     }
 
-    fun <T : Activity> checkUnitStandardIbw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_ibw_unit_label, R.string.text_lb)
+    fun checkUnitStandardIbw() {
+        checkSuffixText(R.id.anthro_ibw_layout, R.string.text_lb)
     }
 
-    fun <T : Activity> checkUnitStandardPercentIbw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_percent_ibw_unit_label, R.string.text_percent_sign)
+    fun checkUnitStandardPercentIbw() {
+        checkSuffixText(R.id.anthro_percent_ibw_layout, R.string.text_percent_sign)
     }
 
-    fun <T : Activity> checkUnitStandardAdjustedBw(rule: ActivityTestRule<T>) {
-        checkText(rule, R.id.anthro_adjusted_bw_unit_label, R.string.text_lb)
+    fun checkUnitStandardAdjustedBw() {
+        checkSuffixText(R.id.anthro_adjusted_bw_layout, R.string.text_lb)
     }
     //endregion
 
@@ -161,20 +159,20 @@ class AnthropometricsRobot : TestRobot() {
     //endregion
 
     //region Error validation
-    fun <T : Activity> checkWeightNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(rule, R.id.anthro_weight_editText, R.string.error_enter_a_number)
+    fun checkWeightNanError() {
+        checkErrorText(R.id.anthro_weight_layout, R.string.error_enter_a_number)
     }
 
-    fun <T : Activity> checkHeightNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(rule, R.id.anthro_height_editText, R.string.error_enter_a_number)
+    fun checkHeightNanError() {
+        checkErrorText(R.id.anthro_height_layout, R.string.error_enter_a_number)
     }
 
     fun checkWeightNoError() {
-        checkEditTextNoError(R.id.anthro_weight_editText)
+        checkNoErrorText(R.id.anthro_weight_layout)
     }
 
     fun checkHeightNoError() {
-        checkEditTextNoError(R.id.anthro_height_editText)
+        checkNoErrorText(R.id.anthro_height_layout)
     }
     //endregion
 }

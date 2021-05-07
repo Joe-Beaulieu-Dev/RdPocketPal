@@ -42,7 +42,7 @@ class DisclaimerDialogFragmentTest {
             checkDisclaimerTextIsShowing()
             checkCloseBtnIsShowing()
             // rotate screen and check again
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
             checkDisclaimerDialogIsShowing()
             checkTitleIsShowing()
             checkDisclaimerTextIsShowing()
@@ -54,9 +54,9 @@ class DisclaimerDialogFragmentTest {
     fun checkDisclaimerDisplays_rotation() {
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
             checkDisclaimerDialogIsShowing()
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
             checkDisclaimerDialogIsShowing()
         }
     }
@@ -66,9 +66,9 @@ class DisclaimerDialogFragmentTest {
         withDisclaimerDialogFragmentRobot {
             checkDisclaimerDialogIsShowing()
             clickClose()
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
             checkDisclaimerDialogIsNotShowing()
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
             checkDisclaimerDialogIsNotShowing()
         }
     }

@@ -3,7 +3,6 @@ package com.octrobi.rdpocketpal.getstarted
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerDialogFragmentRobot
 import org.junit.Rule
@@ -24,7 +23,7 @@ class GetStartedTest {
             checkReadAndUnderstandTextIsShowing()
             checkContinueBtnIsShowing()
             checkContinueBtnHasProperText(activityRule)
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule)
             checkReadAndUnderstandTextIsShowing()
             checkContinueBtnIsShowing()
             checkContinueBtnHasProperText(activityRule)

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.annotation.IdRes
 import androidx.preference.PreferenceManager
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 
@@ -13,27 +14,35 @@ object TestUtil {
         return rule.activity.getString(id)
     }
 
+    fun getString(@IdRes resId: Int): String =
+            getString(InstrumentationRegistry.getInstrumentation().targetContext, resId)
+
     private fun getString(context: Context, @IdRes id: Int): String {
         return context.getString(id)
     }
 
-    fun setDecimalReductionMethodPref(context: Context, @IdRes stringId: Int) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    fun setDecimalReductionMethodPref(@IdRes stringId: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(
+                InstrumentationRegistry.getInstrumentation().targetContext)
 
         // set pref
         with(prefs.edit()) {
-            putString(getString(context, R.string.key_decimal_reduction_method)
-                    , getString(context, stringId))
+            putString(getString(InstrumentationRegistry.getInstrumentation().targetContext,
+                    R.string.key_decimal_reduction_method),
+                    getString(InstrumentationRegistry.getInstrumentation().targetContext,
+                            stringId))
             commit()
         }
     }
 
-    fun setNumericScalePref(context: Context, scale: Int) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    fun setNumericScalePref(scale: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(
+                InstrumentationRegistry.getInstrumentation().targetContext)
 
         // set pref
         with(prefs.edit()) {
-            putInt(getString(context, R.string.key_numeric_scale), scale)
+            putInt(getString(InstrumentationRegistry.getInstrumentation().targetContext,
+                    R.string.key_numeric_scale), scale)
             commit()
         }
     }

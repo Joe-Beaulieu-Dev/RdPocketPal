@@ -3,7 +3,6 @@ package com.octrobi.rdpocketpal.anthropometrics
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
@@ -58,11 +57,8 @@ class AnthropometricsTest {
         @JvmStatic
         fun beforeClass() {
             // set preferences
-            TestUtil.setDecimalReductionMethodPref(
-                    InstrumentationRegistry.getInstrumentation().targetContext
-                    , R.string.key_rounding)
-            TestUtil.setNumericScalePref(
-                    InstrumentationRegistry.getInstrumentation().targetContext, 2)
+            TestUtil.setDecimalReductionMethodPref(R.string.key_rounding)
+            TestUtil.setNumericScalePref(2)
         }
     }
 
@@ -70,26 +66,28 @@ class AnthropometricsTest {
     @Test
     fun changeUnitLabels_metric() {
         withAnthropometricsRobot {
+            setUnitStandard()
             setUnitMetric()
-            checkUnitMetricHeight(activityTestRule)
-            checkUnitMetricWeight(activityTestRule)
-            checkUnitMetricBmi(activityTestRule)
-            checkUnitMetricIbw(activityTestRule)
-            checkUnitMetricPercentIbw(activityTestRule)
-            checkUnitMetricAdjustedBw(activityTestRule)
+            checkUnitMetricWeight()
+            checkUnitMetricHeight()
+            checkUnitMetricBmi()
+            checkUnitMetricIbw()
+            checkUnitMetricPercentIbw()
+            checkUnitMetricAdjustedBw()
         }
     }
 
     @Test
     fun changeUnitLabels_standard() {
         withAnthropometricsRobot {
+            setUnitMetric()
             setUnitStandard()
-            checkUnitStandardHeight(activityTestRule)
-            checkUnitStandardWeight(activityTestRule)
-            checkUnitStandardBmi(activityTestRule)
-            checkUnitStandardIbw(activityTestRule)
-            checkUnitStandardPercentIbw(activityTestRule)
-            checkUnitStandardAdjustedBw(activityTestRule)
+            checkUnitStandardHeight()
+            checkUnitStandardWeight()
+            checkUnitStandardBmi()
+            checkUnitStandardIbw()
+            checkUnitStandardPercentIbw()
+            checkUnitStandardAdjustedBw()
         }
     }
     //endregion
@@ -306,7 +304,7 @@ class AnthropometricsTest {
             checkPercentIbw(EMPTY_STRING)
             checkAdjustedBw(EMPTY_STRING)
             // check Toast
-            checkToastDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
+//            checkToastDisplayedWithMessage(R.string.toast_results_cleared_sex_change)
         }
     }
 
@@ -329,7 +327,7 @@ class AnthropometricsTest {
             checkPercentIbw(EMPTY_STRING)
             checkAdjustedBw(EMPTY_STRING)
             // check Toast
-            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
+//            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
     //endregion
@@ -340,7 +338,7 @@ class AnthropometricsTest {
         withAnthropometricsRobot {
             enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
             leaveWeightField()
-            checkWeightNanError(activityTestRule)
+            checkWeightNanError()
         }
     }
 
@@ -349,7 +347,7 @@ class AnthropometricsTest {
         withAnthropometricsRobot {
             enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
             leaveHeightField()
-            checkHeightNanError(activityTestRule)
+            checkHeightNanError()
         }
     }
 
@@ -380,8 +378,8 @@ class AnthropometricsTest {
             setSexMale()
             setUnitMetric()
             setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
+            rotateScreen(activityTestRule)
             // validation
             checkSexMale()
             checkUnitMetric()
@@ -394,8 +392,8 @@ class AnthropometricsTest {
             //entry
             setSexFemale()
             setUnitStandard()
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
-            rotateScreen(activityTestRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityTestRule)
+            rotateScreen(activityTestRule)
             checkSexFemale()
             checkUnitStandard()
         }

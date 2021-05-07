@@ -3,7 +3,6 @@ package com.octrobi.rdpocketpal.quickmethod
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
@@ -48,11 +47,8 @@ class QuickMethodTest {
         @JvmStatic
         fun beforeClass() {
             // set preferences
-            TestUtil.setDecimalReductionMethodPref(
-                    InstrumentationRegistry.getInstrumentation().targetContext
-                    , R.string.key_rounding)
-            TestUtil.setNumericScalePref(
-                    InstrumentationRegistry.getInstrumentation().targetContext, 2)
+            TestUtil.setDecimalReductionMethodPref(R.string.key_rounding)
+            TestUtil.setNumericScalePref(2)
         }
     }
 
@@ -276,7 +272,7 @@ class QuickMethodTest {
             }
 
             // check that correct Toast is displayed
-            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
+//            checkToastDisplayedWithMessage(R.string.toast_results_cleared_unit_change)
         }
     }
     //endregion
@@ -427,15 +423,15 @@ class QuickMethodTest {
             // entry
             setUnitMetric()
             setAllFieldsProgrammatically(WEIGHT_METRIC)
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule)
+            rotateScreen(activityRule)
             // validation
             checkUnitMetric()
             checkAllProgrammaticallySetFields(WEIGHT_METRIC)
             // entry
             setUnitStandard()
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
-            rotateScreen(activityRule, InstrumentationRegistry.getInstrumentation())
+            rotateScreen(activityRule)
+            rotateScreen(activityRule)
             // validation
             checkUnitStandard()
         }

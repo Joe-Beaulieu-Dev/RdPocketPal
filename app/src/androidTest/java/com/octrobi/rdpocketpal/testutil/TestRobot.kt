@@ -30,6 +30,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.action.CustomViewActions.nestedScrollTo
+import com.octrobi.rdpocketpal.matcher.TextInputLayoutMatchers.withError
+import com.octrobi.rdpocketpal.matcher.TextInputLayoutMatchers.withSuffix
 import com.octrobi.rdpocketpal.matcher.ToastMatcher
 import com.octrobi.rdpocketpal.matcher.clickClickableSpan
 import org.hamcrest.Matcher
@@ -69,6 +71,10 @@ open class TestRobot {
                                            , @IdRes viewId: Int
                                            , @StringRes stringId: Int): ViewInteraction {
         return checkText(viewId, TestUtil.getString(activityRule, stringId))
+    }
+
+    protected fun checkText(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction {
+        return checkText(viewId, TestUtil.getString(stringId))
     }
 
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
@@ -176,6 +182,33 @@ open class TestRobot {
     }
     //endregion
 
+    //region TextInputLayout
+    protected fun checkSuffixText(
+        @IdRes textInputLayoutId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction =
+        onView(withId(textInputLayoutId))
+            .perform(nestedScrollTo())
+            .check(matches(withSuffix(TestUtil.getString(stringId))))
+
+    protected fun checkErrorText(
+        @IdRes textInputLayoutId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction =
+        onView(withId(textInputLayoutId))
+            .perform(nestedScrollTo())
+            .check(matches(withError(TestUtil.getString(stringId))))
+
+    protected fun checkNoErrorText(@IdRes viewId: Int): ViewInteraction {
+        // need to use this value because of overload resolution
+        // ambiguity on hasErrorText() when just using null
+        val nullString: String? = null
+        return onView(withId(viewId))
+            .perform(nestedScrollTo())
+            .check(matches(withError(nullString)))
+    }
+    //endregion
+
     //region RadioButton
     protected fun checkRadioBtnIsChecked(@IdRes id: Int): ViewInteraction {
         return onView(withId(id)).perform(nestedScrollTo()).check(matches(isChecked()))
@@ -256,7 +289,7 @@ open class TestRobot {
     //endregion
 
     //region Orientation
-    fun <T : Activity> rotateScreen(rule: ActivityTestRule<T>, instrumentation: Instrumentation) {
+    fun <T : Activity> rotateScreen(rule: ActivityTestRule<T>) {
         // get current orientation and set value to opposite
         val orientation: Int =
                 if (rule.activity.resources.configuration.orientation
@@ -274,7 +307,7 @@ open class TestRobot {
         // Need to use sleep as well or else we'll still get errors. Ex: PredictiveEquationsTest,
         // rotating the screen twice with waitForIdleSync() and then trying to click on the equation
         // Spinner leads to an error without using sleep.
-        instrumentation.waitForIdleSync()
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         SystemClock.sleep(500)
     }
     //endregion
