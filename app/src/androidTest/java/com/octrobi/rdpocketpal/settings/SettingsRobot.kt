@@ -1,8 +1,6 @@
 package com.octrobi.rdpocketpal.settings
 
-import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.TestRobot
 import com.octrobi.rdpocketpal.testutil.TestUtil
@@ -26,9 +24,8 @@ class SettingsRobot : TestRobot() {
         clickViewTextNoScroll(stringId)
     }
 
-    fun <T : Activity> checkDisplayedDecimalPlacesDescription(rule: ActivityTestRule<T>
-                                                              , numPlaces: Int) {
-        val desc = buildDisplayedDecimalPlacesDescriptionString(rule, numPlaces)
+    fun checkDisplayedDecimalPlacesDescription(numPlaces: Int) {
+        val desc = buildDisplayedDecimalPlacesDescriptionString(numPlaces)
         checkViewWithTextIsDisplayedNoScroll(desc)
     }
 
@@ -36,10 +33,8 @@ class SettingsRobot : TestRobot() {
         checkViewWithTextIsDisplayedNoScroll(stringId)
     }
 
-    private fun <T : Activity> buildDisplayedDecimalPlacesDescriptionString(rule: ActivityTestRule<T>
-                                                                    , numPlaces: Int): String {
-        return "$numPlaces ${TestUtil.getString(rule, R.string.text_numeric_scale_desc)}"
-    }
+    private fun buildDisplayedDecimalPlacesDescriptionString(numPlaces: Int): String =
+        "$numPlaces ${TestUtil.getString(R.string.text_numeric_scale_desc)}"
     //endregion
 
     //region Activity check

@@ -1,15 +1,13 @@
 package com.octrobi.rdpocketpal.conversions
 
-import android.app.Activity
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.TestRobot
 
 class InCmRobot : TestRobot() {
 
     //region Entry
-    fun <T : Activity> navigateToInCm(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_conversion_spinner, R.string.text_in_to_cm)
+    fun navigateToInCm() {
+        clickSpinnerItem(R.id.conv_conversion_spinner, R.string.text_in_to_cm)
     }
 
     fun enterInches(inches: String) {

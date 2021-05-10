@@ -1,9 +1,9 @@
 package com.octrobi.rdpocketpal.anthropometrics
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
@@ -49,8 +49,8 @@ private const val ADJUSTED_BW_STANDARD_ANSWER = "160.88"
 class AnthropometricsTest {
 
     @get:Rule
-    val activityTestRule: ActivityTestRule<AnthropometricsActivity> =
-            ActivityTestRule(AnthropometricsActivity::class.java)
+    var activityRule: ActivityScenarioRule<AnthropometricsActivity> =
+        ActivityScenarioRule(AnthropometricsActivity::class.java)
 
     companion object {
         @BeforeClass
@@ -378,8 +378,8 @@ class AnthropometricsTest {
             setSexMale()
             setUnitMetric()
             setAllFieldsProgrammatically(VALID_ENTRY_INT_STRING)
-            rotateScreen(activityTestRule)
-            rotateScreen(activityTestRule)
+            rotateScreen(activityRule)
+            rotateScreen(activityRule)
             // validation
             checkSexMale()
             checkUnitMetric()
@@ -392,8 +392,8 @@ class AnthropometricsTest {
             //entry
             setSexFemale()
             setUnitStandard()
-            rotateScreen(activityTestRule)
-            rotateScreen(activityTestRule)
+            rotateScreen(activityRule)
+            rotateScreen(activityRule)
             checkSexFemale()
             checkUnitStandard()
         }

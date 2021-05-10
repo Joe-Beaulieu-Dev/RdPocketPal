@@ -1,8 +1,6 @@
 package com.octrobi.rdpocketpal.home
 
-import android.app.Activity
 import android.app.Instrumentation
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.anthropometrics.AnthropometricsActivity
 import com.octrobi.rdpocketpal.conversions.ConversionActivity
@@ -13,24 +11,20 @@ import com.octrobi.rdpocketpal.testutil.TestRobot
 class HomeRobot : TestRobot() {
 
     //region Launch Activities
-    fun <T : Activity> launchPredictiveEquations(activityRule: ActivityTestRule<T>) {
-        clickRecyclerViewItem(activityRule, R.id.home_buttons_recyclerView
-                , R.string.btn_predictive_equations)
+    fun launchPredictiveEquations() {
+        clickRecyclerViewItem(R.id.home_buttons_recyclerView, R.string.btn_predictive_equations)
     }
 
-    fun <T : Activity> launchQuickMethod(activityRule: ActivityTestRule<T>) {
-        clickRecyclerViewItem(activityRule, R.id.home_buttons_recyclerView
-                , R.string.btn_quick_method)
+    fun launchQuickMethod() {
+        clickRecyclerViewItem(R.id.home_buttons_recyclerView, R.string.btn_quick_method)
     }
 
-    fun <T : Activity> launchAnthropometrics(activityRule: ActivityTestRule<T>) {
-        clickRecyclerViewItem(activityRule, R.id.home_buttons_recyclerView
-                , R.string.btn_anthropometrics)
+    fun launchAnthropometrics() {
+        clickRecyclerViewItem(R.id.home_buttons_recyclerView, R.string.btn_anthropometrics)
     }
 
-    fun <T : Activity> launchConversions(activityRule: ActivityTestRule<T>) {
-        clickRecyclerViewItem(activityRule, R.id.home_buttons_recyclerView
-                , R.string.btn_conversions)
+    fun launchConversions() {
+        clickRecyclerViewItem(R.id.home_buttons_recyclerView, R.string.btn_conversions)
     }
     //endregion
 

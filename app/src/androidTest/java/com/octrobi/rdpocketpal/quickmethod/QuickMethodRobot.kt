@@ -1,8 +1,6 @@
 package com.octrobi.rdpocketpal.quickmethod
 
-import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import com.octrobi.rdpocketpal.testutil.TestRobot
@@ -19,8 +17,8 @@ open class QuickMethodRobot : TestRobot() {
         checkText(R.id.qm_weight_editText, weight)
     }
 
-    fun <T : Activity> checkWeightNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(rule, R.id.qm_weight_editText, R.string.error_enter_a_number)
+    fun checkWeightNanError() {
+        checkEditTextError(R.id.qm_weight_editText, R.string.error_enter_a_number)
     }
 
     fun checkWeightNoError() {
@@ -52,12 +50,12 @@ open class QuickMethodRobot : TestRobot() {
         checkRadioBtnIsChecked(R.id.qm_unit_standard)
     }
 
-    fun <T : Activity> checkUnitMetricWeight(rule: ActivityTestRule<T>) {
-        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_kg))
+    fun checkUnitMetricWeight() {
+        checkText(R.id.qm_weight_unit_label, TestUtil.getString(R.string.text_kg))
     }
 
-    fun <T : Activity> checkUnitStandardWeight(rule: ActivityTestRule<T>) {
-        checkText(R.id.qm_weight_unit_label, TestUtil.getString(rule, R.string.text_lb))
+    fun checkUnitStandardWeight() {
+        checkText(R.id.qm_weight_unit_label, TestUtil.getString(R.string.text_lb))
     }
     //endregion
 

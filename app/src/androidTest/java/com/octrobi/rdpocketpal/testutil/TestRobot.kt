@@ -25,7 +25,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
@@ -77,6 +79,10 @@ open class TestRobot {
         return checkText(viewId, TestUtil.getString(stringId))
     }
 
+    protected fun checkTextInDialog(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction {
+        return onView(withId(viewId)).inRoot(isDialog()).check(matches(withText(stringId)))
+    }
+
     protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
         return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(withText(text)))
     }
@@ -91,10 +97,11 @@ open class TestRobot {
     //endregion
 
     //region View visibility
-    @Suppress("SameParameterValue")
-    protected fun checkViewWithIdIsDisplayed(@IdRes viewId: Int): ViewInteraction {
-        return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
-    }
+    protected fun checkViewIsDisplayed(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
+
+    protected fun checkViewIsDisplayedInDialog(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).inRoot(isDialog()).check(matches(isDisplayed()))
 
     protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction {
         return onView(withId(viewId)).check(matches(isDisplayed()))
@@ -105,13 +112,16 @@ open class TestRobot {
         return onView(withText(stringId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
     }
 
-    protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
-        return onView(withText(stringId)).check(matches(isDisplayed()))
-    }
+    protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction =
+        onView(withText(stringId)).check(matches(isDisplayed()))
 
     protected fun checkViewWithTextIsDisplayedNoScroll(text: String): ViewInteraction {
         return onView(withText(text)).check(matches(isDisplayed()))
     }
+
+    @Suppress("SameParameterValue")
+    protected fun checkViewIsNotDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).check(doesNotExist())
 
     @Suppress("SameParameterValue")
     protected fun checkViewWithTextIsNotDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
@@ -128,6 +138,15 @@ open class TestRobot {
                 .perform(nestedScrollTo())
                 .check(matches(hasErrorText(TestUtil.getString(activityRule, stringId))))
     }
+
+    @Suppress("SameParameterValue")
+    protected fun checkEditTextError(
+        @IdRes viewId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction =
+        onView(withId(viewId))
+            .perform(nestedScrollTo())
+            .check(matches(hasErrorText(TestUtil.getString(stringId))))
 
     protected fun checkEditTextNoError(@IdRes viewId: Int): ViewInteraction {
         // need to use this value because of overload resolution
@@ -148,6 +167,10 @@ open class TestRobot {
     protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction {
         return onView(withId(viewId)).perform(click())
     }
+
+    @Suppress("SameParameterValue")
+    protected fun clickViewInDialogNoScroll(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).inRoot(isDialog()).perform(click())
 
     protected fun clickViewTextNoScroll(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId)).perform(click())
@@ -216,11 +239,10 @@ open class TestRobot {
     //endregion
 
     //region Spinner
-    protected fun <T : Activity> clickSpinnerItem(activityRule: ActivityTestRule<T>
-                                                  , @IdRes spinnerId: Int
-                                                  , @StringRes stringId: Int): ViewInteraction {
-        return clickSpinnerItem(spinnerId, TestUtil.getString(activityRule, stringId))
-    }
+    protected fun clickSpinnerItem(
+        @IdRes spinnerId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction = clickSpinnerItem(spinnerId, TestUtil.getString(stringId))
 
     private fun clickSpinnerItem(@IdRes spinnerId: Int
                                    , selection: String): ViewInteraction {
@@ -249,6 +271,15 @@ open class TestRobot {
                         hasDescendant(withText(TestUtil.getString(activityRule, stringId)))
                         , click()))
     }
+
+    @Suppress("SameParameterValue")
+    protected fun clickRecyclerViewItem(@IdRes recyclerViewId: Int, @StringRes stringId: Int)
+            : ViewInteraction = onView(withId(recyclerViewId))
+        .perform(
+            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                hasDescendant(withText(TestUtil.getString(stringId))), click()
+            )
+        )
     //endregion
 
     //region NumberPicker
@@ -272,35 +303,36 @@ open class TestRobot {
 
     //region Menu
     fun openDisclaimer() {
-        // open overflow menu
-        openActionBarOverflowOrOptionsMenu(
-                InstrumentationRegistry.getInstrumentation().targetContext)
-        // open disclaimer screen
-        onView(withText(R.string.menu_disclaimer)).perform(click())
+        clickMenuItem(R.string.menu_disclaimer)
     }
 
     fun openSettings() {
-        // open overflow menu
+        clickMenuItem(R.string.menu_settings)
+    }
+
+    private fun clickMenuItem(@StringRes stringId: Int) {
         openActionBarOverflowOrOptionsMenu(
-                InstrumentationRegistry.getInstrumentation().targetContext)
-        // open settings screen
-        onView(withText(R.string.menu_settings)).perform(click())
+            InstrumentationRegistry.getInstrumentation().targetContext
+        )
+        onView(withText(stringId)).perform(click())
     }
     //endregion
 
     //region Orientation
-    fun <T : Activity> rotateScreen(rule: ActivityTestRule<T>) {
-        // get current orientation and set value to opposite
-        val orientation: Int =
-                if (rule.activity.resources.configuration.orientation
-                        == Configuration.ORIENTATION_PORTRAIT) {
+    fun <T : Activity> rotateScreen(rule: ActivityScenarioRule<T>) {
+        rule.scenario.onActivity {
+            // get current orientation and set value to opposite
+            val orientation: Int =
+                if (it.resources.configuration.orientation
+                    == Configuration.ORIENTATION_PORTRAIT) {
                     ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 } else {
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 }
 
-        // set orientation on activity
-        rule.activity.requestedOrientation = orientation
+            // set orientation on activity
+            it.requestedOrientation = orientation
+        }
 
         // wait for screen to finish rotating
         // waitForIdleSync() doesn't get the job done; still getting errors trying to use it.

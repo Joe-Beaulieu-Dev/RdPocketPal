@@ -1,12 +1,11 @@
 package com.octrobi.rdpocketpal.disclaimer
 
-import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
-import com.octrobi.rdpocketpal.home.HomeActivity
-import com.octrobi.rdpocketpal.home.withHomeRobot
+import com.octrobi.rdpocketpal.getstarted.GetStartedActivity
+import com.octrobi.rdpocketpal.getstarted.withGetStartedRobot
 import com.octrobi.rdpocketpal.testutil.TestUtil
 import org.junit.Before
 import org.junit.Rule
@@ -18,34 +17,37 @@ import org.junit.runner.RunWith
 class DisclaimerDialogFragmentTest {
 
     @get:Rule
-    var activityTestRule: ActivityTestRule<HomeActivity> =
-            ActivityTestRule(HomeActivity::class.java)
+    var activityTestRule: ActivityScenarioRule<GetStartedActivity> =
+        ActivityScenarioRule(GetStartedActivity::class.java)
 
     @Before
     fun before() {
         TestUtil.setIfDisclaimerAccepted(
                 InstrumentationRegistry.getInstrumentation().targetContext, false)
+        withGetStartedRobot {
+            clickDisclaimerLink()
+        }
     }
 
     @Test
     fun checkDisclaimerDisplays_initialCreation() {
         withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
         }
     }
 
     @Test
     fun checkDisclaimerComponents_display() {
         withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
-            checkTitleIsShowing()
-            checkDisclaimerTextIsShowing()
+            checkDisclaimerDialogIsDisplayed()
+            checkTitleIsDisplayed()
+            checkDisclaimerTextIsDisplayed()
             checkCloseBtnIsShowing()
             // rotate screen and check again
             rotateScreen(activityTestRule)
-            checkDisclaimerDialogIsShowing()
-            checkTitleIsShowing()
-            checkDisclaimerTextIsShowing()
+            checkDisclaimerDialogIsDisplayed()
+            checkTitleIsDisplayed()
+            checkDisclaimerTextIsDisplayed()
             checkCloseBtnIsShowing()
         }
     }
@@ -53,50 +55,30 @@ class DisclaimerDialogFragmentTest {
     @Test
     fun checkDisclaimerDisplays_rotation() {
         withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
             rotateScreen(activityTestRule)
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
             rotateScreen(activityTestRule)
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
         }
-    }
-
-    @Test
-    fun checkDisclaimerDoesNotDisplay_afterContinue_rotation() {
-        withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
-            clickClose()
-            rotateScreen(activityTestRule)
-            checkDisclaimerDialogIsNotShowing()
-            rotateScreen(activityTestRule)
-            checkDisclaimerDialogIsNotShowing()
-        }
-    }
-
-    @Test
-    fun checkDisclaimerDoesNotDisplay_afterContinue_leaveActivityAndReturn() {
-        Intents.init()
-        withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
-            clickClose()
-            withHomeRobot {
-                launchAnthropometrics(activityTestRule)
-                checkAnthropometricsActivityIsDisplayed()
-                pressBackButton()
-                checkHomeActivityIsDisplayed(InstrumentationRegistry.getInstrumentation())
-            }
-            checkDisclaimerDialogIsNotShowing()
-        }
-        Intents.release()
     }
 
     @Test
     fun checkDisclaimerDialog_isNotCancellable() {
         withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
             pressBackButton()
             pressBackButton()
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
+        }
+    }
+
+    @Test
+    fun checkCloseButton_dismissesDisclaimer() {
+        withDisclaimerDialogFragmentRobot {
+            checkDisclaimerDialogIsDisplayed()
+            clickClose()
+            checkDisclaimerDialogIsNotDisplayed()
         }
     }
 }

@@ -1,10 +1,10 @@
 package com.octrobi.rdpocketpal.disclaimer
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import org.junit.Rule
 import org.junit.Test
@@ -15,8 +15,8 @@ import org.junit.runner.RunWith
 class DisclaimerActivityTest {
 
     @get:Rule
-    var activityTestRule: ActivityTestRule<DisclaimerActivity> =
-            ActivityTestRule(DisclaimerActivity::class.java)
+    var activityRule: ActivityScenarioRule<DisclaimerActivity> =
+        ActivityScenarioRule(DisclaimerActivity::class.java)
 
     //region Visibility
     @Test

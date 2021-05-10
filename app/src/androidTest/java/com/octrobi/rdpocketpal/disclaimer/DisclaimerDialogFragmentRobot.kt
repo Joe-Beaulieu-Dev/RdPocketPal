@@ -7,31 +7,32 @@ class DisclaimerDialogFragmentRobot : TestRobot() {
 
     //region Buttons
     fun clickClose() {
-        clickViewIdNoScroll(R.id.disc_dialog_close)
+        clickViewInDialogNoScroll(R.id.disc_dialog_close)
     }
     //endregion
 
     //Region Visibility
-    fun checkDisclaimerDialogIsShowing() {
-        checkViewWithTextIsDisplayedNoScroll(R.string.title_disclaimer_dialog)
+    fun checkDisclaimerDialogIsDisplayed() {
+        checkViewIsDisplayedInDialog(R.id.disc_dialog_title)
+        checkTextInDialog(R.id.disc_dialog_title, R.string.title_disclaimer_dialog)
     }
 
-    fun checkDisclaimerDialogIsNotShowing() {
-        checkViewWithTextIsNotDisplayedNoScroll(R.string.title_disclaimer_dialog)
+    fun checkDisclaimerDialogIsNotDisplayed() {
+        checkViewIsNotDisplayedNoScroll(R.id.disc_dialog_title)
     }
 
-    fun checkTitleIsShowing() {
-        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_title)
-        checkViewWithTextIsDisplayedNoScroll(R.string.title_disclaimer_dialog)
+    fun checkTitleIsDisplayed() {
+        checkViewIsDisplayedInDialog(R.id.disc_dialog_title)
+        checkTextInDialog(R.id.disc_dialog_title, R.string.title_disclaimer_dialog)
     }
 
-    fun checkDisclaimerTextIsShowing() {
-        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_text)
-        checkViewWithTextIsDisplayedNoScroll(R.string.text_disclaimer)
+    fun checkDisclaimerTextIsDisplayed() {
+        checkViewIsDisplayedInDialog(R.id.disc_dialog_text)
+        checkTextInDialog(R.id.disc_dialog_text, R.string.text_disclaimer)
     }
 
     fun checkCloseBtnIsShowing() {
-        checkViewWithIdIsDisplayedNoScroll(R.id.disc_dialog_close)
+        checkViewIsDisplayedInDialog(R.id.disc_dialog_close)
     }
     //endregion
 }

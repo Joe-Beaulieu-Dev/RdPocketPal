@@ -1,7 +1,5 @@
 package com.octrobi.rdpocketpal.conversions
 
-import android.app.Activity
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.TestRobot
 
@@ -14,12 +12,12 @@ class ConversionsRobot : TestRobot() {
     //endregion
 
     //region Errors
-    fun <T : Activity> checkLeftFieldNanError(activityRule: ActivityTestRule<T>) {
-        checkEditTextError(activityRule, R.id.conv_field_left, R.string.error_enter_a_number)
+    fun checkLeftFieldNanError() {
+        checkEditTextError(R.id.conv_field_left, R.string.error_enter_a_number)
     }
 
-    fun <T : Activity> checkRightFieldNanError(activityRule: ActivityTestRule<T>) {
-        checkEditTextError(activityRule, R.id.conv_field_right, R.string.error_enter_a_number)
+    fun checkRightFieldNanError() {
+        checkEditTextError(R.id.conv_field_right, R.string.error_enter_a_number)
     }
 
     fun checkLeftFieldNoError() {

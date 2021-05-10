@@ -1,9 +1,9 @@
 package com.octrobi.rdpocketpal.predictiveequations
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
@@ -76,8 +76,8 @@ private const val BRANDI_ANSWER_FEMALE_MAX = "3337.2"
 class PredictiveEquationsTest {
 
     @get:Rule
-    val activityRule: ActivityTestRule<PredictiveEquationsActivity> =
-            ActivityTestRule(PredictiveEquationsActivity::class.java)
+    val activityRule: ActivityScenarioRule<PredictiveEquationsActivity> =
+        ActivityScenarioRule(PredictiveEquationsActivity::class.java)
 
     companion object {
         @BeforeClass
@@ -93,22 +93,22 @@ class PredictiveEquationsTest {
     @Test
     fun changeUnitLabels_metric() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setUnitMetric()
-            checkUnitMetricWeight(activityRule)
-            checkUnitMetricHeight(activityRule)
-            checkUnitMetricTmax(activityRule)
+            checkUnitMetricWeight()
+            checkUnitMetricHeight()
+            checkUnitMetricTmax()
         }
     }
 
     @Test
     fun changeUnitLabels_standard() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setUnitStandard()
-            checkUnitStandardWeight(activityRule)
-            checkUnitStandardHeight(activityRule)
-            checkUnitStandardTmax(activityRule)
+            checkUnitStandardWeight()
+            checkUnitStandardHeight()
+            checkUnitStandardTmax()
         }
     }
     //endregion
@@ -118,7 +118,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_mifflin_metric_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectMifflin(activityRule)
+            selectMifflin()
             setSexMale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -134,10 +134,11 @@ class PredictiveEquationsTest {
         }
     }
 
+    @Test
     fun checkCalculation_mifflin_metric_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectMifflin(activityRule)
+            selectMifflin()
             setSexFemale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -153,10 +154,11 @@ class PredictiveEquationsTest {
         }
     }
 
+    @Test
     fun checkCalculation_mifflin_standard_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectMifflin(activityRule)
+            selectMifflin()
             setSexMale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -172,10 +174,11 @@ class PredictiveEquationsTest {
         }
     }
 
+    @Test
     fun checkCalculation_mifflin_standard_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectMifflin(activityRule)
+            selectMifflin()
             setSexFemale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -195,7 +198,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_benedict_metric_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectBenedict(activityRule)
+            selectBenedict()
             setSexMale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -215,7 +218,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_benedict_metric_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectBenedict(activityRule)
+            selectBenedict()
             setSexFemale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -235,7 +238,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_benedict_standard_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectBenedict(activityRule)
+            selectBenedict()
             setSexMale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -255,7 +258,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_benedict_standard_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectBenedict(activityRule)
+            selectBenedict()
             setSexFemale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -275,7 +278,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2003b_metric_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setSexMale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -297,7 +300,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2003b_metric_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setSexFemale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -319,7 +322,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2003b_standard_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setSexMale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -341,7 +344,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2003b_standard_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             setSexFemale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -363,7 +366,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2010_metric_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2010(activityRule)
+            selectPennState2010()
             setSexMale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -385,7 +388,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2010_metric_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2010(activityRule)
+            selectPennState2010()
             setSexFemale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -407,7 +410,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2010_standard_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2010(activityRule)
+            selectPennState2010()
             setSexMale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -429,7 +432,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_pennState2010_standard_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectPennState2010(activityRule)
+            selectPennState2010()
             setSexFemale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -451,7 +454,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_brandi_metric_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectBrandi(activityRule)
+            selectBrandi()
             setSexMale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -473,7 +476,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_brandi_metric_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectBrandi(activityRule)
+            selectBrandi()
             setSexFemale()
             setUnitMetric()
             enterWeight(WEIGHT_METRIC)
@@ -495,7 +498,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_brandi_standard_male() {
         withPredictiveEquationsRobot {
             // entry
-            selectBrandi(activityRule)
+            selectBrandi()
             setSexMale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -517,7 +520,7 @@ class PredictiveEquationsTest {
     fun checkCalculation_brandi_standard_female() {
         withPredictiveEquationsRobot {
             // entry
-            selectBrandi(activityRule)
+            selectBrandi()
             setSexFemale()
             setUnitStandard()
             enterWeight(WEIGHT_STANDARD)
@@ -541,7 +544,7 @@ class PredictiveEquationsTest {
     fun clearFields_ClearBtn() {
         withPredictiveEquationsRobot {
             // initial entry
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
             enterAge(VALID_ENTRY_INT_STRING)
@@ -566,7 +569,7 @@ class PredictiveEquationsTest {
             checkCalorieMax(EMPTY_STRING)
 
             // enter fields that don't display in penn state equations
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             clickClear()
             // check that fields are empty
@@ -642,13 +645,13 @@ class PredictiveEquationsTest {
     @Test
     fun clearFields_equationSpinnerSelection() {
         withPredictiveEquationsRobot {
-            selectMifflin(activityRule)
+            selectMifflin()
             // entry
             programmaticallySetBmr(VALID_ENTRY_INT_STRING)
             programmaticallySetCalorieMin(VALID_ENTRY_INT_STRING)
             programmaticallySetCalorieMax(VALID_ENTRY_INT_STRING)
             // change equation
-            selectBenedict(activityRule)
+            selectBenedict()
             // validate fields are empty
             checkBmr(EMPTY_STRING)
             checkCalorieMin(EMPTY_STRING)
@@ -664,16 +667,16 @@ class PredictiveEquationsTest {
     fun checkError_noInput_calculationBtn_pennState2003b_allFields_displays() {
         withPredictiveEquationsRobot {
             // setup and calculate
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             clickCalculate()
             // validation
-            checkWeightNanError(activityRule)
-            checkHeightNanError(activityRule)
-            checkAgeNanError(activityRule)
-            checkTmaxNanError(activityRule)
-            checkVeNanError(activityRule)
-            checkActivityFactorMinNanError(activityRule)
-            checkActivityFactorMaxNanError(activityRule)
+            checkWeightNanError()
+            checkHeightNanError()
+            checkAgeNanError()
+            checkTmaxNanError()
+            checkVeNanError()
+            checkActivityFactorMinNanError()
+            checkActivityFactorMaxNanError()
 //            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
             // check results
             checkBmr(EMPTY_STRING)
@@ -687,16 +690,16 @@ class PredictiveEquationsTest {
     fun checkError_noInput_calculationBtn_brandi_allFields_displays() {
         withPredictiveEquationsRobot {
             // setup and calculate
-            selectBrandi(activityRule)
+            selectBrandi()
             clickCalculate()
             // validation
-            checkWeightNanError(activityRule)
-            checkHeightNanError(activityRule)
-            checkAgeNanError(activityRule)
-            checkHeartRateNanError(activityRule)
-            checkVeNanError(activityRule)
-            checkActivityFactorMinNanError(activityRule)
-            checkActivityFactorMaxNanError(activityRule)
+            checkWeightNanError()
+            checkHeightNanError()
+            checkAgeNanError()
+            checkHeartRateNanError()
+            checkVeNanError()
+            checkActivityFactorMinNanError()
+            checkActivityFactorMaxNanError()
 //            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
             // check results
             checkBmr(EMPTY_STRING)
@@ -709,7 +712,7 @@ class PredictiveEquationsTest {
     fun checkError_invalidInput_calculationBtn_pennState2003b_allFields_displays() {
         withPredictiveEquationsRobot {
             // setup and calculate
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
             enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
             enterAge(INVALID_ENTRY_NOT_A_NUMBER)
@@ -719,13 +722,13 @@ class PredictiveEquationsTest {
             enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
             clickCalculate()
             // validation
-            checkWeightNanError(activityRule)
-            checkHeightNanError(activityRule)
-            checkAgeNanError(activityRule)
-            checkTmaxNanError(activityRule)
-            checkVeNanError(activityRule)
-            checkActivityFactorMinNanError(activityRule)
-            checkActivityFactorMaxNanError(activityRule)
+            checkWeightNanError()
+            checkHeightNanError()
+            checkAgeNanError()
+            checkTmaxNanError()
+            checkVeNanError()
+            checkActivityFactorMinNanError()
+            checkActivityFactorMaxNanError()
 //            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
             // check results
             checkBmr(EMPTY_STRING)
@@ -738,7 +741,7 @@ class PredictiveEquationsTest {
     fun checkError_invalidInput_calculationBtn_brandi_allFields_displays() {
         withPredictiveEquationsRobot {
             // setup and calculate
-            selectBrandi(activityRule)
+            selectBrandi()
             enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
             enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
             enterAge(INVALID_ENTRY_NOT_A_NUMBER)
@@ -748,13 +751,13 @@ class PredictiveEquationsTest {
             enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
             clickCalculate()
             // validation
-            checkWeightNanError(activityRule)
-            checkHeightNanError(activityRule)
-            checkAgeNanError(activityRule)
-            checkHeartRateNanError(activityRule)
-            checkVeNanError(activityRule)
-            checkActivityFactorMinNanError(activityRule)
-            checkActivityFactorMaxNanError(activityRule)
+            checkWeightNanError()
+            checkHeightNanError()
+            checkAgeNanError()
+            checkHeartRateNanError()
+            checkVeNanError()
+            checkActivityFactorMinNanError()
+            checkActivityFactorMaxNanError()
 //            checkToastDisplayedWithMessage(R.string.toast_invalid_fields)
             // check results
             checkBmr(EMPTY_STRING)
@@ -768,7 +771,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             enterWeight(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkWeightNanError(activityRule)
+            checkWeightNanError()
         }
     }
 
@@ -777,7 +780,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             enterHeight(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkHeightNanError(activityRule)
+            checkHeightNanError()
         }
     }
 
@@ -791,37 +794,37 @@ class PredictiveEquationsTest {
             programmaticallySetAge(".")
             giveFocusToAge()
             loseFocusToWeight()
-            checkAgeNanError(activityRule)
+            checkAgeNanError()
         }
     }
 
     @Test
     fun checkError_tmax_notANumber_displays() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterTmax(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkTmaxNanError(activityRule)
+            checkTmaxNanError()
         }
     }
 
     @Test
     fun checkError_ve_notANumber_displays() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterVe(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkVeNanError(activityRule)
+            checkVeNanError()
         }
     }
 
     @Test
     fun checkError_heartRate_notANumber_displays() {
         withPredictiveEquationsRobot {
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkHeartRateNanError(activityRule)
+            checkHeartRateNanError()
         }
     }
 
@@ -830,7 +833,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             enterActivityFactorMin(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkActivityFactorMinNanError(activityRule)
+            checkActivityFactorMinNanError()
         }
     }
 
@@ -839,7 +842,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             enterActivityFactorMax(INVALID_ENTRY_NOT_A_NUMBER)
             loseFocusToAge()
-            checkActivityFactorMaxNanError(activityRule)
+            checkActivityFactorMaxNanError()
         }
     }
 
@@ -873,7 +876,7 @@ class PredictiveEquationsTest {
     @Test
     fun checkError_tmax_noError() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterTmax(VALID_ENTRY_INT_STRING)
             loseFocusToAge()
             checkTmaxNoError()
@@ -883,7 +886,7 @@ class PredictiveEquationsTest {
     @Test
     fun checkError_ve_noError() {
         withPredictiveEquationsRobot {
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterVe(VALID_ENTRY_INT_STRING)
             loseFocusToAge()
             checkVeNoError()
@@ -893,7 +896,7 @@ class PredictiveEquationsTest {
     @Test
     fun checkError_heartRate_noError() {
         withPredictiveEquationsRobot {
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             loseFocusToAge()
             checkHeartRateNoError()
@@ -926,7 +929,7 @@ class PredictiveEquationsTest {
             // entry
             setSexMale()
             setUnitMetric()
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
             enterAge(VALID_ENTRY_INT_STRING)
@@ -957,7 +960,7 @@ class PredictiveEquationsTest {
             // enter fields that don't display in penn state equations
             setSexFemale()
             setUnitStandard()
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             // rotate screen
             rotateScreen(activityRule)
@@ -975,7 +978,7 @@ class PredictiveEquationsTest {
             // entry
             setSexMale()
             setUnitMetric()
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
             enterAge(VALID_ENTRY_INT_STRING)
@@ -1011,7 +1014,7 @@ class PredictiveEquationsTest {
             // enter fields that don't display in penn state equations
             setSexFemale()
             setUnitStandard()
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             // open and close Settings
             Intents.init()
@@ -1033,7 +1036,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             // entry
             setSexMale()
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
             enterAge(VALID_ENTRY_INT_STRING)
@@ -1061,7 +1064,7 @@ class PredictiveEquationsTest {
 
             // enter fields that don't display in penn state equations
             setSexFemale()
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             setSexFemale()
             //validation
@@ -1076,7 +1079,7 @@ class PredictiveEquationsTest {
         withPredictiveEquationsRobot {
             // entry
             setUnitMetric()
-            selectPennState2003b(activityRule)
+            selectPennState2003b()
             enterWeight(VALID_ENTRY_INT_STRING)
             enterHeight(VALID_ENTRY_INT_STRING)
             enterAge(VALID_ENTRY_INT_STRING)
@@ -1104,7 +1107,7 @@ class PredictiveEquationsTest {
 
             // enter fields that don't display in penn state equations
             setUnitStandard()
-            selectBrandi(activityRule)
+            selectBrandi()
             enterHeartRate(VALID_ENTRY_INT_STRING)
             setUnitStandard()
             //validation

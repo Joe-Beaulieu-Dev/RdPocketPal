@@ -1,9 +1,9 @@
 package com.octrobi.rdpocketpal.quickmethod
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
@@ -39,8 +39,8 @@ private const val OUTPUT_MAX_TWO_DECIMALS_ROUNDED = "2250"
 class QuickMethodTest {
 
     @get:Rule
-    var activityRule: ActivityTestRule<QuickMethodActivity> =
-            ActivityTestRule(QuickMethodActivity::class.java)
+    var activityRule: ActivityScenarioRule<QuickMethodActivity> =
+        ActivityScenarioRule(QuickMethodActivity::class.java)
 
     companion object {
         @BeforeClass
@@ -60,7 +60,7 @@ class QuickMethodTest {
             // set to metric
             setUnitMetric()
             // validate
-            checkUnitMetricWeight(activityRule)
+            checkUnitMetricWeight()
         }
     }
 
@@ -71,7 +71,7 @@ class QuickMethodTest {
             // set to metric
             setUnitStandard()
             // validate
-            checkUnitStandardWeight(activityRule)
+            checkUnitStandardWeight()
         }
     }
     //endregion
@@ -288,7 +288,7 @@ class QuickMethodTest {
             leaveField()
 
             // validate error
-            checkWeightNanError(activityRule)
+            checkWeightNanError()
         }
     }
 
@@ -304,8 +304,8 @@ class QuickMethodTest {
                 leaveField()
 
                 // validate errors
-                checkMinInputNanError(activityRule)
-                checkMaxInputNanError(activityRule)
+                checkMinInputNanError()
+                checkMaxInputNanError()
             }
         }
     }
@@ -322,8 +322,8 @@ class QuickMethodTest {
                 leaveField()
 
                 // validate errors
-                checkMinInputNanError(activityRule)
-                checkMaxInputNanError(activityRule)
+                checkMinInputNanError()
+                checkMaxInputNanError()
             }
         }
     }
@@ -340,8 +340,8 @@ class QuickMethodTest {
                 leaveField()
 
                 // validate errors
-                checkMinInputNanError(activityRule)
-                checkMaxInputNanError(activityRule)
+                checkMinInputNanError()
+                checkMaxInputNanError()
             }
         }
     }

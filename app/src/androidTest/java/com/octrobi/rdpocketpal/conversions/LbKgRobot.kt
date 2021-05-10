@@ -1,15 +1,13 @@
 package com.octrobi.rdpocketpal.conversions
 
-import android.app.Activity
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.TestRobot
 
 class LbKgRobot : TestRobot() {
 
     //region Entry
-    fun <T : Activity> navigateToLbKg(activityRule: ActivityTestRule<T>) {
-        clickSpinnerItem(activityRule, R.id.conv_conversion_spinner, R.string.text_lb_to_kg)
+    fun navigateToLbKg() {
+        clickSpinnerItem(R.id.conv_conversion_spinner, R.string.text_lb_to_kg)
     }
 
     fun enterPounds(pounds: String) {

@@ -1,9 +1,9 @@
 package com.octrobi.rdpocketpal.conversions
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import com.octrobi.rdpocketpal.testutil.EMPTY_STRING
@@ -28,8 +28,8 @@ private const val LB_TO_KG_KILOGRAMS = "0.45359"
 class ConversionsTest {
 
     @get:Rule
-    val activityRule: ActivityTestRule<ConversionActivity> =
-            ActivityTestRule(ConversionActivity::class.java)
+    val activityRule: ActivityScenarioRule<ConversionActivity> =
+        ActivityScenarioRule(ConversionActivity::class.java)
 
     //region Visibility
     @Test
@@ -47,7 +47,7 @@ class ConversionsTest {
     fun inToCm_leftToRight_isCorrect() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
@@ -58,7 +58,7 @@ class ConversionsTest {
     fun inToCm_rightToLeft_isCorrect() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterCentimeters(IN_TO_CM_CENTIMETERS)
                 checkInches(IN_TO_CM_INCHES)
             }
@@ -71,7 +71,7 @@ class ConversionsTest {
     fun lbToKg_leftToRight_isCorrect() {
         withConversionsRobot {
             inLbKg {
-                navigateToLbKg(activityRule)
+                navigateToLbKg()
                 enterPounds(LB_TO_KG_POUNDS)
                 checkKilograms(LB_TO_KG_KILOGRAMS)
             }
@@ -82,7 +82,7 @@ class ConversionsTest {
     fun lbToKg_rightToLeft_isCorrect() {
         withConversionsRobot {
             inLbKg {
-                navigateToLbKg(activityRule)
+                navigateToLbKg()
                 enterKilograms(LB_TO_KG_KILOGRAMS)
                 checkPounds(LB_TO_GK_R2L_POUNDS_OUTPUT)
             }
@@ -95,7 +95,7 @@ class ConversionsTest {
     fun clearFields_clearBtn() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
@@ -111,12 +111,12 @@ class ConversionsTest {
     fun clearFields_conversionTypeSpinnerSelection() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
             inLbKg {
-                navigateToLbKg(activityRule)
+                navigateToLbKg()
                 checkPounds(EMPTY_STRING)
                 checkKilograms(EMPTY_STRING)
             }
@@ -129,10 +129,10 @@ class ConversionsTest {
     fun checkError_leftField_notANumber_displays() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(INVALID_ENTRY_NOT_A_NUMBER)
             }
-            checkLeftFieldNanError(activityRule)
+            checkLeftFieldNanError()
         }
     }
 
@@ -140,10 +140,10 @@ class ConversionsTest {
     fun checkError_rightField_notANumber_displays() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterCentimeters(INVALID_ENTRY_NOT_A_NUMBER)
             }
-            checkRightFieldNanError(activityRule)
+            checkRightFieldNanError()
         }
     }
 
@@ -151,7 +151,7 @@ class ConversionsTest {
     fun checkError_leftField_noError_displays() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
             }
             checkLeftFieldNoError()
@@ -162,7 +162,7 @@ class ConversionsTest {
     fun checkError_rightField_noError_displays() {
         withConversionsRobot {
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterCentimeters(IN_TO_CM_CENTIMETERS)
             }
             checkRightFieldNoError()
@@ -176,7 +176,7 @@ class ConversionsTest {
         withConversionsRobot {
             // input
             inInCm {
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
             }
@@ -196,10 +196,10 @@ class ConversionsTest {
         withConversionsRobot {
             inInCm {
                 // entry
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 enterInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)
-                navigateToInCm(activityRule)
+                navigateToInCm()
                 // validation
                 checkInches(IN_TO_CM_INCHES)
                 checkCentimeters(IN_TO_CM_CENTIMETERS)

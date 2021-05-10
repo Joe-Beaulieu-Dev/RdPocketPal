@@ -1,7 +1,5 @@
 package com.octrobi.rdpocketpal.quickmethod
 
-import android.app.Activity
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.testutil.EMPTY_STRING
 import com.octrobi.rdpocketpal.testutil.TestRobot
@@ -32,12 +30,12 @@ class FluidsRobot : TestRobot() {
         checkText(R.id.qm_fluid_ml_per_day_max, kcal)
     }
 
-    fun <T : Activity> checkMinInputNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(rule, R.id.qm_fluid_ml_per_kg_min, R.string.error_enter_a_number)
+    fun checkMinInputNanError() {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_min, R.string.error_enter_a_number)
     }
 
-    fun <T : Activity> checkMaxInputNanError(rule: ActivityTestRule<T>) {
-        checkEditTextError(rule, R.id.qm_fluid_ml_per_kg_max, R.string.error_enter_a_number)
+    fun checkMaxInputNanError() {
+        checkEditTextError(R.id.qm_fluid_ml_per_kg_max, R.string.error_enter_a_number)
     }
 
     fun checkMinInputNoError() {

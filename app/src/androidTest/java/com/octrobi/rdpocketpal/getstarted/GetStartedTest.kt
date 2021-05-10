@@ -1,9 +1,9 @@
 package com.octrobi.rdpocketpal.getstarted
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerDialogFragmentRobot
 import org.junit.Rule
 import org.junit.Test
@@ -14,19 +14,21 @@ import org.junit.runner.RunWith
 class GetStartedTest {
 
     @get:Rule
-    val activityRule: ActivityTestRule<GetStartedActivity> =
-            ActivityTestRule(GetStartedActivity::class.java)
+    val activityRule: ActivityScenarioRule<GetStartedActivity> =
+        ActivityScenarioRule(GetStartedActivity::class.java)
 
     @Test
     fun checkAllUIComponents_display() {
         withGetStartedRobot {
-            checkReadAndUnderstandTextIsShowing()
-            checkContinueBtnIsShowing()
-            checkContinueBtnHasProperText(activityRule)
+            checkReadAndUnderstandIsDisplayed()
+            checkReadAndUnderstandText()
+            checkContinueBtnIsDisplayed()
+            checkContinueBtnText()
             rotateScreen(activityRule)
-            checkReadAndUnderstandTextIsShowing()
-            checkContinueBtnIsShowing()
-            checkContinueBtnHasProperText(activityRule)
+            checkReadAndUnderstandIsDisplayed()
+            checkReadAndUnderstandText()
+            checkContinueBtnIsDisplayed()
+            checkContinueBtnText()
         }
     }
 
@@ -36,7 +38,7 @@ class GetStartedTest {
             clickDisclaimerLink()
         }
         withDisclaimerDialogFragmentRobot {
-            checkDisclaimerDialogIsShowing()
+            checkDisclaimerDialogIsDisplayed()
         }
     }
 

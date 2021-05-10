@@ -1,10 +1,10 @@
 package com.octrobi.rdpocketpal.home
 
 import androidx.test.espresso.intent.Intents
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.disclaimer.withDisclaimerActivityRobot
 import com.octrobi.rdpocketpal.settings.withSettingsRobot
 import com.octrobi.rdpocketpal.testutil.TestUtil
@@ -16,8 +16,8 @@ import org.junit.runner.RunWith
 class HomeTest {
 
     @get:Rule
-    var activityTestRule: ActivityTestRule<HomeActivity> =
-            ActivityTestRule(HomeActivity::class.java)
+    var activityRule: ActivityScenarioRule<HomeActivity> =
+        ActivityScenarioRule(HomeActivity::class.java)
 
     companion object {
         @BeforeClass
@@ -42,7 +42,7 @@ class HomeTest {
     @Test
     fun predictiveEquationsButton_launchesPredictiveEquationsActivity() {
         withHomeRobot {
-            launchPredictiveEquations(activityTestRule)
+            launchPredictiveEquations()
             checkPredictiveEquationsActivityIsDisplayed()
         }
     }
@@ -50,7 +50,7 @@ class HomeTest {
     @Test
     fun quickMethodButton_launchesQuickMethodActivity() {
         withHomeRobot {
-            launchQuickMethod(activityTestRule)
+            launchQuickMethod()
             checkQuickMethodIsActivityDisplayed()
         }
     }
@@ -58,7 +58,7 @@ class HomeTest {
     @Test
     fun anthropometricsButton_launchesAnthropometricsActivity() {
         withHomeRobot {
-            launchAnthropometrics(activityTestRule)
+            launchAnthropometrics()
             checkAnthropometricsActivityIsDisplayed()
         }
     }
@@ -66,7 +66,7 @@ class HomeTest {
     @Test
     fun conversionsButton_launchesConversionActivity() {
         withHomeRobot {
-            launchConversions(activityTestRule)
+            launchConversions()
             checkConversionsActivityIsDisplayed()
         }
     }
