@@ -46,52 +46,49 @@ annotation class TestRobotMarker
 open class TestRobot {
 
     //region Text entry
-    protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction {
-        return onView(withId(viewId)).perform(nestedScrollTo(), typeText(text), closeSoftKeyboard())
-    }
+    protected fun enterText(@IdRes viewId: Int, text: String): ViewInteraction =
+        onView(withId(viewId)).perform(nestedScrollTo(), typeText(text), closeSoftKeyboard())
 
     protected fun setTextProgrammatically(@IdRes id: Int, text: String): ViewInteraction {
         return onView(withId(id)).perform(nestedScrollTo(),
-                object : ViewAction {
-                    override fun getDescription(): String {
-                        return "Set the value of an EditText programmatically"
-                    }
+            object : ViewAction {
+                override fun getDescription(): String {
+                    return "Set the value of an EditText programmatically"
+                }
 
-                    override fun getConstraints(): Matcher<View> {
-                        return isAssignableFrom(EditText::class.java)
-                    }
+                override fun getConstraints(): Matcher<View> {
+                    return isAssignableFrom(EditText::class.java)
+                }
 
-                    override fun perform(uiController: UiController?, view: View?) {
-                        (view as EditText).setText(text)
-                    }
-                })
+                override fun perform(uiController: UiController?, view: View?) {
+                    (view as EditText).setText(text)
+                }
+            })
     }
     //endregion
 
     //region Text validation
-    protected fun <T : Activity> checkText(activityRule: ActivityTestRule<T>
-                                           , @IdRes viewId: Int
-                                           , @StringRes stringId: Int): ViewInteraction {
-        return checkText(viewId, TestUtil.getString(activityRule, stringId))
-    }
+    protected fun <T : Activity> checkText(
+        activityRule: ActivityTestRule<T>,
+        @IdRes viewId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction =
+        checkText(viewId, TestUtil.getString(activityRule, stringId))
 
-    protected fun checkText(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction {
-        return checkText(viewId, TestUtil.getString(stringId))
-    }
+    protected fun checkText(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction =
+        checkText(viewId, TestUtil.getString(stringId))
 
-    protected fun checkTextInDialog(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction {
-        return onView(withId(viewId)).inRoot(isDialog()).check(matches(withText(stringId)))
-    }
+    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction =
+        onView(withId(viewId)).perform(nestedScrollTo()).check(matches(withText(text)))
 
-    protected fun checkText(@IdRes viewId: Int, text: String): ViewInteraction {
-        return onView(withId(viewId)).perform(nestedScrollTo()).check(matches(withText(text)))
-    }
+    protected fun checkTextInDialog(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction =
+        onView(withId(viewId)).inRoot(isDialog()).check(matches(withText(stringId)))
 
     fun checkActionBarTitle(instrumentation: Instrumentation, @StringRes stringId: Int) {
         val res: Resources = instrumentation.targetContext.resources
-        val actionbarId: Int = res.getIdentifier("action_bar_container"
-                , "id"
-                , instrumentation.targetContext.packageName)
+        val actionbarId: Int = res.getIdentifier(
+            "action_bar_container", "id", instrumentation.targetContext.packageName
+        )
         onView(withId(actionbarId)).check(matches(hasDescendant(withText(stringId))))
     }
     //endregion
@@ -103,40 +100,30 @@ open class TestRobot {
     protected fun checkViewIsDisplayedInDialog(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).inRoot(isDialog()).check(matches(isDisplayed()))
 
-    protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction {
-        return onView(withId(viewId)).check(matches(isDisplayed()))
-    }
-
-    @Suppress("SameParameterValue")
-    protected fun checkViewWithTextIsDisplayed(@StringRes stringId: Int): ViewInteraction {
-        return onView(withText(stringId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
-    }
+    protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).check(matches(isDisplayed()))
 
     protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction =
         onView(withText(stringId)).check(matches(isDisplayed()))
 
-    protected fun checkViewWithTextIsDisplayedNoScroll(text: String): ViewInteraction {
-        return onView(withText(text)).check(matches(isDisplayed()))
-    }
+    protected fun checkViewWithTextIsDisplayedNoScroll(text: String): ViewInteraction =
+        onView(withText(text)).check(matches(isDisplayed()))
 
     @Suppress("SameParameterValue")
     protected fun checkViewIsNotDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).check(doesNotExist())
-
-    @Suppress("SameParameterValue")
-    protected fun checkViewWithTextIsNotDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction {
-        return onView(withText(stringId)).check(doesNotExist())
-    }
     //endregion
 
     //region Error validation
     @Suppress("SameParameterValue")
-    protected fun <T : Activity> checkEditTextError(activityRule: ActivityTestRule<T>
-                                                    , @IdRes viewId: Int
-                                                    , @StringRes stringId: Int): ViewInteraction {
+    protected fun <T : Activity> checkEditTextError(
+        activityRule: ActivityTestRule<T>,
+        @IdRes viewId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction {
         return onView(withId(viewId))
-                .perform(nestedScrollTo())
-                .check(matches(hasErrorText(TestUtil.getString(activityRule, stringId))))
+            .perform(nestedScrollTo())
+            .check(matches(hasErrorText(TestUtil.getString(activityRule, stringId))))
     }
 
     @Suppress("SameParameterValue")
@@ -153,38 +140,36 @@ open class TestRobot {
         // ambiguity on hasErrorText() when just using null
         val nullString: String? = null
         return onView(withId(viewId))
-                .perform(nestedScrollTo())
-                .check(matches(hasErrorText(nullString)))
+            .perform(nestedScrollTo())
+            .check(matches(hasErrorText(nullString)))
     }
     //endregion
 
     //region Click
-    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction {
-        return onView(withId(viewId)).perform(nestedScrollTo(), click())
-    }
+    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).perform(nestedScrollTo(), click())
 
     @Suppress("SameParameterValue")
-    protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction {
-        return onView(withId(viewId)).perform(click())
-    }
+    protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction =
+        onView(withId(viewId)).perform(click())
 
     @Suppress("SameParameterValue")
     protected fun clickViewInDialogNoScroll(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).inRoot(isDialog()).perform(click())
 
-    protected fun clickViewTextNoScroll(@StringRes stringId: Int): ViewInteraction {
-        return onView(withText(stringId)).perform(click())
-    }
+    protected fun clickViewTextNoScroll(@StringRes stringId: Int): ViewInteraction =
+        onView(withText(stringId)).perform(click())
 
     @Suppress("SameParameterValue")
-    protected fun clickClickableSpan(@IdRes viewId: Int
-                                     , @StringRes clickTarget: Int): ViewInteraction {
-        return onView(withId(viewId)).perform(nestedScrollTo(), clickClickableSpan(clickTarget))
-    }
+    protected fun clickClickableSpan(
+        @IdRes viewId: Int,
+        @StringRes clickTarget: Int
+    ): ViewInteraction =
+        onView(withId(viewId)).perform(nestedScrollTo(), clickClickableSpan(clickTarget))
 
     fun pressUpNavigation() {
         onView(withContentDescription(androidx.appcompat.R.string.abc_action_bar_up_description))
-                .perform(click())
+            .perform(click())
     }
 
     fun pressBackButton() {
@@ -193,15 +178,14 @@ open class TestRobot {
     //endregion
 
     //region Toast
-    fun checkToastDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction {
-        return onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
-    }
+    fun checkToastDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction =
+        onView(withText(stringId)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 
     // TODO ToastMatcher just loops when there's no Toast on screen
     fun checkToastNotDisplayedWithMessage(@StringRes stringId: Int): ViewInteraction {
         return onView(withText(stringId))
-                .inRoot(ToastMatcher())
-                .check(doesNotExist())
+            .inRoot(ToastMatcher())
+            .check(doesNotExist())
     }
     //endregion
 
@@ -233,9 +217,8 @@ open class TestRobot {
     //endregion
 
     //region RadioButton
-    protected fun checkRadioBtnIsChecked(@IdRes id: Int): ViewInteraction {
-        return onView(withId(id)).perform(nestedScrollTo()).check(matches(isChecked()))
-    }
+    protected fun checkRadioBtnIsChecked(@IdRes id: Int): ViewInteraction =
+        onView(withId(id)).perform(nestedScrollTo()).check(matches(isChecked()))
     //endregion
 
     //region Spinner
@@ -244,42 +227,35 @@ open class TestRobot {
         @StringRes stringId: Int
     ): ViewInteraction = clickSpinnerItem(spinnerId, TestUtil.getString(stringId))
 
-    private fun clickSpinnerItem(@IdRes spinnerId: Int
-                                   , selection: String): ViewInteraction {
-        // click conversion spinner
+    private fun clickSpinnerItem(
+        @IdRes spinnerId: Int,
+        selection: String
+    ): ViewInteraction {
         clickViewId(spinnerId)
-        // find target item and click it
         return onData(allOf(`is`(instanceOf(String::class.java)), `is`(selection))).perform(click())
     }
 
-    protected fun checkSpinnerSelection(@IdRes spinnerId: Int
-                                        , @StringRes stringId: Int): ViewInteraction {
+    protected fun checkSpinnerSelection(
+        @IdRes spinnerId: Int,
+        @StringRes stringId: Int
+    ): ViewInteraction {
         return onView(withId(spinnerId))
-                .perform(nestedScrollTo())
-                .check(matches(withSpinnerText(stringId)))
+            .perform(nestedScrollTo())
+            .check(matches(withSpinnerText(stringId)))
     }
     //endregion
 
     //region RecyclerView
     @Suppress("SameParameterValue")
-    protected fun <T : Activity> clickRecyclerViewItem(activityRule: ActivityTestRule<T>
-                                                                 , @IdRes recyclerViewId: Int
-                                                                 , @StringRes stringId: Int): ViewInteraction {
-        // click on the ViewHolder that has the specified text (Activity name)
-        return onView(withId(recyclerViewId))
-                .perform(RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                        hasDescendant(withText(TestUtil.getString(activityRule, stringId)))
-                        , click()))
-    }
-
-    @Suppress("SameParameterValue")
     protected fun clickRecyclerViewItem(@IdRes recyclerViewId: Int, @StringRes stringId: Int)
-            : ViewInteraction = onView(withId(recyclerViewId))
-        .perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                hasDescendant(withText(TestUtil.getString(stringId))), click()
+            : ViewInteraction {
+        return onView(withId(recyclerViewId))
+            .perform(
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(TestUtil.getString(stringId))), click()
+                )
             )
-        )
+    }
     //endregion
 
     //region NumberPicker
@@ -324,7 +300,8 @@ open class TestRobot {
             // get current orientation and set value to opposite
             val orientation: Int =
                 if (it.resources.configuration.orientation
-                    == Configuration.ORIENTATION_PORTRAIT) {
+                    == Configuration.ORIENTATION_PORTRAIT
+                ) {
                     ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 } else {
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -353,14 +330,14 @@ open class TestRobot {
     //region Disclaimer
     fun setDisclaimerToAccepted() {
         TestUtil.setIfDisclaimerAccepted(
-                InstrumentationRegistry.getInstrumentation().targetContext
-                , true)
+            InstrumentationRegistry.getInstrumentation().targetContext, true
+        )
     }
 
     fun setDisclaimerToNotAccepted() {
         TestUtil.setIfDisclaimerAccepted(
-                InstrumentationRegistry.getInstrumentation().targetContext
-                , false)
+            InstrumentationRegistry.getInstrumentation().targetContext, false
+        )
     }
     //endregion
 }
