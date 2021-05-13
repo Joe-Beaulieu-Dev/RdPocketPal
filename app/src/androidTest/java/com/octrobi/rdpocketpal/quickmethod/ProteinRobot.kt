@@ -54,15 +54,15 @@ class ProteinRobot : TestRobot() {
     }
 
     fun clickClear() {
-        clickViewId(R.id.qm_protein_clear_btn)
+        clickView(R.id.qm_protein_clear_btn)
     }
 
     fun clickCalculate() {
-        clickViewId(R.id.qm_protein_calculate_btn)
+        clickView(R.id.qm_protein_calculate_btn)
     }
 
     fun leaveField() {
-        clickViewId(R.id.qm_weight_editText)
+        clickView(R.id.qm_weight_editText)
         pressBackButton()
     }
 

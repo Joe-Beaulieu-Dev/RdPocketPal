@@ -26,7 +26,7 @@ open class QuickMethodRobot : TestRobot() {
     }
 
     fun leaveField() {
-        clickViewId(R.id.qm_calorie_kcal_per_kg_min)
+        clickView(R.id.qm_calorie_kcal_per_kg_min)
         pressBackButton()
     }
     //endregion
@@ -34,12 +34,12 @@ open class QuickMethodRobot : TestRobot() {
     //region Units
     fun setUnitMetric() {
         // click metric RadioButton
-        clickViewId(R.id.qm_unit_metric)
+        clickView(R.id.qm_unit_metric)
     }
 
     fun setUnitStandard() {
         // click standard RadioButton
-        clickViewId(R.id.qm_unit_standard)
+        clickView(R.id.qm_unit_standard)
     }
 
     fun checkUnitMetric() {

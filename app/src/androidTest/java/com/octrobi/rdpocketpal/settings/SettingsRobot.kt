@@ -14,7 +14,7 @@ class SettingsRobot : TestRobot() {
         // set value
         setNumberPickerValue(R.id.pref_dialog_number_picker, scale)
         // click OK (positive button) to close dialog
-        clickViewId(android.R.id.button1)
+        clickView(android.R.id.button1)
     }
 
     fun setDecimalReductionMethod(@StringRes stringId: Int) {

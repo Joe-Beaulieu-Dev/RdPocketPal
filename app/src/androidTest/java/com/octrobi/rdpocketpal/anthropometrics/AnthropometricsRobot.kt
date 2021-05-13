@@ -8,11 +8,11 @@ class AnthropometricsRobot : TestRobot() {
 
     //region Sex
     fun setSexMale() {
-        clickViewId(R.id.anthro_sex_male)
+        clickView(R.id.anthro_sex_male)
     }
 
     fun setSexFemale() {
-        clickViewId(R.id.anthro_sex_female)
+        clickView(R.id.anthro_sex_female)
     }
 
     fun checkSexMale() {
@@ -26,11 +26,11 @@ class AnthropometricsRobot : TestRobot() {
 
     //region Units
     fun setUnitMetric() {
-        clickViewId(R.id.anthro_unit_metric)
+        clickView(R.id.anthro_unit_metric)
     }
 
     fun setUnitStandard() {
-        clickViewId(R.id.anthro_unit_standard)
+        clickView(R.id.anthro_unit_standard)
     }
 
     fun checkUnitMetric() {
@@ -92,11 +92,11 @@ class AnthropometricsRobot : TestRobot() {
 
     //region Buttons
     fun clickClear() {
-        clickViewId(R.id.anthro_clear_btn)
+        clickView(R.id.anthro_clear_btn)
     }
 
     fun clickCalculate() {
-        clickViewId(R.id.anthro_calculate_btn)
+        clickView(R.id.anthro_calculate_btn)
     }
     //endregion
 
@@ -124,11 +124,11 @@ class AnthropometricsRobot : TestRobot() {
     }
 
     fun leaveWeightField() {
-        clickViewId(R.id.anthro_height_editText)
+        clickView(R.id.anthro_height_editText)
     }
 
     fun leaveHeightField() {
-        clickViewId(R.id.anthro_weight_editText)
+        clickView(R.id.anthro_weight_editText)
     }
     //endregion
 

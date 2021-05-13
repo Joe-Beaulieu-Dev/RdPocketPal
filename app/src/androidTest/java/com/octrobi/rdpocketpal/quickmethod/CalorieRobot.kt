@@ -54,15 +54,15 @@ class CalorieRobot : TestRobot() {
     }
 
     fun clickClear() {
-        clickViewId(R.id.qm_calorie_clear_btn)
+        clickView(R.id.qm_calorie_clear_btn)
     }
 
     fun clickCalculate() {
-        clickViewId(R.id.qm_calorie_calculate_btn)
+        clickView(R.id.qm_calorie_calculate_btn)
     }
 
     fun leaveField() {
-        clickViewId(R.id.qm_weight_editText)
+        clickView(R.id.qm_weight_editText)
         pressBackButton()
     }
 

@@ -29,7 +29,6 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import com.octrobi.rdpocketpal.R
 import com.octrobi.rdpocketpal.action.CustomViewActions.nestedScrollTo
 import com.octrobi.rdpocketpal.matcher.TextInputLayoutMatchers.withError
@@ -68,13 +67,6 @@ open class TestRobot {
     //endregion
 
     //region Text validation
-    protected fun <T : Activity> checkText(
-        activityRule: ActivityTestRule<T>,
-        @IdRes viewId: Int,
-        @StringRes stringId: Int
-    ): ViewInteraction =
-        checkText(viewId, TestUtil.getString(activityRule, stringId))
-
     protected fun checkText(@IdRes viewId: Int, @StringRes stringId: Int): ViewInteraction =
         checkText(viewId, TestUtil.getString(stringId))
 
@@ -97,10 +89,14 @@ open class TestRobot {
     protected fun checkViewIsDisplayed(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
 
+    protected fun checkViewWithTextIsDisplayed(@StringRes stringId: Int): ViewInteraction =
+        onView(withText(stringId)).perform(nestedScrollTo()).check(matches(isDisplayed()))
+
     protected fun checkViewIsDisplayedInDialog(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).inRoot(isDialog()).check(matches(isDisplayed()))
 
-    protected fun checkViewWithIdIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction =
+    @Suppress("SameParameterValue")
+    protected fun checkViewIsDisplayedNoScroll(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).check(matches(isDisplayed()))
 
     protected fun checkViewWithTextIsDisplayedNoScroll(@StringRes stringId: Int): ViewInteraction =
@@ -115,17 +111,6 @@ open class TestRobot {
     //endregion
 
     //region Error validation
-    @Suppress("SameParameterValue")
-    protected fun <T : Activity> checkEditTextError(
-        activityRule: ActivityTestRule<T>,
-        @IdRes viewId: Int,
-        @StringRes stringId: Int
-    ): ViewInteraction {
-        return onView(withId(viewId))
-            .perform(nestedScrollTo())
-            .check(matches(hasErrorText(TestUtil.getString(activityRule, stringId))))
-    }
-
     @Suppress("SameParameterValue")
     protected fun checkEditTextError(
         @IdRes viewId: Int,
@@ -146,12 +131,8 @@ open class TestRobot {
     //endregion
 
     //region Click
-    protected fun clickViewId(@IdRes viewId: Int): ViewInteraction =
+    protected fun clickView(@IdRes viewId: Int): ViewInteraction =
         onView(withId(viewId)).perform(nestedScrollTo(), click())
-
-    @Suppress("SameParameterValue")
-    protected fun clickViewIdNoScroll(@IdRes viewId: Int): ViewInteraction =
-        onView(withId(viewId)).perform(click())
 
     @Suppress("SameParameterValue")
     protected fun clickViewInDialogNoScroll(@IdRes viewId: Int): ViewInteraction =
@@ -198,6 +179,7 @@ open class TestRobot {
             .perform(nestedScrollTo())
             .check(matches(withSuffix(TestUtil.getString(stringId))))
 
+    @Suppress("SameParameterValue")
     protected fun checkErrorText(
         @IdRes textInputLayoutId: Int,
         @StringRes stringId: Int
@@ -231,7 +213,7 @@ open class TestRobot {
         @IdRes spinnerId: Int,
         selection: String
     ): ViewInteraction {
-        clickViewId(spinnerId)
+        clickView(spinnerId)
         return onData(allOf(`is`(instanceOf(String::class.java)), `is`(selection))).perform(click())
     }
 

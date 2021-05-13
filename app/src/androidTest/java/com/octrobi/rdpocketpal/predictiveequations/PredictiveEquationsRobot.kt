@@ -29,11 +29,11 @@ class PredictiveEquationsRobot : TestRobot() {
 
     //region Sex
     fun setSexMale() {
-        clickViewId(R.id.pe_sex_male)
+        clickView(R.id.pe_sex_male)
     }
 
     fun setSexFemale() {
-        clickViewId(R.id.pe_sex_female)
+        clickView(R.id.pe_sex_female)
     }
 
     fun checkSexMale() {
@@ -47,11 +47,11 @@ class PredictiveEquationsRobot : TestRobot() {
 
     //region Units
     fun setUnitMetric() {
-        clickViewId(R.id.pe_unit_metric)
+        clickView(R.id.pe_unit_metric)
     }
 
     fun setUnitStandard() {
-        clickViewId(R.id.pe_unit_standard)
+        clickView(R.id.pe_unit_standard)
     }
 
     fun checkUnitMetric() {
@@ -89,11 +89,11 @@ class PredictiveEquationsRobot : TestRobot() {
 
     //region Buttons
     fun clickClear() {
-        clickViewId(R.id.pe_clear_btn)
+        clickView(R.id.pe_clear_btn)
     }
 
     fun clickCalculate() {
-        clickViewId(R.id.pe_calculate_btn)
+        clickView(R.id.pe_calculate_btn)
     }
     //endregion
 
@@ -147,15 +147,15 @@ class PredictiveEquationsRobot : TestRobot() {
     }
 
     fun giveFocusToAge() {
-        clickViewId(R.id.pe_age_editText)
+        clickView(R.id.pe_age_editText)
     }
 
     fun loseFocusToWeight() {
-        clickViewId(R.id.pe_weight_editText)
+        clickView(R.id.pe_weight_editText)
     }
 
     fun loseFocusToAge() {
-        clickViewId(R.id.pe_age_editText)
+        clickView(R.id.pe_age_editText)
     }
     //endregion
 

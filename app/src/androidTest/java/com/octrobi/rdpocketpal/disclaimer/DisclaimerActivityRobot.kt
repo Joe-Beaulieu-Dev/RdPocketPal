@@ -12,8 +12,8 @@ class DisclaimerActivityRobot : TestRobot() {
     }
 
     fun checkDisclaimerTextDisplays() {
-        checkViewWithIdIsDisplayedNoScroll(R.id.disclaimer_text)
-        checkViewWithTextIsDisplayedNoScroll(R.string.text_disclaimer)
+        checkViewIsDisplayed(R.id.disclaimer_text)
+        checkViewWithTextIsDisplayed(R.string.text_disclaimer)
     }
     //endregion
 

@@ -12,7 +12,7 @@ class GetStartedRobot : TestRobot() {
     }
 
     fun clickContinue() {
-        clickViewId(R.id.start_continue)
+        clickView(R.id.start_continue)
     }
     //endregion
 

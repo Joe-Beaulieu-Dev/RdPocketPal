@@ -7,7 +7,7 @@ class ConversionsRobot : TestRobot() {
 
     //region Buttons
     fun clickClear() {
-        clickViewId(R.id.conv_clear_btn)
+        clickView(R.id.conv_clear_btn)
     }
     //endregion
 
@@ -31,7 +31,7 @@ class ConversionsRobot : TestRobot() {
 
     //region Visibility
     fun checkSettingsNoteIsShowing() {
-        checkViewWithIdIsDisplayedNoScroll(R.id.conv_settings_note)
+        checkViewIsDisplayedNoScroll(R.id.conv_settings_note)
     }
     //endregion
 
