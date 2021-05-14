@@ -89,7 +89,7 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.13'
-    testImplementation 'org.mockito:mockito-core:2.6.3'
+    testImplementation 'org.mockito:mockito-core:3.10.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'

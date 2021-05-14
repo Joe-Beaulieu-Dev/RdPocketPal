@@ -14,4 +14,4 @@ import org.junit.runners.Suite
     MetricEquationUtilTest::class,
     NumberUtilTest::class
 )
-class UtilSuite
+class UtilTestSuite
