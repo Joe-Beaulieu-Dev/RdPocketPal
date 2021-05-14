@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.octrobi.rdpocketpal.conversions.ConversionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conv_top_level_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardViewBackgroundLight"
+        android:paddingStart="@dimen/margin_large"
+        android:paddingEnd="@dimen/margin_large"
+        tools:context=".conversions.ConversionActivity">
+
+        <!-- Top Anchor -->
+        <View
+            android:id="@+id/conv_top_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/conv_scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <!-- ScrollView that holds the conversion components -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/conv_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/conv_settings_note"
+            app:layout_constraintTop_toBottomOf="@+id/conv_top_anchor">
+
+            <!-- Conversion layout -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/conv_internal_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Conversion Type "Spinner" -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/conv_conversions_layout"
+                    style="@style/Widget.App.TextInputStyle.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    app:layout_constraintBottom_toTopOf="@+id/conv_field_left_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/conv_conversions_auto_complete_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        tools:text="@string/text_in_to_cm"
+                        tools:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Left Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/conv_field_left_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:errorMsg="@={viewModel.mFieldLeftErrorMsg}"
+                    app:layout_constraintBottom_toTopOf="@+id/conv_dual_arrows"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/conv_conversions_layout"
+                    app:suffixText="@{viewModel.mFieldLeftLabel}"
+                    tools:suffixText="@string/text_in">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conv_field_left_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mFieldLeft}"
+                        tools:text="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--************
+                    ** Arrows **
+                    ************-->
+                <ImageView
+                    android:id="@+id/conv_dual_arrows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:src="@drawable/ic_compare_arrows_grey_48dp"
+                    app:layout_constraintBottom_toTopOf="@id/conv_field_right_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/conv_field_left_layout"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Right Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/conv_field_right_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:errorMsg="@={viewModel.mFieldRightErrorMsg}"
+                    app:layout_constraintBottom_toTopOf="@+id/conv_spacer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/conv_dual_arrows"
+                    app:suffixText="@{viewModel.mFieldRightLabel}"
+                    tools:suffixText="@string/text_cm">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conv_field_right_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.mFieldRight}"
+                        tools:text="2.54" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Spacer between input and Clear Button -->
+                <View
+                    android:id="@+id/conv_spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/conv_clear_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/conv_field_right_layout" />
+
+                <!-- Clear Button -->
+                <Button
+                    android:id="@+id/conv_clear_btn"
+                    style="@style/ClearBtn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:onClick="@{() -> viewModel.onClearClicked()}"
+                    android:text="@string/text_clear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/conv_spacer" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Hard-coded Settings Note -->
+        <TextView
+            android:id="@+id/conv_settings_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:gravity="center"
+            android:text="@string/text_conversion_settings_note"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conv_scrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
