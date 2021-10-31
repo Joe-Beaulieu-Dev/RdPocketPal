@@ -6,6 +6,13 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
+
 import com.octrobi.rdpocketpal.R;
 import com.octrobi.rdpocketpal.model.UserPreferences;
 import com.octrobi.rdpocketpal.quickmethod.FatalCalculationException;
@@ -16,13 +23,6 @@ import com.octrobi.rdpocketpal.util.UiUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.SavedStateHandle;
 
 public class ConversionViewModel extends AndroidViewModel {
     //region LiveData
@@ -248,8 +248,12 @@ public class ConversionViewModel extends AndroidViewModel {
 
     void clearAllFieldsAndErrors() {
         clearAllFields();
-        mFieldLeftErrorMsg.setValue(null);
-        mFieldRightErrorMsg.setValue(null);
+        if (NumberUtil.isDouble(mFieldLeftErrorMsg)) {
+            mFieldLeftErrorMsg.setValue(null);
+        }
+        if (NumberUtil.isDouble(mFieldRightErrorMsg)) {
+            mFieldRightErrorMsg.setValue(null);
+        }
     }
 
     void updateFieldLabelData() {

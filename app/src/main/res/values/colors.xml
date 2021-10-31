@@ -4,7 +4,7 @@
     <color name="colorPrimary">#5213ab</color>
     <color name="colorPrimaryDark">#320e81</color>
     <color name="colorAccent">#118e81</color>
-    <color name="windowBackground">#bebebe</color>
+    <color name="windowBackground">#f7f7f7</color>
     <color name="headerBackground">#eeeeee</color>
     <color name="link">#0000ee</color>
 

@@ -1,4 +1,4 @@
-package com.octrobi.rdpocketpal.util
+package com.octrobi.rdpocketpal.adapter
 
 import android.view.View
 import android.widget.*
@@ -6,8 +6,11 @@ import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputLayout
 import com.octrobi.rdpocketpal.R
+import com.octrobi.rdpocketpal.util.DEFAULT_RADIO_BTN_INDEX
+import com.octrobi.rdpocketpal.util.NumberUtil
 
 //region TextInputLayout
 @BindingAdapter("errorMsg")
@@ -129,9 +132,31 @@ fun Spinner.setSpinnerListener(selection: String?, listener: InverseBindingListe
 
     // for selectedSpinnerItem
     if (selection != null && selection != selectedItem) {
-        // TODO sort this out
         val pos = (adapter as? ArrayAdapter<String>)!!.getPosition(selection)
         setSelection(pos, true)
     }
+}
+//endregion
+
+//region AutoCompleteTextView as Dropdown
+@BindingAdapter("value")
+fun AutoCompleteTextView.setDropDownText(selection: MutableLiveData<String>) {
+    if (selection.value != null) {
+        if (text.toString() != selection.value) {
+            val arrAdapter = (adapter as ArrayAdapter<CharSequence>)
+            setText(arrAdapter.getItem(arrAdapter.getPosition(selection.value)), false)
+        }
+    } else {
+        setText((adapter as ArrayAdapter<CharSequence>).getItem(0), false)
+        onItemClickListener.onItemClick(null, null, 0, 0)
+    }
+}
+
+@InverseBindingAdapter(attribute = "value")
+fun AutoCompleteTextView.getDropDownText(): String = text.toString()
+
+@BindingAdapter("valueAttrChanged")
+fun AutoCompleteTextView.setDropDownListener(listener: InverseBindingListener) {
+    setOnItemClickListener { _, _, _, _ -> listener.onChange() }
 }
 //endregion

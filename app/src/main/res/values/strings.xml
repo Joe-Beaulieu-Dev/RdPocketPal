@@ -105,8 +105,8 @@
     <!-- Conversions -->
     <string name="text_conversion_settings_note">All results on this screen will always be rounded
         to 5 decimal places, regardless of User settings.</string>
-    <string name="text_in_to_cm">Inches &lt;=> Centimeters</string>
-    <string name="text_lb_to_kg">Pounds &lt;=> Kilograms</string>
+    <string name="text_in_to_cm">Inches / Centimeters</string>
+    <string name="text_lb_to_kg">Pounds / Kilograms</string>
     <string-array name="conversion_list">
         <item>@string/text_in_to_cm</item>
         <item>@string/text_lb_to_kg</item>

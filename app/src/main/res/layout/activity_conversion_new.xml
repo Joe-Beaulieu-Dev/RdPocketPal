@@ -47,7 +47,7 @@
 
                 <!-- Conversion Type "Spinner" -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/conv_conversions_layout"
+                    android:id="@+id/conv_conversion_selection_layout"
                     style="@style/Widget.App.TextInputStyle.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,12 +59,15 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <AutoCompleteTextView
-                        android:id="@+id/conv_conversions_auto_complete_textview"
+                        android:id="@+id/conv_conversion_selection_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
                         android:inputType="none"
-                        tools:text="@string/text_in_to_cm"
-                        tools:textSize="20sp" />
+                        android:textSize="@dimen/font_size_extra_large"
+                        app:value="@={viewModel.mConversionType}"
+                        tools:text="@string/text_in_to_cm" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,10 +78,11 @@
                     android:layout_height="wrap_content"
                     app:errorEnabled="true"
                     app:errorMsg="@={viewModel.mFieldLeftErrorMsg}"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintBottom_toTopOf="@+id/conv_dual_arrows"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/conv_conversions_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/conv_conversion_selection_layout"
                     app:suffixText="@{viewModel.mFieldLeftLabel}"
                     tools:suffixText="@string/text_in">
 
@@ -86,6 +90,7 @@
                         android:id="@+id/conv_field_left_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:afterTextChanged="@{() -> viewModel.onLeftFieldChanged(convFieldLeftEditText)}"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.mFieldLeft}"
                         tools:text="1" />
@@ -115,6 +120,7 @@
                     android:layout_height="wrap_content"
                     app:errorEnabled="true"
                     app:errorMsg="@={viewModel.mFieldRightErrorMsg}"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintBottom_toTopOf="@+id/conv_spacer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +132,7 @@
                         android:id="@+id/conv_field_right_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:afterTextChanged="@{() -> viewModel.onRightFieldChanged(convFieldRightEditText)}"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.mFieldRight}"
                         tools:text="2.54" />
@@ -150,6 +157,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
                     android:onClick="@{() -> viewModel.onClearClicked()}"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="50dp"
                     android:text="@string/text_clear"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

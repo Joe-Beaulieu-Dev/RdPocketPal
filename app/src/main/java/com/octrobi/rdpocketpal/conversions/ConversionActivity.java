@@ -5,14 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-import com.octrobi.rdpocketpal.R;
-import com.octrobi.rdpocketpal.databinding.ActivityConversionBinding;
-import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity;
-import com.octrobi.rdpocketpal.settings.SettingsActivity;
-import com.octrobi.rdpocketpal.util.UiUtil;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +13,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.octrobi.rdpocketpal.R;
+import com.octrobi.rdpocketpal.adapter.NoFilterAdapter;
+import com.octrobi.rdpocketpal.databinding.ActivityConversionNewBinding;
+import com.octrobi.rdpocketpal.disclaimer.DisclaimerActivity;
+import com.octrobi.rdpocketpal.settings.SettingsActivity;
+import com.octrobi.rdpocketpal.util.UiUtil;
+
+import java.util.Arrays;
+
 public class ConversionActivity extends AppCompatActivity {
-    private ConversionViewModel mViewModel;
-    private ActivityConversionBinding mBinding;
+    public ConversionViewModel mViewModel;
+    private ActivityConversionNewBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ConversionActivity extends AppCompatActivity {
                 .get(ConversionViewModel.class);
 
         // set up DataBinding
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_conversion);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_conversion_new);
         mBinding.setLifecycleOwner(this);
         mBinding.setViewModel(mViewModel);
 
@@ -69,11 +70,12 @@ public class ConversionActivity extends AppCompatActivity {
     }
 
     private void setUpConversionSpinner() {
-        Spinner spinner = mBinding.convConversionSpinner;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter
-                .createFromResource(this, R.array.conversion_list, R.layout.spinner_item);
+        NoFilterAdapter<String> adapter = new NoFilterAdapter<>(
+                this,
+                Arrays.asList(getResources().getStringArray(R.array.conversion_list))
+        );
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        mBinding.convConversionSelectionTextView.setAdapter(adapter);
     }
 
     private void setUpAllBtnRipples() {
